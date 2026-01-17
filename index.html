@@ -95,17 +95,37 @@
   </div>
 
   <!-- BOOKING -->
-  <div class="booking-bar">
-    <div class="field">
-      <label>Check in</label>
-      <input type="date" id="checkin">
-    </div>
-    <div class="field">
-      <label>Check out</label>
-      <input type="date" id="checkout">
-    </div>
-    <button class="book-btn">BOOK NOW</button>
+<div class="booking-bar">
+  <div class="field">
+    <label>Check in</label>
+    <input type="date" id="checkin">
   </div>
+  <div class="field">
+    <label>Check out</label>
+    <input type="date" id="checkout">
+  </div>
+  <div class="field">
+    <label>Adults</label>
+    <select id="adults">
+      <option value="1">1 Adult</option>
+      <option value="2" selected>2 Adults</option>
+      <option value="3">3 Adults</option>
+      <option value="4">4 Adults</option>
+      <option value="5">5+ Adults</option>
+    </select>
+  </div>
+  <div class="field">
+    <label>Children</label>
+    <select id="children">
+      <option value="0" selected>0 Children</option>
+      <option value="1">1 Child</option>
+      <option value="2">2 Children</option>
+      <option value="3">3 Children</option>
+      <option value="4">4+ Children</option>
+    </select>
+  </div>
+  <button class="book-btn">BOOK NOW</button>
+</div>
 
 </section>
 

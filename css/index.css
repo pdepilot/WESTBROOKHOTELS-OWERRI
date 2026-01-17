@@ -2015,6 +2015,423 @@ body {
 }
 
 /* ===========================================
+   UPDATED BOOKING BAR - WITH ADULTS/CHILDREN
+   =========================================== */
+.booking-bar {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  background: #fff;
+  color: #000;
+  display: flex;
+  z-index: 6;
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 -5px 30px rgba(0, 0, 0, 0.2);
+}
+
+.field {
+  flex: 1;
+  padding: 20px;
+  border-right: 2px solid #e6e6e6;
+  position: relative;
+}
+
+.field:last-child {
+  border-right: none;
+}
+
+.field label {
+  display: block;
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 8px;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.field input,
+.field select {
+  border: none;
+  outline: none;
+  width: 100%;
+  background: transparent;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  color: #000;
+  padding: 5px 0;
+  cursor: pointer;
+}
+
+.field select {
+  appearance: none;
+  background: transparent;
+}
+
+.field::after {
+  content: '\f078';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  position: absolute;
+  right: 20px;
+  bottom: 25px;
+  color: #c19a5b;
+  font-size: 12px;
+  pointer-events: none;
+}
+
+.field:not(:has(select))::after {
+  content: '\f073';
+}
+
+.book-btn {
+  background: linear-gradient(135deg, #c19a5b 0%, #d4af37 100%);
+  color: #fff;
+  border: none;
+  padding: 0 40px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 16px;
+  letter-spacing: 2px;
+  font-weight: 500;
+  min-width: 180px;
+  position: relative;
+  overflow: hidden;
+}
+
+.book-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.7s ease;
+}
+
+.book-btn:hover::before {
+  left: 100%;
+}
+
+.book-btn:hover {
+  background: linear-gradient(135deg, #b08c4a 0%, #c9a035 100%);
+  transform: scale(1.02);
+}
+
+/* ===========================================
+   UPDATED MOBILE RESERVATION - VERTICAL ON LEFT
+   =========================================== */
+@media (max-width: 768px) {
+  /* Hide original side reservation on mobile */
+  .side-reservation {
+    display: none !important;
+  }
+  
+  /* New mobile reservation - vertical on left */
+  .mobile-reservation {
+    position: fixed;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    z-index: 5;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 25px;
+    padding: 20px 10px;
+    border: 1px solid rgba(193, 154, 91, 0.3);
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+  
+  .mobile-reservation .label {
+    color: #c19a5b;
+    font-size: 12px;
+    letter-spacing: 3px;
+    margin-bottom: 15px;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    text-transform: uppercase;
+  }
+  
+  .mobile-reservation .phone-icon {
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(193, 154, 91, 0.5);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 15px 0;
+    color: #c19a5b;
+    font-size: 16px;
+    transition: all 0.3s ease;
+  }
+  
+  .mobile-reservation .phone-icon:hover {
+    background: rgba(193, 154, 91, 0.1);
+    transform: scale(1.1);
+  }
+  
+  .mobile-reservation .divider {
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(to bottom, transparent, #c19a5b, transparent);
+    margin: 10px 0;
+  }
+  
+  .mobile-reservation .phone {
+    color: #fff;
+    font-size: 12px;
+    letter-spacing: 1px;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    text-align: center;
+    line-height: 1.6;
+  }
+  
+  /* Mobile booking bar adjustments */
+  .booking-bar {
+    flex-direction: column;
+    width: 90%;
+    bottom: 20px;
+    border-radius: 12px;
+  }
+  
+  .field {
+    border-right: none;
+    border-bottom: 1px solid #e6e6e6;
+    padding: 18px;
+  }
+  
+  .field:last-child {
+    border-bottom: none;
+  }
+  
+  .field::after {
+    bottom: 20px;
+    right: 15px;
+  }
+  
+  .book-btn {
+    padding: 20px;
+    min-width: auto;
+    font-size: 14px;
+  }
+  
+  /* Adjust hero for mobile reservation */
+  .hero-content {
+    padding-left: 60px; /* Make space for mobile reservation */
+  }
+}
+
+/* ===========================================
+   ENHANCED SCROLL TO TOP WITH PERCENTAGE
+   =========================================== */
+.scroll-progress-container {
+  position: fixed;
+  right: 30px;
+  bottom: 100px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.scroll-progress {
+  position: relative;
+  width: 60px;
+  height: 60px;
+}
+
+.scroll-progress-circle {
+  transform: rotate(-90deg);
+  width: 100%;
+  height: 100%;
+}
+
+.scroll-progress-circle-bg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.1);
+  stroke-width: 4;
+}
+
+.scroll-progress-circle-fill {
+  fill: none;
+  stroke: #c19a5b;
+  stroke-width: 4;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.1s ease;
+  stroke-dasharray: 283;
+  stroke-dashoffset: 283;
+}
+
+.scroll-progress-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.enhanced-back-to-top {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #c19a5b 0%, #d4af37 100%);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 20px rgba(193, 154, 91, 0.4);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+}
+
+.enhanced-back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.enhanced-back-to-top:hover {
+  transform: translateY(-5px) scale(1.1);
+  box-shadow: 0 10px 30px rgba(193, 154, 91, 0.6);
+}
+
+.enhanced-back-to-top:active {
+  transform: translateY(-2px) scale(0.95);
+}
+
+/* Hide original back to top button */
+.back-to-top {
+  display: none;
+}
+
+/* ===========================================
+   ANIMATIONS FOR NEW ELEMENTS
+   =========================================== */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px) translateY(-50%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) translateY(-50%);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 10px 30px rgba(193, 154, 91, 0.3);
+  }
+  50% {
+    box-shadow: 0 10px 40px rgba(193, 154, 91, 0.6);
+  }
+}
+
+.mobile-reservation {
+  animation: slideInLeft 0.8s ease-out;
+}
+
+.mobile-reservation .phone-icon {
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+/* ===========================================
+   DESKTOP: HIDE MOBILE RESERVATION
+   =========================================== */
+@media (min-width: 769px) {
+  .mobile-reservation {
+    display: none !important;
+  }
+  
+  /* Show original side reservation on desktop */
+  .side-reservation {
+    display: flex !important;
+  }
+}
+
+/* ===========================================
+   TABLET ADJUSTMENTS
+   =========================================== */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .booking-bar {
+    width: 95%;
+  }
+  
+  .field {
+    padding: 15px;
+  }
+  
+  .book-btn {
+    padding: 0 25px;
+    min-width: 150px;
+    font-size: 14px;
+  }
+}
+
+/* ===========================================
+   VERY SMALL MOBILE DEVICES
+   =========================================== */
+@media (max-width: 480px) {
+  .mobile-reservation {
+    left: 10px;
+    padding: 15px 8px;
+  }
+  
+  .mobile-reservation .label {
+    font-size: 10px;
+    letter-spacing: 2px;
+  }
+  
+  .mobile-reservation .phone-icon {
+    width: 35px;
+    height: 35px;
+    font-size: 14px;
+  }
+  
+  .mobile-reservation .phone {
+    font-size: 10px;
+  }
+  
+  .scroll-progress-container {
+    right: 20px;
+    bottom: 90px;
+  }
+  
+  .scroll-progress {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .enhanced-back-to-top {
+    width: 45px;
+    height: 45px;
+    font-size: 16px;
+  }
+  
+  .hero-content {
+    padding-left: 50px;
+  }
+}
+
+/* ===========================================
    RESPONSIVE DESIGN - NEW SECTIONS
    =========================================== */
 @media (max-width: 1024px) {

@@ -762,3 +762,566 @@ modalStyle.textContent = `
 `;
 
 document.head.appendChild(modalStyle);
+
+// ===========================================
+// ENHANCED BOOKING FORM FUNCTIONALITY
+// ===========================================
+
+// Initialize date inputs with tomorrow's date as minimum
+const tomorrow = new Date();
+tomorrow.setDate(tomorrow.getDate() + 1);
+const tomorrowStr = tomorrow.toISOString().split('T')[0];
+
+const checkinInput = document.getElementById('checkin');
+const checkoutInput = document.getElementById('checkout');
+
+if (checkinInput) {
+  // Set minimum date to today
+  const today = new Date().toISOString().split('T')[0];
+  checkinInput.min = today;
+  checkinInput.value = today;
+  
+  // Set checkout minimum to tomorrow
+  checkoutInput.min = tomorrowStr;
+  
+  // When checkin changes, update checkout min
+  checkinInput.addEventListener('change', function() {
+    const checkinDate = new Date(this.value);
+    checkinDate.setDate(checkinDate.getDate() + 1);
+    const nextDay = checkinDate.toISOString().split('T')[0];
+    checkoutInput.min = nextDay;
+    
+    // If checkout is before new min, reset it
+    if (checkoutInput.value && new Date(checkoutInput.value) < checkinDate) {
+      checkoutInput.value = nextDay;
+    }
+  });
+}
+
+// Enhanced booking form validation
+const bookBtn = document.querySelector('.book-btn');
+if (bookBtn) {
+  bookBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    
+    const checkin = checkinInput.value;
+    const checkout = checkoutInput.value;
+    const adults = document.getElementById('adults').value;
+    const children = document.getElementById('children').value;
+    
+    // Validation
+    if (!checkin || !checkout) {
+      showBookingAlert('Please select both check-in and check-out dates.', 'error');
+      return;
+    }
+    
+    if (new Date(checkout) <= new Date(checkin)) {
+      showBookingAlert('Check-out date must be after check-in date.', 'error');
+      return;
+    }
+    
+    if (parseInt(adults) === 0) {
+      showBookingAlert('Please select at least 1 adult.', 'error');
+      return;
+    }
+    
+    // Calculate nights
+    const checkinDate = new Date(checkin);
+    const checkoutDate = new Date(checkout);
+    const nights = Math.ceil((checkoutDate - checkinDate) / (1000 * 60 * 60 * 24));
+    
+    // Show success message with booking summary
+    const summary = `
+      Booking Summary:
+      • Check-in: ${formatDate(checkin)}
+      • Check-out: ${formatDate(checkout)}
+      • Nights: ${nights}
+      • Adults: ${adults}
+      • Children: ${children}
+      
+      Your reservation request has been received. Our team will contact you shortly.
+    `;
+    
+    showBookingAlert(summary, 'success');
+    
+    // Animate booking button
+    animateBookingButton();
+  });
+}
+
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+}
+
+function showBookingAlert(message, type) {
+  // Remove existing alert if any
+  const existingAlert = document.querySelector('.booking-alert');
+  if (existingAlert) {
+    existingAlert.remove();
+  }
+  
+  // Create alert element
+  const alert = document.createElement('div');
+  alert.className = `booking-alert ${type}`;
+  alert.innerHTML = `
+    <div class="alert-content">
+      <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+      <div class="alert-message">${message.replace(/\n/g, '<br>')}</div>
+      <button class="alert-close"><i class="fas fa-times"></i></button>
+    </div>
+  `;
+  
+  document.body.appendChild(alert);
+  
+  // Close alert
+  const closeBtn = alert.querySelector('.alert-close');
+  closeBtn.addEventListener('click', () => {
+    alert.classList.add('fade-out');
+    setTimeout(() => alert.remove(), 300);
+  });
+  
+  // Auto-close success alerts after 8 seconds
+  if (type === 'success') {
+    setTimeout(() => {
+      if (alert.parentNode) {
+        alert.classList.add('fade-out');
+        setTimeout(() => alert.remove(), 300);
+      }
+    }, 8000);
+  }
+}
+
+function animateBookingButton() {
+  const bookBtn = document.querySelector('.book-btn');
+  bookBtn.classList.add('processing');
+  bookBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> PROCESSING...';
+  
+  setTimeout(() => {
+    bookBtn.classList.remove('processing');
+    bookBtn.innerHTML = 'BOOK NOW';
+  }, 2000);
+}
+
+// ===========================================
+// MOBILE RESERVATION CREATION
+// ===========================================
+function createMobileReservation() {
+  // Check if mobile reservation already exists
+  if (document.querySelector('.mobile-reservation')) return;
+  
+  // Create mobile reservation element
+  const mobileReservation = document.createElement('div');
+  mobileReservation.className = 'mobile-reservation';
+  mobileReservation.innerHTML = `
+    <span class="label">RESERVATION</span>
+    <span class="divider"></span>
+    <span class="phone-icon">
+      <i class="fas fa-phone"></i>
+    </span>
+    <span class="phone">
+      +234 809 999 1244<br>
+      +234 704 282 5937
+    </span>
+  `;
+  
+  // Add to hero section
+  const hero = document.querySelector('.hero');
+  hero.appendChild(mobileReservation);
+  
+  // Add click event to phone icon
+  const phoneIcon = mobileReservation.querySelector('.phone-icon');
+  phoneIcon.addEventListener('click', () => {
+    // Animate phone icon
+    phoneIcon.style.transform = 'scale(0.9)';
+    setTimeout(() => {
+      phoneIcon.style.transform = 'scale(1)';
+    }, 200);
+    
+    // Show call dialog
+    if (window.confirm('Call +234 809 999 1244?')) {
+      window.location.href = 'tel:+2348099991244';
+    }
+  });
+}
+
+// ===========================================
+// ENHANCED SCROLL PROGRESS WITH PERCENTAGE
+// ===========================================
+function createScrollProgress() {
+  // Check if scroll progress already exists
+  if (document.querySelector('.scroll-progress-container')) return;
+  
+  // Create scroll progress container
+  const scrollProgressContainer = document.createElement('div');
+  scrollProgressContainer.className = 'scroll-progress-container';
+  scrollProgressContainer.innerHTML = `
+    <div class="scroll-progress">
+      <svg class="scroll-progress-circle" viewBox="0 0 100 100">
+        <circle class="scroll-progress-circle-bg" cx="50" cy="50" r="45"></circle>
+        <circle class="scroll-progress-circle-fill" cx="50" cy="50" r="45"></circle>
+      </svg>
+      <div class="scroll-progress-text">0%</div>
+    </div>
+    <button class="enhanced-back-to-top">
+      <i class="fas fa-chevron-up"></i>
+    </button>
+  `;
+  
+  document.body.appendChild(scrollProgressContainer);
+  
+  // Get elements
+  const scrollProgressFill = document.querySelector('.scroll-progress-circle-fill');
+  const scrollProgressText = document.querySelector('.scroll-progress-text');
+  const backToTopBtn = document.querySelector('.enhanced-back-to-top');
+  
+  // Calculate scroll percentage
+  function updateScrollProgress() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = scrollTop / docHeight;
+    
+    // Update circle
+    const circumference = 2 * Math.PI * 45;
+    const offset = circumference - (scrollPercent * circumference);
+    scrollProgressFill.style.strokeDashoffset = offset;
+    
+    // Update percentage text
+    const percent = Math.round(scrollPercent * 100);
+    scrollProgressText.textContent = `${percent}%`;
+    
+    // Show/hide back to top button
+    if (scrollPercent > 0.1) {
+      backToTopBtn.classList.add('visible');
+    } else {
+      backToTopBtn.classList.remove('visible');
+    }
+  }
+  
+  // Back to top functionality
+  backToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+    
+    // Animate button
+    backToTopBtn.style.transform = 'scale(0.9)';
+    setTimeout(() => {
+      backToTopBtn.style.transform = '';
+    }, 200);
+  });
+  
+  // Throttle scroll event
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        updateScrollProgress();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+  
+  // Initial update
+  updateScrollProgress();
+}
+
+// ===========================================
+// INITIALIZE NEW FEATURES
+// ===========================================
+document.addEventListener('DOMContentLoaded', () => {
+  // Create mobile reservation on load
+  createMobileReservation();
+  
+  // Create scroll progress
+  createScrollProgress();
+  
+  // Check screen size and update mobile reservation
+  function checkScreenSize() {
+    const mobileReservation = document.querySelector('.mobile-reservation');
+    const originalReservation = document.querySelector('.side-reservation');
+    
+    if (window.innerWidth <= 768) {
+      // Mobile
+      if (mobileReservation) mobileReservation.style.display = 'flex';
+      if (originalReservation) originalReservation.style.display = 'none';
+    } else {
+      // Desktop
+      if (mobileReservation) mobileReservation.style.display = 'none';
+      if (originalReservation) originalReservation.style.display = 'flex';
+    }
+  }
+  
+  // Initial check
+  checkScreenSize();
+  
+  // Update on resize
+  window.addEventListener('resize', checkScreenSize);
+  
+  // Update booking button to handle adults/children
+  const adultsSelect = document.getElementById('adults');
+  const childrenSelect = document.getElementById('children');
+  
+  if (adultsSelect && childrenSelect) {
+    adultsSelect.addEventListener('change', updateBookingSummary);
+    childrenSelect.addEventListener('change', updateBookingSummary);
+  }
+});
+
+function updateBookingSummary() {
+  const adults = document.getElementById('adults').value;
+  const children = document.getElementById('children').value;
+  const checkin = document.getElementById('checkin').value;
+  const checkout = document.getElementById('checkout').value;
+  
+  // In a real application, you would update pricing here
+  console.log(`Booking updated: ${adults} adults, ${children} children`);
+}
+
+// ===========================================
+// STYLES FOR NEW ELEMENTS (Dynamically added)
+// ===========================================
+const dynamicStyles = document.createElement('style');
+dynamicStyles.textContent = `
+  /* Booking Alert Styles */
+  .booking-alert {
+    position: fixed;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(15, 15, 20, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(193, 154, 91, 0.3);
+    border-radius: 15px;
+    padding: 25px;
+    max-width: 500px;
+    width: 90%;
+    z-index: 9999;
+    animation: slideDown 0.5s ease;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  }
+  
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateX(-50%) translateY(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  }
+  
+  .booking-alert.fade-out {
+    animation: fadeOut 0.3s ease forwards;
+  }
+  
+  @keyframes fadeOut {
+    to {
+      opacity: 0;
+      transform: translateX(-50%) translateY(-20px);
+    }
+  }
+  
+  .booking-alert.success {
+    border-left: 4px solid #4CAF50;
+  }
+  
+  .booking-alert.error {
+    border-left: 4px solid #f44336;
+  }
+  
+  .alert-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  
+  .booking-alert i {
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+  
+  .booking-alert.success i {
+    color: #4CAF50;
+  }
+  
+  .booking-alert.error i {
+    color: #f44336;
+  }
+  
+  .alert-message {
+    color: #fff;
+    line-height: 1.6;
+    flex: 1;
+    font-size: 14px;
+    white-space: pre-line;
+  }
+  
+  .alert-message strong {
+    color: #c19a5b;
+  }
+  
+  .alert-close {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 5px;
+    transition: color 0.3s ease;
+  }
+  
+  .alert-close:hover {
+    color: #c19a5b;
+  }
+  
+  /* Processing animation for booking button */
+  .book-btn.processing {
+    background: linear-gradient(135deg, #666 0%, #888 100%);
+    cursor: not-allowed;
+  }
+  
+  .book-btn i.fa-spinner {
+    margin-right: 10px;
+  }
+  
+  /* Date input styling */
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    color: #c19a5b;
+    opacity: 0.7;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+  }
+  
+  input[type="date"]::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
+  }
+  
+  /* Select dropdown styling */
+  select {
+    cursor: pointer;
+  }
+  
+  /* Booking summary preview */
+  .booking-summary-preview {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(15, 15, 20, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(193, 154, 91, 0.3);
+    border-radius: 10px;
+    padding: 15px;
+    color: #fff;
+    font-size: 12px;
+    min-width: 200px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    pointer-events: none;
+  }
+  
+  .booking-bar:hover .booking-summary-preview {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(-10px);
+    pointer-events: auto;
+  }
+  
+  .booking-summary-preview::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 8px solid transparent;
+    border-top-color: rgba(193, 154, 91, 0.3);
+  }
+  
+  .summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  
+  .summary-item:last-child {
+    margin-bottom: 0;
+  }
+  
+  .summary-label {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .summary-value {
+    color: #c19a5b;
+    font-weight: 500;
+  }
+`;
+
+document.head.appendChild(dynamicStyles);
+
+// ===========================================
+// BOOKING SUMMARY PREVIEW
+// ===========================================
+function addBookingSummaryPreview() {
+  const bookingBar = document.querySelector('.booking-bar');
+  if (!bookingBar || document.querySelector('.booking-summary-preview')) return;
+  
+  const summaryPreview = document.createElement('div');
+  summaryPreview.className = 'booking-summary-preview';
+  summaryPreview.innerHTML = `
+    <div class="summary-item">
+      <span class="summary-label">Adults:</span>
+      <span class="summary-value" id="preview-adults">2</span>
+    </div>
+    <div class="summary-item">
+      <span class="summary-label">Children:</span>
+      <span class="summary-value" id="preview-children">0</span>
+    </div>
+    <div class="summary-item">
+      <span class="summary-label">Nights:</span>
+      <span class="summary-value" id="preview-nights">0</span>
+    </div>
+  `;
+  
+  bookingBar.appendChild(summaryPreview);
+  
+  // Update preview on change
+  const updatePreview = () => {
+    const adults = document.getElementById('adults').value;
+    const children = document.getElementById('children').value;
+    const checkin = document.getElementById('checkin').value;
+    const checkout = document.getElementById('checkout').value;
+    
+    document.getElementById('preview-adults').textContent = adults;
+    document.getElementById('preview-children').textContent = children;
+    
+    if (checkin && checkout) {
+      const checkinDate = new Date(checkin);
+      const checkoutDate = new Date(checkout);
+      const nights = Math.ceil((checkoutDate - checkinDate) / (1000 * 60 * 60 * 24));
+      document.getElementById('preview-nights').textContent = nights;
+    }
+  };
+  
+  // Add event listeners
+  document.getElementById('adults').addEventListener('change', updatePreview);
+  document.getElementById('children').addEventListener('change', updatePreview);
+  document.getElementById('checkin').addEventListener('change', updatePreview);
+  document.getElementById('checkout').addEventListener('change', updatePreview);
+  
+  // Initial update
+  updatePreview();
+}
+
+// Initialize booking summary preview
+setTimeout(addBookingSummaryPreview, 1000);
