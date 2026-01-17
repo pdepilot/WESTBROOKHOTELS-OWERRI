@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>WestBrook Hotel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Luxury 5-star hotel in Owerri, Imo State. Experience unparalleled luxury and hospitality.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="./css/index.css">
+</head>
+<body>
+
+<!-- PRELOADER -->
+<div class="preloader">
+  <div class="loader-inner">
+    <img src="./images/westbrook logo.png" alt="WestBrook Logo">
+    <span class="loader-line"></span>
+  </div>
+</div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#" class="active">HOME</a>
+  <a href="#">ABOUT</a>
+  <a href="#">ROOMS & SUITES</a>
+  <a href="#">EXPERIENCE</a>
+  <a href="#">CONTACT</a>
+</div>
+
+<section class="hero">
+
+  <!-- SLIDES -->
+  <div class="slides">
+    <div class="slide active" data-darkness="light" style="background-image:url('./images/FB_IMG_1768590107424.jpg')"></div>
+    <div class="slide" data-darkness="dark" style="background-image:url('./images/FB_IMG_1768590052773.jpg')"></div>
+    <div class="slide" data-darkness="medium" style="background-image:url('./images/FB_IMG_1768590031789.jpg')"></div>
+    <div class="slide" data-darkness="dark" style="background-image:url('./images/FB_IMG_1768589973920.jpg')"></div>
+  </div>
+
+  <div class="overlay"></div>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo">
+      <img src="./images/westbrook logo.png" alt="WestBrook">
+    </div>
+
+    <nav class="nav">
+      <a href="#">HOME</a>
+      <a href="#about">ABOUT</a>
+      <a href="#rooms">ROOMS & SUITES</a>
+      <a href="#experience">EXPERIENCE</a>
+      <a href="#contact">CONTACT</a>
+    </nav>
+
+    <div class="hamburger" id="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </header>
+
+  <!-- SIDE INFO -->
+  <div class="side-reservation">
+    <span class="label">RESERVATION</span>
+    <span class="divider"></span>
+    <span class="phone-icon">
+      <i class="fas fa-phone"></i>
+    </span>
+    <span class="phone">
+      +234 809 999 1244<br>
+      +234 704 282 5937
+    </span>
+  </div>
+
+   <!-- SOCIALS -->
+  <div class="side-socials">
+    <a href="#" aria-label="Instagram" class="social-icon"><i class="fab fa-instagram"></i></a>
+    <a href="#" aria-label="Facebook" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+    <a href="#" aria-label="Twitter" class="social-icon"><i class="fab fa-x-twitter"></i></a>
+  </div>
+
+  <!-- HERO CONTENT -->
+  <div class="hero-content" id="heroText">
+    <div class="stars">★★★★★</div>
+    <p class="subtitle" id="subtitle">THE ULTIMATE LUXURY EXPERIENCE</p>
+    <h1 id="headline">
+      ENJOY THE BEST<br>
+      MOMENTS OF LIFE
+    </h1>
+    <button class="outline-btn">ROOMS & SUITES</button>
+  </div>
+
+  <!-- BOOKING -->
+  <div class="booking-bar">
+    <div class="field">
+      <label>Check in</label>
+      <input type="date" id="checkin">
+    </div>
+    <div class="field">
+      <label>Check out</label>
+      <input type="date" id="checkout">
+    </div>
+    <button class="book-btn">BOOK NOW</button>
+  </div>
+
+</section>
+
+<!-- ABOUT US SECTION -->
+<section class="about-section" id="about">
+  <div class="section-header">
+    <h2 class="section-title">ABOUT US</h2>
+    <div class="title-divider"></div>
+  </div>
+  
+  <div class="about-container">
+    <!-- Left Side with Multiple Images -->
+    <div class="about-images">
+      <div class="main-image-container">
+        <img src="./images/FB_IMG_1768589973920.jpg" alt="Hotel Exterior" class="main-image">
+        <div class="experience-badge">
+          <span class="years">10+ Years</span>
+          <span class="experience-text">of Excellence</span>
+        </div>
+      </div>
+      <div class="secondary-images">
+        <div class="small-image img1">
+          <img src="./images/FB_IMG_1768590024422.jpg" alt="Hotel Lobby">
+        </div>
+        <div class="small-image img2"> 
+          <img src="./images/FB_IMG_1768590107424.jpg" alt="Hotel Room">
+        </div>
+        <div class="small-image img3">
+          <img src="./images/FB_IMG_1768590028070.jpg" alt="Hotel Restaurant">
+        </div>
+      </div>
+    </div>
+    
+    <!-- Right Side with Text Content and Stats -->
+    <div class="about-content">
+      <h3 class="about-welcome">Welcome to <span class="hotel-name">WestBrook Hotel</span></h3>
+      <p class="about-description">
+        Nestled in the heart of Owerri, Imo State, WestBrook Hotel stands as a premier destination for travelers seeking luxury, comfort, and exceptional hospitality. Founded by Chief Sir...
+      </p>
+      <button class="read-more-btn">
+        READ MORE
+        <i class="fas fa-arrow-right"></i>
+      </button>
+      
+      <!-- Stats Section -->
+      <div class="stats-container">
+        <div class="stat-item">
+          <div class="stat-number">80+</div>
+          <div class="stat-label">ROOMS</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">120+</div>
+          <div class="stat-label">STAFFS</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">5k+</div>
+          <div class="stat-label">CLIENTS</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LUXURY ROOMS & SUITES SECTION -->
+<section class="rooms-section" id="rooms">
+  <div class="section-header">
+    <h2 class="section-title">ROOMS & SUITES</h2>
+    <div class="title-divider"></div>
+    <p class="section-subtitle">Indulge in our exquisite collection of rooms and suites, each designed to provide the ultimate comfort and luxury experience.</p>
+  </div>
+  
+  <div class="rooms-grid">
+    <!-- Room 1 -->
+    <div class="room-card">
+      <div class="room-image">
+        <img src="./images/FB_IMG_1768590031789.jpg" alt="Presidential Suite">
+        <div class="room-price">From ₦150,000<span>/night</span></div>
+      </div>
+      <div class="room-content">
+        <h3 class="room-name">Presidential Suite</h3>
+        <div class="room-features">
+          <span><i class="fas fa-bed"></i> King Bed</span>
+          <span><i class="fas fa-expand"></i> 120 m²</span>
+          <span><i class="fas fa-user"></i> 2 Guests</span>
+        </div>
+        <p class="room-description">Experience presidential luxury with private terrace, jacuzzi, and personalized butler service.</p>
+        <button class="room-book-btn">BOOK NOW</button>
+      </div>
+    </div>
+    
+    <!-- Room 2 -->
+    <div class="room-card">
+      <div class="room-image">
+        <img src="./images/FB_IMG_1768590024422.jpg" alt="Executive Suite">
+        <div class="room-price">From ₦85,000<span>/night</span></div>
+      </div>
+      <div class="room-content">
+        <h3 class="room-name">Executive Suite</h3>
+        <div class="room-features">
+          <span><i class="fas fa-bed"></i> Queen Bed</span>
+          <span><i class="fas fa-expand"></i> 75 m²</span>
+          <span><i class="fas fa-user"></i> 2 Guests</span>
+        </div>
+        <p class="room-description">Spacious suite with separate living area, work desk, and panoramic city views.</p>
+        <button class="room-book-btn">BOOK NOW</button>
+      </div>
+    </div>
+    
+    <!-- Room 3 -->
+    <div class="room-card">
+      <div class="room-image">
+        <img src="./images/FB_IMG_1768590052773.jpg" alt="Deluxe Room">
+        <div class="room-price">From ₦65,000<span>/night</span></div>
+      </div>
+      <div class="room-content">
+        <h3 class="room-name">Deluxe Room</h3>
+        <div class="room-features">
+          <span><i class="fas fa-bed"></i> King Bed</span>
+          <span><i class="fas fa-expand"></i> 45 m²</span>
+          <span><i class="fas fa-user"></i> 2 Guests</span>
+        </div>
+        <p class="room-description">Elegant room with marble bathroom, premium amenities, and garden views.</p>
+        <button class="room-book-btn">BOOK NOW</button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="view-all-container">
+    <a href="#" class="view-all-btn">VIEW ALL ROOMS <i class="fas fa-chevron-right"></i></a>
+  </div>
+</section>
+
+<!-- EXPERIENCE SECTION -->
+<section class="experience-section" id="experience">
+  <div class="section-header">
+    <h2 class="section-title">EXPERIENCE WESTBROOK</h2>
+    <div class="title-divider"></div>
+    <p class="section-subtitle">Beyond accommodation, discover world-class amenities and unforgettable experiences</p>
+  </div>
+  
+  <div class="experience-grid">
+    <!-- Dining -->
+    <div class="experience-card">
+      <div class="experience-icon">
+        <i class="fas fa-utensils"></i>
+      </div>
+      <h3>Fine Dining</h3>
+      <p>Experience culinary excellence at our award-winning restaurants with international and local cuisine.</p>
+      <a href="#" class="experience-link">Explore Restaurants <i class="fas fa-arrow-right"></i></a>
+    </div>
+    
+    <!-- Spa -->
+    <div class="experience-card">
+      <div class="experience-icon">
+        <i class="fas fa-spa"></i>
+      </div>
+      <h3>Luxury Spa</h3>
+      <p>Rejuvenate your senses with our signature treatments and wellness therapies in a serene environment.</p>
+      <a href="#" class="experience-link">View Treatments <i class="fas fa-arrow-right"></i></a>
+    </div>
+    
+    <!-- Pool -->
+    <div class="experience-card">
+      <div class="experience-icon">
+        <i class="fas fa-swimming-pool"></i>
+      </div>
+      <h3>Infinity Pool</h3>
+      <p>Take a dip in our temperature-controlled infinity pool overlooking the stunning Owerri skyline.</p>
+      <a href="#" class="experience-link">View Amenities <i class="fas fa-arrow-right"></i></a>
+    </div>
+    
+    <!-- Events -->
+    <div class="experience-card">
+      <div class="experience-icon">
+        <i class="fas fa-glass-cheers"></i>
+      </div>
+      <h3>Events & Weddings</h3>
+      <p>Host unforgettable celebrations in our elegant ballrooms and beautifully landscaped gardens.</p>
+      <a href="#" class="experience-link">Plan Your Event <i class="fas fa-arrow-right"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS SECTION -->
+<section class="testimonials-section">
+  <div class="section-header">
+    <h2 class="section-title">GUEST EXPERIENCES</h2>
+    <div class="title-divider"></div>
+  </div>
+  
+  <div class="testimonials-container">
+    <div class="testimonials-slider">
+      <!-- Testimonial 1 -->
+      <div class="testimonial active">
+        <div class="testimonial-content">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">"Absolutely breathtaking! The attention to detail and exceptional service made our anniversary unforgettable. The Presidential Suite exceeded all expectations."</p>
+          <div class="guest-info">
+            <div class="guest-avatar">
+              <i class="fas fa-user-circle"></i>
+            </div>
+            <div class="guest-details">
+              <h4>David & Sarah Johnson</h4>
+              <p>Celebrated 25th Anniversary</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Testimonial 2 -->
+      <div class="testimonial">
+        <div class="testimonial-content">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">"Perfect venue for our corporate retreat. The conference facilities were state-of-the-art, and the team went above and beyond to ensure everything was flawless."</p>
+          <div class="guest-info">
+            <div class="guest-avatar">
+              <i class="fas fa-user-circle"></i>
+            </div>
+            <div class="guest-details">
+              <h4>Michael Chen</h4>
+              <p>CEO, TechGlobal Solutions</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Testimonial 3 -->
+      <div class="testimonial">
+        <div class="testimonial-content">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">"The spa experience was transformative! From the warm welcome to the skilled therapists, every moment was pure bliss. Can't wait to return!"</p>
+          <div class="guest-info">
+            <div class="guest-avatar">
+              <i class="fas fa-user-circle"></i>
+            </div>
+            <div class="guest-details">
+              <h4>Amara Okonkwo</h4>
+              <p>Return Guest</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="testimonial-dots">
+      <span class="dot active"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY SECTION -->
+<section class="gallery-section">
+  <div class="section-header">
+    <h2 class="section-title">GALLERY</h2>
+    <div class="title-divider"></div>
+    <p class="section-subtitle">A glimpse into the WestBrook experience</p>
+  </div>
+  
+  <div class="gallery-grid">
+    <div class="gallery-item large">
+      <img src="./images/FB_IMG_1768590107424.jpg" alt="Luxury Lobby">
+      <div class="gallery-overlay">
+        <h3>Grand Lobby</h3>
+        <p>Elegant Reception Area</p>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <img src="./images/FB_IMG_1768590031789.jpg" alt="Restaurant">
+      <div class="gallery-overlay">
+        <h3>Fine Dining</h3>
+        <p>The Pearl Restaurant</p>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <img src="./images/FB_IMG_1768590028070.jpg" alt="Spa">
+      <div class="gallery-overlay">
+        <h3>Wellness Spa</h3>
+        <p>Serenity Awaits</p>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <img src="./images/FB_IMG_1768590052773.jpg" alt="Pool">
+      <div class="gallery-overlay">
+        <h3>Infinity Pool</h3>
+        <p>Skyline Views</p>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <img src="./images/FB_IMG_1768590024422.jpg" alt="Event Space">
+      <div class="gallery-overlay">
+        <h3>Event Hall</h3>
+        <p>Grand Celebrations</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT SECTION -->
+<section class="contact-section" id="contact">
+  <div class="section-header">
+    <h2 class="section-title">CONTACT US</h2>
+    <div class="title-divider"></div>
+    <p class="section-subtitle">Get in touch for reservations and inquiries</p>
+  </div>
+  
+  <div class="contact-container">
+    <div class="contact-info">
+      <div class="contact-card">
+        <div class="contact-icon">
+          <i class="fas fa-map-marker-alt"></i>
+        </div>
+        <h3>Address</h3>
+        <p>Plot 15, WestBrook Estate<br>Owerri, Imo State<br>Nigeria</p>
+      </div>
+      
+      <div class="contact-card">
+        <div class="contact-icon">
+          <i class="fas fa-phone"></i>
+        </div>
+        <h3>Phone</h3>
+        <p>+234 809 999 1244<br>+234 704 282 5937</p>
+      </div>
+      
+      <div class="contact-card">
+        <div class="contact-icon">
+          <i class="fas fa-envelope"></i>
+        </div>
+        <h3>Email</h3>
+        <p>reservations@westbrookhotel.com<br>info@westbrookhotel.com</p>
+      </div>
+    </div>
+    
+    <div class="contact-form">
+      <form id="contactForm">
+        <div class="form-group">
+          <input type="text" placeholder="Your Name" required>
+        </div>
+        <div class="form-group">
+          <input type="email" placeholder="Your Email" required>
+        </div>
+        <div class="form-group">
+          <input type="tel" placeholder="Phone Number" required>
+        </div>
+        <div class="form-group">
+          <textarea placeholder="Your Message" rows="5" required></textarea>
+        </div>
+        <button type="submit" class="submit-btn">SEND MESSAGE <i class="fas fa-paper-plane"></i></button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-section">
+      <div class="footer-logo">
+        <img src="./images/westbrook logo.png" alt="WestBrook Hotel">
+      </div>
+      <p class="footer-description">WestBrook Hotel - Where luxury meets Nigerian hospitality. Experience unparalleled comfort and service in the heart of Owerri.</p>
+      <div class="footer-social">
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-x-twitter"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+    
+    <div class="footer-section">
+      <h3>Quick Links</h3>
+      <ul class="footer-links">
+        <li><a href="#"><i class="fas fa-chevron-right"></i> Home</a></li>
+        <li><a href="#about"><i class="fas fa-chevron-right"></i> About Us</a></li>
+        <li><a href="#rooms"><i class="fas fa-chevron-right"></i> Rooms & Suites</a></li>
+        <li><a href="#experience"><i class="fas fa-chevron-right"></i> Experience</a></li>
+        <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+      </ul>
+    </div>
+    
+    <div class="footer-section">
+      <h3>Contact Info</h3>
+      <div class="contact-details">
+        <p><i class="fas fa-map-marker-alt"></i> Plot 15, WestBrook Estate, Owerri</p>
+        <p><i class="fas fa-phone"></i> +234 809 999 1244</p>
+        <p><i class="fas fa-envelope"></i> info@westbrookhotel.com</p>
+      </div>
+    </div>
+    
+    <div class="footer-section">
+      <h3>Newsletter</h3>
+      <p>Subscribe for exclusive offers and updates</p>
+      <div class="newsletter-form">
+        <input type="email" placeholder="Your Email">
+        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+      </div>
+      <p class="newsletter-note">We respect your privacy. Unsubscribe at any time.</p>
+    </div>
+  </div>
+  
+  <div class="footer-bottom">
+    <p>&copy; 2024 WestBrook Hotel. All Rights Reserved. | Designed with <i class="fas fa-heart"></i> for Luxury Hospitality</p>
+    <div class="footer-policies">
+      <a href="#">Privacy Policy</a> |
+      <a href="#">Terms of Service</a> |
+      <a href="#">Cookie Policy</a>
+    </div>
+  </div>
+</footer>
+
+<!-- BACK TO TOP BUTTON -->
+<button class="back-to-top" id="backToTop">
+  <i class="fas fa-chevron-up"></i>
+</button>
+
+<script src="./javascript/index.js"></script>
+</body>
+</html>
