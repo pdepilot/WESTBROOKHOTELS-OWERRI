@@ -1,143 +1,369 @@
-// PRELOADER
-window.addEventListener("load", () => {
-  setTimeout(() => {
-    document.querySelector(".preloader").style.opacity = "0";
-    document.querySelector(".preloader").style.pointerEvents = "none";
-    document.body.style.overflow = "auto";
-  }, 2000);
-});
-
-// SLIDES + TAGLINES
-const slides = document.querySelectorAll(".slide");
-const heroText = document.getElementById("heroText");
-const subtitle = document.getElementById("subtitle");
-const headline = document.getElementById("headline");
-const socialIcons = document.querySelectorAll('.social-icon');
-
-const textData = [
-  {
-    subtitle: "THE ULTIMATE LUXURY EXPERIENCE",
-    headline: "ENJOY THE BEST<br>MOMENTS OF LIFE"
-  },
-  {
-    subtitle: "COMFORT REDEFINED",
-    headline: "WHERE ELEGANCE<br>MEETS TRANQUILITY"
-  },
-  {
-    subtitle: "DESIGNED FOR YOU",
-    headline: "EXPERIENCE TRUE<br>HOSPITALITY"
-  },
-  {
-    subtitle: "A STAY TO REMEMBER",
-    headline: "LUXURY THAT<br>FEELS LIKE HOME"
-  }
-];
-
-let current = 0;
-let slideInterval;
-
-function startSlideShow() {
-  slideInterval = setInterval(() => {
-    changeSlide();
-  }, 6500);
-}
-
-function changeSlide() {
-  slides[current].classList.remove("active");
-  heroText.classList.add("text-out");
-
-  current = (current + 1) % slides.length;
-  slides[current].classList.add("active");
-
-  setTimeout(() => {
-    subtitle.textContent = textData[current].subtitle;
-    headline.innerHTML = textData[current].headline;
-    heroText.classList.remove("text-out");
-    
-    // Reset and sync social icon animations
-    socialIcons.forEach(icon => {
-      icon.style.animation = 'none';
-      void icon.offsetWidth; // Trigger reflow
-      icon.style.animation = '';
-    });
-  }, 600);
-}
-
-// Initialize slideshow
-startSlideShow();
-
-// HAMBURGER MENU (FULLY FUNCTIONAL)
-const hamburger = document.getElementById("hamburger");
-const mobileMenu = document.getElementById("mobileMenu");
-
-hamburger.addEventListener("click", (e) => {
-  e.stopPropagation();
-  mobileMenu.classList.toggle("active");
-  hamburger.classList.toggle("active");
-  
-  // Prevent body scroll when menu is open
-  if (mobileMenu.classList.contains("active")) {
-    document.body.style.overflow = "hidden";
-  } else {
-    document.body.style.overflow = "auto";
-  }
-});
-
-mobileMenu.querySelectorAll("a").forEach(link => {
-  link.addEventListener("click", () => {
-    mobileMenu.classList.remove("active");
-    hamburger.classList.remove("active");
-    document.body.style.overflow = "auto";
-  });
-});
-
-document.addEventListener("click", e => {
-  if (!mobileMenu.contains(e.target) && !hamburger.contains(e.target) && mobileMenu.classList.contains("active")) {
-    mobileMenu.classList.remove("active");
-    hamburger.classList.remove("active");
-    document.body.style.overflow = "auto";
-  }
-});
-
-// Close menu on escape key
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
-    mobileMenu.classList.remove("active");
-    hamburger.classList.remove("active");
-    document.body.style.overflow = "auto";
-  }
-});
-
-// BOOKING
-document.querySelector(".book-btn").addEventListener("click", () => {
-  const inDate = checkin.value;
-  const outDate = checkout.value;
-
-  if (!inDate || !outDate) {
-    alert("Please select your dates.");
-    return;
-  }
-
-  if (new Date(outDate) <= new Date(inDate)) {
-    alert("Check-out must be after check-in.");
-    return;
-  }
-
-  alert("Booking request received.");
-});
-
-// Pause social icon animations on hover
-socialIcons.forEach(icon => {
-  icon.addEventListener('mouseenter', () => {
-    icon.style.animationPlayState = 'paused';
-  });
-  
-  icon.addEventListener('mouseleave', () => {
-    icon.style.animationPlayState = 'running';
-  });
-});
-// STICKY NAVBAR IMPLEMENTATION
+// ===========================================
+// LUXURY PRELOADER FUNCTIONALITY
+// ===========================================
 document.addEventListener('DOMContentLoaded', () => {
+  const preloader = document.getElementById('preloader');
+  const skipPreloaderBtn = document.getElementById('skipPreloader');
+  const progressFill = document.querySelector('.progress-fill');
+  const percentageText = document.querySelector('.percentage');
+  const statusText = document.querySelector('.status');
+  const detailItems = document.querySelectorAll('.detail-item');
+  
+  if (!preloader) return;
+  
+  // Status messages for a luxury experience
+  const statusMessages = [
+    "INITIALIZING LUXURY EXPERIENCE",
+    "LOADING PREMIUM AMENITIES",
+    "PREPARING CONCIERGE SERVICES",
+    "CURATING EXCLUSIVE OFFERS",
+    "OPTIMIZING LUXURY INTERFACE",
+    "FINALIZING 5-STAR EXPERIENCE"
+  ];
+  
+  // Progress simulation for a luxury feel
+  let progress = 0;
+  let currentStatus = 0;
+  let completedItems = 0;
+  let loadingInterval;
+  
+  // Simulate luxury loading process
+  function simulateLuxuryLoading() {
+    loadingInterval = setInterval(() => {
+      // Increment progress with random luxury feel
+      progress += Math.random() * 3 + 1; // 1-4% per interval
+      
+      if (progress >= 100) {
+        progress = 100;
+        clearInterval(loadingInterval);
+        completeLoading();
+      }
+      
+      // Update progress bar
+      progressFill.style.width = `${progress}%`;
+      percentageText.textContent = `${Math.round(progress)}%`;
+      
+      // Change status message at certain intervals
+      if (progress > 20 && currentStatus === 0) {
+        currentStatus = 1;
+        statusText.textContent = statusMessages[currentStatus];
+        completeDetailItem(0);
+      } else if (progress > 40 && currentStatus === 1) {
+        currentStatus = 2;
+        statusText.textContent = statusMessages[currentStatus];
+        completeDetailItem(1);
+      } else if (progress > 60 && currentStatus === 2) {
+        currentStatus = 3;
+        statusText.textContent = statusMessages[currentStatus];
+      } else if (progress > 80 && currentStatus === 3) {
+        currentStatus = 4;
+        statusText.textContent = statusMessages[currentStatus];
+        completeDetailItem(2);
+      }
+      
+    }, 100); // Update every 100ms
+  }
+  
+  // Complete a detail item
+  function completeDetailItem(index) {
+    if (index < detailItems.length && !detailItems[index].classList.contains('completed')) {
+      detailItems[index].classList.add('completed');
+      
+      // Add celebration effect
+      const check = detailItems[index].querySelector('.detail-check i');
+      check.style.transform = 'scale(1.5)';
+      setTimeout(() => {
+        check.style.transform = 'scale(1)';
+      }, 300);
+      
+      completedItems++;
+    }
+  }
+  
+  // Complete loading with luxury flourish
+  function completeLoading() {
+    // Final updates
+    percentageText.textContent = "100%";
+    statusText.textContent = "READY FOR LUXURY";
+    statusText.style.color = "#c19a5b";
+    
+    // Final celebration
+    createSparkleBurst();
+    
+    // Trigger luxury completion sequence
+    setTimeout(() => {
+      // Animate preloader out
+      preloader.classList.add('fade-out');
+      
+      // Enable body scroll
+      document.body.style.overflow = 'auto';
+      
+      // Remove preloader from DOM after animation
+      setTimeout(() => {
+        preloader.style.display = 'none';
+        
+        // Initialize main website functionality
+        initializeMainWebsite();
+      }, 1200);
+    }, 1000);
+  }
+  
+  // Create sparkle burst effect
+  function createSparkleBurst() {
+    const preloaderContent = document.querySelector('.preloader-content');
+    
+    for (let i = 0; i < 20; i++) {
+      const sparkle = document.createElement('div');
+      sparkle.className = 'burst-sparkle';
+      sparkle.style.cssText = `
+        position: absolute;
+        width: ${Math.random() * 6 + 2}px;
+        height: ${Math.random() * 6 + 2}px;
+        background: radial-gradient(circle, 
+          rgba(255,255,255,1) 0%, 
+          rgba(193,154,91,1) 50%, 
+          transparent 100%);
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        pointer-events: none;
+        z-index: 1000;
+        filter: blur(1px);
+        animation: burstSparkle 1.5s ease-out forwards;
+        animation-delay: ${Math.random() * 0.2}s;
+      `;
+      
+      // Random angle and distance
+      const angle = Math.random() * Math.PI * 2;
+      const distance = 80 + Math.random() * 150;
+      
+      sparkle.style.setProperty('--end-x', `${Math.cos(angle) * distance}px`);
+      sparkle.style.setProperty('--end-y', `${Math.sin(angle) * distance}px`);
+      
+      preloaderContent.appendChild(sparkle);
+      
+      // Remove sparkle after animation
+      setTimeout(() => {
+        if (sparkle.parentNode) {
+          sparkle.remove();
+        }
+      }, 1500);
+    }
+  }
+  
+  // Skip preloader functionality
+  skipPreloaderBtn.addEventListener('click', () => {
+    // Animate skip button
+    skipPreloaderBtn.style.transform = 'scale(0.95)';
+    setTimeout(() => {
+      skipPreloaderBtn.style.transform = '';
+    }, 200);
+    
+    // Clear any existing interval
+    if (loadingInterval) {
+      clearInterval(loadingInterval);
+    }
+    
+    // Immediately complete loading
+    progress = 100;
+    progressFill.style.width = '100%';
+    percentageText.textContent = "100%";
+    statusText.textContent = "SKIPPING TO LUXURY";
+    statusText.style.color = "#c19a5b";
+    
+    // Mark all detail items as completed
+    detailItems.forEach((item, index) => {
+      item.classList.add('completed');
+    });
+    
+    // Create quick sparkle effect
+    createSparkleBurst();
+    
+    // Fade out quickly
+    setTimeout(() => {
+      preloader.classList.add('fade-out');
+      document.body.style.overflow = 'auto';
+      
+      setTimeout(() => {
+        preloader.style.display = 'none';
+        initializeMainWebsite();
+      }, 800);
+    }, 500);
+  });
+  
+  // Add key press skip (ESC key)
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && preloader && !preloader.classList.contains('fade-out')) {
+      skipPreloaderBtn.click();
+    }
+  });
+  
+  // Start loading simulation after a brief pause for dramatic effect
+  setTimeout(() => {
+    simulateLuxuryLoading();
+  }, 800);
+  
+  // Add CSS for burst animation
+  const burstStyle = document.createElement('style');
+  burstStyle.textContent = `
+    @keyframes burstSparkle {
+      0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(var(--end-x), var(--end-y)) scale(0);
+      }
+    }
+  `;
+  document.head.appendChild(burstStyle);
+});
+
+// ===========================================
+// MAIN WEBSITE FUNCTIONALITY
+// ===========================================
+function initializeMainWebsite() {
+  // PRELOADER
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      document.querySelector(".preloader").style.opacity = "0";
+      document.querySelector(".preloader").style.pointerEvents = "none";
+      document.body.style.overflow = "auto";
+    }, 2000);
+  });
+
+  // SLIDES + TAGLINES
+  const slides = document.querySelectorAll(".slide");
+  const heroText = document.getElementById("heroText");
+  const subtitle = document.getElementById("subtitle");
+  const headline = document.getElementById("headline");
+  const socialIcons = document.querySelectorAll('.social-icon');
+
+  const textData = [
+    {
+      subtitle: "THE ULTIMATE LUXURY EXPERIENCE",
+      headline: "ENJOY THE BEST<br>MOMENTS OF LIFE"
+    },
+    {
+      subtitle: "COMFORT REDEFINED",
+      headline: "WHERE ELEGANCE<br>MEETS TRANQUILITY"
+    },
+    {
+      subtitle: "DESIGNED FOR YOU",
+      headline: "EXPERIENCE TRUE<br>HOSPITALITY"
+    },
+    {
+      subtitle: "A STAY TO REMEMBER",
+      headline: "LUXURY THAT<br>FEELS LIKE HOME"
+    }
+  ];
+
+  let current = 0;
+  let slideInterval;
+
+  function startSlideShow() {
+    slideInterval = setInterval(() => {
+      changeSlide();
+    }, 6500);
+  }
+
+  function changeSlide() {
+    slides[current].classList.remove("active");
+    heroText.classList.add("text-out");
+
+    current = (current + 1) % slides.length;
+    slides[current].classList.add("active");
+
+    setTimeout(() => {
+      subtitle.textContent = textData[current].subtitle;
+      headline.innerHTML = textData[current].headline;
+      heroText.classList.remove("text-out");
+      
+      // Reset and sync social icon animations
+      socialIcons.forEach(icon => {
+        icon.style.animation = 'none';
+        void icon.offsetWidth; // Trigger reflow
+        icon.style.animation = '';
+      });
+    }, 600);
+  }
+
+  // Initialize slideshow
+  startSlideShow();
+
+  // HAMBURGER MENU (FULLY FUNCTIONAL)
+  const hamburger = document.getElementById("hamburger");
+  const mobileMenu = document.getElementById("mobileMenu");
+
+  hamburger.addEventListener("click", (e) => {
+    e.stopPropagation();
+    mobileMenu.classList.toggle("active");
+    hamburger.classList.toggle("active");
+    
+    // Prevent body scroll when menu is open
+    if (mobileMenu.classList.contains("active")) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  });
+
+  mobileMenu.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+      mobileMenu.classList.remove("active");
+      hamburger.classList.remove("active");
+      document.body.style.overflow = "auto";
+    });
+  });
+
+  document.addEventListener("click", e => {
+    if (!mobileMenu.contains(e.target) && !hamburger.contains(e.target) && mobileMenu.classList.contains("active")) {
+      mobileMenu.classList.remove("active");
+      hamburger.classList.remove("active");
+      document.body.style.overflow = "auto";
+    }
+  });
+
+  // Close menu on escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+      mobileMenu.classList.remove("active");
+      hamburger.classList.remove("active");
+      document.body.style.overflow = "auto";
+    }
+  });
+
+  // BOOKING
+  document.querySelector(".book-btn").addEventListener("click", () => {
+    const inDate = document.getElementById('checkin').value;
+    const outDate = document.getElementById('checkout').value;
+
+    if (!inDate || !outDate) {
+      alert("Please select your dates.");
+      return;
+    }
+
+    if (new Date(outDate) <= new Date(inDate)) {
+      alert("Check-out must be after check-in.");
+      return;
+    }
+
+    alert("Booking request received.");
+  });
+
+  // Pause social icon animations on hover
+  socialIcons.forEach(icon => {
+    icon.addEventListener('mouseenter', () => {
+      icon.style.animationPlayState = 'paused';
+    });
+    
+    icon.addEventListener('mouseleave', () => {
+      icon.style.animationPlayState = 'running';
+    });
+  });
+
+  // STICKY NAVBAR IMPLEMENTATION
   // Create sticky navbar HTML
   const stickyNav = document.createElement('nav');
   stickyNav.className = 'sticky-nav';
@@ -150,9 +376,9 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="nav-links">
         <a href="#" class="active">HOME</a>
         <a href="#about">ABOUT</a>
-        <a href="#">ROOMS & SUITES</a>
-        <a href="#">EXPERIENCE</a>
-        <a href="#">CONTACT</a>
+        <a href="#rooms">ROOMS & SUITES</a>
+        <a href="#experience">EXPERIENCE</a>
+        <a href="#contact">CONTACT</a>
       </div>
       
       <button class="book-btn">BOOK NOW</button>
@@ -177,9 +403,9 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="mobile-menu-container">
       <a href="#" class="active">HOME</a>
       <a href="#about">ABOUT</a>
-      <a href="#">ROOMS & SUITES</a>
-      <a href="#">EXPERIENCE</a>
-      <a href="#">CONTACT</a>
+      <a href="#rooms">ROOMS & SUITES</a>
+      <a href="#experience">EXPERIENCE</a>
+      <a href="#contact">CONTACT</a>
       <a href="#">SPECIAL OFFERS</a>
       
       <div class="mobile-contact-info">
@@ -272,44 +498,12 @@ document.addEventListener('DOMContentLoaded', () => {
     mobileMenuOverlay.classList.add('active');
     stickyHamburger.classList.add('active');
     document.body.style.overflow = 'hidden';
-    
-    // Add ripple effect to the clicked hamburger
-    addRippleEffect(stickyHamburger);
   }
   
   function closeMobileMenu() {
     mobileMenuOverlay.classList.remove('active');
     stickyHamburger.classList.remove('active');
     document.body.style.overflow = 'auto';
-    
-    // Add ripple effect to the close button
-    addRippleEffect(menuCloseBtn);
-  }
-  
-  // Ripple effect function
-  function addRippleEffect(element) {
-    const ripple = document.createElement('span');
-    const rect = element.getBoundingClientRect();
-    const size = Math.max(rect.width, rect.height);
-    
-    ripple.style.cssText = `
-      position: absolute;
-      border-radius: 50%;
-      background: rgba(193, 154, 91, 0.3);
-      transform: scale(0);
-      animation: ripple 0.6s ease-out;
-      width: ${size}px;
-      height: ${size}px;
-      top: ${(rect.height - size) / 2}px;
-      left: ${(rect.width - size) / 2}px;
-      pointer-events: none;
-    `;
-    
-    element.appendChild(ripple);
-    
-    setTimeout(() => {
-      ripple.remove();
-    }, 600);
   }
   
   // Menu item click effect
@@ -434,894 +628,344 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   `;
   document.head.appendChild(style);
-});
 
-// ===========================================
-// NEW SECTIONS FUNCTIONALITY
-// ===========================================
+  // ===========================================
+  // NEW SECTIONS FUNCTIONALITY
+  // ===========================================
 
-// Testimonials Slider
-const testimonials = document.querySelectorAll('.testimonial');
-const dots = document.querySelectorAll('.dot');
-let currentTestimonial = 0;
+  // Testimonials Slider
+  const testimonials = document.querySelectorAll('.testimonial');
+  const dots = document.querySelectorAll('.dot');
+  let currentTestimonial = 0;
 
-function showTestimonial(index) {
-  testimonials.forEach(testimonial => testimonial.classList.remove('active'));
-  dots.forEach(dot => dot.classList.remove('active'));
-  
-  testimonials[index].classList.add('active');
-  dots[index].classList.add('active');
-  currentTestimonial = index;
-}
+  function showTestimonial(index) {
+    testimonials.forEach(testimonial => testimonial.classList.remove('active'));
+    dots.forEach(dot => dot.classList.remove('active'));
+    
+    testimonials[index].classList.add('active');
+    dots[index].classList.add('active');
+    currentTestimonial = index;
+  }
 
-// Auto-rotate testimonials
-let testimonialInterval = setInterval(() => {
-  currentTestimonial = (currentTestimonial + 1) % testimonials.length;
-  showTestimonial(currentTestimonial);
-}, 5000);
+  // Auto-rotate testimonials
+  let testimonialInterval = setInterval(() => {
+    currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+    showTestimonial(currentTestimonial);
+  }, 5000);
 
-// Dot click events
-dots.forEach((dot, index) => {
-  dot.addEventListener('click', () => {
+  // Dot click events
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      clearInterval(testimonialInterval);
+      showTestimonial(index);
+      // Restart auto-rotation
+      testimonialInterval = setInterval(() => {
+        currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+        showTestimonial(currentTestimonial);
+      }, 5000);
+    });
+  });
+
+  // Pause auto-rotation on hover
+  const testimonialsContainer = document.querySelector('.testimonials-slider');
+  testimonialsContainer.addEventListener('mouseenter', () => {
     clearInterval(testimonialInterval);
-    showTestimonial(index);
-    // Restart auto-rotation
+  });
+
+  testimonialsContainer.addEventListener('mouseleave', () => {
     testimonialInterval = setInterval(() => {
       currentTestimonial = (currentTestimonial + 1) % testimonials.length;
       showTestimonial(currentTestimonial);
     }, 5000);
   });
-});
 
-// Pause auto-rotation on hover
-const testimonialsContainer = document.querySelector('.testimonials-slider');
-testimonialsContainer.addEventListener('mouseenter', () => {
-  clearInterval(testimonialInterval);
-});
+  // Gallery modal functionality
+  const galleryItems = document.querySelectorAll('.gallery-item');
 
-testimonialsContainer.addEventListener('mouseleave', () => {
-  testimonialInterval = setInterval(() => {
-    currentTestimonial = (currentTestimonial + 1) % testimonials.length;
-    showTestimonial(currentTestimonial);
-  }, 5000);
-});
-
-// Gallery modal functionality
-const galleryItems = document.querySelectorAll('.gallery-item');
-
-galleryItems.forEach(item => {
-  item.addEventListener('click', () => {
-    const imgSrc = item.querySelector('img').src;
-    const title = item.querySelector('h3').textContent;
-    const description = item.querySelector('p').textContent;
-    
-    // Create modal
-    const modal = document.createElement('div');
-    modal.className = 'gallery-modal';
-    modal.innerHTML = `
-      <div class="modal-content">
-        <button class="modal-close"><i class="fas fa-times"></i></button>
-        <img src="${imgSrc}" alt="${title}">
-        <div class="modal-info">
-          <h3>${title}</h3>
-          <p>${description}</p>
-        </div>
-      </div>
-    `;
-    
-    document.body.appendChild(modal);
-    document.body.style.overflow = 'hidden';
-    
-    // Close modal
-    const closeBtn = modal.querySelector('.modal-close');
-    closeBtn.addEventListener('click', () => {
-      document.body.removeChild(modal);
-      document.body.style.overflow = 'auto';
-    });
-    
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        document.body.removeChild(modal);
-        document.body.style.overflow = 'auto';
-      }
-    });
-    
-    // Close on ESC
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && document.body.contains(modal)) {
-        document.body.removeChild(modal);
-        document.body.style.overflow = 'auto';
-      }
-    });
-  });
-});
-
-// Contact form submission
-const contactForm = document.getElementById('contactForm');
-if (contactForm) {
-  contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    // Get form values
-    const formData = new FormData(contactForm);
-    const data = Object.fromEntries(formData);
-    
-    // In a real application, you would send this to a server
-    console.log('Form submitted:', data);
-    
-    // Show success message
-    const submitBtn = contactForm.querySelector('.submit-btn');
-    const originalText = submitBtn.innerHTML;
-    
-    submitBtn.innerHTML = '<i class="fas fa-check"></i> MESSAGE SENT!';
-    submitBtn.style.background = '#4CAF50';
-    
-    setTimeout(() => {
-      submitBtn.innerHTML = originalText;
-      submitBtn.style.background = '';
-      contactForm.reset();
+  galleryItems.forEach(item => {
+    item.addEventListener('click', () => {
+      const imgSrc = item.querySelector('img').src;
+      const title = item.querySelector('h3').textContent;
+      const description = item.querySelector('p').textContent;
       
-      // Show thank you message
-      alert('Thank you for your message! We will get back to you within 24 hours.');
-    }, 2000);
+      // Create modal
+      const modal = document.createElement('div');
+      modal.className = 'gallery-modal';
+      modal.innerHTML = `
+        <div class="modal-content">
+          <button class="modal-close"><i class="fas fa-times"></i></button>
+          <img src="${imgSrc}" alt="${title}">
+          <div class="modal-info">
+            <h3>${title}</h3>
+            <p>${description}</p>
+          </div>
+        </div>
+      `;
+      
+      document.body.appendChild(modal);
+      document.body.style.overflow = 'hidden';
+      
+      // Close modal
+      const closeBtn = modal.querySelector('.modal-close');
+      closeBtn.addEventListener('click', () => {
+        document.body.removeChild(modal);
+        document.body.style.overflow = 'auto';
+      });
+      
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          document.body.removeChild(modal);
+          document.body.style.overflow = 'auto';
+        }
+      });
+      
+      // Close on ESC
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && document.body.contains(modal)) {
+          document.body.removeChild(modal);
+          document.body.style.overflow = 'auto';
+        }
+      });
+    });
   });
-}
 
-// Newsletter subscription
-const newsletterForm = document.querySelector('.newsletter-form');
-if (newsletterForm) {
-  newsletterForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const emailInput = newsletterForm.querySelector('input[type="email"]');
-    const submitBtn = newsletterForm.querySelector('button');
-    
-    if (emailInput.value) {
-      const originalHtml = submitBtn.innerHTML;
-      submitBtn.innerHTML = '<i class="fas fa-check"></i>';
+  // Contact form submission
+  const contactForm = document.getElementById('contactForm');
+  if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      // Get form values
+      const formData = new FormData(contactForm);
+      const data = Object.fromEntries(formData);
+      
+      // In a real application, you would send this to a server
+      console.log('Form submitted:', data);
+      
+      // Show success message
+      const submitBtn = contactForm.querySelector('.submit-btn');
+      const originalText = submitBtn.innerHTML;
+      
+      submitBtn.innerHTML = '<i class="fas fa-check"></i> MESSAGE SENT!';
       submitBtn.style.background = '#4CAF50';
       
       setTimeout(() => {
-        submitBtn.innerHTML = originalHtml;
+        submitBtn.innerHTML = originalText;
         submitBtn.style.background = '';
-        emailInput.value = '';
-        alert('Thank you for subscribing to our newsletter!');
+        contactForm.reset();
+        
+        // Show thank you message
+        alert('Thank you for your message! We will get back to you within 24 hours.');
       }, 2000);
-    }
-  });
-}
-
-// Back to top button
-const backToTop = document.getElementById('backToTop');
-
-function toggleBackToTop() {
-  if (window.scrollY > 500) {
-    backToTop.classList.add('visible');
-  } else {
-    backToTop.classList.remove('visible');
+    });
   }
-}
 
-backToTop.addEventListener('click', () => {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  });
-});
-
-window.addEventListener('scroll', toggleBackToTop);
-
-// Room booking buttons
-const roomBookBtns = document.querySelectorAll('.room-book-btn');
-roomBookBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    const roomName = btn.closest('.room-card').querySelector('.room-name').textContent;
-    const roomPrice = btn.closest('.room-card').querySelector('.room-price').textContent;
-    
-    // Scroll to booking section
-    const bookingBar = document.querySelector('.booking-bar');
-    if (bookingBar) {
-      window.scrollTo({
-        top: bookingBar.offsetTop - 100,
-        behavior: 'smooth'
-      });
+  // Newsletter subscription
+  const newsletterForm = document.querySelector('.newsletter-form');
+  if (newsletterForm) {
+    newsletterForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const emailInput = newsletterForm.querySelector('input[type="email"]');
+      const submitBtn = newsletterForm.querySelector('button');
       
-      // Optional: Show a notification about which room was selected
-      setTimeout(() => {
-        const bookingBtn = document.querySelector('.book-btn');
-        bookingBtn.style.animation = 'pulse 2s ease';
+      if (emailInput.value) {
+        const originalHtml = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<i class="fas fa-check"></i>';
+        submitBtn.style.background = '#4CAF50';
+        
         setTimeout(() => {
-          bookingBtn.style.animation = '';
+          submitBtn.innerHTML = originalHtml;
+          submitBtn.style.background = '';
+          emailInput.value = '';
+          alert('Thank you for subscribing to our newsletter!');
         }, 2000);
-      }, 1000);
-    }
-  });
-});
-
-// Add smooth scrolling to all links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function (e) {
-    e.preventDefault();
-    
-    const targetId = this.getAttribute('href');
-    if (targetId === '#') return;
-    
-    const targetElement = document.querySelector(targetId);
-    if (targetElement) {
-      window.scrollTo({
-        top: targetElement.offsetTop - 80,
-        behavior: 'smooth'
-      });
-    }
-  });
-});
-
-// Initialize
-document.addEventListener('DOMContentLoaded', () => {
-  // Add animation classes on scroll
-  const observerOptions = {
-    root: null,
-    rootMargin: '0px',
-    threshold: 0.1
-  };
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('animated');
       }
     });
-  }, observerOptions);
-
-  // Observe all new sections
-  document.querySelectorAll('.rooms-grid, .experience-grid, .testimonials-container, .gallery-grid, .contact-container').forEach(el => {
-    observer.observe(el);
-  });
-  
-  // Initialize back to top button
-  toggleBackToTop();
-});
-
-// Add CSS for modal
-const modalStyle = document.createElement('style');
-modalStyle.textContent = `
-  .gallery-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.95);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    animation: fadeIn 0.3s ease;
   }
-  
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  
-  .modal-content {
-    max-width: 90%;
-    max-height: 90%;
-    position: relative;
-    animation: zoomIn 0.3s ease;
-  }
-  
-  @keyframes zoomIn {
-    from { transform: scale(0.8); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-  }
-  
-  .modal-content img {
-    max-width: 100%;
-    max-height: 70vh;
-    border-radius: 10px;
-  }
-  
-  .modal-close {
-    position: absolute;
-    top: -40px;
-    right: -40px;
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 24px;
-    cursor: pointer;
-    transition: color 0.3s ease;
-  }
-  
-  .modal-close:hover {
-    color: #c19a5b;
-  }
-  
-  .modal-info {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    padding: 20px;
-    border-radius: 0 0 10px 10px;
-    text-align: center;
-  }
-  
-  .modal-info h3 {
-    font-family: 'Playfair Display', serif;
-    color: #fff;
-    margin-bottom: 10px;
-  }
-  
-  .modal-info p {
-    color: rgba(255, 255, 255, 0.7);
-  }
-  
-  @keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-  }
-`;
 
-document.head.appendChild(modalStyle);
+  // Back to top button
+  const backToTop = document.getElementById('backToTop');
 
-// ===========================================
-// ENHANCED BOOKING FORM FUNCTIONALITY
-// ===========================================
-
-// Initialize date inputs with tomorrow's date as minimum
-const tomorrow = new Date();
-tomorrow.setDate(tomorrow.getDate() + 1);
-const tomorrowStr = tomorrow.toISOString().split('T')[0];
-
-const checkinInput = document.getElementById('checkin');
-const checkoutInput = document.getElementById('checkout');
-
-if (checkinInput) {
-  // Set minimum date to today
-  const today = new Date().toISOString().split('T')[0];
-  checkinInput.min = today;
-  checkinInput.value = today;
-  
-  // Set checkout minimum to tomorrow
-  checkoutInput.min = tomorrowStr;
-  
-  // When checkin changes, update checkout min
-  checkinInput.addEventListener('change', function() {
-    const checkinDate = new Date(this.value);
-    checkinDate.setDate(checkinDate.getDate() + 1);
-    const nextDay = checkinDate.toISOString().split('T')[0];
-    checkoutInput.min = nextDay;
-    
-    // If checkout is before new min, reset it
-    if (checkoutInput.value && new Date(checkoutInput.value) < checkinDate) {
-      checkoutInput.value = nextDay;
-    }
-  });
-}
-
-// Enhanced booking form validation
-const bookBtn = document.querySelector('.book-btn');
-if (bookBtn) {
-  bookBtn.addEventListener('click', function(e) {
-    e.preventDefault();
-    
-    const checkin = checkinInput.value;
-    const checkout = checkoutInput.value;
-    const adults = document.getElementById('adults').value;
-    const children = document.getElementById('children').value;
-    
-    // Validation
-    if (!checkin || !checkout) {
-      showBookingAlert('Please select both check-in and check-out dates.', 'error');
-      return;
-    }
-    
-    if (new Date(checkout) <= new Date(checkin)) {
-      showBookingAlert('Check-out date must be after check-in date.', 'error');
-      return;
-    }
-    
-    if (parseInt(adults) === 0) {
-      showBookingAlert('Please select at least 1 adult.', 'error');
-      return;
-    }
-    
-    // Calculate nights
-    const checkinDate = new Date(checkin);
-    const checkoutDate = new Date(checkout);
-    const nights = Math.ceil((checkoutDate - checkinDate) / (1000 * 60 * 60 * 24));
-    
-    // Show success message with booking summary
-    const summary = `
-      Booking Summary:
-      • Check-in: ${formatDate(checkin)}
-      • Check-out: ${formatDate(checkout)}
-      • Nights: ${nights}
-      • Adults: ${adults}
-      • Children: ${children}
-      
-      Your reservation request has been received. Our team will contact you shortly.
-    `;
-    
-    showBookingAlert(summary, 'success');
-    
-    // Animate booking button
-    animateBookingButton();
-  });
-}
-
-function formatDate(dateString) {
-  const date = new Date(dateString);
-  return date.toLocaleDateString('en-US', {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  });
-}
-
-function showBookingAlert(message, type) {
-  // Remove existing alert if any
-  const existingAlert = document.querySelector('.booking-alert');
-  if (existingAlert) {
-    existingAlert.remove();
-  }
-  
-  // Create alert element
-  const alert = document.createElement('div');
-  alert.className = `booking-alert ${type}`;
-  alert.innerHTML = `
-    <div class="alert-content">
-      <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
-      <div class="alert-message">${message.replace(/\n/g, '<br>')}</div>
-      <button class="alert-close"><i class="fas fa-times"></i></button>
-    </div>
-  `;
-  
-  document.body.appendChild(alert);
-  
-  // Close alert
-  const closeBtn = alert.querySelector('.alert-close');
-  closeBtn.addEventListener('click', () => {
-    alert.classList.add('fade-out');
-    setTimeout(() => alert.remove(), 300);
-  });
-  
-  // Auto-close success alerts after 8 seconds
-  if (type === 'success') {
-    setTimeout(() => {
-      if (alert.parentNode) {
-        alert.classList.add('fade-out');
-        setTimeout(() => alert.remove(), 300);
-      }
-    }, 8000);
-  }
-}
-
-function animateBookingButton() {
-  const bookBtn = document.querySelector('.book-btn');
-  bookBtn.classList.add('processing');
-  bookBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> PROCESSING...';
-  
-  setTimeout(() => {
-    bookBtn.classList.remove('processing');
-    bookBtn.innerHTML = 'BOOK NOW';
-  }, 2000);
-}
-
-// ===========================================
-// MOBILE RESERVATION CREATION
-// ===========================================
-function createMobileReservation() {
-  // Check if mobile reservation already exists
-  if (document.querySelector('.mobile-reservation')) return;
-  
-  // Create mobile reservation element
-  const mobileReservation = document.createElement('div');
-  mobileReservation.className = 'mobile-reservation';
-  mobileReservation.innerHTML = `
-    <span class="label">RESERVATION</span>
-    <span class="divider"></span>
-    <span class="phone-icon">
-      <i class="fas fa-phone"></i>
-    </span>
-    <span class="phone">
-      +234 809 999 1244<br>
-      +234 704 282 5937
-    </span>
-  `;
-  
-  // Add to hero section
-  const hero = document.querySelector('.hero');
-  hero.appendChild(mobileReservation);
-  
-  // Add click event to phone icon
-  const phoneIcon = mobileReservation.querySelector('.phone-icon');
-  phoneIcon.addEventListener('click', () => {
-    // Animate phone icon
-    phoneIcon.style.transform = 'scale(0.9)';
-    setTimeout(() => {
-      phoneIcon.style.transform = 'scale(1)';
-    }, 200);
-    
-    // Show call dialog
-    if (window.confirm('Call +234 809 999 1244?')) {
-      window.location.href = 'tel:+2348099991244';
-    }
-  });
-}
-
-// ===========================================
-// ENHANCED SCROLL PROGRESS WITH PERCENTAGE
-// ===========================================
-function createScrollProgress() {
-  // Check if scroll progress already exists
-  if (document.querySelector('.scroll-progress-container')) return;
-  
-  // Create scroll progress container
-  const scrollProgressContainer = document.createElement('div');
-  scrollProgressContainer.className = 'scroll-progress-container';
-  scrollProgressContainer.innerHTML = `
-    <div class="scroll-progress">
-      <svg class="scroll-progress-circle" viewBox="0 0 100 100">
-        <circle class="scroll-progress-circle-bg" cx="50" cy="50" r="45"></circle>
-        <circle class="scroll-progress-circle-fill" cx="50" cy="50" r="45"></circle>
-      </svg>
-      <div class="scroll-progress-text">0%</div>
-    </div>
-    <button class="enhanced-back-to-top">
-      <i class="fas fa-chevron-up"></i>
-    </button>
-  `;
-  
-  document.body.appendChild(scrollProgressContainer);
-  
-  // Get elements
-  const scrollProgressFill = document.querySelector('.scroll-progress-circle-fill');
-  const scrollProgressText = document.querySelector('.scroll-progress-text');
-  const backToTopBtn = document.querySelector('.enhanced-back-to-top');
-  
-  // Calculate scroll percentage
-  function updateScrollProgress() {
-    const scrollTop = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const scrollPercent = scrollTop / docHeight;
-    
-    // Update circle
-    const circumference = 2 * Math.PI * 45;
-    const offset = circumference - (scrollPercent * circumference);
-    scrollProgressFill.style.strokeDashoffset = offset;
-    
-    // Update percentage text
-    const percent = Math.round(scrollPercent * 100);
-    scrollProgressText.textContent = `${percent}%`;
-    
-    // Show/hide back to top button
-    if (scrollPercent > 0.1) {
-      backToTopBtn.classList.add('visible');
+  function toggleBackToTop() {
+    if (window.scrollY > 500) {
+      backToTop.classList.add('visible');
     } else {
-      backToTopBtn.classList.remove('visible');
+      backToTop.classList.remove('visible');
     }
   }
-  
-  // Back to top functionality
-  backToTopBtn.addEventListener('click', () => {
+
+  backToTop.addEventListener('click', () => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
     });
-    
-    // Animate button
-    backToTopBtn.style.transform = 'scale(0.9)';
-    setTimeout(() => {
-      backToTopBtn.style.transform = '';
-    }, 200);
   });
-  
-  // Throttle scroll event
-  let ticking = false;
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      window.requestAnimationFrame(() => {
-        updateScrollProgress();
-        ticking = false;
+
+  window.addEventListener('scroll', toggleBackToTop);
+
+  // Room booking buttons
+  const roomBookBtns = document.querySelectorAll('.room-book-btn');
+  roomBookBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const roomName = btn.closest('.room-card').querySelector('.room-name').textContent;
+      const roomPrice = btn.closest('.room-card').querySelector('.room-price').textContent;
+      
+      // Scroll to booking section
+      const bookingBar = document.querySelector('.booking-bar');
+      if (bookingBar) {
+        window.scrollTo({
+          top: bookingBar.offsetTop - 100,
+          behavior: 'smooth'
+        });
+        
+        // Optional: Show a notification about which room was selected
+        setTimeout(() => {
+          const bookingBtn = document.querySelector('.book-btn');
+          bookingBtn.style.animation = 'pulse 2s ease';
+          setTimeout(() => {
+            bookingBtn.style.animation = '';
+          }, 2000);
+        }, 1000);
+      }
+    });
+  });
+
+  // Add smooth scrolling to all links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      
+      const targetId = this.getAttribute('href');
+      if (targetId === '#') return;
+      
+      const targetElement = document.querySelector(targetId);
+      if (targetElement) {
+        window.scrollTo({
+          top: targetElement.offsetTop - 80,
+          behavior: 'smooth'
+        });
+      }
+    });
+  });
+
+  // Initialize
+  document.addEventListener('DOMContentLoaded', () => {
+    // Add animation classes on scroll
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animated');
+        }
       });
-      ticking = true;
-    }
+    }, observerOptions);
+
+    // Observe all new sections
+    document.querySelectorAll('.rooms-grid, .experience-grid, .testimonials-container, .gallery-grid, .contact-container').forEach(el => {
+      observer.observe(el);
+    });
+    
+    // Initialize back to top button
+    toggleBackToTop();
   });
-  
-  // Initial update
-  updateScrollProgress();
-}
 
-// ===========================================
-// INITIALIZE NEW FEATURES
-// ===========================================
-document.addEventListener('DOMContentLoaded', () => {
-  // Create mobile reservation on load
-  createMobileReservation();
-  
-  // Create scroll progress
-  createScrollProgress();
-  
-  // Check screen size and update mobile reservation
-  function checkScreenSize() {
-    const mobileReservation = document.querySelector('.mobile-reservation');
-    const originalReservation = document.querySelector('.side-reservation');
+  // Add CSS for modal
+  const modalStyle = document.createElement('style');
+  modalStyle.textContent = `
+    .gallery-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      animation: fadeIn 0.3s ease;
+    }
     
-    if (window.innerWidth <= 768) {
-      // Mobile
-      if (mobileReservation) mobileReservation.style.display = 'flex';
-      if (originalReservation) originalReservation.style.display = 'none';
-    } else {
-      // Desktop
-      if (mobileReservation) mobileReservation.style.display = 'none';
-      if (originalReservation) originalReservation.style.display = 'flex';
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
-  }
-  
-  // Initial check
-  checkScreenSize();
-  
-  // Update on resize
-  window.addEventListener('resize', checkScreenSize);
-  
-  // Update booking button to handle adults/children
-  const adultsSelect = document.getElementById('adults');
-  const childrenSelect = document.getElementById('children');
-  
-  if (adultsSelect && childrenSelect) {
-    adultsSelect.addEventListener('change', updateBookingSummary);
-    childrenSelect.addEventListener('change', updateBookingSummary);
-  }
-});
-
-function updateBookingSummary() {
-  const adults = document.getElementById('adults').value;
-  const children = document.getElementById('children').value;
-  const checkin = document.getElementById('checkin').value;
-  const checkout = document.getElementById('checkout').value;
-  
-  // In a real application, you would update pricing here
-  console.log(`Booking updated: ${adults} adults, ${children} children`);
-}
-
-// ===========================================
-// STYLES FOR NEW ELEMENTS (Dynamically added)
-// ===========================================
-const dynamicStyles = document.createElement('style');
-dynamicStyles.textContent = `
-  /* Booking Alert Styles */
-  .booking-alert {
-    position: fixed;
-    top: 100px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(15, 15, 20, 0.95);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(193, 154, 91, 0.3);
-    border-radius: 15px;
-    padding: 25px;
-    max-width: 500px;
-    width: 90%;
-    z-index: 9999;
-    animation: slideDown 0.5s ease;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-  }
-  
-  @keyframes slideDown {
-    from {
-      opacity: 0;
-      transform: translateX(-50%) translateY(-30px);
+    
+    .modal-content {
+      max-width: 90%;
+      max-height: 90%;
+      position: relative;
+      animation: zoomIn 0.3s ease;
     }
-    to {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
+    
+    @keyframes zoomIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
     }
-  }
-  
-  .booking-alert.fade-out {
-    animation: fadeOut 0.3s ease forwards;
-  }
-  
-  @keyframes fadeOut {
-    to {
-      opacity: 0;
-      transform: translateX(-50%) translateY(-20px);
+    
+    .modal-content img {
+      max-width: 100%;
+      max-height: 70vh;
+      border-radius: 10px;
     }
-  }
-  
-  .booking-alert.success {
-    border-left: 4px solid #4CAF50;
-  }
-  
-  .booking-alert.error {
-    border-left: 4px solid #f44336;
-  }
-  
-  .alert-content {
-    display: flex;
-    align-items: flex-start;
-    gap: 20px;
-  }
-  
-  .booking-alert i {
-    font-size: 24px;
-    flex-shrink: 0;
-  }
-  
-  .booking-alert.success i {
-    color: #4CAF50;
-  }
-  
-  .booking-alert.error i {
-    color: #f44336;
-  }
-  
-  .alert-message {
-    color: #fff;
-    line-height: 1.6;
-    flex: 1;
-    font-size: 14px;
-    white-space: pre-line;
-  }
-  
-  .alert-message strong {
-    color: #c19a5b;
-  }
-  
-  .alert-close {
-    background: none;
-    border: none;
-    color: rgba(255, 255, 255, 0.5);
-    cursor: pointer;
-    font-size: 16px;
-    padding: 5px;
-    transition: color 0.3s ease;
-  }
-  
-  .alert-close:hover {
-    color: #c19a5b;
-  }
-  
-  /* Processing animation for booking button */
-  .book-btn.processing {
-    background: linear-gradient(135deg, #666 0%, #888 100%);
-    cursor: not-allowed;
-  }
-  
-  .book-btn i.fa-spinner {
-    margin-right: 10px;
-  }
-  
-  /* Date input styling */
-  input[type="date"]::-webkit-calendar-picker-indicator {
-    color: #c19a5b;
-    opacity: 0.7;
-    cursor: pointer;
-    transition: opacity 0.3s ease;
-  }
-  
-  input[type="date"]::-webkit-calendar-picker-indicator:hover {
-    opacity: 1;
-  }
-  
-  /* Select dropdown styling */
-  select {
-    cursor: pointer;
-  }
-  
-  /* Booking summary preview */
-  .booking-summary-preview {
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(15, 15, 20, 0.95);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(193, 154, 91, 0.3);
-    border-radius: 10px;
-    padding: 15px;
-    color: #fff;
-    font-size: 12px;
-    min-width: 200px;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-    pointer-events: none;
-  }
-  
-  .booking-bar:hover .booking-summary-preview {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(-50%) translateY(-10px);
-    pointer-events: auto;
-  }
-  
-  .booking-summary-preview::after {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    border: 8px solid transparent;
-    border-top-color: rgba(193, 154, 91, 0.3);
-  }
-  
-  .summary-item {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 8px;
-  }
-  
-  .summary-item:last-child {
-    margin-bottom: 0;
-  }
-  
-  .summary-label {
-    color: rgba(255, 255, 255, 0.7);
-  }
-  
-  .summary-value {
-    color: #c19a5b;
-    font-weight: 500;
-  }
-`;
-
-document.head.appendChild(dynamicStyles);
-
-// ===========================================
-// BOOKING SUMMARY PREVIEW
-// ===========================================
-function addBookingSummaryPreview() {
-  const bookingBar = document.querySelector('.booking-bar');
-  if (!bookingBar || document.querySelector('.booking-summary-preview')) return;
-  
-  const summaryPreview = document.createElement('div');
-  summaryPreview.className = 'booking-summary-preview';
-  summaryPreview.innerHTML = `
-    <div class="summary-item">
-      <span class="summary-label">Adults:</span>
-      <span class="summary-value" id="preview-adults">2</span>
-    </div>
-    <div class="summary-item">
-      <span class="summary-label">Children:</span>
-      <span class="summary-value" id="preview-children">0</span>
-    </div>
-    <div class="summary-item">
-      <span class="summary-label">Nights:</span>
-      <span class="summary-value" id="preview-nights">0</span>
-    </div>
+    
+    .modal-close {
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 24px;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+    
+    .modal-close:hover {
+      color: #c19a5b;
+    }
+    
+    .modal-info {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 20px;
+      border-radius: 0 0 10px 10px;
+      text-align: center;
+    }
+    
+    .modal-info h3 {
+      font-family: 'Playfair Display', serif;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+    
+    .modal-info p {
+      color: rgba(255, 255, 255, 0.7);
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
   `;
-  
-  bookingBar.appendChild(summaryPreview);
-  
-  // Update preview on change
-  const updatePreview = () => {
-    const adults = document.getElementById('adults').value;
-    const children = document.getElementById('children').value;
-    const checkin = document.getElementById('checkin').value;
-    const checkout = document.getElementById('checkout').value;
-    
-    document.getElementById('preview-adults').textContent = adults;
-    document.getElementById('preview-children').textContent = children;
-    
-    if (checkin && checkout) {
-      const checkinDate = new Date(checkin);
-      const checkoutDate = new Date(checkout);
-      const nights = Math.ceil((checkoutDate - checkinDate) / (1000 * 60 * 60 * 24));
-      document.getElementById('preview-nights').textContent = nights;
-    }
-  };
-  
-  // Add event listeners
-  document.getElementById('adults').addEventListener('change', updatePreview);
-  document.getElementById('children').addEventListener('change', updatePreview);
-  document.getElementById('checkin').addEventListener('change', updatePreview);
-  document.getElementById('checkout').addEventListener('change', updatePreview);
-  
-  // Initial update
-  updatePreview();
+
+  document.head.appendChild(modalStyle);
 }
 
-// Initialize booking summary preview
-setTimeout(addBookingSummaryPreview, 1000);
+// Initialize main website when preloader completes
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    // The preloader will handle initialization
+  });
+} else {
+  // DOM already loaded, check if preloader is still showing
+  const preloader = document.getElementById('preloader');
+  if (!preloader || preloader.style.display === 'none') {
+    initializeMainWebsite();
+  }
+}

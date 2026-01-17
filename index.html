@@ -6,15 +6,164 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Luxury 5-star hotel in Owerri, Imo State. Experience unparalleled luxury and hospitality.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="icon" href="./images/westbrook logo.png" type="image/png">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-  <link rel="stylesheet" href="./css/index.css">
+   <link rel="stylesheet" href="./css/index.css">
 </head>
 <body>
 
-<!-- PRELOADER -->
-<div class="preloader">
+<!-- LUXURY PRELOADER -->
+<div class="preloader" id="preloader">
+  <!-- Background Layers -->
+  <div class="preloader-bg">
+    <div class="bg-layer layer-1"></div>
+    <div class="bg-layer layer-2"></div>
+    <div class="bg-layer layer-3"></div>
+  </div>
+  
+  <!-- Main Content Container -->
+  <div class="preloader-content">
+    
+    <!-- Animated 3D Logo Reveal -->
+    <div class="logo-3d-container">
+      <div class="logo-3d-wrapper">
+        <div class="logo-3d-front">
+          <img src="./images/westbrook logo.png" alt="WestBrook Logo" class="main-logo">
+        </div>
+        <div class="logo-3d-back"></div>
+        <div class="logo-3d-left"></div>
+        <div class="logo-3d-right"></div>
+        <div class="logo-3d-top"></div>
+        <div class="logo-3d-bottom"></div>
+      </div>
+      
+      <!-- Floating Stars -->
+      <div class="floating-stars">
+        <div class="star" style="--delay: 0s; --size: 15px; --x: 10%; --y: 20%;"></div>
+        <div class="star" style="--delay: 0.5s; --size: 20px; --x: 25%; --y: 65%;"></div>
+        <div class="star" style="--delay: 1s; --size: 18px; --x: 75%; --y: 30%;"></div>
+        <div class="star" style="--delay: 1.5s; --size: 12px; --x: 85%; --y: 75%;"></div>
+        <div class="star" style="--delay: 2s; --size: 16px; --x: 40%; --y: 85%;"></div>
+      </div>
+    </div>
+    
+    <!-- Welcome Text Sequence -->
+    <div class="welcome-sequence">
+      <div class="text-line" id="line1">
+        <span class="char" style="--index: 0">W</span>
+        <span class="char" style="--index: 1">E</span>
+        <span class="char" style="--index: 2">L</span>
+        <span class="char" style="--index: 3">C</span>
+        <span class="char" style="--index: 4">O</span>
+        <span class="char" style="--index: 5">M</span>
+        <span class="char" style="--index: 6">E</span>
+        <span class="char" style="--index: 7"> </span>
+        <span class="char" style="--index: 8">T</span>
+        <span class="char" style="--index: 9">O</span>
+      </div>
+      <div class="text-line" id="line2">
+        <span class="char" style="--index: 0">W</span>
+        <span class="char" style="--index: 1">E</span>
+        <span class="char" style="--index: 2">S</span>
+        <span class="char" style="--index: 3">T</span>
+        <span class="char" style="--index: 4">B</span>
+        <span class="char" style="--index: 5">R</span>
+        <span class="char" style="--index: 6">O</span>
+        <span class="char" style="--index: 7">O</span>
+        <span class="char" style="--index: 8">K</span>
+      </div>
+      <div class="text-line" id="line3">
+        <span class="char" style="--index: 0">H</span>
+        <span class="char" style="--index: 1">O</span>
+        <span class="char" style="--index: 2">T</span>
+        <span class="char" style="--index: 3">E</span>
+        <span class="char" style="--index: 4">L</span>
+      </div>
+    </div>
+    
+    <!-- Luxury Tagline -->
+    <div class="luxury-tagline">
+      <span class="tagline-words">
+        <span class="word">EXPERIENCE</span>
+        <span class="word">LUXURY</span>
+        <span class="word">REDEFINED</span>
+      </span>
+    </div>
+    
+    <!-- Loading Progress -->
+    <div class="loading-progress">
+      <div class="progress-container">
+        <div class="progress-bar">
+          <div class="progress-fill"></div>
+          <div class="progress-glow"></div>
+        </div>
+        <div class="progress-text">
+          <span class="percentage">0%</span>
+          <span class="status">INITIALIZING LUXURY EXPERIENCE</span>
+        </div>
+      </div>
+      
+      <!-- Loading Details -->
+      <div class="loading-details">
+        <div class="detail-item">
+          <div class="detail-icon">
+            <i class="fas fa-spa"></i>
+          </div>
+          <div class="detail-text">Preparing Luxury Amenities</div>
+          <div class="detail-check"><i class="fas fa-check"></i></div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon">
+            <i class="fas fa-concierge-bell"></i>
+          </div>
+          <div class="detail-text">Activating Concierge Service</div>
+          <div class="detail-check"><i class="fas fa-check"></i></div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon">
+            <i class="fas fa-champagne-glasses"></i>
+          </div>
+          <div class="detail-text">Curating Premium Experience</div>
+          <div class="detail-check"><i class="fas fa-check"></i></div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Elegant Divider -->
+    <div class="elegant-divider">
+      <div class="divider-line"></div>
+      <div class="divider-star">★</div>
+      <div class="divider-line"></div>
+    </div>
+    
+    <!-- Signature -->
+    <div class="signature">
+      <div class="signature-line"></div>
+      <div class="signature-text">EST. 2014</div>
+      <div class="signature-line"></div>
+    </div>
+    
+    <!-- Ambient Elements -->
+    <div class="ambient-elements">
+      <div class="sparkle" style="--x: 10%; --y: 15%; --delay: 0s;"></div>
+      <div class="sparkle" style="--x: 90%; --y: 25%; --delay: 0.3s;"></div>
+      <div class="sparkle" style="--x: 15%; --y: 80%; --delay: 0.6s;"></div>
+      <div class="sparkle" style="--x: 85%; --y: 70%; --delay: 0.9s;"></div>
+      <div class="sparkle" style="--x: 50%; --y: 45%; --delay: 1.2s;"></div>
+    </div>
+  </div>
+  
+  <!-- Skip Button -->
+  <button class="skip-preloader" id="skipPreloader">
+    <span>SKIP INTRO</span>
+    <i class="fas fa-forward"></i>
+  </button>
+</div>
+
+<!-- OLD PRELOADER (Hidden) -->
+<div class="preloader-old" style="display: none;">
   <div class="loader-inner">
     <img src="./images/westbrook logo.png" alt="WestBrook Logo">
     <span class="loader-line"></span>
@@ -31,7 +180,6 @@
 </div>
 
 <section class="hero">
-
   <!-- SLIDES -->
   <div class="slides">
     <div class="slide active" data-darkness="light" style="background-image:url('./images/FB_IMG_1768590107424.jpg')"></div>
@@ -63,7 +211,7 @@
     </div>
   </header>
 
-  <!-- SIDE INFO -->
+  <!-- SIDE RESERVATION - Hidden on mobile -->
   <div class="side-reservation">
     <span class="label">RESERVATION</span>
     <span class="divider"></span>
@@ -76,14 +224,14 @@
     </span>
   </div>
 
-   <!-- SOCIALS -->
+  <!-- SOCIALS -->
   <div class="side-socials">
     <a href="#" aria-label="Instagram" class="social-icon"><i class="fab fa-instagram"></i></a>
     <a href="#" aria-label="Facebook" class="social-icon"><i class="fab fa-facebook-f"></i></a>
     <a href="#" aria-label="Twitter" class="social-icon"><i class="fab fa-x-twitter"></i></a>
   </div>
 
-  <!-- HERO CONTENT -->
+  <!-- HERO CONTENT - Position adjusted up -->
   <div class="hero-content" id="heroText">
     <div class="stars">★★★★★</div>
     <p class="subtitle" id="subtitle">THE ULTIMATE LUXURY EXPERIENCE</p>
@@ -95,38 +243,17 @@
   </div>
 
   <!-- BOOKING -->
-<div class="booking-bar">
-  <div class="field">
-    <label>Check in</label>
-    <input type="date" id="checkin">
+  <div class="booking-bar">
+    <div class="field">
+      <label>Check in</label>
+      <input type="date" id="checkin">
+    </div>
+    <div class="field">
+      <label>Check out</label>
+      <input type="date" id="checkout">
+    </div>
+    <button class="book-btn">BOOK NOW</button>
   </div>
-  <div class="field">
-    <label>Check out</label>
-    <input type="date" id="checkout">
-  </div>
-  <!-- <div class="field">
-    <label>Adults</label>
-    <select id="adults">
-      <option value="1">1 Adult</option>
-      <option value="2" selected>2 Adults</option>
-      <option value="3">3 Adults</option>
-      <option value="4">4 Adults</option>
-      <option value="5">5+ Adults</option>
-    </select>
-  </div>
-  <div class="field">
-    <label>Children</label>
-    <select id="children">
-      <option value="0" selected>0 Children</option>
-      <option value="1">1 Child</option>
-      <option value="2">2 Children</option>
-      <option value="3">3 Children</option>
-      <option value="4">4+ Children</option>
-    </select>
-  </div> -->
-  <button class="book-btn">BOOK NOW</button>
-</div>
-
 </section>
 
 <!-- ABOUT US SECTION -->
@@ -542,6 +669,6 @@
   <i class="fas fa-chevron-up"></i>
 </button>
 
-<script src="./javascript/index.js"></script>
+<script src="javascript/index.js"></script>
 </body>
 </html>
