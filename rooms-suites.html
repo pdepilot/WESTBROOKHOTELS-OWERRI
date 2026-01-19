@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Rooms & Suites | WestBrook Hotel - Luxury Accommodation in Owerri</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Experience luxury at WestBrook Hotel with our exquisite rooms & suites. From Deluxe Rooms to Presidential Suites, discover unparalleled comfort and elegance in Owerri.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="icon" href="./images/westbrook logo.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="./css/room_suite.css">
+</head>
+<body>
+  <!-- Hero Section -->
+  <section class="rooms-hero">
+    <div class="hero-overlay"></div>
+    
+    <!-- Luxury Sparkles -->
+    <div class="luxury-sparkles" id="sparklesContainer"></div>
+
+    <!-- Header (From About Page) -->
+    <header class="header">
+      <div class="logo">
+        <a href="index.html">
+          <img src="./images/westbrook logo.png" alt="WestBrook">
+        </a>
+      </div>
+
+      <nav class="nav">
+        <a href="index.html">HOME</a>
+        <a href="about.html">ABOUT</a>
+        <a href="rooms-suites.html" class="active">ROOMS & SUITES</a>
+        <a href="experience.html">EXPERIENCE</a>
+        <a href="contact.html">CONTACT</a>
+      </nav>
+
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </header>
+
+    <!-- SIDE RESERVATION -->
+    <div class="side-reservation">
+      <span class="label">RESERVATION</span>
+      <span class="divider"></span>
+      <span class="phone-icon">
+        <i class="fas fa-phone"></i>
+      </span>
+      <span class="phone">
+        +234 809 999 1244<br>
+        +234 704 282 5937
+      </span>
+    </div>
+
+    <!-- SOCIALS -->
+    <div class="side-socials">
+      <a href="#" aria-label="Instagram" class="social-icon"><i class="fab fa-instagram"></i></a>
+      <a href="#" aria-label="Facebook" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" aria-label="Twitter" class="social-icon"><i class="fab fa-x-twitter"></i></a>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-breadcrumb">
+        <!-- <a href="index.html">HOME</a> / <span>ROOMS & SUITES</span> -->
+      </div>
+      <h1>LUXURY ACCOMMODATION</h1>
+      <div class="hero-divider"></div>
+      <p class="hero-subtitle">Where Elegance Meets Comfort</p>
+    </div>
+
+    <!-- Scroll Hint -->
+    <div class="scroll-hint" onclick="scrollToRooms()">
+      <div class="scroll-text">EXPLORE ROOMS</div>
+      <div class="scroll-circle"></div>
+    </div>
+  </section>
+
+  <!-- New Image Section -->
+  <!-- <section class="image-section">
+    <div class="image-container">
+      <img src="./images/FB_IMG_1768589973920.jpg" alt="WestBrook Hotel Luxury Room">
+      <div class="image-caption">
+        <h2>Experience Unparalleled Luxury</h2>
+        <p>Each room and suite at WestBrook Hotel is meticulously designed to provide the ultimate in comfort, style, and sophistication. From breathtaking views to premium amenities, discover accommodation that exceeds expectations.</p>
+      </div>
+    </div> -->
+  </section>
+
+  <!-- Rooms Showcase -->
+  <section class="rooms-showcase" id="roomsSection">
+    <div class="section-header">
+      <h2 class="section-title">Our Rooms & Suites</h2>
+      <p class="section-subtitle">Each accommodation is meticulously designed to provide the ultimate luxury experience</p>
+    </div>
+
+    <div class="rooms-grid" id="roomsGrid">
+      <!-- Room cards will be inserted here by JavaScript -->
+    </div>
+  </section>
+
+  <!-- Amenities Section -->
+  <section class="amenities-section">
+    <div class="section-header">
+      <h2 class="section-title">Exclusive Amenities</h2>
+      <p class="section-subtitle">Enjoy world-class amenities designed for your comfort and convenience</p>
+    </div>
+    
+    <div class="amenities-grid">
+      <div class="amenity-card">
+        <div class="amenity-icon">
+          <i class="fas fa-wifi"></i>
+        </div>
+        <h3>High-Speed WiFi</h3>
+        <p>Complimentary ultra-fast internet access throughout the hotel</p>
+      </div>
+      
+      <div class="amenity-card">
+        <div class="amenity-icon">
+          <i class="fas fa-swimming-pool"></i>
+        </div>
+        <h3>Infinity Pool</h3>
+        <p>Stunning infinity pool with panoramic views of Owerri</p>
+      </div>
+      
+      <div class="amenity-card">
+        <div class="amenity-icon">
+          <i class="fas fa-spa"></i>
+        </div>
+        <h3>Luxury Spa</h3>
+        <p>Full-service spa offering rejuvenating treatments</p>
+      </div>
+      
+      <div class="amenity-card">
+        <div class="amenity-icon">
+          <i class="fas fa-dumbbell"></i>
+        </div>
+        <h3>Fitness Center</h3>
+        <p>State-of-the-art gym with personal trainers available</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparison Table -->
+  <section class="comparison-section">
+    <div class="section-header">
+      <h2 class="section-title">Room Comparison</h2>
+      <p class="section-subtitle">Find the perfect accommodation that suits your needs</p>
+    </div>
+    
+    <div class="comparison-table">
+      <div class="table-header">
+        <div>Features</div>
+        <div>Deluxe Room</div>
+        <div>Executive Suite</div>
+        <div>Presidential Suite</div>
+      </div>
+      
+      <div class="table-row">
+        <div class="feature-name">Room Size</div>
+        <div class="room-check">40 m²</div>
+        <div class="room-check">75 m²</div>
+        <div class="room-check">120 m²</div>
+      </div>
+      
+      <div class="table-row">
+        <div class="feature-name">King Size Bed</div>
+        <div class="room-check"><i class="fas fa-check"></i></div>
+        <div class="room-check"><i class="fas fa-check"></i></div>
+        <div class="room-check"><i class="fas fa-check"></i></div>
+      </div>
+      
+      <div class="table-row">
+        <div class="feature-name">Private Balcony</div>
+        <div class="room-check"><i class="fas fa-check"></i></div>
+        <div class="room-check"><i class="fas fa-check"></i></div>
+        <div class="room-check"><i class="fas fa-check"></i></div>
+      </div>
+      
+      <div class="table-row">
+        <div class="feature-name">Jacuzzi</div>
+        <div class="room-check na"><i class="fas fa-times"></i></div>
+        <div class="room-check"><i class="fas fa-check"></i></div>
+        <div class="room-check"><i class="fas fa-check"></i></div>
+      </div>
+      
+      <div class="table-row">
+        <div class="feature-name">Private Butler</div>
+        <div class="room-check na"><i class="fas fa-times"></i></div>
+        <div class="room-check"><i class="fas fa-check"></i></div>
+        <div class="room-check"><i class="fas fa-check"></i></div>
+      </div>
+      
+      <div class="table-row">
+        <div class="feature-name">Private Dining</div>
+        <div class="room-check na"><i class="fas fa-times"></i></div>
+        <div class="room-check"><i class="fas fa-check"></i></div>
+        <div class="room-check"><i class="fas fa-check"></i></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Booking CTA -->
+  <section class="booking-cta">
+    <div class="floating-ornaments">
+      <div class="ornament ornament-1"><i class="fas fa-crown"></i></div>
+      <div class="ornament ornament-2"><i class="fas fa-star"></i></div>
+      <div class="ornament ornament-3"><i class="fas fa-gem"></i></div>
+    </div>
+    
+    <div class="cta-content">
+      <h2>Ready to Experience Luxury?</h2>
+      <p>Book your stay at WestBrook Hotel and immerse yourself in unparalleled luxury and comfort. Limited availability - secure your preferred dates today.</p>
+      <div class="cta-buttons">
+        <button class="cta-btn primary" onclick="window.location.href='index.html#booking'">
+          BOOK NOW
+          <i class="fas fa-calendar-check"></i>
+        </button>
+        <button class="cta-btn secondary" onclick="window.location.href='contact.html'">
+          CONTACT CONCIERGE
+          <i class="fas fa-phone-alt"></i>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer (From About Page) -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <div class="footer-logo">
+          <img src="./images/westbrook logo.png" alt="WestBrook Hotel">
+        </div>
+        <p class="footer-description">WestBrook Hotel - Where luxury meets Nigerian hospitality. Experience unparalleled comfort and service in the heart of Owerri.</p>
+        <div class="footer-social">
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-x-twitter"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul class="footer-links">
+          <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+          <li><a href="about.html"><i class="fas fa-chevron-right"></i> About Us</a></li>
+          <li><a href="rooms.html" class="active"><i class="fas fa-chevron-right"></i> Rooms & Suites</a></li>
+          <li><a href="experience.html"><i class="fas fa-chevron-right"></i> Experience</a></li>
+          <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Contact Info</h3>
+        <div class="contact-details">
+          <p><i class="fas fa-map-marker-alt"></i> Plot 15, WestBrook Estate, Owerri</p>
+          <p><i class="fas fa-phone"></i> +234 809 999 1244</p>
+          <p><i class="fas fa-phone"></i> +234 704 282 5937</p>
+          <p><i class="fas fa-envelope"></i> info@westbrookhotel.com</p>
+        </div>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Newsletter</h3>
+        <p>Subscribe for exclusive offers and updates</p>
+        <div class="newsletter-form">
+          <input type="email" placeholder="Your Email">
+          <button type="submit"><i class="fas fa-paper-plane"></i></button>
+        </div>
+        <p class="newsletter-note">We respect your privacy. Unsubscribe at any time.</p>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; 2024 WestBrook Hotel. All Rights Reserved. | Designed with <i class="fas fa-heart"></i> for Luxury Hospitality</p>
+      <div class="footer-policies">
+        <a href="#">Privacy Policy</a> |
+        <a href="#">Terms of Service</a> |
+        <a href="#">Cookie Policy</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top" id="backToTop">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <!-- Mobile Menu Elements (From About Page) -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">HOME</a>
+    <a href="about.html">ABOUT</a>
+    <a href="rooms.html" class="active">ROOMS & SUITES</a>
+    <a href="experience.html">EXPERIENCE</a>
+    <a href="contact.html">CONTACT</a>
+  </div>
+
+  <div class="mobile-menu-overlay" id="mobileMenuOverlay">
+    <button class="menu-close-btn" id="menuCloseBtn">
+      <span></span>
+      <span></span>
+    </button>
+    
+    <div class="mobile-menu-container">
+      <a href="index.html">HOME</a>
+      <a href="about.html">ABOUT</a>
+      <a href="rooms.html" class="active">ROOMS & SUITES</a>
+      <a href="experience.html">EXPERIENCE</a>
+      <a href="contact.html">CONTACT</a>
+      
+      <div class="mobile-contact-info">
+        <p>RESERVATIONS</p>
+        <div class="phone">+234 809 999 1244</div>
+        <div class="phone">+234 704 282 5937</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ===========================================
+    // LUXURY ROOMS PAGE FUNCTIONALITY
+    // ===========================================
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      // Create sparkling effect
+      function createSparkles() {
+        const container = document.getElementById('sparklesContainer');
+        if (!container) return;
+        
+        for (let i = 0; i < 30; i++) {
+          const sparkle = document.createElement('div');
+          sparkle.className = 'sparkle';
+          
+          // Random position
+          sparkle.style.left = `${Math.random() * 100}%`;
+          sparkle.style.top = `${Math.random() * 100}%`;
+          
+          // Random animation delay and duration
+          sparkle.style.animationDelay = `${Math.random() * 4}s`;
+          sparkle.style.animationDuration = `${2 + Math.random() * 3}s`;
+          
+          // Random size
+          const size = 1 + Math.random() * 3;
+          sparkle.style.width = `${size}px`;
+          sparkle.style.height = `${size}px`;
+          
+          container.appendChild(sparkle);
+        }
+      }
+      
+      // Room Data - Each room has 3-4 images
+      const roomsData = [
+        {
+          id: 1,
+          type: 'deluxe',
+          name: 'Deluxe Room',
+          price: 85000,
+          size: '40 m²',
+          description: 'Our Deluxe Rooms offer sophisticated comfort with modern amenities and elegant decor. Perfect for business travelers and couples.',
+          features: ['King Bed', 'City View', 'Free WiFi', 'Mini Bar', 'Smart TV'],
+          images: [
+            './images/FB_IMG_1768590028070.jpg',
+            './images/FB_IMG_1768590031789.jpg',
+            './images/FB_IMG_1768590107424.jpg',
+            './images/westbrook logo.png'
+          ],
+          highlight: 'Most Popular'
+        },
+        {
+          id: 2,
+          type: 'suites',
+          name: 'Executive Suite',
+          price: 125000,
+          size: '75 m²',
+          description: 'Spacious suite with separate living area, ideal for extended stays. Features premium amenities and personalized service.',
+          features: ['Separate Living', 'Balcony', 'Jacuzzi', 'Butler Service', 'Workspace'],
+          images: [
+            './images/FB_IMG_1768590028070.jpg',
+            './images/FB_IMG_1768590031789.jpg',
+            './images/FB_IMG_1768590107424.jpg',
+            './images/westbrook logo.png'
+          ],
+          highlight: 'Business Favorite'
+        },
+        {
+          id: 3,
+          type: 'presidential',
+          name: 'Presidential Suite',
+          price: 250000,
+          size: '120 m²',
+          description: 'The epitome of luxury with panoramic views, private dining, and exclusive access to premium services and amenities.',
+          features: ['Private Dining', 'Panoramic View', 'Private Butler', 'Library', 'Wine Cellar'],
+          images: [
+            './images/FB_IMG_1768590028070.jpg',
+            './images/FB_IMG_1768590031789.jpg',
+            './images/FB_IMG_1768590107424.jpg',
+            './images/westbrook logo.png'
+          ],
+          highlight: 'Ultimate Luxury'
+        },
+        {
+          id: 4,
+          type: 'standard',
+          name: 'Standard Room',
+          price: 65000,
+          size: '35 m²',
+          description: 'Comfortable and elegantly designed rooms with all essential amenities for a pleasant stay.',
+          features: ['Queen Bed', 'Garden View', 'Free WiFi', 'Work Desk', 'Coffee Maker'],
+          images: [
+            './images/FB_IMG_1768590028070.jpg',
+            './images/FB_IMG_1768590031789.jpg',
+            './images/FB_IMG_1768590107424.jpg'
+          ],
+          highlight: 'Great Value'
+        },
+        {
+          id: 5,
+          type: 'deluxe',
+          name: 'Deluxe Pool View',
+          price: 95000,
+          size: '45 m²',
+          description: 'Enjoy stunning views of our infinity pool from your private balcony. Perfect for relaxation.',
+          features: ['Pool View', 'King Bed', 'Balcony', 'Bathtub', 'Smart TV'],
+          images: [
+            './images/FB_IMG_1768590028070.jpg',
+            './images/FB_IMG_1768590031789.jpg',
+            './images/FB_IMG_1768590107424.jpg',
+            './images/westbrook logo.png'
+          ],
+          highlight: 'Pool View'
+        },
+        {
+          id: 6,
+          type: 'suites',
+          name: 'Family Suite',
+          price: 150000,
+          size: '85 m²',
+          description: 'Spacious family accommodation with interconnected rooms, children amenities, and family-friendly services.',
+          features: ['2 Bedrooms', 'Kitchenette', 'Children Toys', 'Play Area', 'Family Board Games'],
+          images: [
+            './images/FB_IMG_1768590028070.jpg',
+            './images/FB_IMG_1768590031789.jpg',
+            './images/FB_IMG_1768590107424.jpg',
+            './images/westbrook logo.png'
+          ],
+          highlight: 'Family Friendly'
+        }
+      ];
+      
+      // Generate room cards
+      function generateRoomCards(rooms) {
+        const grid = document.getElementById('roomsGrid');
+        if (!grid) return;
+        
+        grid.innerHTML = '';
+        
+        rooms.forEach((room, index) => {
+          const card = document.createElement('div');
+          card.className = 'room-card';
+          card.dataset.type = room.type;
+          
+          // Create image slider HTML
+          const slides = room.images.map(img => `
+            <div class="slide" style="background-image: url('${img}')">
+              <div class="slide-overlay"></div>
+            </div>
+          `).join('');
+          
+          // Create dots for slider
+          const dots = room.images.map((_, i) => 
+            `<div class="slider-dot ${i === 0 ? 'active' : ''}" data-slide="${i}" data-room="${room.id}"></div>`
+          ).join('');
+          
+          // Create features HTML
+          const features = room.features.map(feature => `
+            <div class="feature">
+              <i class="fas fa-check"></i>
+              <span>${feature}</span>
+            </div>
+          `).join('');
+          
+          card.innerHTML = `
+            <div class="room-slider">
+              <div class="slider-track" id="slider-track-${room.id}">
+                ${slides}
+              </div>
+              
+              <div class="slider-nav">
+                ${dots}
+              </div>
+              
+              <div class="room-type-badge">${room.highlight}</div>
+            </div>
+            
+            <div class="room-content">
+              <div class="room-header">
+                <div>
+                  <h3 class="room-title">${room.name}</h3>
+                </div>
+                <div class="room-price">
+                  <div class="price-from">Starting from</div>
+                  <div class="price-amount">₦${room.price.toLocaleString()}</div>
+                  <div class="price-period">per night</div>
+                </div>
+              </div>
+              
+              <div class="room-features">
+                ${features}
+              </div>
+              
+              <p class="room-description">${room.description}</p>
+              
+              <div class="room-actions">
+                <div class="room-size">
+                  <i class="fas fa-expand-arrows-alt"></i>
+                  <span>${room.size}</span>
+                </div>
+                <button class="book-now-btn" onclick="bookRoom(${room.id})">
+                  BOOK NOW
+                  <i class="fas fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          `;
+          
+          grid.appendChild(card);
+          
+          // Animate card entrance with delay
+          setTimeout(() => {
+            card.classList.add('visible');
+          }, 100 + (index * 100));
+          
+          // Initialize slider for this room
+          initializeSlider(room.id, room.images.length);
+        });
+      }
+      
+      // Initialize image slider for a room
+      function initializeSlider(roomId, totalSlides) {
+        let currentSlide = 0;
+        const track = document.getElementById(`slider-track-${roomId}`);
+        const dots = track?.parentElement?.querySelectorAll(`.slider-dot[data-room="${roomId}"]`);
+        
+        if (!track || !dots) return;
+        
+        // Function to go to specific slide
+        const goToSlide = function(slideIndex) {
+          currentSlide = slideIndex;
+          track.style.transform = `translateX(-${slideIndex * 25}%)`;
+          
+          // Update dots
+          dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === slideIndex);
+          });
+        };
+        
+        // Next slide function
+        const nextSlide = function() {
+          currentSlide = (currentSlide + 1) % totalSlides;
+          goToSlide(currentSlide);
+        };
+        
+        // Previous slide function
+        const prevSlide = function() {
+          currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+          goToSlide(currentSlide);
+        };
+        
+        // Add click events to dots
+        dots.forEach((dot, i) => {
+          dot.addEventListener('click', (e) => {
+            e.stopPropagation();
+            goToSlide(i);
+          });
+        });
+        
+        // Auto-slide every 5 seconds
+        const slideInterval = setInterval(() => {
+          nextSlide();
+        }, 5000);
+        
+        // Pause auto-slide on hover
+        const roomCard = track.closest('.room-card');
+        if (roomCard) {
+          roomCard.addEventListener('mouseenter', () => {
+            clearInterval(slideInterval);
+          });
+          
+          roomCard.addEventListener('mouseleave', () => {
+            clearInterval(slideInterval);
+            // Restart interval
+            setInterval(() => {
+              nextSlide();
+            }, 5000);
+          });
+        }
+        
+        // Store functions for this room
+        window[`goToSlide_${roomId}`] = goToSlide;
+        window[`nextSlide_${roomId}`] = nextSlide;
+        window[`prevSlide_${roomId}`] = prevSlide;
+      }
+      
+      // Book room function
+      window.bookRoom = function(roomId) {
+        const room = roomsData.find(r => r.id === roomId);
+        if (room) {
+          alert(`Booking ${room.name}\n\nPrice: ₦${room.price.toLocaleString()} per night\n\nYou will be redirected to our booking page.`);
+          // In a real implementation, this would redirect to booking page with room details
+          window.location.href = `index.html#booking?room=${roomId}`;
+        }
+      };
+      
+      // Scroll to rooms section
+      window.scrollToRooms = function() {
+        const roomsSection = document.getElementById('roomsSection');
+        if (roomsSection) {
+          roomsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      };
+      
+      // ===========================================
+      // NAVBAR FUNCTIONALITY (From About Page)
+      // ===========================================
+      
+      // Create and add sticky navbar
+      function addStickyNavbar() {
+        const stickyNav = document.createElement('nav');
+        stickyNav.className = 'sticky-nav';
+        stickyNav.innerHTML = `
+          <div class="nav-container">
+            <div class="logo">
+              <a href="index.html">
+                <img src="./images/westbrook logo.png" alt="WestBrook Hotel">
+              </a>
+            </div>
+            
+            <div class="nav-links">
+              <a href="index.html">HOME</a>
+              <a href="about.html">ABOUT</a>
+              <a href="rooms.html" class="active">ROOMS & SUITES</a>
+              <a href="experience.html">EXPERIENCE</a>
+              <a href="contact.html">CONTACT</a>
+            </div>
+            
+            <button class="book-btn" onclick="window.location.href='index.html#booking'">BOOK NOW</button>
+            
+            <button class="hamburger-btn" id="stickyHamburger">
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
+          </div>
+        `;
+        
+        document.body.insertBefore(stickyNav, document.body.firstChild);
+      }
+      
+      // Initialize all navbar elements
+      addStickyNavbar();
+      
+      // Get all navbar elements
+      const hamburger = document.getElementById('hamburger');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const stickyHamburger = document.getElementById('stickyHamburger');
+      const menuCloseBtn = document.getElementById('menuCloseBtn');
+      const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+      const stickyNav = document.querySelector('.sticky-nav');
+      const bookBtn = document.querySelector('.sticky-nav .book-btn');
+      
+      // Original hamburger menu functionality
+      hamburger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        mobileMenu.classList.toggle('active');
+        hamburger.classList.toggle('active');
+        
+        if (mobileMenu.classList.contains('active')) {
+          document.body.style.overflow = 'hidden';
+        } else {
+          document.body.style.overflow = 'auto';
+        }
+      });
+      
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.remove('active');
+          hamburger.classList.remove('active');
+          document.body.style.overflow = 'auto';
+        });
+      });
+      
+      // Sticky navbar hamburger functionality
+      stickyHamburger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        mobileMenuOverlay.classList.add('active');
+        stickyHamburger.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+      
+      menuCloseBtn.addEventListener('click', () => {
+        mobileMenuOverlay.classList.remove('active');
+        stickyHamburger.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      });
+      
+      // Mobile menu overlay links
+      mobileMenuOverlay.querySelectorAll('.mobile-menu-container a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenuOverlay.classList.remove('active');
+          stickyHamburger.classList.remove('active');
+          document.body.style.overflow = 'auto';
+        });
+      });
+      
+      // Close menus when clicking outside
+      document.addEventListener('click', e => {
+        // Original mobile menu
+        if (!mobileMenu.contains(e.target) && !hamburger.contains(e.target) && mobileMenu.classList.contains('active')) {
+          mobileMenu.classList.remove('active');
+          hamburger.classList.remove('active');
+          document.body.style.overflow = 'auto';
+        }
+        
+        // Mobile menu overlay
+        if (e.target === mobileMenuOverlay && mobileMenuOverlay.classList.contains('active')) {
+          mobileMenuOverlay.classList.remove('active');
+          stickyHamburger.classList.remove('active');
+          document.body.style.overflow = 'auto';
+        }
+      });
+      
+      // Close menus on escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          if (mobileMenu.classList.contains('active')) {
+            mobileMenu.classList.remove('active');
+            hamburger.classList.remove('active');
+            document.body.style.overflow = 'auto';
+          }
+          
+          if (mobileMenuOverlay.classList.contains('active')) {
+            mobileMenuOverlay.classList.remove('active');
+            stickyHamburger.classList.remove('active');
+            document.body.style.overflow = 'auto';
+          }
+        }
+      });
+      
+      // Sticky navbar scroll functionality
+      let ticking = false;
+      
+      function updateStickyNavbar() {
+        const scrollPosition = window.scrollY;
+        
+        if (scrollPosition > 100) {
+          stickyNav.classList.add('visible', 'scrolled');
+        } else {
+          stickyNav.classList.remove('visible', 'scrolled');
+        }
+        
+        if (scrollPosition > 300) {
+          stickyNav.classList.add('elevated');
+        } else {
+          stickyNav.classList.remove('elevated');
+        }
+      }
+      
+      function onScroll() {
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            updateStickyNavbar();
+            updateBackToTop();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }
+      
+      window.addEventListener('scroll', onScroll);
+      updateStickyNavbar(); // Initial check
+      
+      // Book button hover effect
+      if (bookBtn) {
+        bookBtn.addEventListener('mouseenter', () => {
+          bookBtn.style.transform = 'translateY(-2px)';
+        });
+        
+        bookBtn.addEventListener('mouseleave', () => {
+          bookBtn.style.transform = 'translateY(0)';
+        });
+      }
+      
+      // Social icons animation pause on hover
+      const socialIcons = document.querySelectorAll('.social-icon');
+      socialIcons.forEach(icon => {
+        icon.addEventListener('mouseenter', () => {
+          icon.style.animationPlayState = 'paused';
+        });
+        
+        icon.addEventListener('mouseleave', () => {
+          icon.style.animationPlayState = 'running';
+        });
+      });
+      
+      // Back to Top Button
+      const backToTop = document.getElementById('backToTop');
+      
+      function updateBackToTop() {
+        if (window.scrollY > 300) {
+          backToTop.classList.add('visible');
+        } else {
+          backToTop.classList.remove('visible');
+        }
+      }
+      
+      backToTop.addEventListener('click', () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+      
+      // CTA Button animations
+      const ctaButtons = document.querySelectorAll('.cta-btn');
+      ctaButtons.forEach(button => {
+        button.addEventListener('mouseenter', () => {
+          button.style.transform = 'translateY(-5px)';
+        });
+        
+        button.addEventListener('mouseleave', () => {
+          button.style.transform = 'translateY(0)';
+        });
+      });
+      
+      // Amenity card animations
+      const amenityCards = document.querySelectorAll('.amenity-card');
+      amenityCards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+          card.style.transform = 'translateY(-10px)';
+        });
+        
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = 'translateY(0)';
+        });
+      });
+      
+      // Timeline animation
+      const tableRows = document.querySelectorAll('.table-row');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateX(0)';
+          }
+        });
+      }, {
+        threshold: 0.2
+      });
+      
+      tableRows.forEach((row, index) => {
+        row.style.opacity = '0';
+        row.style.transform = 'translateX(30px)';
+        row.style.transition = 'all 0.6s ease';
+        observer.observe(row);
+      });
+      
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          
+          const targetId = this.getAttribute('href');
+          if (targetId === '#') return;
+          
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            window.scrollTo({
+              top: targetElement.offsetTop - 80,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+      
+      // Newsletter form submission
+      const newsletterForm = document.querySelector('.newsletter-form');
+      if (newsletterForm) {
+        newsletterForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const emailInput = newsletterForm.querySelector('input[type="email"]');
+          const submitBtn = newsletterForm.querySelector('button');
+          
+          if (emailInput.value) {
+            const originalHtml = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-check"></i>';
+            submitBtn.style.background = '#4CAF50';
+            
+            setTimeout(() => {
+              submitBtn.innerHTML = originalHtml;
+              submitBtn.style.background = '';
+              emailInput.value = '';
+              alert('Thank you for subscribing to our newsletter!');
+            }, 2000);
+          }
+        });
+      }
+      
+      // Initialize everything
+      function init() {
+        createSparkles();
+        generateRoomCards(roomsData);
+        updateBackToTop();
+        
+        // Animate cards after page load
+        setTimeout(() => {
+          document.querySelectorAll('.room-card').forEach((card, index) => {
+            setTimeout(() => {
+              card.classList.add('visible');
+            }, 300 + (index * 100));
+          });
+        }, 500);
+      }
+      
+      // Start initialization
+      init();
+      
+      // Parallax effect for hero
+      window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const hero = document.querySelector('.rooms-hero');
+        if (hero) {
+          const rate = scrolled * -0.3;
+          hero.style.backgroundPosition = `center ${rate}px`;
+        }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -374,9 +374,9 @@ function initializeMainWebsite() {
       </div>
       
       <div class="nav-links">
-        <a href="#" class="active">HOME</a>
-        <a href="#about">ABOUT</a>
-        <a href="#rooms">ROOMS & SUITES</a>
+        <a href="index.html" class="active">HOME</a>
+        <a href="about.html">ABOUT</a>
+        <a href="rooms-suites.html">ROOMS & SUITES</a>
         <a href="#experience">EXPERIENCE</a>
         <a href="#contact">CONTACT</a>
       </div>
@@ -401,9 +401,9 @@ function initializeMainWebsite() {
     </button>
     
     <div class="mobile-menu-container">
-      <a href="#" class="active">HOME</a>
-      <a href="#about">ABOUT</a>
-      <a href="#rooms">ROOMS & SUITES</a>
+      <a href="index.html" class="active">HOME</a>
+      <a href="about.html">ABOUT</a>
+      <a href="rooms-suites.html">ROOMS & SUITES</a>
       <a href="#experience">EXPERIENCE</a>
       <a href="#contact">CONTACT</a>
       <a href="#">SPECIAL OFFERS</a>
@@ -969,3 +969,6 @@ if (document.readyState === 'loading') {
     initializeMainWebsite();
   }
 }
+
+
+
