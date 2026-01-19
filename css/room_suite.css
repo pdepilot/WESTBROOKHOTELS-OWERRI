@@ -378,7 +378,7 @@
     }
 
     /* ===========================================
-       REDUCED HERO SECTION
+       HERO SECTION WITH FEATURED IMAGE
        =========================================== */
     .rooms-hero {
       position: relative;
@@ -389,19 +389,86 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
-                  url('./images/room-hero.jpg');
+    }
+
+    /* Background image with overlay */
+    .hero-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('./images/FB_IMG_1768590107424.jpg');
       background-size: cover;
       background-position: center;
+      z-index: 1;
     }
 
     .hero-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(45deg, rgba(193, 154, 91, 0.1), rgba(0, 0, 0, 0.5));
+      background: linear-gradient(45deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4));
+      z-index: 2;
     }
 
-    /* Luxury Glowing Elements */
+    /* Featured Image Container */
+    .hero-featured-image {
+      position: absolute;
+      bottom: 0;
+      right: 100px;
+      width: 500px;
+      height: 350px;
+      z-index: 3;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+      transform: translateY(50px);
+      opacity: 0;
+      animation: slideUpImage 1s ease forwards 0.5s;
+    }
+
+    @keyframes slideUpImage {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .hero-featured-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s ease;
+    }
+
+    .hero-featured-image:hover img {
+      transform: scale(1.05);
+    }
+
+    .featured-image-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+      color: #fff;
+      padding: 30px;
+      padding-top: 50px;
+    }
+
+    .featured-image-caption h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    .featured-image-caption p {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.5;
+    }
+
+    /* Luxury Sparkles */
     .luxury-sparkles {
       position: absolute;
       width: 100%;
@@ -431,14 +498,15 @@
     .hero-content {
       position: relative;
       z-index: 3;
-      text-align: center;
-      max-width: 800px;
-      padding: 0 20px;
+      text-align: left;
+      max-width: 600px;
+      padding-left: 100px;
+      padding-right: 20px;
     }
 
     .hero-breadcrumb {
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
       gap: 10px;
       margin-bottom: 30px;
@@ -460,6 +528,10 @@
 
     .hero-breadcrumb span {
       color: #c19a5b;
+    }
+
+    h1 {
+      z-index: 999999999999;
     }
 
     .rooms-hero h1 {
@@ -487,8 +559,8 @@
     .hero-divider {
       width: 100px;
       height: 3px;
-      background: linear-gradient(90deg, transparent, #c19a5b, transparent);
-      margin: 0 auto 25px;
+      background: linear-gradient(90deg, #c19a5b, transparent);
+      margin: 0 0 25px 0;
       position: relative;
       overflow: hidden;
     }
@@ -513,12 +585,20 @@
       font-weight: 300;
     }
 
+    .hero-description {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 40px;
+      max-width: 500px;
+    }
+
     /* Scroll Hint */
     .scroll-hint {
       position: absolute;
       bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
+      left: 100px;
+      transform: translateX(0);
       z-index: 3;
       text-align: center;
       cursor: pointer;
@@ -537,6 +617,7 @@
       letter-spacing: 2px;
       margin-bottom: 15px;
       font-weight: 300;
+      text-align: left;
     }
 
     .scroll-circle {
@@ -545,7 +626,7 @@
       border: 2px solid rgba(255, 255, 255, 0.3);
       border-radius: 50%;
       position: relative;
-      margin: 0 auto;
+      margin: 0 auto 0 0;
       transition: all 0.3s ease;
     }
 
@@ -561,58 +642,6 @@
       border-right: 2px solid #c19a5b;
       transform: translate(-50%, -50%) rotate(45deg);
       animation: scrollPulse 2s infinite;
-    }
-
-    /* ===========================================
-       IMAGE SECTION (NEW SECTION)
-       =========================================== */
-    .image-section {
-      padding: 80px 64px;
-      background: #fff;
-    }
-
-    .image-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.1);
-      position: relative;
-    }
-
-    .image-container img {
-      width: 100%;
-      height: auto;
-      display: block;
-      transition: transform 0.8s ease;
-    }
-
-    .image-container:hover img {
-      transform: scale(1.05);
-    }
-
-    .image-caption {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-      color: #fff;
-      padding: 40px;
-      padding-top: 60px;
-    }
-
-    .image-caption h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.2rem;
-      margin-bottom: 15px;
-    }
-
-    .image-caption p {
-      font-size: 16px;
-      color: rgba(255, 255, 255, 0.9);
-      max-width: 600px;
-      line-height: 1.6;
     }
 
     /* ===========================================
@@ -1005,7 +1034,7 @@
     .booking-cta {
       padding: 100px 64px;
       background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), 
-                  url('./images/cta-bg.jpg');
+                  url('./images/FB_IMG_1768590028070.jpg');
       background-size: cover;
       background-attachment: fixed;
       text-align: center;
@@ -1346,10 +1375,15 @@
     /* ===========================================
        RESPONSIVE STYLES
        =========================================== */
-    @media (max-width: 1024px) {
-      .header,
-      .sticky-nav {
-        padding: 0 40px;
+    @media (max-width: 1200px) {
+      .hero-content {
+        padding-left: 80px;
+      }
+      
+      .hero-featured-image {
+        right: 50px;
+        width: 450px;
+        height: 300px;
       }
       
       .rooms-hero h1 {
@@ -1361,11 +1395,15 @@
         gap: 40px;
       }
       
+      .header,
+      .sticky-nav {
+        padding: 0 40px;
+      }
+      
       .rooms-showcase,
       .amenities-section,
       .comparison-section,
-      .booking-cta,
-      .image-section {
+      .booking-cta {
         padding-left: 40px;
         padding-right: 40px;
       }
@@ -1379,10 +1417,62 @@
       }
     }
 
+    @media (max-width: 992px) {
+      .rooms-hero {
+        height: 70vh;
+        min-height: 600px;
+      }
+      
+      .hero-content {
+        padding: 0 40px;
+        text-align: center;
+        max-width: 100%;
+      }
+      
+      .hero-breadcrumb {
+        justify-content: center;
+      }
+      
+      .hero-divider {
+        margin: 0 auto 25px;
+        background: linear-gradient(90deg, transparent, #c19a5b, transparent);
+      }
+      
+      .hero-featured-image {
+        position: relative;
+        right: auto;
+        width: 80%;
+        max-width: 500px;
+        height: 300px;
+        margin: 40px auto 0;
+        transform: translateY(0);
+        opacity: 1;
+        animation: none;
+      }
+      
+      .hero-description {
+        margin: 0 auto 40px;
+        text-align: center;
+      }
+      
+      .scroll-hint {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      
+      .scroll-text {
+        text-align: center;
+      }
+      
+      .scroll-circle {
+        margin: 0 auto;
+      }
+    }
+
     @media (max-width: 768px) {
       .rooms-hero {
-        height: 50vh;
-        min-height: 400px;
+        height: 60vh;
+        min-height: 500px;
       }
       
       .rooms-hero h1 {
@@ -1476,17 +1566,13 @@
         width: 90px;
       }
       
-      .image-section {
-        padding: 60px 25px;
+      .hero-featured-image {
+        width: 90%;
+        height: 250px;
       }
       
-      .image-caption {
-        padding: 25px;
-        padding-top: 40px;
-      }
-      
-      .image-caption h2 {
-        font-size: 1.8rem;
+      .featured-image-caption h3 {
+        font-size: 1.3rem;
       }
       
       .table-header,
@@ -1520,15 +1606,32 @@
     }
 
     @media (max-width: 480px) {
+      .rooms-hero {
+        height: 70vh;
+        min-height: 500px;
+      }
+      
       .rooms-hero h1 {
         font-size: 2rem;
+      }
+      
+      .hero-featured-image {
+        height: 200px;
+      }
+      
+      .featured-image-caption {
+        padding: 20px;
+        padding-top: 40px;
+      }
+      
+      .featured-image-caption h3 {
+        font-size: 1.1rem;
       }
       
       .rooms-showcase,
       .amenities-section,
       .comparison-section,
-      .booking-cta,
-      .image-section {
+      .booking-cta {
         padding-left: 20px;
         padding-right: 20px;
       }
@@ -1562,11 +1665,11 @@
     @keyframes fadeInUp {
       to {
         opacity: 1;
-        transform: translateX(-50%) translateY(0);
+        transform: translateY(0);
       }
       from {
         opacity: 0;
-        transform: translateX(-50%) translateY(20px);
+        transform: translateY(20px);
       }
     }
 

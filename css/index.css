@@ -2161,7 +2161,7 @@ body {
        TESTIMONIALS SECTION
        =========================================== */
 .testimonials-section {
-  padding: 120px 64px;
+  padding: 100px 50px;
   background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
   position: relative;
   overflow: hidden;

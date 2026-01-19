@@ -377,8 +377,8 @@ function initializeMainWebsite() {
         <a href="index.html" class="active">HOME</a>
         <a href="about.html">ABOUT</a>
         <a href="rooms-suites.html">ROOMS & SUITES</a>
-        <a href="#experience">EXPERIENCE</a>
-        <a href="#contact">CONTACT</a>
+        <a href="experience.html">EXPERIENCE</a>
+        <a href="contact.html">CONTACT</a>
       </div>
       
       <button class="book-btn">BOOK NOW</button>
@@ -404,8 +404,8 @@ function initializeMainWebsite() {
       <a href="index.html" class="active">HOME</a>
       <a href="about.html">ABOUT</a>
       <a href="rooms-suites.html">ROOMS & SUITES</a>
-      <a href="#experience">EXPERIENCE</a>
-      <a href="#contact">CONTACT</a>
+      <a href="experience.html">EXPERIENCE</a>
+      <a href="contact.html">CONTACT</a>
       <a href="#">SPECIAL OFFERS</a>
       
       <div class="mobile-contact-info">
