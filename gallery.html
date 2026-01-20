@@ -1,0 +1,2809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Gallery | WestBrook Hotel - Visual Luxury Experience</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Immerse yourself in WestBrook Hotel's breathtaking gallery. Experience luxury through stunning visuals, virtual tours, and interactive showcases of our world-class facilities.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="icon" href="./images/westbrook logo.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    /* ===========================================
+       GLOBAL STYLES & THEME VARIABLES
+       =========================================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --gold: #c19a5b;
+      --dark-gold: #b08c4a;
+      --light-gold: #d4af37;
+      --dark: #0a0a0a;
+      --light: #f9f7f3;
+      --gray: #666;
+      --white: #ffffff;
+      --dark-bg: #121212;
+      --dark-card: #1e1e1e;
+      --dark-text: #e0e0e0;
+      --dark-gray: #888;
+      --transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Dark Mode Variables */
+    .dark-mode {
+      --light: #121212;
+      --dark: #f0f0f0;
+      --white: #1e1e1e;
+      --gray: #b0b0b0;
+      --dark-card: #2d2d35;
+      --dark-bg: #0a0a0a;
+    }
+
+    body {
+      font-family: "Montserrat", sans-serif;
+      background: var(--light);
+      color: var(--dark);
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      transition: var(--transition);
+    }
+
+    /* ===========================================
+       THEME CONTROLS
+       =========================================== */
+    .theme-controls {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1005;
+      display: flex;
+      gap: 10px;
+      animation: fadeIn 0.6s ease 0.8s forwards;
+      opacity: 0;
+    }
+
+    @media (max-width: 768px) {
+      .theme-controls {
+        top: 15px;
+        right: 70px;
+        z-index: 1002;
+      }
+    }
+
+    .theme-btn, .language-btn {
+      width: 48px;
+      height: 48px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      color: var(--white);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+      font-size: 18px;
+    }
+
+    @media (max-width: 768px) {
+      .theme-btn, .language-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+      }
+    }
+
+    .theme-btn:hover, .language-btn:hover {
+      background: var(--gold);
+      transform: scale(1.1) rotate(5deg);
+      box-shadow: 0 8px 25px rgba(193, 154, 91, 0.3);
+    }
+
+    .language-dropdown {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: var(--white);
+      border-radius: 15px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+      display: none;
+      min-width: 140px;
+      overflow: hidden;
+      z-index: 1006;
+      transform-origin: top right;
+      animation: dropdownSlide 0.3s ease forwards;
+    }
+
+    @keyframes dropdownSlide {
+      from {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .language-dropdown.active {
+      display: block;
+    }
+
+    .language-option {
+      padding: 12px 20px;
+      color: var(--dark);
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+    }
+
+    .language-option:hover {
+      background: var(--gold);
+      color: var(--white);
+      padding-left: 25px;
+    }
+
+    /* ===========================================
+       REDUCED HERO SECTION
+       =========================================== */
+    .gallery-hero {
+      position: relative;
+      height: 70vh;
+      min-height: 500px;
+      max-height: 700px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @media (max-width: 992px) {
+      .gallery-hero {
+        height: 60vh;
+        min-height: 400px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .gallery-hero {
+        height: 50vh;
+        min-height: 350px;
+      }
+    }
+
+    /* Parallax Background Layers */
+    .hero-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), 
+                  url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      z-index: 1;
+      filter: brightness(0.7);
+      transition: var(--transition);
+      transform: scale(1.1);
+      animation: slowZoom 30s infinite alternate ease-in-out;
+    }
+
+    @keyframes slowZoom {
+      0% {
+        transform: scale(1.1);
+      }
+      100% {
+        transform: scale(1.15);
+      }
+    }
+
+    /* Floating Particles Effect */
+    .particles-container {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 2;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      box-shadow: 0 0 20px 2px rgba(255, 255, 255, 0.6);
+      animation: floatParticle 20s infinite linear;
+    }
+
+    @keyframes floatParticle {
+      0% {
+        transform: translateY(100vh) translateX(0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100px) translateX(100px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Hero Content */
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+      max-width: 1200px;
+      padding: 0 20px;
+      margin-top: -50px; /* Adjusted for reduced height */
+    }
+
+    .gallery-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 5rem;
+      font-weight: 800;
+      letter-spacing: 4px;
+      margin-bottom: 20px;
+      color: var(--white);
+      text-shadow: 2px 2px 30px rgba(0, 0, 0, 0.8);
+      line-height: 1;
+      animation: titleGlow 3s infinite alternate ease-in-out;
+    }
+
+    @keyframes titleGlow {
+      0% {
+        text-shadow: 2px 2px 30px rgba(0, 0, 0, 0.8),
+                     0 0 20px rgba(193, 154, 91, 0.3);
+      }
+      100% {
+        text-shadow: 2px 2px 40px rgba(0, 0, 0, 0.9),
+                     0 0 40px rgba(193, 154, 91, 0.6);
+      }
+    }
+
+    @media (max-width: 992px) {
+      .gallery-hero h1 {
+        font-size: 3.5rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .gallery-hero h1 {
+        font-size: 2.5rem;
+      }
+    }
+
+    .hero-subtitle {
+      font-size: 1.2rem;
+      letter-spacing: 4px;
+      color: var(--gold);
+      margin-bottom: 30px;
+      text-transform: uppercase;
+      font-weight: 300;
+      line-height: 1.5;
+      opacity: 0;
+      animation: fadeInUp 1.2s ease 0.5s forwards;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+    }
+
+    /* Scroll Indicator - Properly Positioned */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      color: var(--white);
+      text-align: center;
+      opacity: 0;
+      animation: fadeIn 1s ease 1s forwards;
+    }
+
+    .scroll-indicator p {
+      font-size: 12px;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      opacity: 0.8;
+    }
+
+    .scroll-indicator i {
+      font-size: 20px;
+      animation: bounce 2s infinite ease-in-out;
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(8px);
+      }
+    }
+
+    /* ===========================================
+       INTERACTIVE GALLERY GRID
+       =========================================== */
+    .gallery-section {
+      padding: 100px 64px;
+      background: var(--light);
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (max-width: 768px) {
+      .gallery-section {
+        padding: 80px 25px;
+      }
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 60px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 20px;
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .section-subtitle {
+      color: var(--gray);
+      font-size: 1.1rem;
+      line-height: 1.7;
+      margin-top: 30px;
+    }
+
+    /* ===========================================
+       NAVBAR STYLES (From Contact Page)
+       =========================================== */
+    .header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 25px 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .header {
+        padding: 20px 25px;
+      }
+    }
+
+    .logo img {
+      width: 100px;
+      transition: var(--transition);
+    }
+
+    @media (max-width: 768px) {
+      .logo img {
+        width: 80px;
+      }
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+    }
+
+    @media (max-width: 992px) {
+      .nav {
+        display: none;
+      }
+    }
+
+    .nav a {
+      color: var(--white);
+      text-decoration: none;
+      margin-left: 32px;
+      font-size: 12px;
+      letter-spacing: 2px;
+      position: relative;
+      transition: var(--transition);
+    }
+
+    .nav a.active {
+      color: var(--gold);
+    }
+
+    .nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 0;
+      height: 1px;
+      background: var(--gold);
+      transition: 0.3s;
+    }
+
+    .nav a:hover::after,
+    .nav a.active::after {
+      width: 100%;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      cursor: pointer;
+      z-index: 1003;
+      position: relative;
+    }
+
+    @media (max-width: 992px) {
+      .hamburger {
+        display: flex;
+      }
+    }
+
+    .hamburger span {
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      transition: var(--transition);
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(6px, 6px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+    /* SIDE RESERVATION (From Contact Page) */
+    .side-reservation {
+      position: absolute;
+      left: 30px;
+      top: 50%;
+      transform: translateY(-50%);
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      z-index: 5;
+      font-size: 11px;
+      letter-spacing: 3px;
+      opacity: 0.9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    @media (max-width: 992px) {
+      .side-reservation {
+        display: none;
+      }
+    }
+
+    .side-reservation .label {
+      margin-bottom: 15px;
+      color: var(--white);
+    }
+
+    .side-reservation .divider {
+      height: 50px;
+      width: 1px;
+      background: var(--white);
+      margin: 14px 0;
+    }
+
+    .side-reservation .phone-icon {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 15px 0;
+      font-size: 16px;
+      color: var(--white);
+      transition: var(--transition);
+    }
+
+    .side-reservation .phone-icon:hover {
+      border-color: var(--gold);
+      background: rgba(193, 154, 91, 0.1);
+      transform: scale(1.05);
+    }
+
+    .side-reservation .phone {
+      margin-top: 15px;
+      writing-mode: vertical-rl;
+      color: var(--gold);
+      text-orientation: mixed;
+      line-height: 1.8;
+      font-size: 13px;
+      letter-spacing: 1.5px;
+    }
+
+    /* SOCIALS */
+    .side-socials {
+      position: absolute;
+      right: 30px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 5;
+    }
+
+    @media (max-width: 768px) {
+      .side-socials {
+        position: fixed;
+        top: 20px;
+        left: 0;
+        right: 0;
+        transform: none;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(5px);
+        padding: 8px 12px;
+        border-radius: 30px;
+        width: 85%;
+        margin: 0 auto;
+        z-index: 4;
+      }
+    }
+
+    .side-socials a {
+      color: var(--white);
+      text-decoration: none;
+      margin: 12px 0;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    @media (max-width: 768px) {
+      .side-socials a {
+        margin: 0 12px;
+        width: 32px;
+        height: 32px;
+      }
+    }
+
+    .side-socials a {
+      animation: socialPulse 6.5s infinite ease-in-out;
+      animation-delay: calc(var(--animation-delay, 0) * 1s);
+    }
+
+    .side-socials a:nth-child(1) { --animation-delay: 0; }
+    .side-socials a:nth-child(2) { --animation-delay: 0.5; }
+    .side-socials a:nth-child(3) { --animation-delay: 1; }
+
+    @keyframes socialPulse {
+      0%, 100% {
+        box-shadow: 0 0 0px rgba(255, 255, 255, 0);
+        border-color: rgba(255, 255, 255, 0.3);
+        transform: scale(1);
+      }
+      25% {
+        box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+        border-color: rgba(255, 255, 255, 0.8);
+        transform: scale(1.05);
+      }
+      50% {
+        box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+        border-color: rgba(255, 255, 255, 0.5);
+        transform: scale(1);
+      }
+      75% {
+        box-shadow: 0 0 6px rgba(255, 255, 255, 0.4);
+        border-color: rgba(255, 255, 255, 0.6);
+        transform: scale(1.03);
+      }
+    }
+
+    .side-socials a:hover {
+      animation-play-state: paused;
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--gold);
+      transform: scale(1.1);
+    }
+
+    /* Sticky Navbar */
+    .sticky-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      transition: var(--transition);
+      padding: 0 64px;
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+
+    @media (max-width: 768px) {
+      .sticky-nav {
+        padding: 0 20px;
+      }
+    }
+
+    .sticky-nav.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .sticky-nav.scrolled {
+      background: rgba(15, 15, 20, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(193, 154, 91, 0.1);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .sticky-nav .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 70px;
+      max-width: 1400px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .sticky-nav .book-btn {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--light-gold) 100%);
+      color: var(--white);
+      border: none;
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-size: 12px;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      margin-right: 120px;
+    }
+
+    @media (max-width: 1200px) {
+      .sticky-nav .book-btn {
+        margin-right: 100px;
+      }
+    }
+
+    @media (max-width: 992px) {
+      .sticky-nav .book-btn {
+        display: none;
+      }
+    }
+
+    .sticky-nav .book-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(193, 154, 91, 0.4);
+    }
+
+    .sticky-nav .logo img {
+      width: 90px;
+      filter: brightness(1.2);
+      transition: var(--transition);
+    }
+
+    .sticky-nav .nav-links {
+      display: flex;
+      gap: 35px;
+    }
+
+    @media (max-width: 1200px) {
+      .sticky-nav .nav-links {
+        gap: 25px;
+      }
+    }
+
+    @media (max-width: 992px) {
+      .sticky-nav .nav-links {
+        display: none;
+      }
+    }
+
+    .sticky-nav .nav-links a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 2px;
+      position: relative;
+      padding: 8px 0;
+      transition: var(--transition);
+      font-weight: 400;
+    }
+
+    .sticky-nav .nav-links a.active {
+      color: var(--gold);
+    }
+
+    .sticky-nav .nav-links a:hover {
+      color: var(--gold);
+    }
+
+    .sticky-nav .hamburger-btn {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 8px;
+      z-index: 1001;
+    }
+
+    @media (max-width: 992px) {
+      .sticky-nav .hamburger-btn {
+        display: flex;
+      }
+    }
+
+    .sticky-nav .hamburger-btn span {
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      transition: var(--transition);
+    }
+
+    /* ===========================================
+       GALLERY FILTER
+       =========================================== */
+    .gallery-filter {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 60px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      background: transparent;
+      color: var(--dark);
+      border: 2px solid var(--gold);
+      padding: 12px 30px;
+      border-radius: 50px;
+      font-size: 14px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: var(--transition);
+      text-transform: uppercase;
+      font-weight: 500;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .filter-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: var(--gold);
+      transition: var(--transition);
+      z-index: -1;
+    }
+
+    .filter-btn:hover::before,
+    .filter-btn.active::before {
+      left: 0;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      color: var(--white);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(193, 154, 91, 0.3);
+    }
+
+    /* Masonry Grid */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 25px;
+      margin-bottom: 60px;
+    }
+
+    @media (max-width: 768px) {
+      .gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+      }
+    }
+
+    /* Gallery Items with Hover Effects */
+    .gallery-item {
+      position: relative;
+      border-radius: 15px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      cursor: pointer;
+      transform: scale(0.95);
+      opacity: 0;
+      animation: itemReveal 0.8s ease forwards;
+      transition: var(--transition);
+    }
+
+    @keyframes itemReveal {
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .gallery-item.large {
+      grid-column: span 2;
+      grid-row: span 2;
+      aspect-ratio: 16/9;
+    }
+
+    @media (max-width: 768px) {
+      .gallery-item.large {
+        grid-column: span 1;
+        grid-row: span 1;
+      }
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.05);
+    }
+
+    /* Item Overlay */
+    .item-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 50%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 30px;
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .gallery-item:hover .item-overlay {
+      opacity: 1;
+    }
+
+    .item-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--white);
+      margin-bottom: 8px;
+      transform: translateY(20px);
+      transition: var(--transition) 0.1s;
+    }
+
+    .item-category {
+      color: var(--gold);
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      transform: translateY(20px);
+      transition: var(--transition) 0.2s;
+    }
+
+    .gallery-item:hover .item-title,
+    .gallery-item:hover .item-category {
+      transform: translateY(0);
+    }
+
+    /* ===========================================
+       360° IMMERSIVE VIEWER (ORIGINAL STYLING)
+       =========================================== */
+    .immersive-viewer {
+      padding: 100px 64px;
+      background: linear-gradient(135deg, var(--dark) 0%, #1a1a2e 100%);
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (max-width: 768px) {
+      .immersive-viewer {
+        padding: 80px 25px;
+      }
+    }
+
+    .viewer-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .viewer-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      margin-bottom: 20px;
+      background: linear-gradient(45deg, var(--gold), var(--light-gold));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .viewer-description {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 1.2rem;
+      line-height: 1.7;
+      max-width: 600px;
+      margin: 0 auto 60px;
+    }
+
+    /* Panorama Container */
+    .panorama-container {
+      height: 600px;
+      border-radius: 30px;
+      overflow: hidden;
+      position: relative;
+      margin-bottom: 40px;
+      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+    }
+
+    @media (max-width: 992px) {
+      .panorama-container {
+        height: 400px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .panorama-container {
+        height: 300px;
+      }
+    }
+
+    .panorama-placeholder {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .panorama-controls {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 20px;
+      z-index: 10;
+    }
+
+    .panorama-btn {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border: 2px solid var(--gold);
+      color: var(--white);
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 20px;
+    }
+
+    .panorama-btn:hover {
+      background: var(--gold);
+      transform: scale(1.1) rotate(15deg);
+    }
+
+    /* ===========================================
+       BEFORE/AFTER COMPARISON SLIDER (ORIGINAL STYLING)
+       =========================================== */
+    .comparison-section {
+      padding: 120px 64px;
+      background: var(--light);
+    }
+
+    @media (max-width: 768px) {
+      .comparison-section {
+        padding: 80px 25px;
+      }
+    }
+
+    .comparison-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .comparison-slider {
+      position: relative;
+      height: 600px;
+      border-radius: 30px;
+      overflow: hidden;
+      margin: 60px auto;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+    }
+
+    @media (max-width: 992px) {
+      .comparison-slider {
+        height: 400px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .comparison-slider {
+        height: 300px;
+      }
+    }
+
+    .comparison-before,
+    .comparison-after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .comparison-before img,
+    .comparison-after img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .comparison-after {
+      width: 50%;
+    }
+
+    .comparison-handle {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: var(--gold);
+      transform: translateX(-50%);
+      cursor: col-resize;
+    }
+
+    .comparison-handle::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60px;
+      height: 60px;
+      background: var(--gold);
+      border-radius: 50%;
+      border: 4px solid var(--white);
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .comparison-handle::after {
+      content: '↔';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: var(--white);
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    /* ===========================================
+       VIRTUAL REALITY SECTION (ORIGINAL STYLING)
+       =========================================== */
+    .vr-section {
+      padding: 120px 64px;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (max-width: 768px) {
+      .vr-section {
+        padding: 80px 25px;
+      }
+    }
+
+    .vr-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .vr-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      margin-bottom: 30px;
+      background: linear-gradient(45deg, #00dbde, #fc00ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: vrTitleGlow 3s infinite alternate;
+    }
+
+    @keyframes vrTitleGlow {
+      0% {
+        filter: drop-shadow(0 0 10px rgba(0, 219, 222, 0.3));
+      }
+      100% {
+        filter: drop-shadow(0 0 30px rgba(252, 0, 255, 0.6));
+      }
+    }
+
+    .vr-experience {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      margin-top: 60px;
+    }
+
+    @media (max-width: 992px) {
+      .vr-experience {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+    }
+
+    .vr-preview {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      height: 400px;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+    }
+
+    .vr-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .vr-preview:hover img {
+      transform: scale(1.05);
+    }
+
+    .vr-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .vr-preview:hover .vr-overlay {
+      opacity: 1;
+    }
+
+    .vr-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(45deg, #00dbde, #fc00ff);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      margin-bottom: 20px;
+      transform: scale(0);
+      transition: var(--transition) 0.2s;
+    }
+
+    .vr-preview:hover .vr-icon {
+      transform: scale(1);
+    }
+
+    .vr-features {
+      text-align: left;
+    }
+
+    .vr-feature {
+      margin-bottom: 30px;
+      opacity: 0;
+      transform: translateX(30px);
+      animation: slideInRight 0.8s ease forwards;
+    }
+
+    @keyframes slideInRight {
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .vr-feature:nth-child(1) { animation-delay: 0.2s; }
+    .vr-feature:nth-child(2) { animation-delay: 0.4s; }
+    .vr-feature:nth-child(3) { animation-delay: 0.6s; }
+
+    .vr-feature h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--gold);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .vr-feature p {
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.6;
+      font-size: 1.1rem;
+    }
+
+    /* ===========================================
+       FOOTER STYLES (From Contact Page)
+       =========================================== */
+    .footer {
+      background: var(--dark);
+      color: var(--white);
+      padding: 80px 64px 30px;
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    @media (max-width: 768px) {
+      .footer {
+        padding: 60px 25px 20px;
+      }
+    }
+
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--gold), var(--light-gold));
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 50px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .footer-section {
+      margin-bottom: 30px;
+    }
+
+    .footer-logo img {
+      width: 100px;
+      margin-bottom: 20px;
+      filter: brightness(1.2);
+    }
+
+    .footer-description {
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.6;
+      margin-bottom: 25px;
+      font-size: 15px;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 12px;
+    }
+
+    .footer-social a {
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .footer-social a:hover {
+      background: var(--gold);
+      transform: translateY(-3px);
+    }
+
+    .footer-section h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      margin-bottom: 25px;
+      color: var(--white);
+      position: relative;
+      padding-bottom: 12px;
+    }
+
+    .footer-section h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background: var(--gold);
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 15px;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: var(--transition);
+    }
+
+    .footer-links a.active {
+      color: var(--gold);
+    }
+
+    .footer-links a:hover {
+      color: var(--gold);
+      transform: translateX(5px);
+    }
+
+    .footer-links i {
+      font-size: 12px;
+      color: var(--gold);
+    }
+
+    .contact-details-footer p {
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 15px;
+    }
+
+    .contact-details-footer i {
+      color: var(--gold);
+      width: 16px;
+    }
+
+    .newsletter-form {
+      display: flex;
+      margin: 20px 0;
+    }
+
+    .newsletter-form input {
+      flex: 1;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50px 0 0 50px;
+      color: var(--white);
+      font-size: 14px;
+    }
+
+    .newsletter-form button {
+      background: var(--gold);
+      color: var(--white);
+      border: none;
+      padding: 0 25px;
+      border-radius: 0 50px 50px 0;
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 14px;
+    }
+
+    .newsletter-form button:hover {
+      background: var(--light-gold);
+    }
+
+    .newsletter-note {
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 12px;
+      margin-top: 12px;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 30px;
+      margin-top: 60px;
+      text-align: center;
+    }
+
+    .footer-bottom p {
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .footer-bottom i {
+      color: var(--gold);
+      margin: 0 3px;
+    }
+
+    .footer-policies {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-policies a {
+      color: rgba(255, 255, 255, 0.5);
+      text-decoration: none;
+      font-size: 14px;
+      transition: var(--transition);
+    }
+
+    .footer-policies a:hover {
+      color: var(--gold);
+    }
+
+    /* ===========================================
+       GALLERY MODAL (ORIGINAL STYLING)
+       =========================================== */
+    .gallery-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      animation: modalFadeIn 0.5s ease forwards;
+    }
+
+    @keyframes modalFadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .gallery-modal.active {
+      display: flex;
+    }
+
+    .modal-container {
+      max-width: 1200px;
+      max-height: 90vh;
+      position: relative;
+      animation: modalZoomIn 0.5s ease 0.1s forwards;
+      transform: scale(0.9);
+      opacity: 0;
+    }
+
+    @keyframes modalZoomIn {
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .modal-image {
+      width: 100%;
+      height: auto;
+      max-height: 80vh;
+      object-fit: contain;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: -50px;
+      right: 0;
+      background: var(--gold);
+      color: var(--white);
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      font-size: 24px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-close:hover {
+      background: var(--dark-gold);
+      transform: rotate(90deg);
+    }
+
+    .modal-nav {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 20px;
+      transform: translateY(-50%);
+    }
+
+    .modal-prev,
+    .modal-next {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      color: var(--white);
+      border: none;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      font-size: 24px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-prev:hover,
+    .modal-next:hover {
+      background: var(--gold);
+      transform: scale(1.1);
+    }
+
+    .modal-info {
+      position: absolute;
+      bottom: -80px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      color: var(--white);
+    }
+
+    .modal-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .modal-category {
+      color: var(--gold);
+      font-size: 14px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* ===========================================
+       MOBILE MENU OVERLAY
+       =========================================== */
+    .mobile-menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(10, 10, 15, 0.98);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 9990;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+    }
+
+    .mobile-menu-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* ===========================================
+       BACK TO TOP BUTTON
+       =========================================== */
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--light-gold) 100%);
+      color: var(--white);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px);
+      transition: var(--transition);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    @media (max-width: 768px) {
+      .back-to-top {
+        width: 45px;
+        height: 45px;
+        font-size: 16px;
+        bottom: 20px;
+        right: 20px;
+      }
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .back-to-top:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(193, 154, 91, 0.4);
+    }
+
+    /* ===========================================
+       DARK MODE STYLES
+       =========================================== */
+    .dark-mode .gallery-section,
+    .dark-mode .comparison-section {
+      background: var(--dark-bg);
+    }
+
+    .dark-mode .section-title {
+      color: var(--dark-text);
+    }
+
+    .dark-mode .section-subtitle {
+      color: var(--dark-gray);
+    }
+
+    .dark-mode .filter-btn {
+      color: var(--dark-text);
+      border-color: var(--gold);
+    }
+
+    .dark-mode .filter-btn:hover,
+    .dark-mode .filter-btn.active {
+      color: var(--white);
+    }
+
+    /* ===========================================
+       LOADING ANIMATIONS
+       =========================================== */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.8s ease forwards;
+      opacity: 0;
+    }
+
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+    .delay-5 { animation-delay: 0.5s; }
+
+    /* ===========================================
+       OTHER EXISTING STYLES
+       =========================================== */
+    .menu-close-btn {
+      position: absolute;
+      top: 25px;
+      right: 25px;
+      width: 45px;
+      height: 45px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: var(--transition);
+      z-index: 9991;
+    }
+
+    .mobile-menu-container {
+      text-align: center;
+      max-width: 500px;
+      width: 90%;
+    }
+
+    .mobile-menu-container a {
+      display: block;
+      color: var(--white);
+      text-decoration: none;
+      font-size: 20px;
+      letter-spacing: 2px;
+      margin: 15px 0;
+      padding: 12px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .mobile-contact-info {
+      margin-top: 30px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: var(--transition) 0.7s;
+    }
+  </style>
+</head>
+<body>
+  <!-- Theme Controls -->
+  <div class="theme-controls">
+    <button class="theme-btn" id="themeToggle" title="Toggle Dark Mode">
+      <i class="fas fa-moon"></i>
+    </button>
+    <div class="language-container">
+      <button class="language-btn" id="languageToggle" title="Select Language">
+        <i class="fas fa-globe"></i>
+      </button>
+      <div class="language-dropdown" id="languageDropdown">
+        <div class="language-option active" data-lang="en">
+          <i class="fas fa-check"></i>
+          <span>English</span>
+        </div>
+        <div class="language-option" data-lang="es">
+          <i class="fas fa-check" style="display: none;"></i>
+          <span>Español</span>
+        </div>
+        <div class="language-option" data-lang="fr">
+          <i class="fas fa-check" style="display: none;"></i>
+          <span>Français</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gallery Modal -->
+  <div class="gallery-modal" id="galleryModal">
+    <div class="modal-container">
+      <img class="modal-image" id="modalImage" src="" alt="">
+      <button class="modal-close" id="modalClose">
+        <i class="fas fa-times"></i>
+      </button>
+      <div class="modal-nav">
+        <button class="modal-prev" id="modalPrev">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="modal-next" id="modalNext">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+      <div class="modal-info">
+        <h3 class="modal-title" id="modalTitle"></h3>
+        <p class="modal-category" id="modalCategory"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sticky Navbar will be inserted here by JavaScript -->
+
+  <!-- Immersive Hero Section -->
+  <section class="gallery-hero">
+    <!-- Background Image with Parallax -->
+    <div class="hero-background"></div>
+    
+    <!-- Floating Particles -->
+    <div class="particles-container" id="particlesContainer"></div>
+
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <a href="index.html">
+          <img src="./images/westbrook logo.png" alt="WestBrook">
+        </a>
+      </div>
+
+      <nav class="nav">
+        <a href="index.html">HOME</a>
+        <a href="about.html">ABOUT</a>
+        <a href="rooms-suites.html">ROOMS & SUITES</a>
+        <a href="experience.html">EXPERIENCE</a>
+        <a href="gallery.html" class="active">GALLERY</a>
+        <a href="contact.html">CONTACT</a>
+      </nav>
+
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </header>
+
+    <!-- SIDE RESERVATION -->
+    <div class="side-reservation">
+      <span class="label">RESERVATION</span>
+      <span class="divider"></span>
+      <span class="phone-icon">
+        <i class="fas fa-phone"></i>
+      </span>
+      <span class="phone">
+        +234 809 999 1244<br>
+        +234 704 282 5937
+      </span>
+    </div>
+
+    <!-- SOCIALS -->
+    <div class="side-socials">
+      <a href="#" aria-label="Instagram" class="social-icon"><i class="fab fa-instagram"></i></a>
+      <a href="#" aria-label="Facebook" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" aria-label="Twitter" class="social-icon"><i class="fab fa-x-twitter"></i></a>
+    </div>
+
+    <!-- Hero Content -->
+    <div class="hero-content">
+      <h1>VISUAL LUXURY</h1>
+      <p class="hero-subtitle">Where Every Image Tells a Story of Excellence</p>
+    </div>
+
+    <!-- Scroll Indicator - Properly Positioned at Bottom -->
+    <div class="scroll-indicator fade-in delay-2">
+      <p>SCROLL TO EXPLORE</p>
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </section>
+
+  <!-- Interactive Gallery Grid -->
+  <section class="gallery-section">
+    <div class="section-header fade-in">
+      <h2 class="section-title">The WestBrook Collection</h2>
+      <p class="section-subtitle">Immerse yourself in our world of luxury through stunning visuals that capture the essence of WestBrook Hotel. Each image is a window into experiences that await you.</p>
+    </div>
+
+    <!-- Gallery Filter -->
+    <div class="gallery-filter fade-in delay-1">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="suites">Suites & Rooms</button>
+      <button class="filter-btn" data-filter="dining">Dining</button>
+      <button class="filter-btn" data-filter="wellness">Wellness</button>
+      <button class="filter-btn" data-filter="events">Events</button>
+      <button class="filter-btn" data-filter="views">Panoramic Views</button>
+    </div>
+
+    <!-- Masonry Grid -->
+    <div class="gallery-grid">
+      <!-- Suite Images -->
+      <div class="gallery-item fade-in" data-category="suites" data-index="1">
+        <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="Presidential Suite">
+        <div class="item-overlay">
+          <h3 class="item-title">Presidential Suite</h3>
+          <p class="item-category">Suites & Rooms</p>
+        </div>
+      </div>
+
+      <div class="gallery-item large fade-in delay-1" data-category="views" data-index="2">
+        <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" alt="City Skyline View">
+        <div class="item-overlay">
+          <h3 class="item-title">Owerri Skyline at Dusk</h3>
+          <p class="item-category">Panoramic Views</p>
+        </div>
+      </div>
+
+      <div class="gallery-item fade-in delay-2" data-category="dining" data-index="3">
+        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="Fine Dining Restaurant">
+        <div class="item-overlay">
+          <h3 class="item-title">La Belle Cuisine</h3>
+          <p class="item-category">Dining</p>
+        </div>
+      </div>
+
+      <div class="gallery-item fade-in delay-3" data-category="wellness" data-index="4">
+        <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="Spa Treatment Room">
+        <div class="item-overlay">
+          <h3 class="item-title">Serenity Spa</h3>
+          <p class="item-category">Wellness</p>
+        </div>
+      </div>
+
+      <div class="gallery-item fade-in delay-4" data-category="events" data-index="5">
+        <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="Grand Ballroom">
+        <div class="item-overlay">
+          <h3 class="item-title">Grand Ballroom</h3>
+          <p class="item-category">Events</p>
+        </div>
+      </div>
+
+      <div class="gallery-item fade-in delay-5" data-category="suites" data-index="6">
+        <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="Executive Suite">
+        <div class="item-overlay">
+          <h3 class="item-title">Executive Suite Living Area</h3>
+          <p class="item-category">Suites & Rooms</p>
+        </div>
+      </div>
+
+      <div class="gallery-item large fade-in delay-1" data-category="wellness" data-index="7">
+        <img src="https://images.unsplash.com/photo-1572883454114-1cf0031ede2a?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" alt="Infinity Pool">
+        <div class="item-overlay">
+          <h3 class="item-title">Infinity Pool at Sunset</h3>
+          <p class="item-category">Wellness</p>
+        </div>
+      </div>
+
+      <div class="gallery-item fade-in delay-2" data-category="dining" data-index="8">
+        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="Wine Cellar">
+        <div class="item-overlay">
+          <h3 class="item-title">Private Wine Cellar</h3>
+          <p class="item-category">Dining</p>
+        </div>
+      </div>
+
+      <div class="gallery-item fade-in delay-3" data-category="views" data-index="9">
+        <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="Garden View">
+        <div class="item-overlay">
+          <h3 class="item-title">Botanical Gardens</h3>
+          <p class="item-category">Panoramic Views</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Load More Button -->
+    <div style="text-align: center;">
+      <button class="filter-btn" id="loadMore" style="padding: 15px 40px; font-size: 14px;">
+        <i class="fas fa-plus"></i> LOAD MORE
+      </button>
+    </div>
+  </section>
+
+  <!-- 360° Immersive Viewer -->
+  <section class="immersive-viewer">
+    <div class="viewer-container">
+      <h2 class="viewer-title fade-in">360° Immersive Experience</h2>
+      <p class="viewer-description fade-in delay-1">Explore our spaces like never before. Drag to look around, zoom in to discover details, and immerse yourself in the WestBrook ambiance.</p>
+      
+      <div class="panorama-container">
+        <div class="panorama-placeholder">
+          <div style="text-align: center; padding: 20px; background: rgba(0,0,0,0.8); border-radius: 20px; max-width: 80%;">
+            <i class="fas fa-360-degrees" style="font-size: 48px; margin-bottom: 20px; color: var(--gold);"></i>
+            <h3 style="margin-bottom: 10px; font-family: 'Playfair Display', serif;">Interactive 360° Tour</h3>
+            <p style="margin-bottom: 20px;">Drag your mouse to explore the Presidential Suite in full 360°</p>
+            <div class="panorama-controls">
+              <button class="panorama-btn" onclick="zoomIn()">
+                <i class="fas fa-search-plus"></i>
+              </button>
+              <button class="panorama-btn" onclick="resetView()">
+                <i class="fas fa-redo"></i>
+              </button>
+              <button class="panorama-btn" onclick="zoomOut()">
+                <i class="fas fa-search-minus"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="gallery-filter" style="margin-top: 40px;">
+        <button class="filter-btn" onclick="changePanorama('lobby')">Hotel Lobby</button>
+        <button class="filter-btn active" onclick="changePanorama('suite')">Presidential Suite</button>
+        <button class="filter-btn" onclick="changePanorama('pool')">Infinity Pool</button>
+        <button class="filter-btn" onclick="changePanorama('restaurant')">Main Restaurant</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Before/After Comparison Slider -->
+  <section class="comparison-section">
+    <div class="comparison-container">
+      <div class="section-header fade-in">
+        <h2 class="section-title">Transformation Stories</h2>
+        <p class="section-subtitle">Witness the remarkable transformation of our spaces. Drag the slider to see how we've reimagined luxury.</p>
+      </div>
+
+      <div class="comparison-slider" id="comparisonSlider">
+        <div class="comparison-before">
+          <img src="https://images.unsplash.com/photo-1568495248636-6432b97bd949?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" alt="Before Renovation">
+          <div style="position: absolute; top: 30px; left: 30px; background: rgba(0,0,0,0.7); color: white; padding: 10px 20px; border-radius: 20px;">
+            <h3>Before Renovation</h3>
+          </div>
+        </div>
+        <div class="comparison-after">
+          <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" alt="After Renovation">
+          <div style="position: absolute; top: 30px; right: 30px; background: rgba(193, 154, 91,0.7); color: white; padding: 10px 20px; border-radius: 20px;">
+            <h3>After Renovation</h3>
+          </div>
+        </div>
+        <div class="comparison-handle"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Virtual Reality Experience -->
+  <section class="vr-section">
+    <div class="vr-container">
+      <h2 class="vr-title fade-in">Virtual Reality Experience</h2>
+      <p class="viewer-description fade-in delay-1">Step into the future of hotel exploration with our VR-ready experiences. Compatible with most VR headsets for complete immersion.</p>
+      
+      <div class="vr-experience">
+        <div class="vr-preview fade-in delay-2">
+          <img src="https://images.unsplash.com/photo-1531746790731-6c087fecd65a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="VR Experience">
+          <div class="vr-overlay">
+            <div class="vr-icon">
+              <i class="fas fa-vr-cardboard"></i>
+            </div>
+            <h3 style="color: white; margin-bottom: 10px;">Click to Enter VR Mode</h3>
+            <button class="filter-btn" style="background: transparent; border: 2px solid white; color: white;">
+              <i class="fas fa-play"></i> START VR
+            </button>
+          </div>
+        </div>
+        
+        <div class="vr-features">
+          <div class="vr-feature">
+            <h3><i class="fas fa-headset"></i> Full Immersion</h3>
+            <p>Experience WestBrook Hotel in complete 360° virtual reality. Move freely through our spaces as if you were physically there.</p>
+          </div>
+          <div class="vr-feature">
+            <h3><i class="fas fa-mobile-alt"></i> Mobile & Desktop Ready</h3>
+            <p>Access our VR experiences on any device. Use your smartphone with a VR headset or explore on desktop with mouse controls.</p>
+          </div>
+          <div class="vr-feature">
+            <h3><i class="fas fa-walking"></i> Interactive Elements</h3>
+            <p>Click on interactive points to learn more about features, view additional images, or even make a reservation directly from the VR experience.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <div class="footer-logo">
+          <img src="./images/westbrook logo.png" alt="WestBrook Hotel">
+        </div>
+        <p class="footer-description">WestBrook Hotel - Where luxury meets impeccable service. Experience world-class hospitality in the heart of Owerri with personalized attention to every detail.</p>
+        <div class="footer-social">
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-x-twitter"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul class="footer-links">
+          <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+          <li><a href="about.html"><i class="fas fa-chevron-right"></i> About Us</a></li>
+          <li><a href="rooms-suites.html"><i class="fas fa-chevron-right"></i> Rooms & Suites</a></li>
+          <li><a href="experience.html"><i class="fas fa-chevron-right"></i> Experience</a></li>
+          <li><a href="gallery.html" class="active"><i class="fas fa-chevron-right"></i> Gallery</a></li>
+          <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Contact Info</h3>
+        <div class="contact-details-footer">
+          <p><i class="fas fa-map-marker-alt"></i> Plot 15, WestBrook Estate, Owerri</p>
+          <p><i class="fas fa-phone"></i> +234 809 999 1244</p>
+          <p><i class="fas fa-phone"></i> +234 704 282 5937</p>
+          <p><i class="fas fa-envelope"></i> contact@westbrookhotel.com</p>
+        </div>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Stay Updated</h3>
+        <p>Subscribe for exclusive gallery updates</p>
+        <div class="newsletter-form">
+          <input type="email" placeholder="Your Email">
+          <button type="submit"><i class="fas fa-paper-plane"></i></button>
+        </div>
+        <p class="newsletter-note">Be the first to see new gallery additions</p>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; 2024 WestBrook Hotel. All Rights Reserved. | Designed with <i class="fas fa-heart"></i> for Luxury Hospitality</p>
+      <div class="footer-policies">
+        <a href="#">Privacy Policy</a> |
+        <a href="#">Terms of Service</a> |
+        <a href="#">Contact Preferences</a> |
+        <a href="#">Cookie Policy</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top" id="backToTop">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu-overlay" id="mobileMenuOverlay">
+    <button class="menu-close-btn" id="menuCloseBtn">
+      <span></span>
+      <span></span>
+    </button>
+    
+    <div class="mobile-menu-container">
+      <a href="index.html">HOME</a>
+      <a href="about.html">ABOUT</a>
+      <a href="rooms-suites.html">ROOMS & SUITES</a>
+      <a href="experience.html">EXPERIENCE</a>
+      <a href="gallery.html" class="active">GALLERY</a>
+      <a href="contact.html">CONTACT</a>
+      
+      <div class="mobile-contact-info">
+        <p>CONTACT & RESERVATIONS</p>
+        <div class="phone">+234 809 999 1244</div>
+        <div class="phone">+234 704 282 5937</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ===========================================
+    // STUNNING GALLERY PAGE FUNCTIONALITY
+    // ===========================================
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize all features
+      initDarkMode();
+      initLanguageSupport();
+      initParticles();
+      initGalleryFilter();
+      initGalleryModal();
+      initComparisonSlider();
+      initAnimations();
+      initStickyNavbar();
+      
+      // ===========================================
+      // FLOATING PARTICLES EFFECT
+      // ===========================================
+      function initParticles() {
+        const container = document.getElementById('particlesContainer');
+        if (!container) return;
+        
+        for (let i = 0; i < 40; i++) {
+          const particle = document.createElement('div');
+          particle.className = 'particle';
+          
+          // Random position
+          particle.style.left = `${Math.random() * 100}%`;
+          particle.style.top = `${Math.random() * 100}%`;
+          
+          // Random size
+          const size = 2 + Math.random() * 3;
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+          
+          // Random animation
+          const duration = 15 + Math.random() * 20;
+          const delay = Math.random() * 5;
+          particle.style.animationDuration = `${duration}s`;
+          particle.style.animationDelay = `${delay}s`;
+          
+          // Random opacity
+          particle.style.opacity = 0.3 + Math.random() * 0.7;
+          
+          container.appendChild(particle);
+        }
+      }
+      
+      // ===========================================
+      // GALLERY FILTER FUNCTIONALITY
+      // ===========================================
+      function initGalleryFilter() {
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        
+        filterButtons.forEach(button => {
+          button.addEventListener('click', () => {
+            // Remove active class from all buttons
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            // Add active class to clicked button
+            button.classList.add('active');
+            
+            const filterValue = button.getAttribute('data-filter');
+            
+            // Filter gallery items
+            galleryItems.forEach(item => {
+              const category = item.getAttribute('data-category');
+              
+              if (filterValue === 'all' || category === filterValue) {
+                item.style.display = 'block';
+                setTimeout(() => {
+                  item.style.opacity = '1';
+                  item.style.transform = 'scale(1)';
+                }, 10);
+              } else {
+                item.style.opacity = '0';
+                item.style.transform = 'scale(0.8)';
+                setTimeout(() => {
+                  item.style.display = 'none';
+                }, 300);
+              }
+            });
+          });
+        });
+        
+        // Load more functionality
+        const loadMoreBtn = document.getElementById('loadMore');
+        if (loadMoreBtn) {
+          loadMoreBtn.addEventListener('click', () => {
+            // Simulate loading more items
+            const galleryGrid = document.querySelector('.gallery-grid');
+            const newItems = [
+              {
+                category: 'suites',
+                image: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80',
+                title: 'Deluxe Room',
+                categoryText: 'Suites & Rooms'
+              },
+              {
+                category: 'dining',
+                image: 'https://images.unsplash.com/photo-1559925393-8be0ec4767c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80',
+                title: 'Poolside Bar',
+                categoryText: 'Dining'
+              },
+              {
+                category: 'wellness',
+                image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80',
+                title: 'Fitness Center',
+                categoryText: 'Wellness'
+              }
+            ];
+            
+            newItems.forEach((item, index) => {
+              const newItem = document.createElement('div');
+              newItem.className = 'gallery-item fade-in';
+              newItem.setAttribute('data-category', item.category);
+              newItem.setAttribute('data-index', galleryItems.length + index + 1);
+              
+              newItem.innerHTML = `
+                <img src="${item.image}" alt="${item.title}">
+                <div class="item-overlay">
+                  <h3 class="item-title">${item.title}</h3>
+                  <p class="item-category">${item.categoryText}</p>
+                </div>
+              `;
+              
+              galleryGrid.appendChild(newItem);
+              
+              // Add click event for modal
+              newItem.addEventListener('click', () => openModal(item.image, item.title, item.categoryText));
+              
+              // Animate in
+              setTimeout(() => {
+                newItem.style.opacity = '1';
+                newItem.style.transform = 'scale(1)';
+              }, index * 200);
+            });
+            
+            // Show message
+            loadMoreBtn.innerHTML = '<i class="fas fa-check"></i> LOADED';
+            loadMoreBtn.style.background = 'var(--gold)';
+            loadMoreBtn.style.color = 'white';
+            
+            setTimeout(() => {
+              loadMoreBtn.innerHTML = '<i class="fas fa-plus"></i> LOAD MORE';
+              loadMoreBtn.style.background = 'transparent';
+              loadMoreBtn.style.color = '';
+            }, 2000);
+          });
+        }
+      }
+      
+      // ===========================================
+      // GALLERY MODAL FUNCTIONALITY
+      // ===========================================
+      function initGalleryModal() {
+        const modal = document.getElementById('galleryModal');
+        const modalImage = document.getElementById('modalImage');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalCategory = document.getElementById('modalCategory');
+        const modalClose = document.getElementById('modalClose');
+        const modalPrev = document.getElementById('modalPrev');
+        const modalNext = document.getElementById('modalNext');
+        
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        let currentIndex = 0;
+        let itemsArray = [];
+        
+        // Create array of gallery items
+        galleryItems.forEach(item => {
+          itemsArray.push({
+            image: item.querySelector('img').src,
+            title: item.querySelector('.item-title').textContent,
+            category: item.querySelector('.item-category').textContent,
+            index: parseInt(item.getAttribute('data-index'))
+          });
+        });
+        
+        // Add click event to gallery items
+        galleryItems.forEach((item, index) => {
+          item.addEventListener('click', () => {
+            const img = item.querySelector('img');
+            const title = item.querySelector('.item-title').textContent;
+            const category = item.querySelector('.item-category').textContent;
+            
+            openModal(img.src, title, category);
+            currentIndex = index;
+          });
+        });
+        
+        function openModal(imageSrc, title, category) {
+          modalImage.src = imageSrc;
+          modalTitle.textContent = title;
+          modalCategory.textContent = category;
+          modal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModal() {
+          modal.classList.remove('active');
+          document.body.style.overflow = 'auto';
+        }
+        
+        function navigateModal(direction) {
+          currentIndex += direction;
+          
+          if (currentIndex < 0) {
+            currentIndex = itemsArray.length - 1;
+          } else if (currentIndex >= itemsArray.length) {
+            currentIndex = 0;
+          }
+          
+          const item = itemsArray[currentIndex];
+          modalImage.src = item.image;
+          modalTitle.textContent = item.title;
+          modalCategory.textContent = item.category;
+          
+          // Add transition effect
+          modalImage.style.opacity = '0';
+          setTimeout(() => {
+            modalImage.style.opacity = '1';
+          }, 200);
+        }
+        
+        // Event listeners
+        modalClose.addEventListener('click', closeModal);
+        modalPrev.addEventListener('click', () => navigateModal(-1));
+        modalNext.addEventListener('click', () => navigateModal(1));
+        
+        // Close modal on overlay click
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) {
+            closeModal();
+          }
+        });
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+          if (modal.classList.contains('active')) {
+            if (e.key === 'Escape') closeModal();
+            if (e.key === 'ArrowLeft') navigateModal(-1);
+            if (e.key === 'ArrowRight') navigateModal(1);
+          }
+        });
+      }
+      
+      // ===========================================
+      // BEFORE/AFTER COMPARISON SLIDER
+      // ===========================================
+      function initComparisonSlider() {
+        const slider = document.getElementById('comparisonSlider');
+        const handle = slider.querySelector('.comparison-handle');
+        const after = slider.querySelector('.comparison-after');
+        
+        let isDragging = false;
+        
+        handle.addEventListener('mousedown', startDragging);
+        handle.addEventListener('touchstart', startDragging);
+        
+        document.addEventListener('mousemove', drag);
+        document.addEventListener('touchmove', drag);
+        document.addEventListener('mouseup', stopDragging);
+        document.addEventListener('touchend', stopDragging);
+        
+        function startDragging(e) {
+          isDragging = true;
+          e.preventDefault();
+        }
+        
+        function drag(e) {
+          if (!isDragging) return;
+          
+          let clientX;
+          if (e.type.includes('touch')) {
+            clientX = e.touches[0].clientX;
+          } else {
+            clientX = e.clientX;
+          }
+          
+          const sliderRect = slider.getBoundingClientRect();
+          let position = ((clientX - sliderRect.left) / sliderRect.width) * 100;
+          
+          // Constrain between 0 and 100
+          position = Math.max(0, Math.min(100, position));
+          
+          after.style.width = `${position}%`;
+          handle.style.left = `${position}%`;
+        }
+        
+        function stopDragging() {
+          isDragging = false;
+        }
+      }
+      
+      // ===========================================
+      // 360° PANORAMA CONTROLS
+      // ===========================================
+      window.zoomIn = function() {
+        alert('Zooming in on the 360° view... In a full implementation, this would zoom the panorama.');
+      };
+      
+      window.zoomOut = function() {
+        alert('Zooming out of the 360° view...');
+      };
+      
+      window.resetView = function() {
+        alert('Resetting panorama view to default...');
+      };
+      
+      window.changePanorama = function(scene) {
+        const scenes = {
+          lobby: 'Hotel Lobby 360° View',
+          suite: 'Presidential Suite 360° View',
+          pool: 'Infinity Pool 360° View',
+          restaurant: 'Main Restaurant 360° View'
+        };
+        
+        alert(`Loading ${scenes[scene]}... In a full implementation, this would load a new 360° panorama.`);
+        
+        // Update active button
+        document.querySelectorAll('.panorama-container + .gallery-filter .filter-btn').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        event.target.classList.add('active');
+      };
+      
+      // ===========================================
+      // DARK MODE FUNCTIONALITY
+      // ===========================================
+      function initDarkMode() {
+        const themeToggle = document.getElementById('themeToggle');
+        const icon = themeToggle.querySelector('i');
+        
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const savedTheme = localStorage.getItem('theme');
+        
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+          document.body.classList.add('dark-mode');
+          icon.className = 'fas fa-sun';
+        }
+        
+        themeToggle.addEventListener('click', () => {
+          const isDark = document.body.classList.toggle('dark-mode');
+          
+          if (isDark) {
+            icon.className = 'fas fa-sun';
+            localStorage.setItem('theme', 'dark');
+          } else {
+            icon.className = 'fas fa-moon';
+            localStorage.setItem('theme', 'light');
+          }
+        });
+      }
+      
+      // ===========================================
+      // LANGUAGE SUPPORT
+      // ===========================================
+      function initLanguageSupport() {
+        const languageToggle = document.getElementById('languageToggle');
+        const languageDropdown = document.getElementById('languageDropdown');
+        const languageOptions = document.querySelectorAll('.language-option');
+        
+        languageToggle.addEventListener('click', (e) => {
+          e.stopPropagation();
+          languageDropdown.classList.toggle('active');
+        });
+        
+        languageOptions.forEach(option => {
+          option.addEventListener('click', () => {
+            const lang = option.dataset.lang;
+            
+            languageOptions.forEach(opt => {
+              const check = opt.querySelector('i');
+              if (opt.dataset.lang === lang) {
+                check.style.display = 'inline-block';
+                opt.classList.add('active');
+              } else {
+                check.style.display = 'none';
+                opt.classList.remove('active');
+              }
+            });
+            
+            alert(`Language changed to ${lang === 'en' ? 'English' : lang === 'es' ? 'Spanish' : 'French'}. In a full implementation, all text would be translated.`);
+            
+            localStorage.setItem('language', lang);
+            languageDropdown.classList.remove('active');
+          });
+        });
+        
+        document.addEventListener('click', (e) => {
+          if (!languageToggle.contains(e.target) && !languageDropdown.contains(e.target)) {
+            languageDropdown.classList.remove('active');
+          }
+        });
+      }
+      
+      // ===========================================
+      // ANIMATIONS
+      // ===========================================
+      function initAnimations() {
+        // Intersection Observer for scroll animations
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.style.opacity = '1';
+              entry.target.style.transform = 'translateY(0)';
+            }
+          });
+        }, {
+          threshold: 0.1,
+          rootMargin: '50px'
+        });
+        
+        document.querySelectorAll('.fade-in').forEach(el => {
+          el.style.opacity = '0';
+          el.style.transform = 'translateY(30px)';
+          el.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+          observer.observe(el);
+        });
+      }
+      
+      // ===========================================
+      // STICKY NAVBAR FUNCTIONALITY
+      // ===========================================
+      function initStickyNavbar() {
+        const stickyNav = document.createElement('nav');
+        stickyNav.className = 'sticky-nav';
+        stickyNav.innerHTML = `
+          <div class="nav-container">
+            <div class="logo">
+              <a href="index.html">
+                <img src="./images/westbrook logo.png" alt="WestBrook Hotel">
+              </a>
+            </div>
+            
+            <div class="nav-links">
+              <a href="index.html">HOME</a>
+              <a href="about.html">ABOUT</a>
+              <a href="rooms-suites.html">ROOMS & SUITES</a>
+              <a href="experience.html">EXPERIENCE</a>
+              <a href="gallery.html" class="active">GALLERY</a>
+              <a href="contact.html">CONTACT</a>
+            </div>
+            
+            <button class="book-btn" onclick="window.location.href='index.html#booking'">BOOK NOW</button>
+            
+            <button class="hamburger-btn" id="stickyHamburger">
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
+          </div>
+        `;
+        
+        document.body.insertBefore(stickyNav, document.body.firstChild);
+        
+        // Navbar functionality
+        const hamburger = document.getElementById('hamburger');
+        const stickyHamburger = document.getElementById('stickyHamburger');
+        const menuCloseBtn = document.getElementById('menuCloseBtn');
+        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+        const stickyNavElement = document.querySelector('.sticky-nav');
+        
+        // Original hamburger menu
+        hamburger.addEventListener('click', (e) => {
+          e.stopPropagation();
+          mobileMenuOverlay.classList.add('active');
+          hamburger.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        });
+        
+        // Sticky navbar hamburger
+        if (stickyHamburger) {
+          stickyHamburger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            mobileMenuOverlay.classList.add('active');
+            stickyHamburger.classList.add('active');
+            document.body.style.overflow = 'hidden';
+          });
+        }
+        
+        // Close mobile menu
+        menuCloseBtn.addEventListener('click', () => {
+          mobileMenuOverlay.classList.remove('active');
+          hamburger.classList.remove('active');
+          if (stickyHamburger) stickyHamburger.classList.remove('active');
+          document.body.style.overflow = 'auto';
+        });
+        
+        // Mobile menu links
+        mobileMenuOverlay.querySelectorAll('.mobile-menu-container a').forEach(link => {
+          link.addEventListener('click', () => {
+            mobileMenuOverlay.classList.remove('active');
+            hamburger.classList.remove('active');
+            if (stickyHamburger) stickyHamburger.classList.remove('active');
+            document.body.style.overflow = 'auto';
+          });
+        });
+        
+        // Sticky navbar scroll
+        function updateStickyNavbar() {
+          const scrollPosition = window.scrollY;
+          
+          if (scrollPosition > 100) {
+            stickyNavElement.classList.add('visible', 'scrolled');
+          } else {
+            stickyNavElement.classList.remove('visible', 'scrolled');
+          }
+        }
+        
+        window.addEventListener('scroll', updateStickyNavbar);
+        updateStickyNavbar();
+      }
+      
+      // ===========================================
+      // BACK TO TOP BUTTON
+      // ===========================================
+      const backToTop = document.getElementById('backToTop');
+      
+      function updateBackToTop() {
+        if (window.scrollY > 300) {
+          backToTop.classList.add('visible');
+        } else {
+          backToTop.classList.remove('visible');
+        }
+      }
+      
+      backToTop.addEventListener('click', () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+      
+      window.addEventListener('scroll', updateBackToTop);
+      updateBackToTop();
+      
+      // ===========================================
+      // PARALLAX EFFECT FOR HERO
+      // ===========================================
+      window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const hero = document.querySelector('.gallery-hero');
+        if (hero) {
+          const rate = scrolled * -0.5;
+          hero.querySelector('.hero-background').style.transform = `translateY(${rate}px) scale(1.1)`;
+        }
+      });
+    });
+  </script>
+</body>
+</html>

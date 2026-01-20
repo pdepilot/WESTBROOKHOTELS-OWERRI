@@ -379,6 +379,7 @@ function initializeMainWebsite() {
         <a href="rooms-suites.html" class="nav-link">ROOMS & SUITES</a>
         <a href="experience.html" class="nav-link">EXPERIENCE</a>
         <a href="contact.html" class="nav-link">CONTACT</a>
+        <a href="gallery.html" class="nav-link">GALLERY</a>
       </div>
       
       <button class="book-btn">BOOK NOW</button>
@@ -406,7 +407,7 @@ function initializeMainWebsite() {
       <a href="rooms-suites.html">ROOMS & SUITES</a>
       <a href="experience.html">EXPERIENCE</a>
       <a href="contact.html">CONTACT</a>
-      <a href="#">SPECIAL OFFERS</a>
+      <a href="gallery.html">GALLERY</a>
       
       <div class="mobile-contact-info">
         <p>RESERVATIONS</p>
