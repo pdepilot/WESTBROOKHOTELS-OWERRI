@@ -32,226 +32,8 @@
     }
 
     /* ===========================================
-       NAVBAR STYLES (From About Page)
+       STICKY NAVBAR - FROM INDEX PAGE
        =========================================== */
-    .header {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 1000;
-      padding: 32px 64px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo img {
-      width: 110px;
-    }
-
-    .nav a {
-      color: #fff;
-      text-decoration: none;
-      margin-left: 32px;
-      font-size: 12px;
-      letter-spacing: 2px;
-      position: relative;
-    }
-
-    .nav a.active {
-      color: #c19a5b;
-    }
-
-    .nav a::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: -6px;
-      width: 0;
-      height: 1px;
-      background: #c19a5b;
-      transition: 0.3s;
-    }
-
-    .nav a:hover::after,
-    .nav a.active::after {
-      width: 100%;
-    }
-
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 6px;
-      cursor: pointer;
-      z-index: 9999;
-      position: relative;
-    }
-
-    .hamburger span {
-      width: 24px;
-      height: 2px;
-      background: #fff;
-      transition: 0.3s;
-    }
-
-    .hamburger.active span:nth-child(1) {
-      transform: rotate(45deg) translate(6px, 6px);
-    }
-
-    .hamburger.active span:nth-child(2) {
-      opacity: 0;
-    }
-
-    .hamburger.active span:nth-child(3) {
-      transform: rotate(-45deg) translate(6px, -6px);
-    }
-
-    .side-reservation {
-      position: absolute;
-      left: 30px;
-      top: 50%;
-      transform: translateY(-50%);
-      writing-mode: vertical-rl;
-      text-orientation: mixed;
-      z-index: 5;
-      font-size: 11px;
-      letter-spacing: 3px;
-      opacity: 0.9;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .side-reservation .label {
-      margin-bottom: 15px;
-    }
-
-    .side-reservation .divider {
-      height: 50px;
-      width: 1px;
-      background: #fff;
-      margin: 14px 0;
-    }
-
-    .side-reservation .phone-icon {
-      width: 40px;
-      height: 40px;
-      border: 1px solid rgb(255, 255, 255);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 15px 0;
-      font-size: 16px;
-      color: #fff;
-      transition: all 0.3s ease;
-    }
-
-    .side-reservation .phone-icon:hover {
-      border-color: #c19a5b;
-      background: rgba(193, 154, 91, 0.1);
-      transform: scale(1.05);
-    }
-
-    .side-reservation .label {
-      margin-top: 15px;
-      writing-mode: vertical-rl;
-      color: white;
-      text-orientation: mixed;
-      line-height: 1.8;
-      font-size: 15px;
-      letter-spacing: 1.5px;
-    }
-
-    .side-reservation .phone {
-      margin-top: 15px;
-      writing-mode: vertical-rl;
-      color: #c19a5b;
-      text-orientation: mixed;
-      line-height: 1.8;
-      font-size: 15px;
-      letter-spacing: 1.5px;
-    }
-
-    .side-socials {
-      position: absolute;
-      right: 30px;
-      top: 50%;
-      transform: translateY(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      z-index: 5;
-    }
-
-    .side-socials a {
-      color: #fff;
-      text-decoration: none;
-      margin: 12px 0;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      border-radius: 50%;
-      position: relative;
-      overflow: hidden;
-      transition: all 0.3s ease;
-    }
-
-    .side-socials a {
-      animation: socialPulse 6.5s infinite ease-in-out;
-      animation-delay: calc(var(--animation-delay, 0) * 1s);
-    }
-
-    .side-socials a:nth-child(1) {
-      --animation-delay: 0;
-    }
-    .side-socials a:nth-child(2) {
-      --animation-delay: 0.5;
-    }
-    .side-socials a:nth-child(3) {
-      --animation-delay: 1;
-    }
-
-    @keyframes socialPulse {
-      0%,
-      100% {
-        box-shadow: 0 0 0px rgba(255, 255, 255, 0);
-        border-color: rgba(255, 255, 255, 0.3);
-        transform: scale(1);
-      }
-      25% {
-        box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
-        border-color: rgba(255, 255, 255, 0.8);
-        transform: scale(1.05);
-      }
-      50% {
-        box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
-        border-color: rgba(255, 255, 255, 0.5);
-        transform: scale(1);
-      }
-      75% {
-        box-shadow: 0 0 6px rgba(255, 255, 255, 0.4);
-        border-color: rgba(255, 255, 255, 0.6);
-        transform: scale(1.03);
-      }
-    }
-
-    .side-socials a:hover {
-      animation-play-state: paused;
-      background: rgba(255, 255, 255, 0.1);
-      border-color: #c19a5b;
-      transform: scale(1.1);
-    }
-
-    .side-socials a i {
-      font-size: 16px;
-    }
-
-    /* Sticky Navbar Styles */
     .sticky-nav {
       position: fixed;
       top: 0;
@@ -274,19 +56,20 @@
     }
 
     .sticky-nav.scrolled {
-      background: rgba(15, 15, 20, 0.95);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      background: transparent;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       border-bottom: 1px solid rgba(193, 154, 91, 0.1);
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     }
 
     .sticky-nav.elevated {
       box-shadow: 0 8px 32px rgba(193, 154, 91, 0.12);
-      background: rgba(15, 15, 20, 0.98);
-      border-bottom: 1px solid rgba(193, 154, 91, 0.2);
+      background: rgba(15, 15, 20, 0.92);
+      border-bottom: 1px solid rgba(193, 154, 91, 0.15);
     }
 
+    /* Sticky nav inner container */
     .sticky-nav .nav-container {
       display: flex;
       justify-content: space-between;
@@ -296,6 +79,7 @@
       margin: 0 auto;
     }
 
+    /* Sticky nav logo */
     .sticky-nav .logo img {
       width: 100px;
       filter: brightness(1.2);
@@ -306,6 +90,7 @@
       transform: scale(1.05);
     }
 
+    /* Sticky nav links */
     .sticky-nav .nav-links {
       display: flex;
       gap: 40px;
@@ -320,6 +105,7 @@
       padding: 8px 0;
       transition: all 0.3s ease;
       font-weight: 400;
+      cursor: pointer;
     }
 
     .sticky-nav .nav-links a.active {
@@ -390,8 +176,167 @@
       box-shadow: 0 6px 20px rgba(193, 154, 91, 0.4);
     }
 
+    /* Sticky nav hamburger */
+    .sticky-nav .hamburger-btn {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 8px;
+      z-index: 1001;
+    }
+
+    .sticky-nav .hamburger-btn span {
+      width: 24px;
+      height: 2px;
+      background: #fff;
+      transition: all 0.3s ease;
+      display: block;
+    }
+
+    .sticky-nav .hamburger-btn.active span:nth-child(1) {
+      transform: rotate(45deg) translate(6px, 6px);
+      background: #c19a5b;
+    }
+
+    .sticky-nav .hamburger-btn.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .sticky-nav .hamburger-btn.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+      background: #c19a5b;
+    }
+
+    /* MOBILE MENU OVERLAY */
+    .mobile-menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(10, 10, 15, 0.98);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 9990;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .mobile-menu-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Mobile menu container */
+    .mobile-menu-container {
+      text-align: center;
+      max-width: 600px;
+      width: 90%;
+    }
+
+    .mobile-menu-container a {
+      display: block;
+      color: #fff;
+      text-decoration: none;
+      font-size: 24px;
+      letter-spacing: 3px;
+      margin: 20px 0;
+      padding: 15px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.4s ease;
+      position: relative;
+    }
+
+    .mobile-menu-overlay.active .mobile-menu-container a {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .mobile-menu-container a.active {
+      color: #c19a5b;
+    }
+
+    .mobile-menu-container a:hover {
+      color: #c19a5b;
+      transform: scale(1.05);
+    }
+
+    /* Mobile menu close button */
+    .menu-close-btn {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.3s ease;
+      z-index: 9991;
+    }
+
+    .menu-close-btn span {
+      position: absolute;
+      width: 24px;
+      height: 2px;
+      background: #fff;
+      transition: all 0.3s ease;
+    }
+
+    .menu-close-btn span:first-child {
+      transform: rotate(45deg);
+    }
+
+    .menu-close-btn span:last-child {
+      transform: rotate(-45deg);
+    }
+
+    .menu-close-btn:hover span {
+      background: #c19a5b;
+    }
+
+    /* Mobile contact info */
+    .mobile-contact-info {
+      margin-top: 40px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.4s ease 0.7s;
+    }
+
+    .mobile-menu-overlay.active .mobile-contact-info {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .mobile-contact-info p {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 14px;
+      letter-spacing: 2px;
+      margin: 10px 0;
+    }
+
+    .mobile-contact-info .phone {
+      color: #c19a5b;
+      font-size: 16px;
+      margin-top: 15px;
+    }
+
     /* ===========================================
-       HERO SECTION WITH FEATURED IMAGE
+       ORIGINAL HERO SECTION - EXACTLY AS YOU HAD IT
        =========================================== */
     .rooms-hero {
       position: relative;
@@ -508,6 +453,227 @@
       50% { opacity: 1; }
     }
 
+    /* Original Header - As you had it */
+    .header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 5;
+      padding: 32px 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo img {
+      width: 110px;
+    }
+
+    .nav a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 32px;
+      font-size: 12px;
+      letter-spacing: 2px;
+      position: relative;
+    }
+
+    .nav a.active {
+      color: #c19a5b;
+    }
+
+    .nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 0;
+      height: 1px;
+      background: #c19a5b;
+      transition: 0.3s;
+    }
+
+    .nav a:hover::after,
+    .nav a.active::after {
+      width: 100%;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      cursor: pointer;
+      z-index: 9999;
+      position: relative;
+    }
+
+    .hamburger span {
+      width: 24px;
+      height: 2px;
+      background: #fff;
+      transition: 0.3s;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(6px, 6px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+    /* SIDE RESERVATION */
+    .side-reservation {
+      position: absolute;
+      left: 30px;
+      top: 50%;
+      transform: translateY(-50%);
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      z-index: 5;
+      font-size: 11px;
+      letter-spacing: 3px;
+      opacity: 0.9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .side-reservation .label {
+      margin-bottom: 15px;
+    }
+
+    .side-reservation .divider {
+      height: 50px;
+      width: 1px;
+      background: #fff;
+      margin: 14px 0;
+    }
+
+    .side-reservation .phone-icon {
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgb(255, 255, 255);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 15px 0;
+      font-size: 16px;
+      color: #fff;
+      transition: all 0.3s ease;
+    }
+
+    .side-reservation .phone-icon:hover {
+      border-color: #c19a5b;
+      background: rgba(193, 154, 91, 0.1);
+      transform: scale(1.05);
+    }
+
+    .side-reservation .label {
+      margin-top: 15px;
+      writing-mode: vertical-rl;
+      color: white;
+      text-orientation: mixed;
+      line-height: 1.8;
+      font-size: 15px;
+      letter-spacing: 1.5px;
+    }
+
+    .side-reservation .phone {
+      margin-top: 15px;
+      writing-mode: vertical-rl;
+      color: #c19a5b;
+      text-orientation: mixed;
+      line-height: 1.8;
+      font-size: 15px;
+      letter-spacing: 1.5px;
+    }
+
+    /* SOCIALS */
+    .side-socials {
+      position: absolute;
+      right: 30px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 5;
+    }
+
+    .side-socials a {
+      color: #fff;
+      text-decoration: none;
+      margin: 12px 0;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .side-socials a {
+      animation: socialPulse 6.5s infinite ease-in-out;
+      animation-delay: calc(var(--animation-delay, 0) * 1s);
+    }
+
+    .side-socials a:nth-child(1) {
+      --animation-delay: 0;
+    }
+    .side-socials a:nth-child(2) {
+      --animation-delay: 0.5;
+    }
+    .side-socials a:nth-child(3) {
+      --animation-delay: 1;
+    }
+
+    @keyframes socialPulse {
+      0%,
+      100% {
+        box-shadow: 0 0 0px rgba(255, 255, 255, 0);
+        border-color: rgba(255, 255, 255, 0.3);
+        transform: scale(1);
+      }
+      25% {
+        box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+        border-color: rgba(255, 255, 255, 0.8);
+        transform: scale(1.05);
+      }
+      50% {
+        box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+        border-color: rgba(255, 255, 255, 0.5);
+        transform: scale(1);
+      }
+      75% {
+        box-shadow: 0 0 6px rgba(255, 255, 255, 0.4);
+        border-color: rgba(255, 255, 255, 0.6);
+        transform: scale(1.03);
+      }
+    }
+
+    .side-socials a:hover {
+      animation-play-state: paused;
+      background: rgba(255, 255, 255, 0.1);
+      border-color: #c19a5b;
+      transform: scale(1.1);
+    }
+
+    .side-socials a i {
+      font-size: 16px;
+    }
+
+    /* Hero Content */
     .hero-content {
       position: relative;
       z-index: 3;
@@ -658,7 +824,7 @@
     }
 
     /* ===========================================
-       ROOMS SHOWCASE
+       ROOMS SHOWCASE - EXACTLY AS YOU HAD IT
        =========================================== */
     .rooms-showcase {
       padding: 100px 64px;
@@ -881,7 +1047,7 @@
       font-size: 15px;
     }
 
-    /* Room Actions - Removed Navigation Button */
+    /* Room Actions */
     .room-actions {
       display: flex;
       justify-content: space-between;
@@ -1146,7 +1312,7 @@
     .ornament-3 { bottom: 15%; left: 15%; }
 
     /* ===========================================
-       FOOTER STYLES (From About Page)
+       FOOTER STYLES
        =========================================== */
     .footer {
       background: #0c0c0c;
@@ -1709,130 +1875,47 @@
     .room-card:nth-child(5) { transition-delay: 0.5s; }
     .room-card:nth-child(6) { transition-delay: 0.6s; }
 
-    /* Mobile Menu Styles */
-    .mobile-menu {
-      position: fixed;
-      top: 0;
-      right: -100%;
-      width: 250px;
-      height: 100vh;
-      background: rgba(10, 10, 10, 0.95);
-      backdrop-filter: blur(10px);
-      display: flex;
-      flex-direction: column;
-      padding: 100px 30px 30px;
-      z-index: 9998;
-      transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    /* RESPONSIVE DESIGN FOR NAVBAR */
+    @media (max-width: 1024px) {
+      .sticky-nav {
+        padding: 0 30px;
+      }
+
+      .sticky-nav .nav-links {
+        gap: 25px;
+      }
     }
 
-    .mobile-menu.active {
-      right: 0;
+    @media (max-width: 768px) {
+      .sticky-nav {
+        padding: 0 20px;
+      }
+
+      .sticky-nav .nav-links,
+      .sticky-nav .book-btn {
+        display: none;
+      }
+
+      .sticky-nav .hamburger-btn {
+        display: flex;
+      }
+
+      .sticky-nav .logo img {
+        width: 90px;
+      }
+
+      /* Adjust original header for mobile */
+      .header .hamburger {
+        display: none;
+      }
     }
 
-    .mobile-menu a {
-      color: #fff;
-      text-decoration: none;
-      font-size: 16px;
-      letter-spacing: 2px;
-      margin: 15px 0;
-      padding: 10px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      transition: color 0.3s;
-    }
-
-    .mobile-menu a.active {
-      color: #c19a5b;
-    }
-
-    .mobile-menu a:hover {
-      color: #c19a5b;
-    }
-
-    .mobile-menu-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(10, 10, 15, 0.98);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      z-index: 9990;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .mobile-menu-overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .mobile-menu-container {
-      text-align: center;
-      max-width: 600px;
-      width: 90%;
-    }
-
-    .mobile-menu-container a {
-      display: block;
-      color: #fff;
-      text-decoration: none;
-      font-size: 24px;
-      letter-spacing: 3px;
-      margin: 20px 0;
-      padding: 15px;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.4s ease;
-      position: relative;
-    }
-
-    .mobile-menu-overlay.active .mobile-menu-container a {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .mobile-menu-container a.active {
-      color: #c19a5b;
-    }
-
-    .menu-close-btn {
-      position: absolute;
-      top: 30px;
-      right: 30px;
-      width: 50px;
-      height: 50px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 50%;
-      border: none;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      transition: all 0.3s ease;
-      z-index: 9991;
-    }
-
-    .menu-close-btn span {
-      position: absolute;
-      width: 24px;
-      height: 2px;
-      background: #fff;
-      transition: all 0.3s ease;
-    }
-
-    .menu-close-btn span:first-child {
-      transform: rotate(45deg);
-    }
-
-    .menu-close-btn span:last-child {
-      transform: rotate(-45deg);
+    @media (min-width: 769px) {
+      .mobile-menu-overlay,
+      .mobile-menu-container,
+      .menu-close-btn {
+        display: none;
+      }
     }
   </style>
 </head>
@@ -1848,7 +1931,7 @@
     <!-- Luxury Sparkles -->
     <div class="luxury-sparkles" id="sparklesContainer"></div>
 
-    <!-- Header (From About Page) -->
+    <!-- Header - EXACTLY AS YOU HAD IT -->
     <header class="header">
       <div class="logo">
         <a href="index.html">
@@ -1859,7 +1942,7 @@
       <nav class="nav">
         <a href="index.html">HOME</a>
         <a href="about.html">ABOUT</a>
-        <a href="rooms.html" class="active">ROOMS & SUITES</a>
+        <a href="rooms-suites.html" class="active">ROOMS & SUITES</a>
         <a href="experience.html">EXPERIENCE</a>
         <a href="contact.html">CONTACT</a>
       </nav>
@@ -1894,9 +1977,9 @@
     <!-- Hero Content -->
     <div class="hero-content">
       <div class="hero-breadcrumb">
-        <a href="index.html">HOME</a> / <span>ROOMS & SUITES</span>
+        <!-- <a href="index.html">HOME</a> / <span>ROOMS & SUITES</span> -->
       </div>
-      <h1>LUXURY ACCOMMODATION</h1>
+      <h1>LUXURY DEFINED</h1>
       <div class="hero-divider"></div>
       <p class="hero-subtitle">Where Elegance Meets Comfort</p>
       <p class="hero-description">Each room and suite at WestBrook Hotel is meticulously designed to provide the ultimate in comfort, style, and sophistication. From breathtaking views to premium amenities, discover accommodation that exceeds expectations.</p>
@@ -2055,7 +2138,7 @@
     </div>
   </section>
 
-  <!-- Footer (From About Page) -->
+  <!-- Footer -->
   <footer class="footer">
     <div class="footer-content">
       <div class="footer-section">
@@ -2118,39 +2201,9 @@
     <i class="fas fa-chevron-up"></i>
   </button>
 
-  <!-- Mobile Menu Elements (From About Page) -->
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="index.html">HOME</a>
-    <a href="about.html">ABOUT</a>
-    <a href="rooms-suites.html" class="active">ROOMS & SUITES</a>
-    <a href="experience.html">EXPERIENCE</a>
-    <a href="contact.html">CONTACT</a>
-  </div>
-
-  <div class="mobile-menu-overlay" id="mobileMenuOverlay">
-    <button class="menu-close-btn" id="menuCloseBtn">
-      <span></span>
-      <span></span>
-    </button>
-    
-    <div class="mobile-menu-container">
-      <a href="index.html">HOME</a>
-      <a href="about.html">ABOUT</a>
-      <a href="rooms-suites.html" class="active">ROOMS & SUITES</a>
-      <a href="experience.html">EXPERIENCE</a>
-      <a href="contact.html">CONTACT</a>
-      
-      <div class="mobile-contact-info">
-        <p>RESERVATIONS</p>
-        <div class="phone">+234 809 999 1244</div>
-        <div class="phone">+234 704 282 5937</div>
-      </div>
-    </div>
-  </div>
-
   <script>
     // ===========================================
-    // LUXURY ROOMS PAGE FUNCTIONALITY
+    // ROOMS PAGE FUNCTIONALITY - EXACTLY AS YOU HAD IT
     // ===========================================
     
     document.addEventListener('DOMContentLoaded', function() {
@@ -2452,7 +2505,7 @@
       };
       
       // ===========================================
-      // NAVBAR FUNCTIONALITY (From About Page)
+      // NAVBAR FUNCTIONALITY - ADDED FROM INDEX PAGE
       // ===========================================
       
       // Create and add sticky navbar
@@ -2470,7 +2523,7 @@
             <div class="nav-links">
               <a href="index.html">HOME</a>
               <a href="about.html">ABOUT</a>
-              <a href="rooms.html" class="active">ROOMS & SUITES</a>
+              <a href="rooms-suites.html" class="active">ROOMS & SUITES</a>
               <a href="experience.html">EXPERIENCE</a>
               <a href="contact.html">CONTACT</a>
             </div>
@@ -2488,37 +2541,52 @@
         document.body.insertBefore(stickyNav, document.body.firstChild);
       }
       
+      // Create mobile menu overlay
+      function createMobileMenuOverlay() {
+        const mobileMenuOverlay = document.createElement('div');
+        mobileMenuOverlay.className = 'mobile-menu-overlay';
+        mobileMenuOverlay.innerHTML = `
+          <button class="menu-close-btn" id="menuCloseBtn">
+            <span></span>
+            <span></span>
+          </button>
+          
+          <div class="mobile-menu-container">
+            <a href="index.html">HOME</a>
+            <a href="about.html">ABOUT</a>
+            <a href="rooms-suites.html" class="active">ROOMS & SUITES</a>
+            <a href="experience.html">EXPERIENCE</a>
+            <a href="contact.html">CONTACT</a>
+            
+            <div class="mobile-contact-info">
+              <p>RESERVATIONS</p>
+              <div class="phone">+234 809 999 1244</div>
+              <div class="phone">+234 704 282 5937</div>
+            </div>
+          </div>
+        `;
+        
+        document.body.appendChild(mobileMenuOverlay);
+        return mobileMenuOverlay;
+      }
+      
       // Initialize all navbar elements
       addStickyNavbar();
+      const mobileMenuOverlay = createMobileMenuOverlay();
       
       // Get all navbar elements
       const hamburger = document.getElementById('hamburger');
-      const mobileMenu = document.getElementById('mobileMenu');
       const stickyHamburger = document.getElementById('stickyHamburger');
       const menuCloseBtn = document.getElementById('menuCloseBtn');
-      const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
       const stickyNav = document.querySelector('.sticky-nav');
       const bookBtn = document.querySelector('.sticky-nav .book-btn');
       
-      // Original hamburger menu functionality
+      // Original hamburger menu functionality (for mobile only)
       hamburger.addEventListener('click', (e) => {
         e.stopPropagation();
-        mobileMenu.classList.toggle('active');
-        hamburger.classList.toggle('active');
-        
-        if (mobileMenu.classList.contains('active')) {
-          document.body.style.overflow = 'hidden';
-        } else {
-          document.body.style.overflow = 'auto';
-        }
-      });
-      
-      mobileMenu.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-          mobileMenu.classList.remove('active');
-          hamburger.classList.remove('active');
-          document.body.style.overflow = 'auto';
-        });
+        mobileMenuOverlay.classList.add('active');
+        stickyHamburger.classList.add('active');
+        document.body.style.overflow = 'hidden';
       });
       
       // Sticky navbar hamburger functionality
@@ -2529,6 +2597,7 @@
         document.body.style.overflow = 'hidden';
       });
       
+      // Close mobile menu
       menuCloseBtn.addEventListener('click', () => {
         mobileMenuOverlay.classList.remove('active');
         stickyHamburger.classList.remove('active');
@@ -2546,13 +2615,6 @@
       
       // Close menus when clicking outside
       document.addEventListener('click', e => {
-        // Original mobile menu
-        if (!mobileMenu.contains(e.target) && !hamburger.contains(e.target) && mobileMenu.classList.contains('active')) {
-          mobileMenu.classList.remove('active');
-          hamburger.classList.remove('active');
-          document.body.style.overflow = 'auto';
-        }
-        
         // Mobile menu overlay
         if (e.target === mobileMenuOverlay && mobileMenuOverlay.classList.contains('active')) {
           mobileMenuOverlay.classList.remove('active');
@@ -2564,12 +2626,6 @@
       // Close menus on escape key
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
-          if (mobileMenu.classList.contains('active')) {
-            mobileMenu.classList.remove('active');
-            hamburger.classList.remove('active');
-            document.body.style.overflow = 'auto';
-          }
-          
           if (mobileMenuOverlay.classList.contains('active')) {
             mobileMenuOverlay.classList.remove('active');
             stickyHamburger.classList.remove('active');

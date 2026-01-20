@@ -782,7 +782,6 @@ body {
   opacity: 0;
 }
 
-
 .sticky-nav.visible {
   transform: translateY(0);
   opacity: 1;
@@ -860,6 +859,7 @@ body {
   padding: 8px 0;
   transition: all 0.3s ease;
   font-weight: 400;
+  cursor: pointer; /* Added cursor pointer */
 }
 
 /* Animated underline effect */
@@ -899,8 +899,6 @@ body {
   transform: translateX(-50%) scale(1);
 }
 
-
-
 /* Color transition on scroll */
 .sticky-nav .nav-links a {
   color: rgba(255, 255, 255, 0.9);
@@ -915,7 +913,6 @@ body {
   color: #ffffff;
   font-weight: 500;
 }
-
 
 /* Sticky nav booking button */
 .sticky-nav .book-btn {
@@ -2158,10 +2155,10 @@ body {
 }
 
 /* ===========================================
-       TESTIMONIALS SECTION
+       TESTIMONIALS SECTION - REDUCED HEIGHT
        =========================================== */
 .testimonials-section {
-  padding: 100px 50px;
+  padding: 60px 50px; /* Reduced from 100px */
   background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
   position: relative;
   overflow: hidden;
@@ -2175,7 +2172,7 @@ body {
 
 .testimonials-slider {
   position: relative;
-  min-height: 400px;
+  min-height: 320px; /* Reduced from 400px */
 }
 
 .testimonial {
@@ -2197,7 +2194,7 @@ body {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
   border-radius: 20px;
-  padding: 60px;
+  padding: 40px 50px; /* Reduced padding */
   border: 1px solid rgba(255, 255, 255, 0.1);
   position: relative;
 }
@@ -2205,9 +2202,9 @@ body {
 .testimonial-content::before {
   content: '"';
   position: absolute;
-  top: -30px;
-  left: 40px;
-  font-size: 120px;
+  top: -25px; /* Adjusted position */
+  left: 30px;
+  font-size: 90px; /* Reduced size */
   font-family: "Playfair Display", serif;
   color: rgba(193, 154, 91, 0.2);
   line-height: 1;
@@ -2215,16 +2212,16 @@ body {
 
 .testimonial .stars {
   color: #c19a5b;
-  font-size: 20px;
-  margin-bottom: 30px;
+  font-size: 18px; /* Reduced from 20px */
+  margin-bottom: 20px; /* Reduced from 30px */
 }
 
 .testimonial-text {
-  font-size: 18px;
-  line-height: 1.8;
+  font-size: 17px; /* Slightly reduced */
+  line-height: 1.7;
   color: rgba(255, 255, 255, 0.9);
   font-style: italic;
-  margin-bottom: 40px;
+  margin-bottom: 30px; /* Reduced from 40px */
   position: relative;
   z-index: 1;
 }
@@ -2232,44 +2229,44 @@ body {
 .guest-info {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 15px; /* Reduced from 20px */
 }
 
 .guest-avatar {
-  width: 60px;
-  height: 60px;
+  width: 50px; /* Reduced from 60px */
+  height: 50px; /* Reduced from 60px */
   background: rgba(193, 154, 91, 0.1);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #c19a5b;
-  font-size: 32px;
+  font-size: 26px; /* Reduced from 32px */
 }
 
 .guest-details h4 {
   font-family: "Playfair Display", serif;
-  font-size: 20px;
+  font-size: 18px; /* Reduced from 20px */
   margin-bottom: 5px;
   color: #fff;
 }
 
 .guest-details p {
   color: rgba(255, 255, 255, 0.6);
-  font-size: 14px;
-  letter-spacing: 1px;
+  font-size: 13px; /* Reduced from 14px */
+  letter-spacing: 0.8px; /* Reduced from 1px */
 }
 
 .testimonial-dots {
   display: flex;
   justify-content: center;
-  gap: 15px;
-  margin-top: 40px;
+  gap: 12px; /* Reduced from 15px */
+  margin-top: 30px; /* Reduced from 40px */
 }
 
 .dot {
-  width: 12px;
-  height: 12px;
+  width: 10px; /* Reduced from 12px */
+  height: 10px; /* Reduced from 12px */
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.2);
   cursor: pointer;
@@ -2775,8 +2772,42 @@ body {
     grid-template-columns: 1fr;
   }
 
+  /* Further reduce testimonials height on mobile */
+  .testimonials-section {
+    padding: 40px 20px;
+  }
+
+  .testimonials-slider {
+    min-height: 280px;
+  }
+
   .testimonial-content {
-    padding: 40px 30px;
+    padding: 30px 25px;
+  }
+
+  .testimonial-content::before {
+    font-size: 70px;
+    top: -20px;
+    left: 20px;
+  }
+
+  .testimonial-text {
+    font-size: 16px;
+    margin-bottom: 25px;
+  }
+
+  .guest-avatar {
+    width: 45px;
+    height: 45px;
+    font-size: 24px;
+  }
+
+  .guest-details h4 {
+    font-size: 16px;
+  }
+
+  .guest-details p {
+    font-size: 12px;
   }
 
   .footer {

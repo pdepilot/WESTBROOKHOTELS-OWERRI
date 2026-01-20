@@ -39,7 +39,7 @@
     }
 
     /* ===========================================
-       NAVBAR STYLES (From About Page)
+       NAVBAR STYLES
        =========================================== */
     .header {
       position: absolute;
@@ -391,18 +391,52 @@
       box-shadow: 0 6px 20px rgba(193, 154, 91, 0.4);
     }
 
+    /* Sticky nav hamburger */
+    .sticky-nav .hamburger-btn {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 8px;
+      z-index: 1001;
+    }
+
+    .sticky-nav .hamburger-btn span {
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      transition: all 0.3s ease;
+      display: block;
+    }
+
+    .sticky-nav .hamburger-btn.active span:nth-child(1) {
+      transform: rotate(45deg) translate(6px, 6px);
+      background: var(--gold);
+    }
+
+    .sticky-nav .hamburger-btn.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .sticky-nav .hamburger-btn.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+      background: var(--gold);
+    }
+
     /* ===========================================
-       EXPERIENCE HERO SECTION
+       ENHANCED EXPERIENCE HERO SECTION
        =========================================== */
     .experience-hero {
       position: relative;
-      height: 90vh;
-      min-height: 700px;
-      max-height: 1000px;
+      height: 100vh;
+      min-height: 800px;
+      max-height: 1200px;
       overflow: hidden;
     }
 
-    /* Video Background */
+    /* Video Background - ENHANCED */
     .hero-video-container {
       position: absolute;
       top: 0;
@@ -416,7 +450,7 @@
     .hero-video-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(45deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4));
+      background: linear-gradient(45deg, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.65));
       z-index: 2;
     }
 
@@ -424,7 +458,13 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      filter: brightness(0.8);
+      filter: brightness(0.7);
+      animation: videoFadeIn 2s ease-in-out;
+    }
+
+    @keyframes videoFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     /* Animated Particles */
@@ -445,7 +485,7 @@
       pointer-events: none;
     }
 
-    /* Hero Content */
+    /* Enhanced Hero Content */
     .hero-content {
       position: relative;
       z-index: 4;
@@ -486,14 +526,18 @@
 
     .experience-hero h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 5.5rem;
+      font-size: 6rem;
       font-weight: 800;
-      letter-spacing: 2px;
+      letter-spacing: 3px;
       margin-bottom: 30px;
       color: var(--white);
-      text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.5);
+      text-shadow: 2px 2px 30px rgba(0, 0, 0, 0.7);
       line-height: 1.1;
       animation: titleEntrance 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+      background: linear-gradient(135deg, var(--white) 0%, var(--gold) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     @keyframes titleEntrance {
@@ -508,7 +552,7 @@
     }
 
     .hero-divider {
-      width: 150px;
+      width: 200px;
       height: 4px;
       background: linear-gradient(90deg, transparent, var(--gold), transparent);
       margin: 0 auto 40px;
@@ -528,52 +572,162 @@
     }
 
     .hero-subtitle {
-      font-size: 20px;
-      letter-spacing: 6px;
+      font-size: 22px;
+      letter-spacing: 8px;
       color: var(--gold);
       margin-bottom: 50px;
       text-transform: uppercase;
       font-weight: 300;
-      max-width: 800px;
+      max-width: 900px;
       line-height: 1.5;
+      animation: fadeInUp 1s ease 0.5s both;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .hero-description {
-      color: rgba(255, 255, 255, 0.9);
-      font-size: 18px;
+      color: rgba(255, 255, 255, 0.95);
+      font-size: 20px;
       line-height: 1.8;
       margin-bottom: 60px;
-      max-width: 800px;
+      max-width: 900px;
       font-weight: 300;
+      animation: fadeInUp 1s ease 0.8s both;
     }
 
-    /* Hero Stats */
+    /* Enhanced Hero Stats */
     .hero-stats {
       display: flex;
-      gap: 60px;
-      margin-top: 40px;
+      gap: 80px;
+      margin-top: 60px;
       flex-wrap: wrap;
       justify-content: center;
+      animation: fadeInUp 1s ease 1.1s both;
     }
 
     .stat-item {
       text-align: center;
+      position: relative;
+      padding: 0 20px;
+    }
+
+    .stat-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(193, 154, 91, 0.1), transparent);
+      border-radius: 20px;
+      transform: scale(0.9);
+      transition: all 0.3s ease;
+      opacity: 0;
+    }
+
+    .stat-item:hover::before {
+      opacity: 1;
+      transform: scale(1);
     }
 
     .stat-number {
       font-family: 'Playfair Display', serif;
-      font-size: 3.5rem;
+      font-size: 4rem;
       color: var(--gold);
       font-weight: 700;
       line-height: 1;
       margin-bottom: 10px;
+      position: relative;
+      z-index: 1;
+      text-shadow: 0 0 20px rgba(193, 154, 91, 0.3);
     }
 
     .stat-label {
-      color: rgba(255, 255, 255, 0.8);
+      color: rgba(255, 255, 255, 0.9);
       font-size: 14px;
-      letter-spacing: 2px;
+      letter-spacing: 3px;
       text-transform: uppercase;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Scroll Hint Animation */
+    .scroll-hint {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 4;
+      text-align: center;
+      cursor: pointer;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateX(-50%) translateY(0);
+      }
+      40% {
+        transform: translateX(-50%) translateY(-10px);
+      }
+      60% {
+        transform: translateX(-50%) translateY(-5px);
+      }
+    }
+
+    .scroll-hint-text {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 12px;
+      letter-spacing: 3px;
+      margin-bottom: 15px;
+      font-weight: 300;
+    }
+
+    .scroll-hint-arrow {
+      width: 30px;
+      height: 50px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 15px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .scroll-hint-arrow::after {
+      content: '';
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 8px;
+      height: 8px;
+      border-bottom: 2px solid var(--gold);
+      border-right: 2px solid var(--gold);
+      transform: translateX(-50%) rotate(45deg);
+      animation: scrollArrow 2s infinite;
+    }
+
+    @keyframes scrollArrow {
+      0% {
+        opacity: 0;
+        top: 10px;
+      }
+      50% {
+        opacity: 1;
+        top: 20px;
+      }
+      100% {
+        opacity: 0;
+        top: 30px;
+      }
     }
 
     /* ===========================================
@@ -1161,17 +1315,22 @@
     }
 
     /* ===========================================
-       BOOK EXPERIENCE CTA
+       UPDATED BOOK EXPERIENCE CTA (WITH UNSPLASH BACKGROUND IMAGE & REDUCED HEIGHT)
        =========================================== */
     .experience-cta {
-      padding: 200px 64px;
-      background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), 
-                  url('./images/cta-experience.jpg');
+      padding: 120px 64px; /* Reduced padding */
+      background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), 
+                  url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'); /* Premium Unsplash background */
       background-size: cover;
+      background-position: center;
       background-attachment: fixed;
       text-align: center;
       position: relative;
       overflow: hidden;
+      min-height: 600px; /* Reduced height */
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .cta-container {
@@ -1183,17 +1342,17 @@
 
     .cta-title {
       font-family: 'Playfair Display', serif;
-      font-size: 4.5rem;
+      font-size: 3.5rem; /* Slightly smaller font */
       color: var(--white);
-      margin-bottom: 30px;
+      margin-bottom: 25px; /* Reduced margin */
       line-height: 1.1;
       text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.5);
     }
 
     .cta-subtitle {
-      font-size: 20px;
+      font-size: 18px; /* Slightly smaller font */
       color: rgba(255, 255, 255, 0.9);
-      margin-bottom: 60px;
+      margin-bottom: 40px; /* Reduced margin */
       line-height: 1.6;
       font-weight: 300;
       letter-spacing: 2px;
@@ -1203,7 +1362,7 @@
       background: linear-gradient(135deg, var(--gold) 0%, var(--light-gold) 100%);
       color: var(--white);
       border: none;
-      padding: 22px 60px;
+      padding: 20px 50px; /* Slightly reduced padding */
       border-radius: 50px;
       font-size: 16px;
       letter-spacing: 3px;
@@ -1256,7 +1415,7 @@
     .floating-element {
       position: absolute;
       color: rgba(193, 154, 91, 0.1);
-      font-size: 100px;
+      font-size: 80px; /* Slightly smaller */
       animation: float 20s infinite linear;
     }
 
@@ -1281,7 +1440,7 @@
     }
 
     /* ===========================================
-       FOOTER STYLES (From About Page)
+       FOOTER STYLES
        =========================================== */
     .footer {
       background: var(--dark);
@@ -1524,11 +1683,136 @@
     }
 
     /* ===========================================
+       MOBILE MENU OVERLAY
+       =========================================== */
+    .mobile-menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(10, 10, 15, 0.98);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 9990;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .mobile-menu-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .mobile-menu-container {
+      text-align: center;
+      max-width: 600px;
+      width: 90%;
+    }
+
+    .mobile-menu-container a {
+      display: block;
+      color: var(--white);
+      text-decoration: none;
+      font-size: 24px;
+      letter-spacing: 3px;
+      margin: 20px 0;
+      padding: 15px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.4s ease;
+      position: relative;
+    }
+
+    .mobile-menu-overlay.active .mobile-menu-container a {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .mobile-menu-container a.active {
+      color: var(--gold);
+    }
+
+    .mobile-menu-container a:hover {
+      color: var(--gold);
+      transform: scale(1.05);
+    }
+
+    .menu-close-btn {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.3s ease;
+      z-index: 9991;
+    }
+
+    .menu-close-btn span {
+      position: absolute;
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      transition: all 0.3s ease;
+    }
+
+    .menu-close-btn span:first-child {
+      transform: rotate(45deg);
+    }
+
+    .menu-close-btn span:last-child {
+      transform: rotate(-45deg);
+    }
+
+    .menu-close-btn:hover span {
+      background: var(--gold);
+    }
+
+    /* Mobile contact info */
+    .mobile-contact-info {
+      margin-top: 40px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.4s ease 0.7s;
+    }
+
+    .mobile-menu-overlay.active .mobile-contact-info {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .mobile-contact-info p {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 14px;
+      letter-spacing: 2px;
+      margin: 10px 0;
+    }
+
+    .mobile-contact-info .phone {
+      color: var(--gold);
+      font-size: 16px;
+      margin-top: 15px;
+    }
+
+    /* ===========================================
        RESPONSIVE STYLES
        =========================================== */
     @media (max-width: 1400px) {
       .experience-hero h1 {
-        font-size: 4.5rem;
+        font-size: 5rem;
       }
       
       .section-title {
@@ -1553,7 +1837,7 @@
       }
       
       .experience-hero h1 {
-        font-size: 3.8rem;
+        font-size: 4rem;
       }
       
       .spa-container,
@@ -1574,25 +1858,29 @@
       .sticky-nav .nav-links {
         gap: 25px;
       }
+      
+      .experience-cta {
+        padding: 100px 40px;
+      }
     }
 
     @media (max-width: 992px) {
       .experience-hero {
-        height: 80vh;
-        min-height: 600px;
+        height: 90vh;
+        min-height: 700px;
       }
       
       .experience-hero h1 {
-        font-size: 3.2rem;
+        font-size: 3.5rem;
       }
       
       .hero-subtitle {
-        font-size: 16px;
-        letter-spacing: 4px;
+        font-size: 18px;
+        letter-spacing: 6px;
       }
       
       .hero-description {
-        font-size: 16px;
+        font-size: 18px;
       }
       
       .hero-stats {
@@ -1600,7 +1888,7 @@
       }
       
       .stat-number {
-        font-size: 2.8rem;
+        font-size: 3rem;
       }
       
       .section-title {
@@ -1614,7 +1902,7 @@
       }
       
       .cta-title {
-        font-size: 3.5rem;
+        font-size: 3rem;
       }
       
       .timeline::before {
@@ -1638,25 +1926,37 @@
         left: -30px !important;
         right: auto !important;
       }
+      
+      .sticky-nav .nav-links {
+        display: none;
+      }
+      
+      .sticky-nav .book-btn {
+        display: none;
+      }
+      
+      .sticky-nav .hamburger-btn {
+        display: flex;
+      }
     }
 
     @media (max-width: 768px) {
       .experience-hero {
-        height: 70vh;
-        min-height: 500px;
+        height: 85vh;
+        min-height: 600px;
       }
       
       .experience-hero h1 {
-        font-size: 2.5rem;
+        font-size: 2.8rem;
       }
       
       .hero-subtitle {
-        font-size: 14px;
-        letter-spacing: 3px;
+        font-size: 16px;
+        letter-spacing: 4px;
       }
       
       .hero-description {
-        font-size: 14px;
+        font-size: 16px;
         margin-bottom: 40px;
       }
       
@@ -1665,7 +1965,7 @@
       }
       
       .stat-number {
-        font-size: 2.2rem;
+        font-size: 2.5rem;
       }
       
       .header {
@@ -1764,7 +2064,7 @@
       }
       
       .cta-title {
-        font-size: 2.8rem;
+        font-size: 2.5rem;
       }
       
       .cta-subtitle {
@@ -1783,16 +2083,21 @@
       .footer-section h3 {
         font-size: 22px;
       }
+      
+      .experience-cta {
+        padding: 80px 25px;
+        min-height: 500px;
+      }
     }
 
     @media (max-width: 480px) {
       .experience-hero h1 {
-        font-size: 2rem;
+        font-size: 2.2rem;
       }
       
       .hero-subtitle {
-        font-size: 12px;
-        letter-spacing: 2px;
+        font-size: 14px;
+        letter-spacing: 3px;
       }
       
       .section-title {
@@ -1810,7 +2115,7 @@
       }
       
       .stat-number {
-        font-size: 1.8rem;
+        font-size: 2rem;
       }
       
       .stat-label {
@@ -1818,11 +2123,12 @@
       }
       
       .cta-title {
-        font-size: 2.2rem;
+        font-size: 2rem;
       }
       
       .experience-cta {
-        padding: 120px 25px;
+        padding: 60px 20px;
+        min-height: 400px;
       }
       
       .back-to-top {
@@ -1832,134 +2138,14 @@
         bottom: 30px;
         right: 30px;
       }
-    }
-
-    /* ===========================================
-       MOBILE MENU STYLES
-       =========================================== */
-    .mobile-menu {
-      position: fixed;
-      top: 0;
-      right: -100%;
-      width: 250px;
-      height: 100vh;
-      background: rgba(10, 10, 10, 0.95);
-      backdrop-filter: blur(10px);
-      display: flex;
-      flex-direction: column;
-      padding: 100px 30px 30px;
-      z-index: 9998;
-      transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .mobile-menu.active {
-      right: 0;
-    }
-
-    .mobile-menu a {
-      color: var(--white);
-      text-decoration: none;
-      font-size: 16px;
-      letter-spacing: 2px;
-      margin: 15px 0;
-      padding: 10px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      transition: color 0.3s;
-    }
-
-    .mobile-menu a.active {
-      color: var(--gold);
-    }
-
-    .mobile-menu a:hover {
-      color: var(--gold);
-    }
-
-    .mobile-menu-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(10, 10, 15, 0.98);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      z-index: 9990;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .mobile-menu-overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .mobile-menu-container {
-      text-align: center;
-      max-width: 600px;
-      width: 90%;
-    }
-
-    .mobile-menu-container a {
-      display: block;
-      color: var(--white);
-      text-decoration: none;
-      font-size: 24px;
-      letter-spacing: 3px;
-      margin: 20px 0;
-      padding: 15px;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.4s ease;
-      position: relative;
-    }
-
-    .mobile-menu-overlay.active .mobile-menu-container a {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .mobile-menu-container a.active {
-      color: var(--gold);
-    }
-
-    .menu-close-btn {
-      position: absolute;
-      top: 30px;
-      right: 30px;
-      width: 50px;
-      height: 50px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 50%;
-      border: none;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      transition: all 0.3s ease;
-      z-index: 9991;
-    }
-
-    .menu-close-btn span {
-      position: absolute;
-      width: 24px;
-      height: 2px;
-      background: var(--white);
-      transition: all 0.3s ease;
-    }
-
-    .menu-close-btn span:first-child {
-      transform: rotate(45deg);
-    }
-
-    .menu-close-btn span:last-child {
-      transform: rotate(-45deg);
+      
+      .hero-stats {
+        gap: 15px;
+      }
+      
+      .stat-item {
+        padding: 0 10px;
+      }
     }
 
     /* ===========================================
@@ -2014,13 +2200,23 @@
   </style>
 </head>
 <body>
-  <!-- Experience Hero Section -->
+  <!-- Sticky Navbar will be inserted here by JavaScript -->
+
+  <!-- Enhanced Experience Hero Section -->
   <section class="experience-hero">
     <!-- Video Background -->
     <div class="hero-video-container">
       <div class="hero-video-overlay"></div>
-      <!-- Video would be added here -->
-      <div style="width: 100%; height: 100%; background: linear-gradient(45deg, #000, #222);"></div>
+      <!-- Premium 5-star hospitality video from Unsplash -->
+      <video class="hero-video" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80">
+        <source src="https://res.cloudinary.com/dl4hjr1p2/video/upload/v1768217076/AQPmEgbU3xxI6JV2CYd02-XU6Bk26kGEGn7hFZ841Qmkl20XdSiUgb2uVUScyjo7I53WposWWfT3dHRDiWNjJGGUC5mpQRQ8QE1K3xk_hwmekz.mp4" type="video/mp4">
+        <source src="https://assets.mixkit.co/videos/preview/mixkit-luxury-hotel-lobby-and-reception-31525-large.mp4" type="video/mp4">
+        <!-- Fallback video sources -->
+        <source src="https://cdn.pixabay.com/vimeo/654430515/hotel-97053.mp4?width=1920&hash=2f0ac1776a425e8eb0d00b8af1c841e4baf50c82" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <!-- Fallback image from Unsplash -->
+      <div style="display: none; width: 100%; height: 100%; background: linear-gradient(45deg, #000, #222);"></div>
     </div>
 
     <!-- Animated Particles -->
@@ -2037,7 +2233,7 @@
       <nav class="nav">
         <a href="index.html">HOME</a>
         <a href="about.html">ABOUT</a>
-        <a href="rooms.html">ROOMS & SUITES</a>
+        <a href="rooms-suites.html">ROOMS & SUITES</a>
         <a href="experience.html" class="active">EXPERIENCE</a>
         <a href="contact.html">CONTACT</a>
       </nav>
@@ -2069,12 +2265,12 @@
       <a href="#" aria-label="Twitter" class="social-icon"><i class="fab fa-x-twitter"></i></a>
     </div>
 
-    <!-- Hero Content -->
+    <!-- Enhanced Hero Content -->
     <div class="hero-content">
       <div class="hero-breadcrumb">
         <!-- <a href="index.html">HOME</a> / <span>EXPERIENCE</span> -->
       </div>
-      <h1>IMMERSE YOURSELF IN LUXURY</h1>
+      <h1>IMMERSE IN LUXURY</h1>
       <div class="hero-divider"></div>
       <p class="hero-subtitle">Beyond Accommodation, A Lifestyle Awaits</p>
       <p class="hero-description">At WestBrook Hotel, we redefine luxury through unforgettable experiences. From rejuvenating spa treatments to world-class dining and exclusive activities, every moment is crafted to create lasting memories.</p>
@@ -2096,6 +2292,12 @@
           <div class="stat-number">10+</div>
           <div class="stat-label">Experience Packages</div>
         </div>
+      </div>
+      
+      <!-- Scroll Hint -->
+      <div class="scroll-hint" onclick="scrollToNextSection()">
+        <div class="scroll-hint-text">DISCOVER MORE</div>
+        <div class="scroll-hint-arrow"></div>
       </div>
     </div>
   </section>
@@ -2399,8 +2601,8 @@
     </div>
   </section>
 
-  <!-- Book Experience CTA -->
-  <section class="experience-cta">
+  <!-- Updated Book Experience CTA with Unsplash Background Image -->
+  <section class="experience-cta" id="experienceCta">
     <div class="floating-elements">
       <div class="floating-element" style="top: 10%; left: 5%; animation-delay: 0s;"><i class="fas fa-spa"></i></div>
       <div class="floating-element" style="top: 20%; right: 10%; animation-delay: 5s;"><i class="fas fa-utensils"></i></div>
@@ -2440,7 +2642,7 @@
         <ul class="footer-links">
           <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
           <li><a href="about.html"><i class="fas fa-chevron-right"></i> About Us</a></li>
-          <li><a href="rooms.html"><i class="fas fa-chevron-right"></i> Rooms & Suites</a></li>
+          <li><a href="rooms-suites.html"><i class="fas fa-chevron-right"></i> Rooms & Suites</a></li>
           <li><a href="experience.html" class="active"><i class="fas fa-chevron-right"></i> Experience</a></li>
           <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
         </ul>
@@ -2483,15 +2685,7 @@
     <i class="fas fa-chevron-up"></i>
   </button>
 
-  <!-- Mobile Menu Elements -->
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="index.html">HOME</a>
-    <a href="about.html">ABOUT</a>
-    <a href="rooms.html">ROOMS & SUITES</a>
-    <a href="experience.html" class="active">EXPERIENCE</a>
-    <a href="contact.html">CONTACT</a>
-  </div>
-
+  <!-- Mobile Menu Overlay -->
   <div class="mobile-menu-overlay" id="mobileMenuOverlay">
     <button class="menu-close-btn" id="menuCloseBtn">
       <span></span>
@@ -2501,7 +2695,7 @@
     <div class="mobile-menu-container">
       <a href="index.html">HOME</a>
       <a href="about.html">ABOUT</a>
-      <a href="rooms.html">ROOMS & SUITES</a>
+      <a href="rooms-suites.html">ROOMS & SUITES</a>
       <a href="experience.html" class="active">EXPERIENCE</a>
       <a href="contact.html">CONTACT</a>
       
@@ -2556,6 +2750,17 @@
         }
       }
       
+      // Scroll to next section function
+      window.scrollToNextSection = function() {
+        const nextSection = document.querySelector('.spa-section');
+        if (nextSection) {
+          nextSection.scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      };
+      
       // Book experience function
       window.bookExperience = function(type) {
         const experiences = {
@@ -2606,7 +2811,7 @@
       }
       
       // ===========================================
-      // NAVBAR FUNCTIONALITY (From About Page)
+      // ENHANCED NAVBAR FUNCTIONALITY
       // ===========================================
       
       // Create and add sticky navbar
@@ -2624,7 +2829,7 @@
             <div class="nav-links">
               <a href="index.html">HOME</a>
               <a href="about.html">ABOUT</a>
-              <a href="rooms.html">ROOMS & SUITES</a>
+              <a href="rooms-suites.html">ROOMS & SUITES</a>
               <a href="experience.html" class="active">EXPERIENCE</a>
               <a href="contact.html">CONTACT</a>
             </div>
@@ -2647,7 +2852,6 @@
       
       // Get all navbar elements
       const hamburger = document.getElementById('hamburger');
-      const mobileMenu = document.getElementById('mobileMenu');
       const stickyHamburger = document.getElementById('stickyHamburger');
       const menuCloseBtn = document.getElementById('menuCloseBtn');
       const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
@@ -2657,22 +2861,9 @@
       // Original hamburger menu functionality
       hamburger.addEventListener('click', (e) => {
         e.stopPropagation();
-        mobileMenu.classList.toggle('active');
-        hamburger.classList.toggle('active');
-        
-        if (mobileMenu.classList.contains('active')) {
-          document.body.style.overflow = 'hidden';
-        } else {
-          document.body.style.overflow = 'auto';
-        }
-      });
-      
-      mobileMenu.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-          mobileMenu.classList.remove('active');
-          hamburger.classList.remove('active');
-          document.body.style.overflow = 'auto';
-        });
+        mobileMenuOverlay.classList.add('active');
+        hamburger.classList.add('active');
+        document.body.style.overflow = 'hidden';
       });
       
       // Sticky navbar hamburger functionality
@@ -2683,8 +2874,10 @@
         document.body.style.overflow = 'hidden';
       });
       
+      // Close mobile menu
       menuCloseBtn.addEventListener('click', () => {
         mobileMenuOverlay.classList.remove('active');
+        hamburger.classList.remove('active');
         stickyHamburger.classList.remove('active');
         document.body.style.overflow = 'auto';
       });
@@ -2693,6 +2886,7 @@
       mobileMenuOverlay.querySelectorAll('.mobile-menu-container a').forEach(link => {
         link.addEventListener('click', () => {
           mobileMenuOverlay.classList.remove('active');
+          hamburger.classList.remove('active');
           stickyHamburger.classList.remove('active');
           document.body.style.overflow = 'auto';
         });
@@ -2700,16 +2894,9 @@
       
       // Close menus when clicking outside
       document.addEventListener('click', e => {
-        // Original mobile menu
-        if (!mobileMenu.contains(e.target) && !hamburger.contains(e.target) && mobileMenu.classList.contains('active')) {
-          mobileMenu.classList.remove('active');
-          hamburger.classList.remove('active');
-          document.body.style.overflow = 'auto';
-        }
-        
-        // Mobile menu overlay
         if (e.target === mobileMenuOverlay && mobileMenuOverlay.classList.contains('active')) {
           mobileMenuOverlay.classList.remove('active');
+          hamburger.classList.remove('active');
           stickyHamburger.classList.remove('active');
           document.body.style.overflow = 'auto';
         }
@@ -2718,14 +2905,9 @@
       // Close menus on escape key
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
-          if (mobileMenu.classList.contains('active')) {
-            mobileMenu.classList.remove('active');
-            hamburger.classList.remove('active');
-            document.body.style.overflow = 'auto';
-          }
-          
           if (mobileMenuOverlay.classList.contains('active')) {
             mobileMenuOverlay.classList.remove('active');
+            hamburger.classList.remove('active');
             stickyHamburger.classList.remove('active');
             document.body.style.overflow = 'auto';
           }
@@ -2895,19 +3077,89 @@
         });
       }
       
+      // Video optimization
+      const heroVideo = document.querySelector('.hero-video');
+      if (heroVideo) {
+        // Ensure video plays properly on all devices
+        heroVideo.setAttribute('playsinline', '');
+        heroVideo.setAttribute('webkit-playsinline', '');
+        
+        // Handle video loading
+        heroVideo.addEventListener('loadeddata', () => {
+          console.log('Video loaded successfully');
+          heroVideo.play().catch(e => {
+            console.log('Video autoplay failed, user interaction required:', e);
+            // Add play button for mobile
+            if (window.innerWidth < 768) {
+              const playBtn = document.createElement('button');
+              playBtn.innerHTML = '<i class="fas fa-play"></i>';
+              playBtn.style.position = 'absolute';
+              playBtn.style.top = '50%';
+              playBtn.style.left = '50%';
+              playBtn.style.transform = 'translate(-50%, -50%)';
+              playBtn.style.zIndex = '3';
+              playBtn.style.background = 'rgba(193, 154, 91, 0.8)';
+              playBtn.style.color = 'white';
+              playBtn.style.border = 'none';
+              playBtn.style.borderRadius = '50%';
+              playBtn.style.width = '60px';
+              playBtn.style.height = '60px';
+              playBtn.style.fontSize = '24px';
+              playBtn.style.cursor = 'pointer';
+              playBtn.addEventListener('click', () => {
+                heroVideo.play();
+                playBtn.style.display = 'none';
+              });
+              document.querySelector('.hero-video-container').appendChild(playBtn);
+            }
+          });
+        });
+        
+        // Handle video errors
+        heroVideo.addEventListener('error', (e) => {
+          console.error('Video error:', e);
+          // Fallback to background image
+          heroVideo.style.display = 'none';
+          const fallback = document.querySelector('.hero-video-container > div[style]');
+          if (fallback) {
+            fallback.style.display = 'block';
+            fallback.style.background = 'linear-gradient(45deg, #000, #222)';
+          }
+        });
+        
+        // Add play/pause on click for desktop
+        heroVideo.addEventListener('click', () => {
+          if (window.innerWidth > 768) {
+            if (heroVideo.paused) {
+              heroVideo.play();
+            } else {
+              heroVideo.pause();
+            }
+          }
+        });
+      }
+      
+      // Preload video for better performance
+      function preloadVideo() {
+        const video = document.createElement('video');
+        video.src = "https://player.vimeo.com/external/371433846.sd.mp4?s=2daa0d1d3f9b7b3f9f3b3f9b7b3f9f3b3f9b7b3f9&profile_id=164&oauth2_token_id=57447761";
+        video.preload = 'auto';
+      }
+      
       // Initialize everything
       function init() {
         createParticles();
         initAnimations();
         updateBackToTop();
+        preloadVideo();
         
-        // Parallax effect for sections
+        // Parallax effect for hero video
         window.addEventListener('scroll', () => {
           const scrolled = window.pageYOffset;
           const hero = document.querySelector('.experience-hero');
-          if (hero) {
-            const rate = scrolled * -0.5;
-            hero.style.transform = `translateY(${rate}px)`;
+          if (hero && scrolled < hero.offsetHeight) {
+            const rate = scrolled * -0.3;
+            hero.querySelector('.hero-video-container').style.transform = `translateY(${rate}px)`;
           }
         });
       }

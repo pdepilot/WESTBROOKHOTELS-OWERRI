@@ -374,11 +374,11 @@ function initializeMainWebsite() {
       </div>
       
       <div class="nav-links">
-        <a href="index.html" class="active">HOME</a>
-        <a href="about.html">ABOUT</a>
-        <a href="rooms-suites.html">ROOMS & SUITES</a>
-        <a href="experience.html">EXPERIENCE</a>
-        <a href="contact.html">CONTACT</a>
+        <a href="index.html" class="nav-link active">HOME</a>
+        <a href="about.html" class="nav-link">ABOUT</a>
+        <a href="rooms-suites.html" class="nav-link">ROOMS & SUITES</a>
+        <a href="experience.html" class="nav-link">EXPERIENCE</a>
+        <a href="contact.html" class="nav-link">CONTACT</a>
       </div>
       
       <button class="book-btn">BOOK NOW</button>
@@ -426,6 +426,7 @@ function initializeMainWebsite() {
   const menuCloseBtn = document.getElementById('menuCloseBtn');
   const mobileLinks = mobileMenuOverlay.querySelectorAll('a');
   const bookBtn = stickyNavbar.querySelector('.book-btn');
+  const navLinks = stickyNavbar.querySelectorAll('.nav-link');
   
   // Show sticky navbar after hero section
   let lastScrollY = window.scrollY;
@@ -462,7 +463,6 @@ function initializeMainWebsite() {
   
   function updateActiveLink(scrollY) {
     const sections = document.querySelectorAll('section');
-    const navLinks = stickyNavbar.querySelectorAll('.nav-links a');
     
     sections.forEach(section => {
       const sectionTop = section.offsetTop - 100;
@@ -472,25 +472,16 @@ function initializeMainWebsite() {
       if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
         navLinks.forEach(link => {
           link.classList.remove('active');
-          if (link.getAttribute('href') === `#${sectionId}`) {
+          if (link.getAttribute('href') === `#${sectionId}` || 
+              (sectionId === 'about' && link.getAttribute('href') === 'about.html') ||
+              (sectionId === 'rooms' && link.getAttribute('href') === 'rooms-suites.html') ||
+              (sectionId === 'experience' && link.getAttribute('href') === 'experience.html') ||
+              (sectionId === 'contact' && link.getAttribute('href') === 'contact.html')) {
             link.classList.add('active');
           }
         });
       }
     });
-  }
-  
-  // Throttle scroll events
-  function onScroll() {
-    lastScrollY = window.scrollY;
-    
-    if (!ticking) {
-      window.requestAnimationFrame(() => {
-        updateNavbar();
-        ticking = false;
-      });
-      ticking = true;
-    }
   }
   
   // Mobile menu functionality
@@ -506,30 +497,21 @@ function initializeMainWebsite() {
     document.body.style.overflow = 'auto';
   }
   
-  // Menu item click effect
-  function onMenuItemClick(event) {
-    event.preventDefault();
-    
-    // Add click animation
-    const link = event.currentTarget;
-    link.style.transform = 'scale(0.95)';
-    link.style.transition = 'transform 0.2s ease';
-    
-    // Add highlight effect
-    link.style.backgroundColor = 'rgba(193, 154, 91, 0.1)';
-    
-    setTimeout(() => {
-      link.style.transform = 'scale(1)';
-      link.style.backgroundColor = '';
-    }, 200);
-    
-    // Close menu after delay
-    setTimeout(() => {
-      closeMobileMenu();
-      
-      // Scroll to section if it's an anchor link
+  // Fix for sticky navbar link clicks - proper navigation
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
       const href = link.getAttribute('href');
-      if (href.startsWith('#')) {
+      
+      // Update active state
+      navLinks.forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
+      
+      if (href.includes('.html')) {
+        // External page navigation
+        window.location.href = href;
+      } else if (href.startsWith('#')) {
+        // Internal section navigation
         const targetSection = document.querySelector(href);
         if (targetSection) {
           window.scrollTo({
@@ -538,8 +520,47 @@ function initializeMainWebsite() {
           });
         }
       }
-    }, 300);
-  }
+    });
+  });
+  
+  // Menu item click effect for mobile
+  mobileLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      
+      // Add click animation
+      link.style.transform = 'scale(0.95)';
+      link.style.transition = 'transform 0.2s ease';
+      
+      // Add highlight effect
+      link.style.backgroundColor = 'rgba(193, 154, 91, 0.1)';
+      
+      setTimeout(() => {
+        link.style.transform = 'scale(1)';
+        link.style.backgroundColor = '';
+      }, 200);
+      
+      // Close menu after delay
+      setTimeout(() => {
+        closeMobileMenu();
+        
+        // Check if it's an anchor link or external page
+        const href = link.getAttribute('href');
+        if (href.startsWith('#')) {
+          const targetSection = document.querySelector(href);
+          if (targetSection) {
+            window.scrollTo({
+              top: targetSection.offsetTop - 80,
+              behavior: 'smooth'
+            });
+          }
+        } else if (href.includes('.html')) {
+          // Navigate to external page
+          window.location.href = href;
+        }
+      }, 300);
+    });
+  });
   
   // Book button animation
   bookBtn.addEventListener('mouseenter', () => {
@@ -572,34 +593,6 @@ function initializeMainWebsite() {
   stickyHamburger.addEventListener('click', openMobileMenu);
   menuCloseBtn.addEventListener('click', closeMobileMenu);
   
-  // Add click events to mobile menu links
-  mobileLinks.forEach(link => {
-    link.addEventListener('click', onMenuItemClick);
-  });
-  
-  // Also add click events to desktop nav links for smooth scrolling
-  const desktopLinks = stickyNavbar.querySelectorAll('.nav-links a');
-  desktopLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const href = link.getAttribute('href');
-      
-      if (href.startsWith('#')) {
-        const targetSection = document.querySelector(href);
-        if (targetSection) {
-          window.scrollTo({
-            top: targetSection.offsetTop - 80,
-            behavior: 'smooth'
-          });
-        }
-      }
-      
-      // Update active state
-      desktopLinks.forEach(l => l.classList.remove('active'));
-      link.classList.add('active');
-    });
-  });
-  
   // Close menu on ESC key
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && mobileMenuOverlay.classList.contains('active')) {
@@ -616,6 +609,19 @@ function initializeMainWebsite() {
   
   // Initialize navbar
   updateNavbar();
+  
+  // Throttle scroll events
+  function onScroll() {
+    lastScrollY = window.scrollY;
+    
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        updateNavbar();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
   
   // Add CSS for ripple animation
   const style = document.createElement('style');
@@ -830,7 +836,7 @@ function initializeMainWebsite() {
     });
   });
 
-  // Add smooth scrolling to all links
+  // Add smooth scrolling to all anchor links
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
       e.preventDefault();
@@ -969,6 +975,3 @@ if (document.readyState === 'loading') {
     initializeMainWebsite();
   }
 }
-
-
-
