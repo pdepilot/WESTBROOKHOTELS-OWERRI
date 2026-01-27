@@ -23,7 +23,7 @@
     "description": "Luxury 5-star hotel in Owerri, Imo State offering unparalleled luxury and hospitality experience.",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Plot 15, WestBrook Estate",
+      "streetAddress": "F273+9VQ, Port Harcourt Rd, New Owerri,",
       "addressLocality": "Owerri",
       "addressRegion": "Imo State",
       "addressCountry": "NG"
@@ -971,11 +971,11 @@
     }
 
     .logo {
-        position: absolute; /* Position logo absolutely */
-        left: 64px; /* Align to left edge */
-        top: 50%;
-        transform: translateY(-50%);
-      }
+      position: absolute; /* Position logo absolutely */
+      left: 64px; /* Align to left edge */
+      top: 50%;
+      transform: translateY(-50%);
+    }
 
     .logo img {
       width: 100px;
@@ -983,8 +983,19 @@
     }
 
     @media (max-width: 768px) {
+      .logo {
+        position: static; /* Reset for mobile */
+        transform: none;
+        left: auto;
+        padding-left: 5px; /* Consistent spacing */
+        margin-left: 0;
+      }
+      
       .logo img {
         width: 80px;
+        position: relative;
+        left: 0;
+        margin-left: 0;
       }
     }
 
@@ -1135,7 +1146,7 @@
       .side-socials {
         position: fixed;
         top: 20px;
-        left: 38%; /* Same as gallery page */
+        left: 50%; /* Centered to avoid logo overlap */
         transform: translateX(-50%);
         flex-direction: row;
         justify-content: center;
@@ -1145,7 +1156,8 @@
         padding: 10px 20px;
         border-radius: 30px;
         width: auto;
-        min-width: 450px;
+        min-width: 200px; /* Reduced width to avoid overlap */
+        max-width: 300px; /* Added max-width */
         margin: 0 auto;
         z-index: 4;
         gap: 15px;
@@ -1457,7 +1469,7 @@
     }
 
     /* ===========================================
-       STICKY NAVBAR (From Gallery Page)
+       STICKY NAVBAR - UPDATED WITH CENTERED NAVIGATION
        =========================================== */
     .sticky-nav {
       position: fixed;
@@ -1475,12 +1487,6 @@
       opacity: 0;
     }
 
-    @media (max-width: 768px) {
-      .sticky-nav {
-        padding: 0 20px;
-      }
-    }
-
     .sticky-nav.visible {
       transform: translateY(0);
       opacity: 1;
@@ -1494,9 +1500,16 @@
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     }
 
+    .sticky-nav.elevated {
+      box-shadow: 0 8px 32px rgba(193, 154, 91, 0.12);
+      background: rgba(15, 15, 20, 0.92);
+      border-bottom: 1px solid rgba(193, 154, 91, 0.15);
+    }
+
+    /* Sticky nav inner container - CENTERED NAVIGATION */
     .sticky-nav .nav-container {
       display: flex;
-      justify-content: center;
+      justify-content: center; /* Centered navigation */
       align-items: center;
       height: 70px;
       max-width: 1400px;
@@ -1504,63 +1517,32 @@
       position: relative;
     }
 
-    .sticky-nav .book-btn {
-      background: linear-gradient(135deg, var(--gold) 0%, var(--light-gold) 100%);
-      color: var(--white);
-      border: none;
-      padding: 12px 28px;
-      border-radius: 30px;
-      font-size: 12px;
-      letter-spacing: 2px;
-      cursor: pointer;
-      transition: var(--transition);
-      position: relative;
-      overflow: hidden;
-      margin-right: 120px;
-    }
-
-    @media (max-width: 1200px) {
-      .sticky-nav .book-btn {
-        margin-right: 100px;
-      }
-    }
-
-    @media (max-width: 992px) {
-      .sticky-nav .book-btn {
-        display: none;
-      }
-    }
-
-    .sticky-nav .book-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(193, 154, 91, 0.4);
+    /* Sticky nav logo - Positioned absolutely on left */
+    .sticky-nav .logo {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
     }
 
     .sticky-nav .logo img {
-      width: 90px;
+      width: 100px;
       filter: brightness(1.2);
-      transition: var(--transition);
+      transition: transform 0.3s ease;
     }
 
+    .sticky-nav .logo:hover img {
+      transform: scale(1.05);
+    }
+
+    /* Sticky nav links - Centered */
     .sticky-nav .nav-links {
       display: flex;
-      gap: 35px;
-    }
-
-    @media (max-width: 1200px) {
-      .sticky-nav .nav-links {
-        gap: 25px;
-      }
-    }
-
-    @media (max-width: 992px) {
-      .sticky-nav .nav-links {
-        display: none;
-      }
+      gap: 40px;
     }
 
     .sticky-nav .nav-links a {
-      color: var(--white);
+      color: #fff;
       text-decoration: none;
       font-size: 12px;
       letter-spacing: 2px;
@@ -1568,16 +1550,83 @@
       padding: 8px 0;
       transition: var(--transition);
       font-weight: 400;
+      cursor: pointer;
     }
 
     .sticky-nav .nav-links a.active {
       color: var(--gold);
     }
 
+    .sticky-nav .nav-links a::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        var(--gold) 50%,
+        transparent 100%
+      );
+      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .sticky-nav .nav-links a:hover::before,
+    .sticky-nav .nav-links a.active::before {
+      width: 100%;
+    }
+
     .sticky-nav .nav-links a:hover {
       color: var(--gold);
     }
 
+    /* Book Now Button - Positioned absolutely on right with proper spacing */
+    .sticky-nav .book-btn {
+      position: absolute;
+      right: 100px; /* Moved left to avoid theme controls */
+      top: 50%;
+      transform: translateY(-50%);
+      background: linear-gradient(135deg, var(--gold) 0%, var(--light-gold) 100%);
+      color: #fff;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-size: 12px;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: var(--transition);
+      overflow: hidden;
+      z-index: 1001;
+    }
+
+    .sticky-nav .book-btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.2) 50%,
+        transparent 100%
+      );
+      transition: left 0.6s ease;
+    }
+
+    .sticky-nav .book-btn:hover::before {
+      left: 100%;
+    }
+
+    .sticky-nav .book-btn:hover {
+      transform: translateY(-52%);
+      box-shadow: 0 6px 20px rgba(193, 154, 91, 0.4);
+    }
+
+    /* Sticky nav hamburger */
     .sticky-nav .hamburger-btn {
       display: none;
       flex-direction: column;
@@ -1587,24 +1636,35 @@
       border: none;
       padding: 8px;
       z-index: 1001;
-    }
-
-    @media (max-width: 992px) {
-      .sticky-nav .hamburger-btn {
-        display: flex;
-      }
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
     }
 
     .sticky-nav .hamburger-btn span {
       width: 24px;
       height: 2px;
-      background: var(--white);
+      background: #fff;
       transition: var(--transition);
+      display: block;
     }
 
-    /* ===========================================
-       MOBILE MENU OVERLAY (From Gallery Page)
-       =========================================== */
+    .sticky-nav .hamburger-btn.active span:nth-child(1) {
+      transform: rotate(45deg) translate(6px, 6px);
+      background: var(--gold);
+    }
+
+    .sticky-nav .hamburger-btn.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .sticky-nav .hamburger-btn.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+      background: var(--gold);
+    }
+
+    /* MOBILE MENU OVERLAY */
     .mobile-menu-overlay {
       position: fixed;
       top: 0;
@@ -1628,9 +1688,10 @@
       opacity: 1;
     }
 
+    /* Mobile menu container */
     .mobile-menu-container {
       text-align: center;
-      max-width: 500px;
+      max-width: 600px;
       width: 90%;
       transform: translateY(30px);
       opacity: 0;
@@ -1644,48 +1705,33 @@
 
     .mobile-menu-container a {
       display: block;
-      color: var(--white);
+      color: #fff;
       text-decoration: none;
       font-size: 20px;
       letter-spacing: 2px;
       margin: 15px 0;
       padding: 12px;
-      position: relative;
+      opacity: 0;
+      transform: translateY(20px);
       transition: var(--transition);
+      position: relative;
     }
 
-    .mobile-menu-container a:hover,
+    .mobile-menu-overlay.active .mobile-menu-container a {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     .mobile-menu-container a.active {
       color: var(--gold);
-      transform: translateX(10px);
     }
 
-    .mobile-contact-info {
-      margin-top: 30px;
-      color: rgba(255, 255, 255, 0.8);
-      transform: translateY(30px);
-      opacity: 0;
-      transition: var(--transition) 0.5s;
-    }
-
-    .mobile-menu-overlay.active .mobile-contact-info {
-      transform: translateY(0);
-      opacity: 1;
-    }
-
-    .mobile-contact-info p {
-      font-size: 14px;
-      letter-spacing: 2px;
-      margin-bottom: 15px;
-      text-transform: uppercase;
-    }
-
-    .mobile-contact-info .phone {
-      font-size: 16px;
-      margin: 10px 0;
+    .mobile-menu-container a:hover {
       color: var(--gold);
+      transform: scale(1.05);
     }
 
+    /* Mobile menu close button */
     .menu-close-btn {
       position: absolute;
       top: 25px;
@@ -1705,10 +1751,10 @@
     }
 
     .menu-close-btn span {
+      position: absolute;
       width: 20px;
       height: 2px;
-      background: var(--white);
-      position: absolute;
+      background: #fff;
       transition: var(--transition);
     }
 
@@ -1720,9 +1766,39 @@
       transform: rotate(-45deg);
     }
 
+    .menu-close-btn:hover span {
+      background: var(--gold);
+    }
+
     .menu-close-btn:hover {
       background: var(--gold);
       transform: rotate(90deg);
+    }
+
+    /* Mobile contact info */
+    .mobile-contact-info {
+      margin-top: 30px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: var(--transition) 0.5s;
+    }
+
+    .mobile-menu-overlay.active .mobile-contact-info {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .mobile-contact-info p {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 14px;
+      letter-spacing: 2px;
+      margin: 10px 0;
+    }
+
+    .mobile-contact-info .phone {
+      color: var(--gold);
+      font-size: 16px;
+      margin: 10px 0;
     }
 
     /* ===========================================
@@ -3118,20 +3194,6 @@
         padding: 20px 25px;
       }
 
-      /* MOBILE LOGO POSITION FIX - Adjusted padding-left */
-      .header .logo {
-        padding-left: 5px; /* Increased from 2px to 5px for better spacing */
-        margin-left: 0;
-      }
-
-      .header .logo img {
-        width: 80px;
-        position: relative;
-        left: 0; /* Reset any left positioning */
-        margin-left: 0;
-  
-      }
-
       .nav {
         display: none;
       }
@@ -3141,7 +3203,6 @@
         position: fixed;
         right: 25px;
         top: 35px;
-        z-index: 1001;
       }
 
       .booking-bar {
@@ -3308,6 +3369,44 @@
     }
     .delay-5 {
       animation-delay: 0.5s;
+    }
+
+    /* Responsive adjustments for sticky nav */
+    @media (max-width: 1024px) {
+      .sticky-nav {
+        padding: 0 30px;
+      }
+
+      .sticky-nav .nav-links {
+        gap: 25px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .sticky-nav {
+        padding: 0 20px;
+      }
+
+      .sticky-nav .nav-links,
+      .sticky-nav .book-btn {
+        display: none;
+      }
+
+      .sticky-nav .hamburger-btn {
+        display: flex;
+      }
+
+      .sticky-nav .logo img {
+        width: 90px;
+      }
+    }
+
+    @media (min-width: 769px) {
+      .mobile-menu-overlay,
+      .mobile-menu-container,
+      .menu-close-btn {
+        display: none;
+      }
     }
   </style>
 </head>
@@ -4201,11 +4300,11 @@
       }
 
       // ===========================================
-      // STICKY NAVBAR (From Gallery Page)
+      // STICKY NAVBAR FUNCTIONALITY WITH CENTERED NAVIGATION
       // ===========================================
       function initStickyNavbar() {
-        const stickyNav = document.createElement('nav');
-        stickyNav.className = 'sticky-nav';
+        const stickyNav = document.createElement("nav");
+        stickyNav.className = "sticky-nav";
         stickyNav.innerHTML = `
           <div class="nav-container">
             <div class="logo">
@@ -4223,7 +4322,7 @@
               <a href="contact.html">CONTACT</a>
             </div>
             
-            <button class="book-btn" onclick="window.location.href='index.html#rooms'">BOOK NOW</button>
+            <button class="book-btn" onclick="window.location.href='index.html#booking'">BOOK NOW</button>
             
             <button class="hamburger-btn" id="stickyHamburger">
               <span></span>
@@ -4236,28 +4335,29 @@
         document.body.insertBefore(stickyNav, document.body.firstChild);
 
         // Navbar functionality
-        const stickyHamburger = document.getElementById('stickyHamburger');
-        const menuCloseBtn = document.getElementById('menuCloseBtn');
-        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-        const stickyNavElement = document.querySelector('.sticky-nav');
+        const stickyHamburger = document.getElementById("stickyHamburger");
+        const menuCloseBtn = document.getElementById("menuCloseBtn");
+        const mobileMenuOverlay =
+          document.getElementById("mobileMenuOverlay");
+        const stickyNavElement = document.querySelector(".sticky-nav");
 
         // Sticky navbar hamburger
         if (stickyHamburger) {
-          stickyHamburger.addEventListener('click', (e) => {
+          stickyHamburger.addEventListener("click", (e) => {
             e.stopPropagation();
-            mobileMenuOverlay.classList.add('active');
-            stickyHamburger.classList.add('active');
-            document.body.style.overflow = 'hidden';
+            mobileMenuOverlay.classList.add("active");
+            stickyHamburger.classList.add("active");
+            document.body.style.overflow = "hidden";
           });
         }
 
         // Close mobile menu from sticky navbar
-        menuCloseBtn.addEventListener('click', () => {
-          mobileMenuOverlay.classList.remove('active');
-          const hamburger = document.getElementById('hamburger');
-          if (hamburger) hamburger.classList.remove('active');
-          if (stickyHamburger) stickyHamburger.classList.remove('active');
-          document.body.style.overflow = 'auto';
+        menuCloseBtn.addEventListener("click", () => {
+          mobileMenuOverlay.classList.remove("active");
+          const hamburger = document.getElementById("hamburger");
+          if (hamburger) hamburger.classList.remove("active");
+          if (stickyHamburger) stickyHamburger.classList.remove("active");
+          document.body.style.overflow = "auto";
         });
 
         // Sticky navbar scroll
@@ -4265,13 +4365,13 @@
           const scrollPosition = window.scrollY;
 
           if (scrollPosition > 100) {
-            stickyNavElement.classList.add('visible', 'scrolled');
+            stickyNavElement.classList.add("visible", "scrolled");
           } else {
-            stickyNavElement.classList.remove('visible', 'scrolled');
+            stickyNavElement.classList.remove("visible", "scrolled");
           }
         }
 
-        window.addEventListener('scroll', updateStickyNavbar);
+        window.addEventListener("scroll", updateStickyNavbar);
         updateStickyNavbar();
       }
 
