@@ -72,7 +72,7 @@
       .theme-controls {
         top: 28px;
         right: 55px;
-        z-index: 1002;
+        z-index: 1000; /* Reduced to be below sticky nav */
       }
     }
 
@@ -881,14 +881,14 @@
     }
 
     /* ===========================================
-       STICKY NAVBAR - UPDATED WITH CENTERED NAVIGATION
+       STICKY NAVBAR - UPDATED WITH CENTERED NAVIGATION & FIXED MOBILE ISSUE
        =========================================== */
     .sticky-nav {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      z-index: 1000;
+      z-index: 1001; /* Increased to be above theme controls */
       background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
@@ -897,11 +897,13 @@
       padding: 0 64px;
       transform: translateY(-100%);
       opacity: 0;
+      visibility: hidden; /* Added for better mobile handling */
     }
 
     .sticky-nav.visible {
       transform: translateY(0);
       opacity: 1;
+      visibility: visible; /* Added */
     }
 
     .sticky-nav.scrolled {
@@ -1047,7 +1049,7 @@
       background: none;
       border: none;
       padding: 8px;
-      z-index: 1001;
+      z-index: 1002; /* Increased z-index */
       position: absolute;
       right: 0;
       top: 50%;
@@ -1074,6 +1076,59 @@
     .sticky-nav .hamburger-btn.active span:nth-child(3) {
       transform: rotate(-45deg) translate(6px, -6px);
       background: var(--gold);
+    }
+
+    /* UPDATED MEDIA QUERIES FOR STICKY NAV - FIX FOR MOBILE */
+    @media (max-width: 1024px) {
+      .sticky-nav {
+        padding: 0 30px;
+      }
+
+      .sticky-nav .nav-links {
+        gap: 25px;
+      }
+      
+      .sticky-nav .book-btn {
+        right: 80px; /* Adjusted for smaller screens */
+      }
+    }
+
+    /* FIX FOR MOBILE - UPDATED RULES */
+    @media (max-width: 768px) {
+      .sticky-nav {
+        padding: 0 20px;
+        background: rgba(15, 15, 20, 0.98); /* Solid background for mobile */
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+      }
+
+      .sticky-nav .nav-links,
+      .sticky-nav .book-btn {
+        display: none;
+      }
+
+      .sticky-nav .hamburger-btn {
+        display: flex;
+        right: 20px; /* Position adjustment */
+      }
+
+      .sticky-nav .logo img {
+        width: 90px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .sticky-nav {
+        padding: 0 15px;
+      }
+      
+      .sticky-nav .hamburger-btn {
+        right: 15px;
+      }
+      
+      .sticky-nav .logo img {
+        width: 80px;
+      }
     }
 
     /* MOBILE MENU OVERLAY */
@@ -1211,49 +1266,6 @@
       color: var(--gold);
       font-size: 16px;
       margin: 10px 0;
-    }
-      font-size: 16px;
-      margin: 10px 0;
-      color: var(--gold);
-    }
-
-    .menu-close-btn {
-      position: absolute;
-      top: 25px;
-      right: 25px;
-      width: 45px;
-      height: 45px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 50%;
-      border: none;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      transition: var(--transition);
-      z-index: 9991;
-    }
-
-    .menu-close-btn span {
-      width: 20px;
-      height: 2px;
-      background: var(--white);
-      position: absolute;
-      transition: var(--transition);
-    }
-
-    .menu-close-btn span:first-child {
-      transform: rotate(45deg);
-    }
-
-    .menu-close-btn span:last-child {
-      transform: rotate(-45deg);
-    }
-
-    .menu-close-btn:hover {
-      background: var(--gold);
-      transform: rotate(90deg);
     }
 
     /* ===========================================
@@ -2203,36 +2215,6 @@
       }
     }
 
-    /* Responsive adjustments for sticky nav */
-    @media (max-width: 1024px) {
-      .sticky-nav {
-        padding: 0 30px;
-      }
-
-      .sticky-nav .nav-links {
-        gap: 25px;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .sticky-nav {
-        padding: 0 20px;
-      }
-
-      .sticky-nav .nav-links,
-      .sticky-nav .book-btn {
-        display: none;
-      }
-
-      .sticky-nav .hamburger-btn {
-        display: flex;
-      }
-
-      .sticky-nav .logo img {
-        width: 90px;
-      }
-    }
-
     @media (min-width: 769px) {
       .mobile-menu-overlay,
       .mobile-menu-container,
@@ -2773,7 +2755,7 @@
       }
 
       // ===========================================
-      // STICKY NAVBAR FUNCTIONALITY WITH CENTERED NAVIGATION
+      // STICKY NAVBAR FUNCTIONALITY WITH CENTERED NAVIGATION - FIXED FOR MOBILE
       // ===========================================
       function initStickyNavbar() {
         const stickyNav = document.createElement("nav");
@@ -2810,8 +2792,7 @@
         // Navbar functionality
         const stickyHamburger = document.getElementById("stickyHamburger");
         const menuCloseBtn = document.getElementById("menuCloseBtn");
-        const mobileMenuOverlay =
-          document.getElementById("mobileMenuOverlay");
+        const mobileMenuOverlay = document.getElementById("mobileMenuOverlay");
         const stickyNavElement = document.querySelector(".sticky-nav");
 
         // Sticky navbar hamburger
@@ -2833,18 +2814,41 @@
           document.body.style.overflow = "auto";
         });
 
-        // Sticky navbar scroll
+        // Sticky navbar scroll - FIXED FOR MOBILE
         function updateStickyNavbar() {
           const scrollPosition = window.scrollY;
+          const isMobile = window.innerWidth <= 768;
 
           if (scrollPosition > 100) {
             stickyNavElement.classList.add("visible", "scrolled");
+            
+            // Add elevated effect when scrolling further on mobile
+            if (scrollPosition > 300 && isMobile) {
+              stickyNavElement.classList.add("elevated");
+            } else {
+              stickyNavElement.classList.remove("elevated");
+            }
           } else {
-            stickyNavElement.classList.remove("visible", "scrolled");
+            stickyNavElement.classList.remove("visible", "scrolled", "elevated");
           }
         }
 
-        window.addEventListener("scroll", updateStickyNavbar);
+        // Use requestAnimationFrame for smoother performance on mobile
+        let ticking = false;
+        window.addEventListener("scroll", () => {
+          if (!ticking) {
+            window.requestAnimationFrame(() => {
+              updateStickyNavbar();
+              ticking = false;
+            });
+            ticking = true;
+          }
+        });
+        
+        // Also update on resize
+        window.addEventListener("resize", updateStickyNavbar);
+        
+        // Initial update
         updateStickyNavbar();
       }
 
