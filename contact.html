@@ -55,17 +55,18 @@
     }
 
     /* ===========================================
-       THEME CONTROLS - MATCHING GALLERY PAGE
+       THEME CONTROLS - FIXED WITH HIGHER Z-INDEX
        =========================================== */
     .theme-controls {
       position: fixed;
       top: 25px;
       right: 20px;
-      z-index: 1005;
+      z-index: 1002;
       display: flex;
       gap: 10px;
       animation: fadeIn 0.6s ease 0.8s forwards;
       opacity: 0;
+      pointer-events: auto;
     }
 
     @media (max-width: 768px) {
@@ -93,6 +94,8 @@
       transition: var(--transition);
       font-size: 18px;
       text-decoration: none;
+      pointer-events: auto;
+      position: relative;
     }
 
     @media (max-width: 768px) {
@@ -744,7 +747,7 @@
        =========================================== */
     .header {
       position: absolute;
-      top: 0;
+      top: 20px;
       left: 0;
       width: 100%;
       z-index: 1000;
@@ -757,13 +760,13 @@
     @media (max-width: 768px) {
       .header {
         padding: 20px 25px;
-        justify-content: space-between; /* Keep space-between on mobile */
+        justify-content: space-between;
       }
     }
 
     .logo {
-      position: absolute; /* Position logo absolutely */
-      left: 64px; /* Align to left edge */
+      position: absolute;
+      left: 64px;
       top: 50%;
       transform: translateY(-50%);
     }
@@ -775,10 +778,10 @@
 
     @media (max-width: 768px) {
       .logo {
-        position: static; /* Reset for mobile */
+        position: static;
         transform: none;
         left: auto;
-        padding-left: 5px; /* Consistent spacing */
+        padding-left: 5px;
         margin-left: 0;
       }
       
@@ -897,7 +900,7 @@
       letter-spacing: 1.5px;
     }
 
-    /* SOCIALS - EXACT SAME AS GALLERY PAGE MOBILE POSITIONING */
+    /* SOCIALS - HIDDEN ON MOBILE */
     .side-socials {
       position: absolute;
       right: 30px;
@@ -909,30 +912,10 @@
       z-index: 5;
     }
 
-    .side-socials a {
-      margin: 0 5px;
-      width: 25px;
-      height: 25px;
-    }
-
+    /* Hide side socials on mobile */
     @media (max-width: 768px) {
       .side-socials {
-        position: fixed;
-        top: 20px;
-        left: 45%;
-        transform: translateX(-50%);
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        background: rgba(0, 0, 0, 0.7);
-        backdrop-filter: blur(10px);
-        padding: 10px 20px;
-        border-radius: 30px;
-        width: auto;
-        min-width: 350px;
-        margin: 0 auto;
-        z-index: 4;
-        gap: 15px;
+        display: none !important;
       }
     }
 
@@ -1007,15 +990,54 @@
       transform: scale(1.1);
     }
 
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+      z-index: 1001;
+    }
+
+    @media (max-width: 992px) {
+      .hamburger {
+        display: flex;
+        position: fixed;
+        right: 25px;
+        top: 35px;
+      }
+    }
+
+    .hamburger span {
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      transition: var(--transition);
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(6px, 6px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+
     /* ===========================================
-       STICKY NAVBAR - UPDATED WITH CENTERED NAVIGATION
+       STICKY NAVBAR - FIXED HAMBURGER POSITION
        =========================================== */
     .sticky-nav {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      z-index: 1000;
+      z-index: 1001;
       background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
@@ -1024,11 +1046,13 @@
       padding: 0 64px;
       transform: translateY(-100%);
       opacity: 0;
+      visibility: hidden;
     }
 
     .sticky-nav.visible {
       transform: translateY(0);
       opacity: 1;
+      visibility: visible;
     }
 
     .sticky-nav.scrolled {
@@ -1048,7 +1072,7 @@
     /* Sticky nav inner container - CENTERED NAVIGATION */
     .sticky-nav .nav-container {
       display: flex;
-      justify-content: center; /* Centered navigation */
+      justify-content: center;
       align-items: center;
       height: 70px;
       max-width: 1400px;
@@ -1121,10 +1145,10 @@
       color: var(--gold);
     }
 
-    /* Book Now Button - Positioned absolutely on right with proper spacing */
+    /* Book Now Button - Adjusted position */
     .sticky-nav .book-btn {
       position: absolute;
-      right: 100px; /* Moved left to avoid theme controls */
+      right: 140px;
       top: 50%;
       transform: translateY(-50%);
       background: linear-gradient(135deg, var(--gold) 0%, var(--light-gold) 100%);
@@ -1166,7 +1190,7 @@
       box-shadow: 0 6px 20px rgba(193, 154, 91, 0.4);
     }
 
-    /* Sticky nav hamburger */
+    /* Sticky nav hamburger - FIXED POSITION */
     .sticky-nav .hamburger-btn {
       display: none;
       flex-direction: column;
@@ -1175,9 +1199,9 @@
       background: none;
       border: none;
       padding: 8px;
-      z-index: 1001;
+      z-index: 1002;
       position: absolute;
-      right: 0;
+      right: 70px;
       top: 50%;
       transform: translateY(-50%);
       text-decoration: none;
@@ -1205,23 +1229,60 @@
       background: var(--gold);
     }
 
-    
-    @media (max-width: 992px) {
-      .hamburger {
-        display: flex;
+    /* Media queries for sticky nav */
+    @media (max-width: 1024px) {
+      .sticky-nav {
+        padding: 0 30px;
+      }
+
+      .sticky-nav .nav-links {
+        gap: 25px;
+      }
+      
+      .sticky-nav .book-btn {
+        right: 110px;
+      }
+      
+      .sticky-nav .hamburger-btn {
+        right: 0;
       }
     }
 
-    .hamburger.active span:nth-child(1) {
-      transform: rotate(45deg) translate(6px, 6px);
+    @media (max-width: 768px) {
+      .sticky-nav {
+        padding: 0 20px;
+        background: rgba(15, 15, 20, 0.98);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+      }
+
+      .sticky-nav .nav-links,
+      .sticky-nav .book-btn {
+        display: none;
+      }
+
+      .sticky-nav .hamburger-btn {
+        display: flex;
+        right: 0;
+      }
+
+      .sticky-nav .logo img {
+        width: 90px;
+      }
     }
 
-    .hamburger.active span:nth-child(2) {
-      opacity: 0;
-    }
-
-    .hamburger.active span:nth-child(3) {
-      transform: rotate(-45deg) translate(6px, -6px);
+    @media (max-width: 480px) {
+      .sticky-nav {
+        padding: 0 15px;
+      }
+      
+      .sticky-nav .hamburger-btn {
+        right: 0;
+      }
+      
+      .sticky-nav .logo img {
+        width: 80px;
+      }
     }
 
     /* ===========================================
@@ -2355,71 +2416,6 @@
       margin: 10px 0;
     }
 
-    .mobile-contact-info {
-      margin-top: 30px;
-      color: rgba(255, 255, 255, 0.8);
-      transform: translateY(30px);
-      opacity: 0;
-      transition: var(--transition) 0.5s;
-    }
-
-    .mobile-menu-overlay.active .mobile-contact-info {
-      transform: translateY(0);
-      opacity: 1;
-    }
-
-    .mobile-contact-info p {
-      font-size: 14px;
-      letter-spacing: 2px;
-      margin-bottom: 15px;
-      text-transform: uppercase;
-    }
-
-    .mobile-contact-info .phone {
-      font-size: 16px;
-      margin: 10px 0;
-      color: var(--gold);
-    }
-
-    .menu-close-btn {
-      position: absolute;
-      top: 25px;
-      right: 25px;
-      width: 45px;
-      height: 45px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 50%;
-      border: none;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      transition: var(--transition);
-      z-index: 9991;
-    }
-
-    .menu-close-btn span {
-      width: 20px;
-      height: 2px;
-      background: var(--white);
-      position: absolute;
-      transition: var(--transition);
-    }
-
-    .menu-close-btn span:first-child {
-      transform: rotate(45deg);
-    }
-
-    .menu-close-btn span:last-child {
-      transform: rotate(-45deg);
-    }
-
-    .menu-close-btn:hover {
-      background: var(--gold);
-      transform: rotate(90deg);
-    }
-
     /* ===========================================
        DARK MODE STYLES
        =========================================== */
@@ -2586,7 +2582,7 @@
       }
       
       .hamburger {
-        display: flex;
+        display: none;
         position: fixed;
         right: 10px;
         top: 25px;
@@ -2597,32 +2593,7 @@
         display: none !important;
       }
       
-      /* EXACT SAME SOCIALS POSITIONING AS GALLERY PAGE */
-      .side-socials {
-        position: fixed;
-        top: 20px;
-        left: 45%;
-        transform: translateX(-50%);
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        background: rgba(0, 0, 0, 0.7);
-        backdrop-filter: blur(10px);
-        padding: 10px 20px;
-        border-radius: 30px;
-        width: auto;
-        min-width: 350px;
-        margin: 0 auto;
-        z-index: 4;
-        gap: 15px;
-      }
-      
-      .side-socials a {
-        margin: 0;
-        width: 35px;
-        height: 35px;
-        font-size: 14px;
-      }
+      /* REMOVED SOCIALS POSITIONING FROM HERE */
       
       .sticky-nav {
         padding: 0 20px;
@@ -2821,7 +2792,7 @@
   </style>
 </head>
 <body>
-  <!-- Theme Controls - EXACT SAME AS GALLERY PAGE -->
+  <!-- Theme Controls - FIXED WITH HIGHER Z-INDEX -->
   <div class="theme-controls">
     <a href="#" class="theme-btn" id="themeToggle" title="Toggle Dark Mode">
       <i class="fas fa-moon"></i>
@@ -2886,6 +2857,59 @@
 
   <!-- Sticky Navbar will be inserted here by JavaScript -->
 
+  <!-- Mobile Menu Overlay - WITH SOCIAL ICONS ADDED -->
+  <div class="mobile-menu-overlay" id="mobileMenuOverlay">
+    <a href="#" class="menu-close-btn" id="menuCloseBtn">
+      <span></span>
+      <span></span>
+    </a>
+    
+    <div class="mobile-menu-container">
+      <a href="index.html">HOME</a>
+      <a href="about.html">ABOUT</a>
+      <a href="rooms-suites.html">ROOMS & SUITES</a>
+      <a href="experience.html">EXPERIENCE</a>
+      <a href="gallery.html">GALLERY</a>
+      <a href="contact.html" class="active">CONTACT</a> 
+      
+      <div class="mobile-contact-info">
+        <p>CONTACT & RESERVATIONS</p>
+        <div class="phone">+234 809 999 1244</div>
+        <div class="phone">+234 704 282 5937</div>
+      </div>
+      
+      <!-- Mobile Social Icons - In hamburger menu -->
+      <div class="mobile-social-icons" style="display: flex; justify-content: center; gap: 20px; margin-top: 30px; opacity: 0; transform: translateY(30px); transition: var(--transition) 0.6s;">
+        <a href="#" aria-label="Instagram" style="width: 50px; height: 50px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 20px; transition: var(--transition); text-decoration: none;"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="Facebook" style="width: 50px; height: 50px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 20px; transition: var(--transition); text-decoration: none;"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" aria-label="Twitter" style="width: 50px; height: 50px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 20px; transition: var(--transition); text-decoration: none;"><i class="fab fa-x-twitter"></i></a>
+        <a href="#" aria-label="LinkedIn" style="width: 50px; height: 50px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 20px; transition: var(--transition); text-decoration: none;"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    /* Ensure mobile social icons animate properly */
+    .mobile-menu-overlay.active .mobile-social-icons {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
+    
+    .mobile-social-icons a:hover {
+      background: var(--gold) !important;
+      transform: translateY(-5px) scale(1.1) !important;
+      border-color: var(--gold) !important;
+    }
+    
+    @media (max-width: 480px) {
+      .mobile-social-icons a {
+        width: 45px !important;
+        height: 45px !important;
+        font-size: 18px !important;
+      }
+    }
+  </style>
+
   <!-- Contact Hero Section -->
   <section class="contact-hero">
     <!-- Background Image -->
@@ -2931,7 +2955,7 @@
       </span>
     </div>
 
-    <!-- SOCIALS - EXACT SAME AS GALLERY PAGE -->
+    <!-- SOCIALS - HIDDEN ON MOBILE -->
     <div class="side-socials">
       <a href="#" aria-label="Instagram" class="social-icon"><i class="fab fa-instagram"></i></a>
       <a href="#" aria-label="Facebook" class="social-icon"><i class="fab fa-facebook-f"></i></a>
@@ -3279,29 +3303,6 @@
     <i class="fas fa-chevron-up"></i>
   </a>
 
-  <!-- Mobile Menu Overlay - EXACT SAME AS GALLERY PAGE -->
-  <div class="mobile-menu-overlay" id="mobileMenuOverlay">
-    <a href="#" class="menu-close-btn" id="menuCloseBtn">
-      <span></span>
-      <span></span>
-    </a>
-    
-    <div class="mobile-menu-container">
-      <a href="index.html">HOME</a>
-      <a href="about.html">ABOUT</a>
-      <a href="rooms-suites.html">ROOMS & SUITES</a>
-      <a href="experience.html">EXPERIENCE</a>
-      <a href="gallery.html">GALLERY</a>
-      <a href="contact.html" class="active">CONTACT</a> 
-      
-      <div class="mobile-contact-info">
-        <p>CONTACT & RESERVATIONS</p>
-        <div class="phone">+234 809 999 1244</div>
-        <div class="phone">+234 704 282 5937</div>
-      </div>
-    </div>
-  </div>
-
   <script>
     // ===========================================
     // ENHANCED CONTACT PAGE WITH SMOOTH TRANSITIONS
@@ -3425,13 +3426,12 @@
       }
       
       // ===========================================
-      // DARK MODE - EXACT SAME AS GALLERY PAGE
+      // DARK MODE - FIXED
       // ===========================================
       function initDarkMode() {
         const themeToggle = document.getElementById('themeToggle');
         const icon = themeToggle.querySelector('i');
         
-        // Check for saved theme or system preference
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         const savedTheme = localStorage.getItem('theme');
         
@@ -3440,8 +3440,9 @@
           icon.className = 'fas fa-sun';
         }
         
-        themeToggle.addEventListener('click', (e) => {
+        themeToggle.addEventListener('click', function(e) {
           e.preventDefault();
+          e.stopPropagation();
           const isDark = document.body.classList.toggle('dark-mode');
           
           if (isDark) {
@@ -3451,29 +3452,31 @@
             icon.className = 'fas fa-moon';
             localStorage.setItem('theme', 'light');
           }
+          return false;
         });
       }
       
       // ===========================================
-      // LANGUAGE SUPPORT - EXACT SAME AS GALLERY PAGE
+      // LANGUAGE SUPPORT - FIXED
       // ===========================================
       function initLanguageSupport() {
         const languageToggle = document.getElementById('languageToggle');
         const languageDropdown = document.getElementById('languageDropdown');
         const languageOptions = document.querySelectorAll('.language-option');
         
-        languageToggle.addEventListener('click', (e) => {
+        languageToggle.addEventListener('click', function(e) {
           e.preventDefault();
           e.stopPropagation();
           languageDropdown.classList.toggle('active');
+          return false;
         });
         
         languageOptions.forEach(option => {
-          option.addEventListener('click', (e) => {
+          option.addEventListener('click', function(e) {
             e.preventDefault();
+            e.stopPropagation();
             const lang = option.dataset.lang;
             
-            // Update active state
             languageOptions.forEach(opt => {
               const check = opt.querySelector('i');
               if (opt.dataset.lang === lang) {
@@ -3485,7 +3488,6 @@
               }
             });
             
-            // Show language change confirmation
             const languages = {
               'en': 'English',
               'es': 'Spanish',
@@ -3497,6 +3499,7 @@
             
             localStorage.setItem('language', lang);
             languageDropdown.classList.remove('active');
+            return false;
           });
         });
         
@@ -3759,6 +3762,7 @@
         const mobileMenuOverlay =
           document.getElementById("mobileMenuOverlay");
         const stickyNavElement = document.querySelector(".sticky-nav");
+        const sideSocials = document.querySelector('.side-socials');
 
         // Sticky navbar hamburger
         if (stickyHamburger) {
@@ -3768,12 +3772,18 @@
             mobileMenuOverlay.classList.add("active");
             stickyHamburger.classList.add("active");
             document.body.style.overflow = "hidden";
+            
+            // Hide side socials when mobile menu is open
+            if (sideSocials && window.innerWidth <= 768) {
+              sideSocials.style.display = 'none';
+            }
           });
         }
 
         // Close mobile menu from sticky navbar
         menuCloseBtn.addEventListener("click", (e) => {
           e.preventDefault();
+          e.stopPropagation();
           mobileMenuOverlay.classList.remove("active");
           const hamburger = document.getElementById("hamburger");
           if (hamburger) hamburger.classList.remove("active");
@@ -3797,13 +3807,14 @@
       }
 
       // ===========================================
-      // MOBILE MENU FUNCTIONALITY FROM GALLERY PAGE
+      // MOBILE MENU FUNCTIONALITY
       // ===========================================
       function initMobileMenu() {
         const hamburger = document.getElementById("hamburger");
         const menuCloseBtn = document.getElementById("menuCloseBtn");
         const mobileMenuOverlay =
           document.getElementById("mobileMenuOverlay");
+        const sideSocials = document.querySelector('.side-socials');
 
         if (hamburger && mobileMenuOverlay) {
           hamburger.addEventListener("click", (e) => {
@@ -3811,10 +3822,16 @@
             mobileMenuOverlay.classList.add("active");
             hamburger.classList.add("active");
             document.body.style.overflow = "hidden";
+            
+            // Hide side socials when mobile menu is open
+            if (sideSocials && window.innerWidth <= 768) {
+              sideSocials.style.display = 'none';
+            }
           });
 
           menuCloseBtn.addEventListener("click", (e) => {
             e.preventDefault();
+            e.stopPropagation();
             mobileMenuOverlay.classList.remove("active");
             hamburger.classList.remove("active");
             document.body.style.overflow = "auto";
@@ -3840,10 +3857,20 @@
             }
           });
         }
+
+        // Handle resize events - ensure side socials remain hidden on mobile
+        window.addEventListener('resize', function() {
+          const sideSocials = document.querySelector('.side-socials');
+          if (window.innerWidth > 768 && sideSocials) {
+            sideSocials.style.display = 'flex';
+          } else if (window.innerWidth <= 768 && sideSocials) {
+            sideSocials.style.display = 'none';
+          }
+        });
       }
       
       // ===========================================
-      // BACK TO TOP BUTTON - EXACT SAME AS GALLERY PAGE
+      // BACK TO TOP BUTTON
       // ===========================================
       const backToTop = document.getElementById("backToTop");
 
