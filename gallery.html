@@ -101,6 +101,7 @@
         justify-content: center;
         transition: var(--transition);
         font-size: 18px;
+        text-decoration: none;
       }
 
       @media (max-width: 768px) {
@@ -158,6 +159,7 @@
         align-items: center;
         gap: 10px;
         font-size: 14px;
+        text-decoration: none;
       }
 
       .language-option:hover {
@@ -351,6 +353,7 @@
         text-align: center;
         opacity: 0;
         animation: fadeIn 1s ease 1s forwards;
+        text-decoration: none;
       }
 
       .scroll-indicator p {
@@ -570,6 +573,7 @@
         font-size: 16px;
         color: var(--white);
         transition: var(--transition);
+        text-decoration: none;
       }
 
       .side-reservation .phone-icon:hover {
@@ -829,6 +833,7 @@
         transition: var(--transition);
         overflow: hidden;
         z-index: 1001;
+        text-decoration: none;
       }
 
       .sticky-nav .book-btn::before {
@@ -870,6 +875,7 @@
         right: 0;
         top: 50%;
         transform: translateY(-50%);
+        text-decoration: none;
       }
 
       .sticky-nav .hamburger-btn span {
@@ -919,6 +925,8 @@
         font-weight: 500;
         position: relative;
         overflow: hidden;
+        text-decoration: none;
+        display: inline-block;
       }
 
       .filter-btn::before {
@@ -1154,6 +1162,7 @@
         cursor: pointer;
         transition: var(--transition);
         font-size: 20px;
+        text-decoration: none;
       }
 
       .panorama-btn:hover {
@@ -1575,7 +1584,7 @@
         font-size: 14px;
       }
 
-      .newsletter-form button {
+      .newsletter-form a {
         background: var(--gold);
         color: var(--white);
         border: none;
@@ -1584,9 +1593,13 @@
         cursor: pointer;
         transition: var(--transition);
         font-size: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
       }
 
-      .newsletter-form button:hover {
+      .newsletter-form a:hover {
         background: var(--light-gold);
       }
 
@@ -1704,6 +1717,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        text-decoration: none;
       }
 
       .modal-close:hover {
@@ -1736,6 +1750,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        text-decoration: none;
       }
 
       .modal-prev:hover,
@@ -1850,6 +1865,7 @@
         align-items: center;
         transition: var(--transition);
         z-index: 9991;
+        text-decoration: none;
       }
 
       .menu-close-btn span {
@@ -1996,6 +2012,7 @@
         justify-content: center;
         font-size: 18px;
         box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        text-decoration: none;
       }
 
       @media (max-width: 768px) {
@@ -2122,38 +2139,35 @@
   <body>
     <!-- Theme Controls -->
     <div class="theme-controls">
-      <button class="theme-btn" id="themeToggle" title="Toggle Dark Mode">
+      <a href="#" class="theme-btn" id="themeToggle" title="Toggle Dark Mode">
         <i class="fas fa-moon"></i>
-      </button>
+      </a>
       <div class="language-container">
-        <button
+        <a
+          href="#"
           class="language-btn"
           id="languageToggle"
           title="Select Language"
         >
           <i class="fas fa-globe"></i>
-        </button>
+        </a>
         <div class="language-dropdown" id="languageDropdown">
-          <div class="language-option active" data-lang="en">
+          <a href="#" class="language-option active" data-lang="en">
             <i class="fas fa-check"></i>
             <span>English</span>
-          </div>
-          <div class="language-option" data-lang="es">
+          </a>
+          <a href="#" class="language-option" data-lang="es">
             <i class="fas fa-check" style="display: none"></i>
             <span>Español</span>
-          </div>
-          <div class="language-option" data-lang="de">
+          </a>
+          <a href="#" class="language-option" data-lang="de">
             <i class="fas fa-check" style="display: none"></i>
             <span>German</span>
-          </div>
-          <div class="language-option" data-lang="es">
-            <i class="fas fa-check" style="display: none"></i>
-            <span>Spanish</span>
-          </div>
-          <div class="language-option" data-lang="fr">
+          </a>
+          <a href="#" class="language-option" data-lang="fr">
             <i class="fas fa-check" style="display: none"></i>
             <span>Français</span>
-          </div>
+          </a>
         </div>
       </div>
     </div>
@@ -2162,16 +2176,16 @@
     <div class="gallery-modal" id="galleryModal">
       <div class="modal-container">
         <img class="modal-image" id="modalImage" src="" alt="" />
-        <button class="modal-close" id="modalClose">
+        <a href="#" class="modal-close" id="modalClose">
           <i class="fas fa-times"></i>
-        </button>
+        </a>
         <div class="modal-nav">
-          <button class="modal-prev" id="modalPrev">
+          <a href="#" class="modal-prev" id="modalPrev">
             <i class="fas fa-chevron-left"></i>
-          </button>
-          <button class="modal-next" id="modalNext">
+          </a>
+          <a href="#" class="modal-next" id="modalNext">
             <i class="fas fa-chevron-right"></i>
-          </button>
+          </a>
         </div>
         <div class="modal-info">
           <h3 class="modal-title" id="modalTitle"></h3>
@@ -2218,9 +2232,9 @@
       <div class="side-reservation">
         <span class="label">RESERVATION</span>
         <span class="divider"></span>
-        <span class="phone-icon">
+        <a href="#" class="phone-icon">
           <i class="fas fa-phone"></i>
-        </span>
+        </a>
         <span class="phone">
           +234 809 999 1244<br />
           +234 704 282 5937
@@ -2249,10 +2263,10 @@
       </div>
 
       <!-- Scroll Indicator - Properly Positioned at Bottom -->
-      <div class="scroll-indicator fade-in delay-2">
+      <a href="#" class="scroll-indicator fade-in delay-2" onclick="document.querySelector('.gallery-section').scrollIntoView({behavior: 'smooth'}); return false;">
         <p>SCROLL TO EXPLORE</p>
         <i class="fas fa-chevron-down"></i>
-      </div>
+      </a>
     </section>
 
     <!-- Interactive Gallery Grid -->
@@ -2268,18 +2282,18 @@
 
       <!-- Gallery Filter -->
       <div class="gallery-filter fade-in delay-1">
-        <button class="filter-btn active" data-filter="all">All</button>
-        <button class="filter-btn" data-filter="suites">Suites & Rooms</button>
-        <button class="filter-btn" data-filter="dining">Dining</button>
-        <button class="filter-btn" data-filter="wellness">Wellness</button>
-        <button class="filter-btn" data-filter="events">Events</button>
-        <button class="filter-btn" data-filter="views">Panoramic Views</button>
+        <a href="#" class="filter-btn active" data-filter="all">All</a>
+        <a href="#" class="filter-btn" data-filter="suites">Suites & Rooms</a>
+        <a href="#" class="filter-btn" data-filter="dining">Dining</a>
+        <a href="#" class="filter-btn" data-filter="wellness">Wellness</a>
+        <a href="#" class="filter-btn" data-filter="events">Events</a>
+        <a href="#" class="filter-btn" data-filter="views">Panoramic Views</a>
       </div>
 
       <!-- Masonry Grid -->
       <div class="gallery-grid">
         <!-- Suite Images -->
-        <div class="gallery-item fade-in" data-category="suites" data-index="1">
+        <a href="#" class="gallery-item fade-in" data-category="suites" data-index="1">
           <img
             src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80"
             alt="Presidential Suite"
@@ -2288,9 +2302,10 @@
             <h3 class="item-title">Presidential Suite</h3>
             <p class="item-category">Suites & Rooms</p>
           </div>
-        </div>
+        </a>
 
-        <div
+        <a
+          href="#"
           class="gallery-item large fade-in delay-1"
           data-category="views"
           data-index="2"
@@ -2303,9 +2318,10 @@
             <h3 class="item-title">Owerri Skyline at Dusk</h3>
             <p class="item-category">Panoramic Views</p>
           </div>
-        </div>
+        </a>
 
-        <div
+        <a
+          href="#"
           class="gallery-item fade-in delay-2"
           data-category="dining"
           data-index="3"
@@ -2318,9 +2334,10 @@
             <h3 class="item-title">La Belle Cuisine</h3>
             <p class="item-category">Dining</p>
           </div>
-        </div>
+        </a>
 
-        <div
+        <a
+          href="#"
           class="gallery-item fade-in delay-3"
           data-category="wellness"
           data-index="4"
@@ -2333,9 +2350,10 @@
             <h3 class="item-title">Serenity Spa</h3>
             <p class="item-category">Wellness</p>
           </div>
-        </div>
+        </a>
 
-        <div
+        <a
+          href="#"
           class="gallery-item fade-in delay-4"
           data-category="events"
           data-index="5"
@@ -2348,9 +2366,10 @@
             <h3 class="item-title">Grand Ballroom</h3>
             <p class="item-category">Events</p>
           </div>
-        </div>
+        </a>
 
-        <div
+        <a
+          href="#"
           class="gallery-item fade-in delay-5"
           data-category="suites"
           data-index="6"
@@ -2363,9 +2382,10 @@
             <h3 class="item-title">Executive Suite Living Area</h3>
             <p class="item-category">Suites & Rooms</p>
           </div>
-        </div>
+        </a>
 
-        <div
+        <a
+          href="#"
           class="gallery-item large fade-in delay-1"
           data-category="wellness"
           data-index="7"
@@ -2378,9 +2398,10 @@
             <h3 class="item-title">Infinity Pool at Sunset</h3>
             <p class="item-category">Wellness</p>
           </div>
-        </div>
+        </a>
 
-        <div
+        <a
+          href="#"
           class="gallery-item fade-in delay-2"
           data-category="dining"
           data-index="8"
@@ -2393,9 +2414,10 @@
             <h3 class="item-title">Private Wine Cellar</h3>
             <p class="item-category">Dining</p>
           </div>
-        </div>
+        </a>
 
-        <div
+        <a
+          href="#"
           class="gallery-item fade-in delay-3"
           data-category="views"
           data-index="9"
@@ -2408,18 +2430,19 @@
             <h3 class="item-title">Botanical Gardens</h3>
             <p class="item-category">Panoramic Views</p>
           </div>
-        </div>
+        </a>
       </div>
 
       <!-- Load More Button -->
       <div style="text-align: center">
-        <button
+        <a
+          href="#"
           class="filter-btn"
           id="loadMore"
           style="padding: 15px 40px; font-size: 14px"
         >
           <i class="fas fa-plus"></i> LOAD MORE
-        </button>
+        </a>
       </div>
     </section>
 
@@ -2459,33 +2482,33 @@
                 Drag your mouse to explore the Presidential Suite in full 360°
               </p>
               <div class="panorama-controls">
-                <button class="panorama-btn" onclick="zoomIn()">
+                <a href="#" class="panorama-btn" onclick="zoomIn(); return false;">
                   <i class="fas fa-search-plus"></i>
-                </button>
-                <button class="panorama-btn" onclick="resetView()">
+                </a>
+                <a href="#" class="panorama-btn" onclick="resetView(); return false;">
                   <i class="fas fa-redo"></i>
-                </button>
-                <button class="panorama-btn" onclick="zoomOut()">
+                </a>
+                <a href="#" class="panorama-btn" onclick="zoomOut(); return false;">
                   <i class="fas fa-search-minus"></i>
-                </button>
+                </a>
               </div>
             </div>
           </div>
         </div>
 
         <div class="gallery-filter" style="margin-top: 40px">
-          <button class="filter-btn" onclick="changePanorama('lobby')">
+          <a href="#" class="filter-btn" onclick="changePanorama('lobby'); return false;">
             Hotel Lobby
-          </button>
-          <button class="filter-btn active" onclick="changePanorama('suite')">
+          </a>
+          <a href="#" class="filter-btn active" onclick="changePanorama('suite'); return false;">
             Presidential Suite
-          </button>
-          <button class="filter-btn" onclick="changePanorama('pool')">
+          </a>
+          <a href="#" class="filter-btn" onclick="changePanorama('pool'); return false;">
             Infinity Pool
-          </button>
-          <button class="filter-btn" onclick="changePanorama('restaurant')">
+          </a>
+          <a href="#" class="filter-btn" onclick="changePanorama('restaurant'); return false;">
             Main Restaurant
-          </button>
+          </a>
         </div>
       </div>
     </section>
@@ -2567,16 +2590,18 @@
               <h3 style="color: white; margin-bottom: 10px">
                 Click to Enter VR Mode
               </h3>
-              <button
+              <a
+                href="#"
                 class="filter-btn"
                 style="
                   background: transparent;
                   border: 2px solid white;
                   color: white;
+                  text-decoration: none;
                 "
               >
                 <i class="fas fa-play"></i> START VR
-              </button>
+              </a>
             </div>
           </div>
 
@@ -2680,7 +2705,7 @@
           <p>Subscribe for exclusive gallery updates</p>
           <div class="newsletter-form">
             <input type="email" placeholder="Your Email" />
-            <button type="submit"><i class="fas fa-paper-plane"></i></button>
+            <a href="#" class="submit-btn"><i class="fas fa-paper-plane"></i></a>
           </div>
           <p class="newsletter-note">
             Be the first to see new gallery additions
@@ -2702,16 +2727,16 @@
     </footer>
 
     <!-- Back to Top Button -->
-    <button class="back-to-top" id="backToTop">
+    <a href="#" class="back-to-top" id="backToTop">
       <i class="fas fa-chevron-up"></i>
-    </button>
+    </a>
 
     <!-- Mobile Menu Overlay -->
     <div class="mobile-menu-overlay" id="mobileMenuOverlay">
-      <button class="menu-close-btn" id="menuCloseBtn">
+      <a href="#" class="menu-close-btn" id="menuCloseBtn">
         <span></span>
         <span></span>
-      </button>
+      </a>
 
       <div class="mobile-menu-container">
         <a href="index.html">HOME</a>
@@ -2796,7 +2821,8 @@
               document.body.style.overflow = "hidden";
             });
 
-            menuCloseBtn.addEventListener("click", () => {
+            menuCloseBtn.addEventListener("click", (e) => {
+              e.preventDefault();
               mobileMenuOverlay.classList.remove("active");
               hamburger.classList.remove("active");
               document.body.style.overflow = "auto";
@@ -2832,7 +2858,8 @@
           const galleryItems = document.querySelectorAll(".gallery-item");
 
           filterButtons.forEach((button) => {
-            button.addEventListener("click", () => {
+            button.addEventListener("click", (e) => {
+              e.preventDefault();
               // Remove active class from all buttons
               filterButtons.forEach((btn) => btn.classList.remove("active"));
               // Add active class to clicked button
@@ -2864,7 +2891,8 @@
           // Load more functionality
           const loadMoreBtn = document.getElementById("loadMore");
           if (loadMoreBtn) {
-            loadMoreBtn.addEventListener("click", () => {
+            loadMoreBtn.addEventListener("click", (e) => {
+              e.preventDefault();
               // Simulate loading more items
               const galleryGrid = document.querySelector(".gallery-grid");
               const newItems = [
@@ -2892,7 +2920,8 @@
               ];
 
               newItems.forEach((item, index) => {
-                const newItem = document.createElement("div");
+                const newItem = document.createElement("a");
+                newItem.href = "#";
                 newItem.className = "gallery-item fade-in";
                 newItem.setAttribute("data-category", item.category);
                 newItem.setAttribute(
@@ -2911,9 +2940,10 @@
                 galleryGrid.appendChild(newItem);
 
                 // Add click event for modal
-                newItem.addEventListener("click", () =>
-                  openModal(item.image, item.title, item.categoryText),
-                );
+                newItem.addEventListener("click", (e) => {
+                  e.preventDefault();
+                  openModal(item.image, item.title, item.categoryText);
+                });
 
                 // Animate in
                 setTimeout(() => {
@@ -2964,7 +2994,8 @@
 
           // Add click event to gallery items
           galleryItems.forEach((item, index) => {
-            item.addEventListener("click", () => {
+            item.addEventListener("click", (e) => {
+              e.preventDefault();
               const img = item.querySelector("img");
               const title = item.querySelector(".item-title").textContent;
               const category = item.querySelector(".item-category").textContent;
@@ -3009,9 +3040,18 @@
           }
 
           // Event listeners
-          modalClose.addEventListener("click", closeModal);
-          modalPrev.addEventListener("click", () => navigateModal(-1));
-          modalNext.addEventListener("click", () => navigateModal(1));
+          modalClose.addEventListener("click", (e) => {
+            e.preventDefault();
+            closeModal();
+          });
+          modalPrev.addEventListener("click", (e) => {
+            e.preventDefault();
+            navigateModal(-1);
+          });
+          modalNext.addEventListener("click", (e) => {
+            e.preventDefault();
+            navigateModal(1);
+          });
 
           // Close modal on overlay click
           modal.addEventListener("click", (e) => {
@@ -3086,14 +3126,17 @@
           alert(
             "Zooming in on the 360° view... In a full implementation, this would zoom the panorama.",
           );
+          return false;
         };
 
         window.zoomOut = function () {
           alert("Zooming out of the 360° view...");
+          return false;
         };
 
         window.resetView = function () {
           alert("Resetting panorama view to default...");
+          return false;
         };
 
         window.changePanorama = function (scene) {
@@ -3117,6 +3160,7 @@
               btn.classList.remove("active");
             });
           event.target.classList.add("active");
+          return false;
         };
 
         // ===========================================
@@ -3136,7 +3180,8 @@
             icon.className = "fas fa-sun";
           }
 
-          themeToggle.addEventListener("click", () => {
+          themeToggle.addEventListener("click", (e) => {
+            e.preventDefault();
             const isDark = document.body.classList.toggle("dark-mode");
 
             if (isDark) {
@@ -3158,12 +3203,14 @@
           const languageOptions = document.querySelectorAll(".language-option");
 
           languageToggle.addEventListener("click", (e) => {
+            e.preventDefault();
             e.stopPropagation();
             languageDropdown.classList.toggle("active");
           });
 
           languageOptions.forEach((option) => {
-            option.addEventListener("click", () => {
+            option.addEventListener("click", (e) => {
+              e.preventDefault();
               const lang = option.dataset.lang;
 
               languageOptions.forEach((opt) => {
@@ -3178,7 +3225,7 @@
               });
 
               alert(
-                `Language changed to ${lang === "en" ? "English" : lang === "es" ? "Spanish" : "French"}. In a full implementation, all text would be translated.`,
+                `Language changed to ${lang === "en" ? "English" : lang === "es" ? "Spanish" : lang === "de" ? "German" : "French"}. In a full implementation, all text would be translated.`,
               );
 
               localStorage.setItem("language", lang);
@@ -3247,13 +3294,13 @@
               <a href="contact.html">CONTACT</a>
             </div>
             
-            <button class="book-btn" onclick="window.location.href='index.html#booking'">BOOK NOW</button>
+            <a href="index.html#booking" class="book-btn">BOOK NOW</a>
             
-            <button class="hamburger-btn" id="stickyHamburger">
+            <a href="#" class="hamburger-btn" id="stickyHamburger">
               <span></span>
               <span></span>
               <span></span>
-            </button>
+            </a>
           </div>
         `;
 
@@ -3269,6 +3316,7 @@
           // Sticky navbar hamburger
           if (stickyHamburger) {
             stickyHamburger.addEventListener("click", (e) => {
+              e.preventDefault();
               e.stopPropagation();
               mobileMenuOverlay.classList.add("active");
               stickyHamburger.classList.add("active");
@@ -3277,7 +3325,8 @@
           }
 
           // Close mobile menu from sticky navbar
-          menuCloseBtn.addEventListener("click", () => {
+          menuCloseBtn.addEventListener("click", (e) => {
+            e.preventDefault();
             mobileMenuOverlay.classList.remove("active");
             const hamburger = document.getElementById("hamburger");
             if (hamburger) hamburger.classList.remove("active");
@@ -3313,7 +3362,8 @@
           }
         }
 
-        backToTop.addEventListener("click", () => {
+        backToTop.addEventListener("click", (e) => {
+          e.preventDefault();
           window.scrollTo({
             top: 0,
             behavior: "smooth",

@@ -1477,10 +1477,10 @@
       left: 0;
       width: 100%;
       z-index: 1000;
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(15, 15, 20, 0.95);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      border-bottom: 1px solid rgba(193, 154, 91, 0.2);
       transition: var(--transition);
       padding: 0 64px;
       transform: translateY(-100%);
@@ -1493,17 +1493,11 @@
     }
 
     .sticky-nav.scrolled {
-      background: rgba(15, 15, 20, 0.95);
+      background: rgba(10, 10, 15, 0.98);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(193, 154, 91, 0.1);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    }
-
-    .sticky-nav.elevated {
-      box-shadow: 0 8px 32px rgba(193, 154, 91, 0.12);
-      background: rgba(15, 15, 20, 0.92);
-      border-bottom: 1px solid rgba(193, 154, 91, 0.15);
+      border-bottom: 1px solid rgba(193, 154, 91, 0.3);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
     }
 
     /* Sticky nav inner container - CENTERED NAVIGATION */
@@ -1549,8 +1543,9 @@
       position: relative;
       padding: 8px 0;
       transition: var(--transition);
-      font-weight: 400;
+      font-weight: 500;
       cursor: pointer;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
     }
 
     .sticky-nav .nav-links a.active {
@@ -1585,7 +1580,7 @@
     /* Book Now Button - Positioned absolutely on right with proper spacing */
     .sticky-nav .book-btn {
       position: absolute;
-      right: 100px; /* Moved left to avoid theme controls */
+      right: 100px;
       top: 50%;
       transform: translateY(-50%);
       background: linear-gradient(135deg, var(--gold) 0%, var(--light-gold) 100%);
@@ -1599,6 +1594,8 @@
       transition: var(--transition);
       overflow: hidden;
       z-index: 1001;
+      text-decoration: none;
+      font-weight: 600;
     }
 
     .sticky-nav .book-btn::before {
@@ -1849,7 +1846,7 @@
     }
 
     /* ===========================================
-       EXISTING PAGE SECTIONS WITH DARK MODE
+       EXISTING PAGE SECTIONS WITH DARK MODE - CONTRAST FIXED
        =========================================== */
     
     /* ABOUT US SECTION */
@@ -1884,7 +1881,7 @@
     }
 
     .dark-mode .section-title {
-      color: var(--dark-text);
+      color: var(--white);
     }
 
     .title-divider {
@@ -2046,7 +2043,7 @@
     }
 
     .dark-mode .about-welcome {
-      color: var(--dark-text);
+      color: var(--white);
     }
 
     .hotel-name {
@@ -2067,9 +2064,9 @@
     .about-description {
       font-size: 16px;
       line-height: 1.8;
-      color: var(--gray);
+      color: var(--dark);
       margin-bottom: 35px;
-      font-weight: 300;
+      font-weight: 400;
     }
 
     .dark-mode .about-description {
@@ -2090,6 +2087,7 @@
       align-items: center;
       gap: 10px;
       margin-bottom: 50px;
+      text-decoration: none;
     }
 
     .read-more-btn i {
@@ -2159,7 +2157,7 @@
       font-size: 14px;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: var(--gray);
+      color: var(--dark);
       font-weight: 500;
     }
 
@@ -2168,7 +2166,7 @@
     }
 
     /* ===========================================
-       LUXURY ROOMS & SUITES SECTION
+       LUXURY ROOMS & SUITES SECTION - CONTRAST FIXED
        =========================================== */
     .rooms-section {
       padding: 120px 64px;
@@ -2195,19 +2193,19 @@
       pointer-events: none;
     }
 
+    .rooms-section .section-title {
+      color: var(--white);
+    }
+
     .section-subtitle {
       text-align: center;
-      color: rgba(0, 0, 0, 0.7);
+      color: rgba(255, 255, 255, 0.9);
       font-size: 18px;
       max-width: 600px;
       margin: 20px auto 60px;
       font-weight: 300;
       letter-spacing: 1px;
       line-height: 1.6;
-    }
-
-    .section-subtitle p {
-      color: white;
     }
 
     .rooms-grid {
@@ -2225,12 +2223,12 @@
     }
 
     .room-card {
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.08);
       border-radius: 20px;
       overflow: hidden;
       transition: var(--transition);
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       position: relative;
     }
 
@@ -2253,8 +2251,8 @@
 
     .room-card:hover {
       transform: translateY(-10px);
-      border-color: rgba(193, 154, 91, 0.3);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      border-color: rgba(193, 154, 91, 0.4);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
     }
 
     .room-image {
@@ -2313,7 +2311,7 @@
     }
 
     .room-features span {
-      color: rgba(255, 255, 255, 0.7);
+      color: rgba(255, 255, 255, 0.9);
       font-size: 14px;
       display: flex;
       align-items: center;
@@ -2325,7 +2323,7 @@
     }
 
     .room-description {
-      color: rgba(255, 255, 255, 0.8);
+      color: rgba(255, 255, 255, 0.9);
       line-height: 1.6;
       margin-bottom: 25px;
       font-size: 15px;
@@ -2345,6 +2343,7 @@
       align-items: center;
       justify-content: center;
       width: 100%;
+      text-decoration: none;
     }
 
     .room-book-btn:hover {
@@ -2372,7 +2371,7 @@
     }
 
     .view-all-btn:hover {
-      background: rgba(193, 154, 91, 0.1);
+      background: rgba(193, 154, 91, 0.15);
       transform: translateY(-2px);
       letter-spacing: 3px;
     }
@@ -2386,7 +2385,7 @@
     }
 
     /* ===========================================
-       EXPERIENCE SECTION
+       EXPERIENCE SECTION - CONTRAST FIXED
        =========================================== */
     .experience-section {
       padding: 120px 64px;
@@ -2403,6 +2402,10 @@
 
     .dark-mode .experience-section {
       background: var(--dark-bg);
+    }
+
+    .dark-mode .experience-section .section-title {
+      color: var(--white);
     }
 
     .experience-grid {
@@ -2486,11 +2489,11 @@
     }
 
     .dark-mode .experience-card h3 {
-      color: var(--dark-text);
+      color: var(--white);
     }
 
     .experience-card p {
-      color: var(--gray);
+      color: var(--dark);
       line-height: 1.6;
       margin-bottom: 20px;
       font-size: 15px;
@@ -2517,14 +2520,14 @@
     }
 
     .dark-mode .experience-link:hover {
-      color: var(--dark-text);
+      color: var(--white);
     }
 
     /* ===========================================
        TESTIMONIALS SECTION - REDUCED HEIGHT
        =========================================== */
     .testimonials-section {
-      padding: 60px 50px; /* Reduced from 100px */
+      padding: 60px 50px;
       background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
       position: relative;
       overflow: hidden;
@@ -2536,6 +2539,10 @@
       }
     }
 
+    .testimonials-section .section-title {
+      color: var(--white);
+    }
+
     .testimonials-container {
       max-width: 800px;
       margin: 0 auto;
@@ -2544,7 +2551,7 @@
 
     .testimonials-slider {
       position: relative;
-      min-height: 320px; /* Reduced from 400px */
+      min-height: 320px;
     }
 
     @media (max-width: 768px) {
@@ -2569,11 +2576,11 @@
     }
 
     .testimonial-content {
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(10px);
       border-radius: 20px;
-      padding: 40px 50px; /* Reduced padding */
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 40px 50px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
       position: relative;
     }
 
@@ -2586,11 +2593,11 @@
     .testimonial-content::before {
       content: '"';
       position: absolute;
-      top: -25px; /* Adjusted position */
+      top: -25px;
       left: 30px;
-      font-size: 90px; /* Reduced size */
+      font-size: 90px;
       font-family: "Playfair Display", serif;
-      color: rgba(193, 154, 91, 0.2);
+      color: rgba(193, 154, 91, 0.3);
       line-height: 1;
     }
 
@@ -2604,16 +2611,16 @@
 
     .testimonial .stars {
       color: var(--gold);
-      font-size: 18px; /* Reduced from 20px */
-      margin-bottom: 20px; /* Reduced from 30px */
+      font-size: 18px;
+      margin-bottom: 20px;
     }
 
     .testimonial-text {
-      font-size: 17px; /* Slightly reduced */
+      font-size: 17px;
       line-height: 1.7;
-      color: rgba(255, 255, 255, 0.9);
+      color: rgba(255, 255, 255, 0.95);
       font-style: italic;
-      margin-bottom: 30px; /* Reduced from 40px */
+      margin-bottom: 30px;
       position: relative;
       z-index: 1;
     }
@@ -2628,19 +2635,19 @@
     .guest-info {
       display: flex;
       align-items: center;
-      gap: 15px; /* Reduced from 20px */
+      gap: 15px;
     }
 
     .guest-avatar {
-      width: 50px; /* Reduced from 60px */
-      height: 50px; /* Reduced from 60px */
-      background: rgba(193, 154, 91, 0.1);
+      width: 50px;
+      height: 50px;
+      background: rgba(193, 154, 91, 0.2);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--gold);
-      font-size: 26px; /* Reduced from 32px */
+      font-size: 26px;
     }
 
     @media (max-width: 768px) {
@@ -2653,7 +2660,7 @@
 
     .guest-details h4 {
       font-family: "Playfair Display", serif;
-      font-size: 18px; /* Reduced from 20px */
+      font-size: 18px;
       margin-bottom: 5px;
       color: #fff;
     }
@@ -2665,9 +2672,9 @@
     }
 
     .guest-details p {
-      color: rgba(255, 255, 255, 0.6);
-      font-size: 13px; /* Reduced from 14px */
-      letter-spacing: 0.8px; /* Reduced from 1px */
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 13px;
+      letter-spacing: 0.8px;
     }
 
     @media (max-width: 768px) {
@@ -2679,15 +2686,15 @@
     .testimonial-dots {
       display: flex;
       justify-content: center;
-      gap: 12px; /* Reduced from 15px */
-      margin-top: 30px; /* Reduced from 40px */
+      gap: 12px;
+      margin-top: 30px;
     }
 
     .dot {
-      width: 10px; /* Reduced from 12px */
-      height: 10px; /* Reduced from 12px */
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.3);
       cursor: pointer;
       transition: var(--transition);
     }
@@ -2702,7 +2709,7 @@
     }
 
     /* ===========================================
-       GALLERY SECTION
+       GALLERY SECTION - CONTRAST FIXED
        =========================================== */
     .gallery-section {
       padding: 120px 64px;
@@ -2717,6 +2724,10 @@
 
     .dark-mode .gallery-section {
       background: var(--dark-bg);
+    }
+
+    .dark-mode .gallery-section .section-title {
+      color: var(--white);
     }
 
     .gallery-grid {
@@ -2790,13 +2801,13 @@
     }
 
     .gallery-overlay p {
-      color: rgba(255, 255, 255, 0.7);
+      color: rgba(255, 255, 255, 0.8);
       font-size: 14px;
       letter-spacing: 1px;
     }
 
     /* ===========================================
-       CONTACT SECTION
+       CONTACT SECTION - CONTRAST FIXED
        =========================================== */
     .contact-section {
       padding: 120px 64px;
@@ -2808,6 +2819,14 @@
       .contact-section {
         padding: 80px 25px;
       }
+    }
+
+    .contact-section .section-title {
+      color: var(--white);
+    }
+
+    .contact-section .section-subtitle {
+      color: rgba(255, 255, 255, 0.9);
     }
 
     .contact-container {
@@ -2831,24 +2850,24 @@
     }
 
     .contact-card {
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.08);
       border-radius: 15px;
       padding: 40px;
       text-align: center;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       transition: var(--transition);
     }
 
     .contact-card:hover {
       border-color: var(--gold);
       transform: translateY(-5px);
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.12);
     }
 
     .contact-icon {
       width: 70px;
       height: 70px;
-      background: rgba(193, 154, 91, 0.1);
+      background: rgba(193, 154, 91, 0.2);
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -2866,17 +2885,17 @@
     }
 
     .contact-card p {
-      color: rgba(255, 255, 255, 0.7);
+      color: rgba(255, 255, 255, 0.9);
       line-height: 1.6;
       font-size: 15px;
     }
 
     .contact-form {
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(10px);
       border-radius: 20px;
       padding: 50px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.15);
     }
 
     @media (max-width: 768px) {
@@ -2911,7 +2930,7 @@
 
     .form-group input::placeholder,
     .form-group textarea::placeholder {
-      color: rgba(255, 255, 255, 0.5);
+      color: rgba(255, 255, 255, 0.6);
     }
 
     .submit-btn {
@@ -2930,6 +2949,7 @@
       gap: 10px;
       width: 100%;
       font-weight: 500;
+      text-decoration: none;
     }
 
     .submit-btn:hover {
@@ -2992,7 +3012,7 @@
     }
 
     .footer-description {
-      color: rgba(255, 255, 255, 0.7);
+      color: rgba(255, 255, 255, 0.8);
       line-height: 1.6;
       margin-bottom: 25px;
       font-size: 15px;
@@ -3049,7 +3069,7 @@
     }
 
     .footer-links a {
-      color: rgba(255, 255, 255, 0.7);
+      color: rgba(255, 255, 255, 0.8);
       text-decoration: none;
       font-size: 15px;
       display: flex;
@@ -3073,7 +3093,7 @@
     }
 
     .contact-details-footer p {
-      color: rgba(255, 255, 255, 0.7);
+      color: rgba(255, 255, 255, 0.8);
       margin-bottom: 15px;
       display: flex;
       align-items: center;
@@ -3101,7 +3121,7 @@
       font-size: 14px;
     }
 
-    .newsletter-form button {
+    .newsletter-form .submit-btn {
       background: var(--gold);
       color: var(--white);
       border: none;
@@ -3110,9 +3130,11 @@
       cursor: pointer;
       transition: var(--transition);
       font-size: 14px;
+      width: auto;
+      display: inline-flex;
     }
 
-    .newsletter-form button:hover {
+    .newsletter-form .submit-btn:hover {
       background: var(--light-gold);
     }
 
@@ -3130,7 +3152,7 @@
     }
 
     .footer-bottom p {
-      color: rgba(255, 255, 255, 0.5);
+      color: rgba(255, 255, 255, 0.7);
       font-size: 14px;
       margin-bottom: 20px;
     }
@@ -3148,7 +3170,7 @@
     }
 
     .footer-policies a {
-      color: rgba(255, 255, 255, 0.5);
+      color: rgba(255, 255, 255, 0.7);
       text-decoration: none;
       font-size: 14px;
       transition: var(--transition);
@@ -3413,34 +3435,30 @@
 <body>
   <!-- Theme Controls (From Gallery Page) -->
   <div class="theme-controls">
-    <button class="theme-btn" id="themeToggle" title="Toggle Dark Mode">
+    <a href="#" class="theme-btn" id="themeToggle" title="Toggle Dark Mode">
       <i class="fas fa-moon"></i>
-    </button>
+    </a>
     <div class="language-container">
-      <button class="language-btn" id="languageToggle" title="Select Language">
+      <a href="#" class="language-btn" id="languageToggle" title="Select Language">
         <i class="fas fa-globe"></i>
-      </button>
+      </a>
       <div class="language-dropdown" id="languageDropdown">
-        <div class="language-option active" data-lang="en">
+        <a href="#" class="language-option active" data-lang="en">
           <i class="fas fa-check"></i>
           <span>English</span>
-        </div>
-        <div class="language-option" data-lang="es">
+        </a>
+        <a href="#" class="language-option" data-lang="es">
           <i class="fas fa-check" style="display: none"></i>
           <span>Español</span>
-        </div>
-        <div class="language-option" data-lang="de">
+        </a>
+        <a href="#" class="language-option" data-lang="de">
           <i class="fas fa-check" style="display: none"></i>
           <span>German</span>
-        </div>
-        <div class="language-option" data-lang="es">
-          <i class="fas fa-check" style="display: none"></i>
-          <span>Spanish</span>
-        </div>
-        <div class="language-option" data-lang="fr">
+        </a>
+        <a href="#" class="language-option" data-lang="fr">
           <i class="fas fa-check" style="display: none"></i>
           <span>Français</span>
-        </div>
+        </a>
       </div>
     </div>
   </div>
@@ -3587,10 +3605,10 @@
     </div>
     
     <!-- Skip Button -->
-    <button class="skip-preloader" id="skipPreloader">
+    <a href="#" class="skip-preloader" id="skipPreloader">
       <span>SKIP INTRO</span>
       <i class="fas fa-forward"></i>
-    </button>
+    </a>
   </div>
 
   <!-- OLD PRELOADER (Hidden) -->
@@ -3603,10 +3621,10 @@
 
   <!-- Mobile Menu Overlay (From Gallery Page) -->
   <div class="mobile-menu-overlay" id="mobileMenuOverlay">
-    <button class="menu-close-btn" id="menuCloseBtn">
+    <a href="#" class="menu-close-btn" id="menuCloseBtn">
       <span></span>
       <span></span>
-    </button>
+    </a>
 
     <div class="mobile-menu-container">
       <a href="index.html" class="active">HOME</a>
@@ -3667,9 +3685,9 @@
     <div class="side-reservation">
       <span class="label">RESERVATION</span>
       <span class="divider"></span>
-      <span class="phone-icon">
+      <a href="#" class="phone-icon">
         <i class="fas fa-phone"></i>
-      </span>
+      </a>
       <span class="phone">
         +234 809 999 1244<br>
         +234 704 282 5937
@@ -3691,7 +3709,7 @@
         ENJOY THE BEST<br>
         MOMENTS OF LIFE
       </h1>
-      <button class="outline-btn">ROOMS & SUITES</button>
+      <a href="#" class="outline-btn">ROOMS & SUITES</a>
     </div>
 
     <!-- BOOKING -->
@@ -3704,7 +3722,7 @@
         <label>Check out</label>
         <input type="date" id="checkout">
       </div>
-      <button class="book-btn">BOOK NOW</button>
+      <a href="#" class="book-btn">BOOK NOW</a>
     </div>
   </section>
 
@@ -3744,10 +3762,10 @@
         <p class="about-description">
           Nestled in the heart of Owerri, Imo State, WestBrook Hotel stands as a premier destination for travelers seeking luxury, comfort, and exceptional hospitality. Founded by Chief Sir...
         </p>
-        <button class="read-more-btn">
+        <a href="#" class="read-more-btn">
           READ MORE
           <i class="fas fa-arrow-right"></i>
-        </button>
+        </a>
         
         <!-- Stats Section -->
         <div class="stats-container">
@@ -3791,7 +3809,7 @@
             <span><i class="fas fa-user"></i> 2 Guests</span>
           </div>
           <p class="room-description">Experience presidential luxury with private terrace, jacuzzi, and personalized butler service.</p>
-          <button class="room-book-btn">BOOK NOW</button>
+          <a href="#" class="room-book-btn">BOOK NOW</a>
         </div>
       </div>
       
@@ -3809,7 +3827,7 @@
             <span><i class="fas fa-user"></i> 2 Guests</span>
           </div>
           <p class="room-description">Spacious suite with separate living area, work desk, and panoramic city views.</p>
-          <button class="room-book-btn">BOOK NOW</button>
+          <a href="#" class="room-book-btn">BOOK NOW</a>
         </div>
       </div>
       
@@ -3827,7 +3845,7 @@
             <span><i class="fas fa-user"></i> 2 Guests</span>
           </div>
           <p class="room-description">Elegant room with marble bathroom, premium amenities, and garden views.</p>
-          <button class="room-book-btn">BOOK NOW</button>
+          <a href="#" class="room-book-btn">BOOK NOW</a>
         </div>
       </div>
     </div>
@@ -3842,7 +3860,7 @@
     <div class="section-header">
       <h2 class="section-title">EXPERIENCE WESTBROOK</h2>
       <div class="title-divider"></div>
-      <p class="section-subtitle">Beyond accommodation, discover world-class amenities and unforgettable experiences</p>
+      <p class="section-subtitle1">Beyond accommodation, discover world-class amenities and unforgettable experiences</p>
     </div>
     
     <div class="experience-grid">
@@ -3962,7 +3980,7 @@
     <div class="section-header">
       <h2 class="section-title">GALLERY</h2>
       <div class="title-divider"></div>
-      <p class="section-subtitle">A glimpse into the WestBrook experience</p>
+      <p class="section-subtitle1">A glimpse into the WestBrook experience</p>
     </div>
     
     <div class="gallery-grid">
@@ -4053,7 +4071,7 @@
           <div class="form-group">
             <textarea placeholder="Your Message" rows="5" required></textarea>
           </div>
-          <button type="submit" class="submit-btn">SEND MESSAGE <i class="fas fa-paper-plane"></i></button>
+          <a href="#" class="submit-btn">SEND MESSAGE <i class="fas fa-paper-plane"></i></a>
         </form>
       </div>
     </div>
@@ -4102,7 +4120,7 @@
         <p>Subscribe for exclusive gallery updates</p>
         <div class="newsletter-form">
           <input type="email" placeholder="Your Email">
-          <button type="submit"><i class="fas fa-paper-plane"></i></button>
+          <a href="#" class="submit-btn"><i class="fas fa-paper-plane"></i></a>
         </div>
         <p class="newsletter-note">We respect your privacy. Unsubscribe at any time.</p>
       </div>
@@ -4119,9 +4137,9 @@
   </footer>
 
   <!-- BACK TO TOP BUTTON -->
-  <button class="back-to-top" id="backToTop">
+  <a href="#" class="back-to-top" id="backToTop">
     <i class="fas fa-chevron-up"></i>
-  </button>
+  </a>
 
   <script>
     // ===========================================
@@ -4162,7 +4180,8 @@
           icon.className = 'fas fa-sun';
         }
 
-        themeToggle.addEventListener('click', () => {
+        themeToggle.addEventListener('click', (e) => {
+          e.preventDefault();
           const isDark = document.body.classList.toggle('dark-mode');
 
           if (isDark) {
@@ -4186,12 +4205,14 @@
         if (!languageToggle || !languageDropdown) return;
 
         languageToggle.addEventListener('click', (e) => {
+          e.preventDefault();
           e.stopPropagation();
           languageDropdown.classList.toggle('active');
         });
 
         languageOptions.forEach((option) => {
-          option.addEventListener('click', () => {
+          option.addEventListener('click', (e) => {
+            e.preventDefault();
             const lang = option.dataset.lang;
 
             languageOptions.forEach((opt) => {
@@ -4206,7 +4227,7 @@
             });
 
             alert(
-              `Language changed to ${lang === 'en' ? 'English' : lang === 'es' ? 'Spanish' : 'French'}. In a full implementation, all text would be translated.`
+              `Language changed to ${lang === 'en' ? 'English' : lang === 'es' ? 'Spanish' : lang === 'de' ? 'German' : 'French'}. In a full implementation, all text would be translated.`
             );
 
             localStorage.setItem('language', lang);
@@ -4273,7 +4294,8 @@
             document.body.style.overflow = 'hidden';
           });
 
-          menuCloseBtn.addEventListener('click', () => {
+          menuCloseBtn.addEventListener('click', (e) => {
+            e.preventDefault();
             mobileMenuOverlay.classList.remove('active');
             hamburger.classList.remove('active');
             document.body.style.overflow = 'auto';
@@ -4281,7 +4303,7 @@
 
           // Close menu when clicking links
           mobileMenuOverlay.querySelectorAll('.mobile-menu-container a').forEach((link) => {
-            link.addEventListener('click', () => {
+            link.addEventListener('click', (e) => {
               mobileMenuOverlay.classList.remove('active');
               hamburger.classList.remove('active');
               document.body.style.overflow = 'auto';
@@ -4322,13 +4344,13 @@
               <a href="contact.html">CONTACT</a>
             </div>
             
-            <button class="book-btn" onclick="window.location.href='index.html#booking'">BOOK NOW</button>
+            <a href="#" class="book-btn" onclick="window.location.href='index.html#booking'">BOOK NOW</a>
             
-            <button class="hamburger-btn" id="stickyHamburger">
+            <a href="#" class="hamburger-btn" id="stickyHamburger">
               <span></span>
               <span></span>
               <span></span>
-            </button>
+            </a>
           </div>
         `;
 
@@ -4344,6 +4366,7 @@
         // Sticky navbar hamburger
         if (stickyHamburger) {
           stickyHamburger.addEventListener("click", (e) => {
+            e.preventDefault();
             e.stopPropagation();
             mobileMenuOverlay.classList.add("active");
             stickyHamburger.classList.add("active");
@@ -4352,7 +4375,8 @@
         }
 
         // Close mobile menu from sticky navbar
-        menuCloseBtn.addEventListener("click", () => {
+        menuCloseBtn.addEventListener("click", (e) => {
+          e.preventDefault();
           mobileMenuOverlay.classList.remove("active");
           const hamburger = document.getElementById("hamburger");
           if (hamburger) hamburger.classList.remove("active");
@@ -4526,7 +4550,8 @@
           }
           
           // Skip preloader functionality
-          skipPreloaderBtn.addEventListener('click', () => {
+          skipPreloaderBtn.addEventListener('click', (e) => {
+            e.preventDefault();
             // Animate skip button
             skipPreloaderBtn.style.transform = 'scale(0.95)';
             setTimeout(() => {
@@ -4653,7 +4678,8 @@
         startSlideShow();
 
         // BOOKING
-        document.querySelector(".book-btn").addEventListener("click", () => {
+        document.querySelector(".book-btn").addEventListener("click", (e) => {
+          e.preventDefault();
           const inDate = document.getElementById('checkin').value;
           const outDate = document.getElementById('checkout').value;
 
@@ -4764,7 +4790,7 @@
           newsletterForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const emailInput = newsletterForm.querySelector('input[type="email"]');
-            const submitBtn = newsletterForm.querySelector('button');
+            const submitBtn = newsletterForm.querySelector('.submit-btn');
             
             if (emailInput.value) {
               const originalHtml = submitBtn.innerHTML;
@@ -4792,7 +4818,8 @@
           }
         }
 
-        backToTop.addEventListener('click', () => {
+        backToTop.addEventListener('click', (e) => {
+          e.preventDefault();
           window.scrollTo({
             top: 0,
             behavior: 'smooth'
@@ -4804,7 +4831,8 @@
         // Room booking buttons
         const roomBookBtns = document.querySelectorAll('.room-book-btn');
         roomBookBtns.forEach(btn => {
-          btn.addEventListener('click', () => {
+          btn.addEventListener('click', (e) => {
+            e.preventDefault();
             const roomName = btn.closest('.room-card').querySelector('.room-name').textContent;
             const roomPrice = btn.closest('.room-card').querySelector('.room-price').textContent;
             

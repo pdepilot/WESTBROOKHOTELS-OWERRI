@@ -92,6 +92,7 @@
       justify-content: center;
       transition: var(--transition);
       font-size: 18px;
+      text-decoration: none;
     }
 
     @media (max-width: 768px) {
@@ -149,6 +150,7 @@
       align-items: center;
       gap: 10px;
       font-size: 14px;
+      text-decoration: none;
     }
 
     .language-option:hover {
@@ -328,6 +330,7 @@
       border: none;
       font-size: 24px;
       animation: pulse 2s infinite;
+      text-decoration: none;
     }
 
     @keyframes pulse {
@@ -419,6 +422,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      text-decoration: none;
     }
 
     .chat-close:hover {
@@ -529,6 +533,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      text-decoration: none;
     }
 
     .chat-send-btn:hover {
@@ -553,6 +558,7 @@
       color: var(--dark);
       cursor: pointer;
       transition: var(--transition);
+      text-decoration: none;
     }
 
     .quick-reply:hover {
@@ -644,6 +650,7 @@
       gap: 10px;
       text-transform: uppercase;
       font-weight: 500;
+      text-decoration: none;
     }
 
     .tour-btn:hover {
@@ -871,6 +878,7 @@
       font-size: 16px;
       color: var(--white);
       transition: var(--transition);
+      text-decoration: none;
     }
 
     .side-reservation .phone-icon:hover {
@@ -1130,6 +1138,7 @@
       transition: var(--transition);
       overflow: hidden;
       z-index: 1001;
+      text-decoration: none;
     }
 
     .sticky-nav .book-btn::before {
@@ -1171,6 +1180,7 @@
       right: 0;
       top: 50%;
       transform: translateY(-50%);
+      text-decoration: none;
     }
 
     .sticky-nav .hamburger-btn span {
@@ -1598,6 +1608,7 @@
       gap: 15px;
       position: relative;
       overflow: hidden;
+      text-decoration: none;
     }
 
     .submit-btn::before {
@@ -1667,6 +1678,10 @@
       line-height: 1.6;
       margin-bottom: 25px;
       transition: var(--transition);
+    }
+
+    .form-success .submit-btn {
+      background: linear-gradient(135deg, #4CAF50, #45a049);
     }
 
     /* MAP SECTION */
@@ -1791,6 +1806,7 @@
       margin-top: 20px;
       text-transform: uppercase;
       font-weight: 500;
+      text-decoration: none;
     }
 
     .get-directions-btn:hover {
@@ -2091,7 +2107,7 @@
       transition: var(--transition);
     }
 
-    .newsletter-form button {
+    .newsletter-form a {
       background: var(--gold);
       color: var(--white);
       border: none;
@@ -2100,9 +2116,13 @@
       cursor: pointer;
       transition: var(--transition);
       font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
     }
 
-    .newsletter-form button:hover {
+    .newsletter-form a:hover {
       background: var(--light-gold);
     }
 
@@ -2173,6 +2193,7 @@
       justify-content: center;
       font-size: 18px;
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      text-decoration: none;
     }
 
     @media (max-width: 768px) {
@@ -2280,6 +2301,7 @@
       align-items: center;
       transition: var(--transition);
       z-index: 9991;
+      text-decoration: none;
     }
 
     .menu-close-btn span {
@@ -2801,50 +2823,46 @@
 <body>
   <!-- Theme Controls - EXACT SAME AS GALLERY PAGE -->
   <div class="theme-controls">
-    <button class="theme-btn" id="themeToggle" title="Toggle Dark Mode">
+    <a href="#" class="theme-btn" id="themeToggle" title="Toggle Dark Mode">
       <i class="fas fa-moon"></i>
-    </button>
+    </a>
     <div class="language-container">
-      <button class="language-btn" id="languageToggle" title="Select Language">
+      <a href="#" class="language-btn" id="languageToggle" title="Select Language">
         <i class="fas fa-globe"></i>
-      </button>
+      </a>
       <div class="language-dropdown" id="languageDropdown">
-        <div class="language-option active" data-lang="en">
+        <a href="#" class="language-option active" data-lang="en">
           <i class="fas fa-check"></i>
           <span>English</span>
-        </div>
-        <div class="language-option" data-lang="es">
+        </a>
+        <a href="#" class="language-option" data-lang="es">
           <i class="fas fa-check" style="display: none;"></i>
           <span>Español</span>
-        </div>
-        <div class="language-option" data-lang="de">
+        </a>
+        <a href="#" class="language-option" data-lang="de">
           <i class="fas fa-check" style="display: none;"></i>
           <span>German</span>
-        </div>
-        <div class="language-option" data-lang="es">
-          <i class="fas fa-check" style="display: none;"></i>
-          <span>Spanish</span>
-        </div>
-        <div class="language-option" data-lang="fr">
+        </a>
+        <a href="#" class="language-option" data-lang="fr">
           <i class="fas fa-check" style="display: none;"></i>
           <span>Français</span>
-        </div>
+        </a>
       </div>
     </div>
   </div>
 
   <!-- Chat Widget -->
   <div class="chat-widget">
-    <button class="chat-toggle" id="chatToggle">
+    <a href="#" class="chat-toggle" id="chatToggle">
       <i class="fas fa-comments"></i>
       <span class="unread" id="unreadCount" style="display: none;">0</span>
-    </button>
+    </a>
     <div class="chat-container" id="chatContainer">
       <div class="chat-header">
         <h3>WestBrook Concierge</h3>
-        <button class="chat-close" id="chatClose">
+        <a href="#" class="chat-close" id="chatClose">
           <i class="fas fa-times"></i>
-        </button>
+        </a>
       </div>
       <div class="chat-messages" id="chatMessages">
         <!-- Messages will be inserted here -->
@@ -2852,15 +2870,15 @@
       <div class="chat-input">
         <div class="input-group">
           <input type="text" class="chat-input-field" id="chatInput" placeholder="Type your message...">
-          <button class="chat-send-btn" id="chatSend">
+          <a href="#" class="chat-send-btn" id="chatSend">
             <i class="fas fa-paper-plane"></i>
-          </button>
+          </a>
         </div>
         <div class="quick-replies" id="quickReplies">
-          <div class="quick-reply" data-reply="Room availability">Room availability</div>
-          <div class="quick-reply" data-reply="Make reservation">Make reservation</div>
-          <div class="quick-reply" data-reply="Prices">Prices</div>
-          <div class="quick-reply" data-reply="Contact support">Contact support</div>
+          <a href="#" class="quick-reply" data-reply="Room availability">Room availability</a>
+          <a href="#" class="quick-reply" data-reply="Make reservation">Make reservation</a>
+          <a href="#" class="quick-reply" data-reply="Prices">Prices</a>
+          <a href="#" class="quick-reply" data-reply="Contact support">Contact support</a>
         </div>
       </div>
     </div>
@@ -2904,9 +2922,9 @@
     <div class="side-reservation">
       <span class="label">RESERVATION</span>
       <span class="divider"></span>
-      <span class="phone-icon">
+      <a href="#" class="phone-icon">
         <i class="fas fa-phone"></i>
-      </span>
+      </a>
       <span class="phone">
         +234 809 999 1244<br>
         +234 704 282 5937
@@ -2948,38 +2966,38 @@
             <p style="margin-bottom: 20px;">360° interactive view would display here</p>
             <p><small>Move your mouse to look around</small></p>
             <div style="margin-top: 20px; display: flex; justify-content: center; gap: 10px;">
-              <button class="tour-btn" style="padding: 10px 20px;">
+              <a href="#" class="tour-btn" style="padding: 10px 20px;">
                 <i class="fas fa-expand"></i> Fullscreen
-              </button>
-              <button style="padding: 10px 20px; background: rgba(255,255,255,0.2); border: 1px solid white; border-radius: 20px; color: white; cursor: pointer;">
+              </a>
+              <a href="#" style="padding: 10px 20px; background: rgba(255,255,255,0.2); border: 1px solid white; border-radius: 20px; color: white; cursor: pointer; text-decoration: none;">
                 <i class="fas fa-video"></i> Video Tour
-              </button>
+              </a>
             </div>
           </div>
         </div>
       </div>
       
       <div class="tour-controls">
-        <button class="tour-btn active" data-scene="lobby">
+        <a href="#" class="tour-btn active" data-scene="lobby">
           <i class="fas fa-door-open"></i>
           Hotel Lobby
-        </button>
-        <button class="tour-btn" data-scene="suite">
+        </a>
+        <a href="#" class="tour-btn" data-scene="suite">
           <i class="fas fa-bed"></i>
           Luxury Suite
-        </button>
-        <button class="tour-btn" data-scene="pool">
+        </a>
+        <a href="#" class="tour-btn" data-scene="pool">
           <i class="fas fa-swimming-pool"></i>
           Infinity Pool
-        </button>
-        <button class="tour-btn" data-scene="restaurant">
+        </a>
+        <a href="#" class="tour-btn" data-scene="restaurant">
           <i class="fas fa-utensils"></i>
           Restaurant
-        </button>
-        <button class="tour-btn" data-scene="spa">
+        </a>
+        <a href="#" class="tour-btn" data-scene="spa">
           <i class="fas fa-spa"></i>
           Wellness Spa
-        </button>
+        </a>
       </div>
     </div>
   </section>
@@ -3106,10 +3124,10 @@
             <textarea id="message" name="message" placeholder="Please provide details about your inquiry..." required></textarea>
           </div>
           
-          <button type="submit" class="submit-btn">
+          <a href="#" class="submit-btn" onclick="document.getElementById('contactForm').dispatchEvent(new Event('submit')); return false;">
             SEND MESSAGE
             <i class="fas fa-paper-plane"></i>
-          </button>
+          </a>
         </form>
         
         <!-- Success Message (Hidden by default) -->
@@ -3119,10 +3137,10 @@
           </div>
           <h3>Message Sent Successfully!</h3>
           <p>Thank you for contacting WestBrook Hotel. Our team will review your message and get back to you within 24 hours. For urgent inquiries, please call our reception desk.</p>
-          <button class="submit-btn" onclick="resetForm()">
+          <a href="#" class="submit-btn" onclick="resetForm(); return false;">
             SEND ANOTHER MESSAGE
             <i class="fas fa-redo"></i>
-          </button>
+          </a>
         </div>
       </div>
     </div>
@@ -3141,10 +3159,10 @@
             <p><i class="fas fa-phone"></i> +234 809 999 1244</p>
             <p><i class="fas fa-clock"></i> Open 24/7</p>
             <p><i class="fas fa-car"></i> Valet parking available</p>
-            <button class="get-directions-btn" onclick="openDirections()">
+            <a href="#" class="get-directions-btn" onclick="openDirections(); return false;">
               <i class="fas fa-directions"></i>
               GET DIRECTIONS
-            </button>
+            </a>
           </div>
           <div style="text-align: center; padding: 20px;">
             <i class="fas fa-map-marked-alt" style="font-size: 48px; margin-bottom: 20px;"></i>
@@ -3239,7 +3257,7 @@
         <p>Subscribe for exclusive offers and updates</p>
         <div class="newsletter-form">
           <input type="email" placeholder="Your Email">
-          <button type="submit"><i class="fas fa-paper-plane"></i></button>
+          <a href="#" class="submit-btn"><i class="fas fa-paper-plane"></i></a>
         </div>
         <p class="newsletter-note">Receive curated luxury experience recommendations</p>
       </div>
@@ -3257,16 +3275,16 @@
   </footer>
 
   <!-- Back to Top Button - EXACT SAME AS GALLERY PAGE -->
-  <button class="back-to-top" id="backToTop">
+  <a href="#" class="back-to-top" id="backToTop">
     <i class="fas fa-chevron-up"></i>
-  </button>
+  </a>
 
   <!-- Mobile Menu Overlay - EXACT SAME AS GALLERY PAGE -->
   <div class="mobile-menu-overlay" id="mobileMenuOverlay">
-    <button class="menu-close-btn" id="menuCloseBtn">
+    <a href="#" class="menu-close-btn" id="menuCloseBtn">
       <span></span>
       <span></span>
-    </button>
+    </a>
     
     <div class="mobile-menu-container">
       <a href="index.html">HOME</a>
@@ -3352,13 +3370,13 @@
           const submitBtn = contactForm.querySelector('.submit-btn');
           const originalText = submitBtn.innerHTML;
           submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> SENDING...';
-          submitBtn.disabled = true;
+          submitBtn.style.pointerEvents = 'none';
           
           setTimeout(() => {
             contactForm.style.display = 'none';
             successMessage.classList.add('active');
             submitBtn.innerHTML = originalText;
-            submitBtn.disabled = false;
+            submitBtn.style.pointerEvents = 'auto';
             console.log('Form submitted:', data);
           }, 1500);
         });
@@ -3422,7 +3440,8 @@
           icon.className = 'fas fa-sun';
         }
         
-        themeToggle.addEventListener('click', () => {
+        themeToggle.addEventListener('click', (e) => {
+          e.preventDefault();
           const isDark = document.body.classList.toggle('dark-mode');
           
           if (isDark) {
@@ -3444,12 +3463,14 @@
         const languageOptions = document.querySelectorAll('.language-option');
         
         languageToggle.addEventListener('click', (e) => {
+          e.preventDefault();
           e.stopPropagation();
           languageDropdown.classList.toggle('active');
         });
         
         languageOptions.forEach(option => {
-          option.addEventListener('click', () => {
+          option.addEventListener('click', (e) => {
+            e.preventDefault();
             const lang = option.dataset.lang;
             
             // Update active state
@@ -3507,7 +3528,8 @@
           addMessage('bot', 'Hello! Welcome to WestBrook Hotel. How can I assist you today?', new Date());
         }, 2000);
         
-        chatToggle.addEventListener('click', () => {
+        chatToggle.addEventListener('click', (e) => {
+          e.preventDefault();
           chatContainer.classList.toggle('active');
           if (chatContainer.classList.contains('active')) {
             unread = 0;
@@ -3515,16 +3537,21 @@
           }
         });
         
-        chatClose.addEventListener('click', () => {
+        chatClose.addEventListener('click', (e) => {
+          e.preventDefault();
           chatContainer.classList.remove('active');
         });
         
-        chatSend.addEventListener('click', sendMessage);
+        chatSend.addEventListener('click', (e) => {
+          e.preventDefault();
+          sendMessage();
+        });
         chatInput.addEventListener('keypress', (e) => {
           if (e.key === 'Enter') sendMessage();
         });
         
         quickReplies.addEventListener('click', (e) => {
+          e.preventDefault();
           if (e.target.classList.contains('quick-reply')) {
             const reply = e.target.dataset.reply;
             addMessage('user', reply, new Date());
@@ -3634,7 +3661,8 @@
         };
         
         tourButtons.forEach(button => {
-          button.addEventListener('click', () => {
+          button.addEventListener('click', (e) => {
+            e.preventDefault();
             const scene = button.dataset.scene;
             
             // Update active button
@@ -3654,12 +3682,12 @@
                     <p style="margin-bottom: 20px;">${tourDescriptions[scene]}</p>
                     <p><small>Move your mouse to look around in 360°</small></p>
                     <div style="margin-top: 20px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
-                      <button class="tour-btn" onclick="alert('Fullscreen mode activated!')" style="padding: 10px 20px;">
+                      <a href="#" class="tour-btn" onclick="alert('Fullscreen mode activated!'); return false;" style="padding: 10px 20px;">
                         <i class="fas fa-expand"></i> Fullscreen
-                      </button>
-                      <button class="tour-btn" onclick="alert('VR mode activated! Put on your headset.')" style="padding: 10px 20px;">
+                      </a>
+                      <a href="#" class="tour-btn" onclick="alert('VR mode activated! Put on your headset.'); return false;" style="padding: 10px 20px;">
                         <i class="fas fa-vr-cardboard"></i> VR Mode
-                      </button>
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -3713,13 +3741,13 @@
               <a href="contact.html" class="active">CONTACT</a>
             </div>
             
-            <button class="book-btn" onclick="window.location.href='index.html#booking'">BOOK NOW</button>
+            <a href="index.html#booking" class="book-btn">BOOK NOW</a>
             
-            <button class="hamburger-btn" id="stickyHamburger">
+            <a href="#" class="hamburger-btn" id="stickyHamburger">
               <span></span>
               <span></span>
               <span></span>
-            </button>
+            </a>
           </div>
         `;
 
@@ -3735,6 +3763,7 @@
         // Sticky navbar hamburger
         if (stickyHamburger) {
           stickyHamburger.addEventListener("click", (e) => {
+            e.preventDefault();
             e.stopPropagation();
             mobileMenuOverlay.classList.add("active");
             stickyHamburger.classList.add("active");
@@ -3743,7 +3772,8 @@
         }
 
         // Close mobile menu from sticky navbar
-        menuCloseBtn.addEventListener("click", () => {
+        menuCloseBtn.addEventListener("click", (e) => {
+          e.preventDefault();
           mobileMenuOverlay.classList.remove("active");
           const hamburger = document.getElementById("hamburger");
           if (hamburger) hamburger.classList.remove("active");
@@ -3783,7 +3813,8 @@
             document.body.style.overflow = "hidden";
           });
 
-          menuCloseBtn.addEventListener("click", () => {
+          menuCloseBtn.addEventListener("click", (e) => {
+            e.preventDefault();
             mobileMenuOverlay.classList.remove("active");
             hamburger.classList.remove("active");
             document.body.style.overflow = "auto";
@@ -3824,7 +3855,8 @@
         }
       }
 
-      backToTop.addEventListener("click", () => {
+      backToTop.addEventListener("click", (e) => {
+        e.preventDefault();
         window.scrollTo({
           top: 0,
           behavior: "smooth",

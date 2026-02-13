@@ -92,6 +92,7 @@
       justify-content: center;
       transition: var(--transition);
       font-size: 18px;
+      text-decoration: none;
     }
 
     @media (max-width: 768px) {
@@ -149,6 +150,7 @@
       align-items: center;
       gap: 10px;
       font-size: 14px;
+      text-decoration: none;
     }
 
     .language-option:hover {
@@ -500,6 +502,7 @@
       cursor: pointer;
       opacity: 0;
       animation: fadeInUp 1s ease forwards 2s;
+      text-decoration: none;
     }
 
     @keyframes fadeInUp {
@@ -742,6 +745,7 @@
       font-size: 16px;
       color: var(--white);
       transition: var(--transition);
+      text-decoration: none;
     }
 
     .side-reservation .phone-icon:hover {
@@ -1013,6 +1017,7 @@
       transition: var(--transition);
       overflow: hidden;
       z-index: 1001;
+      text-decoration: none;
     }
 
     .sticky-nav .book-btn::before {
@@ -1054,6 +1059,7 @@
       right: 0;
       top: 50%;
       transform: translateY(-50%);
+      text-decoration: none;
     }
 
     .sticky-nav .hamburger-btn span {
@@ -1215,6 +1221,7 @@
       align-items: center;
       transition: var(--transition);
       z-index: 9991;
+      text-decoration: none;
     }
 
     .menu-close-btn span {
@@ -1292,6 +1299,7 @@
       justify-content: center;
       font-size: 18px;
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      text-decoration: none;
     }
 
     @media (max-width: 768px) {
@@ -1873,6 +1881,7 @@
       align-items: center;
       gap: 10px;
       border: none;
+      text-decoration: none;
     }
 
     @media (max-width: 768px) {
@@ -2063,7 +2072,7 @@
       font-size: 14px;
     }
 
-    .newsletter-form button {
+    .newsletter-form a {
       background: var(--gold);
       color: var(--white);
       border: none;
@@ -2072,9 +2081,13 @@
       cursor: pointer;
       transition: var(--transition);
       font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
     }
 
-    .newsletter-form button:hover {
+    .newsletter-form a:hover {
       background: var(--light-gold);
     }
 
@@ -2225,46 +2238,42 @@
   </style>
 </head>
 <body>
-  <!-- Theme Controls (From Gallery Page) -->
+  <!-- Theme Controls (From Gallery Page) - All buttons converted to anchor tags with no underline -->
   <div class="theme-controls">
-    <button class="theme-btn" id="themeToggle" title="Toggle Dark Mode">
+    <a href="#" class="theme-btn" id="themeToggle" title="Toggle Dark Mode">
       <i class="fas fa-moon"></i>
-    </button>
+    </a>
     <div class="language-container">
-      <button class="language-btn" id="languageToggle" title="Select Language">
+      <a href="#" class="language-btn" id="languageToggle" title="Select Language">
         <i class="fas fa-globe"></i>
-      </button>
+      </a>
       <div class="language-dropdown" id="languageDropdown">
-        <div class="language-option active" data-lang="en">
+        <a href="#" class="language-option active" data-lang="en">
           <i class="fas fa-check"></i>
           <span>English</span>
-        </div>
-        <div class="language-option" data-lang="es">
+        </a>
+        <a href="#" class="language-option" data-lang="es">
           <i class="fas fa-check" style="display: none"></i>
           <span>Español</span>
-        </div>
-        <div class="language-option" data-lang="de">
+        </a>
+        <a href="#" class="language-option" data-lang="de">
           <i class="fas fa-check" style="display: none"></i>
           <span>German</span>
-        </div>
-        <div class="language-option" data-lang="es">
-          <i class="fas fa-check" style="display: none"></i>
-          <span>Spanish</span>
-        </div>
-        <div class="language-option" data-lang="fr">
+        </a>
+        <a href="#" class="language-option" data-lang="fr">
           <i class="fas fa-check" style="display: none"></i>
           <span>Français</span>
-        </div>
+        </a>
       </div>
     </div>
   </div>
 
   <!-- Mobile Menu Overlay (From Index Page) -->
   <div class="mobile-menu-overlay" id="mobileMenuOverlay">
-    <button class="menu-close-btn" id="menuCloseBtn">
+    <a href="#" class="menu-close-btn" id="menuCloseBtn">
       <span></span>
       <span></span>
-    </button>
+    </a>
 
     <div class="mobile-menu-container">
       <a href="index.html">HOME</a>
@@ -2339,20 +2348,20 @@
       </div>
     </header>
 
-    <!-- SIDE RESERVATION - Exactly like index.html -->
+    <!-- SIDE RESERVATION - Exactly like index.html - Phone icon converted to anchor with no underline -->
     <div class="side-reservation">
       <span class="label">RESERVATION</span>
       <span class="divider"></span>
-      <span class="phone-icon">
+      <a href="#" class="phone-icon">
         <i class="fas fa-phone"></i>
-      </span>
+      </a>
       <span class="phone">
         +234 809 999 1244<br>
         +234 704 282 5937
       </span>
     </div>
 
-    <!-- SOCIALS - EXACT SAME AS INDEX.HTML -->
+    <!-- SOCIALS - EXACT SAME AS INDEX.HTML - Already anchor tags with no underline from global .side-socials a rule -->
     <div class="side-socials">
       <a href="#" aria-label="Instagram" class="social-icon"><i class="fab fa-instagram"></i></a>
       <a href="#" aria-label="Facebook" class="social-icon"><i class="fab fa-facebook-f"></i></a>
@@ -2369,11 +2378,11 @@
       <p class="hero-subtitle">A LEGACY OF EXCELLENCE SINCE 2014</p>
     </div>
 
-    <!-- Scroll Hint -->
-    <div class="scroll-hint">
+    <!-- Scroll Hint - Converted to anchor with no underline -->
+    <a href="#" class="scroll-hint">
       <div class="scroll-text">DISCOVER MORE</div>
       <div class="scroll-chevron"></div>
-    </div>
+    </a>
   </section>
 
   <!-- Our Story Section -->
@@ -2496,20 +2505,20 @@
     </div>
   </section>
 
-  <!-- CTA Section -->
+  <!-- CTA Section - Buttons converted to anchor tags with no underline -->
   <section class="about-cta">
     <div class="cta-content">
       <h2>Experience WestBrook Luxury</h2>
       <p>Discover why we're more than just a hotel - we're a destination where every detail matters and every stay becomes a cherished memory.</p>
       <div class="cta-buttons">
-        <button class="cta-btn primary" onclick="window.location.href='index.html'">
+        <a href="index.html" class="cta-btn primary">
           BOOK YOUR STAY
           <i class="fas fa-arrow-right"></i>
-        </button>
-        <button class="cta-btn secondary" onclick="window.location.href='contact.html'">
+        </a>
+        <a href="contact.html" class="cta-btn secondary">
           CONTACT US
           <i class="fas fa-phone"></i>
-        </button>
+        </a>
       </div>
     </div>
   </section>
@@ -2557,7 +2566,7 @@
         <p>Subscribe for exclusive gallery updates</p>
         <div class="newsletter-form">
           <input type="email" placeholder="Your Email">
-          <button type="submit"><i class="fas fa-paper-plane"></i></button>
+          <a href="#" class="submit-btn"><i class="fas fa-paper-plane"></i></a>
         </div>
         <p class="newsletter-note">We respect your privacy. Unsubscribe at any time.</p>
       </div>
@@ -2573,10 +2582,10 @@
     </div>
   </footer>
 
-  <!-- Back to Top Button -->
-  <button class="back-to-top" id="backToTop">
+  <!-- Back to Top Button - Converted to anchor tag with no underline -->
+  <a href="#" class="back-to-top" id="backToTop">
     <i class="fas fa-chevron-up"></i>
-  </button>
+  </a>
 
   <script>
     // ===========================================
@@ -2617,7 +2626,8 @@
           icon.className = 'fas fa-sun';
         }
 
-        themeToggle.addEventListener('click', () => {
+        themeToggle.addEventListener('click', (e) => {
+          e.preventDefault();
           const isDark = document.body.classList.toggle('dark-mode');
 
           if (isDark) {
@@ -2641,12 +2651,14 @@
         if (!languageToggle || !languageDropdown) return;
 
         languageToggle.addEventListener('click', (e) => {
+          e.preventDefault();
           e.stopPropagation();
           languageDropdown.classList.toggle('active');
         });
 
         languageOptions.forEach((option) => {
-          option.addEventListener('click', () => {
+          option.addEventListener('click', (e) => {
+            e.preventDefault();
             const lang = option.dataset.lang;
 
             languageOptions.forEach((opt) => {
@@ -2661,7 +2673,7 @@
             });
 
             alert(
-              `Language changed to ${lang === 'en' ? 'English' : lang === 'es' ? 'Spanish' : 'French'}. In a full implementation, all text would be translated.`
+              `Language changed to ${lang === 'en' ? 'English' : lang === 'es' ? 'Spanish' : lang === 'de' ? 'German' : 'French'}. In a full implementation, all text would be translated.`
             );
 
             localStorage.setItem('language', lang);
@@ -2728,7 +2740,8 @@
             document.body.style.overflow = 'hidden';
           });
 
-          menuCloseBtn.addEventListener('click', () => {
+          menuCloseBtn.addEventListener('click', (e) => {
+            e.preventDefault();
             mobileMenuOverlay.classList.remove('active');
             hamburger.classList.remove('active');
             document.body.style.overflow = 'auto';
@@ -2777,13 +2790,13 @@
               <a href="contact.html">CONTACT</a>
             </div>
             
-            <button class="book-btn" onclick="window.location.href='index.html#booking'">BOOK NOW</button>
+            <a href="index.html#booking" class="book-btn">BOOK NOW</a>
             
-            <button class="hamburger-btn" id="stickyHamburger">
+            <a href="#" class="hamburger-btn" id="stickyHamburger">
               <span></span>
               <span></span>
               <span></span>
-            </button>
+            </a>
           </div>
         `;
 
@@ -2798,6 +2811,7 @@
         // Sticky navbar hamburger
         if (stickyHamburger) {
           stickyHamburger.addEventListener("click", (e) => {
+            e.preventDefault();
             e.stopPropagation();
             mobileMenuOverlay.classList.add("active");
             stickyHamburger.classList.add("active");
@@ -2806,7 +2820,8 @@
         }
 
         // Close mobile menu from sticky navbar
-        menuCloseBtn.addEventListener("click", () => {
+        menuCloseBtn.addEventListener("click", (e) => {
+          e.preventDefault();
           mobileMenuOverlay.classList.remove("active");
           const hamburger = document.getElementById("hamburger");
           if (hamburger) hamburger.classList.remove("active");
@@ -2923,7 +2938,8 @@
         // Scroll hint functionality
         const scrollHint = document.querySelector('.scroll-hint');
         if (scrollHint) {
-          scrollHint.addEventListener('click', () => {
+          scrollHint.addEventListener('click', (e) => {
+            e.preventDefault();
             const storySection = document.querySelector('.our-story');
             if (storySection) {
               window.scrollTo({
@@ -2962,7 +2978,8 @@
           }
         }
         
-        backToTop.addEventListener('click', () => {
+        backToTop.addEventListener('click', (e) => {
+          e.preventDefault();
           window.scrollTo({
             top: 0,
             behavior: 'smooth'
@@ -3022,7 +3039,7 @@
           newsletterForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const emailInput = newsletterForm.querySelector('input[type="email"]');
-            const submitBtn = newsletterForm.querySelector('button');
+            const submitBtn = newsletterForm.querySelector('.submit-btn');
             
             if (emailInput.value) {
               const originalHtml = submitBtn.innerHTML;

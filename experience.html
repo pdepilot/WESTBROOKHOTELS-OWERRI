@@ -92,6 +92,7 @@
       justify-content: center;
       transition: var(--transition);
       font-size: 18px;
+      text-decoration: none;
     }
 
     @media (max-width: 768px) {
@@ -149,6 +150,7 @@
       align-items: center;
       gap: 10px;
       font-size: 14px;
+      text-decoration: none;
     }
 
     .language-option:hover {
@@ -444,6 +446,7 @@
       cursor: pointer;
       opacity: 0;
       animation: fadeIn 1s ease 1s forwards;
+      text-decoration: none;
     }
 
     @media (max-width: 768px) {
@@ -651,6 +654,7 @@
       font-size: 16px;
       color: var(--white);
       transition: var(--transition);
+      text-decoration: none;
     }
 
     .side-reservation .phone-icon:hover {
@@ -924,6 +928,7 @@
       transition: var(--transition);
       overflow: hidden;
       z-index: 1001;
+      text-decoration: none;
     }
 
     .sticky-nav .book-btn::before {
@@ -965,6 +970,7 @@
       right: 0;
       top: 50%;
       transform: translateY(-50%);
+      text-decoration: none;
     }
 
     .sticky-nav .hamburger-btn span {
@@ -1781,6 +1787,7 @@
       font-weight: 600;
       position: relative;
       overflow: hidden;
+      text-decoration: none;
     }
 
     .cta-button::before {
@@ -2008,7 +2015,7 @@
       transition: var(--transition);
     }
 
-    .newsletter-form button {
+    .newsletter-form a {
       background: var(--gold);
       color: var(--white);
       border: none;
@@ -2017,9 +2024,13 @@
       cursor: pointer;
       transition: var(--transition);
       font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
     }
 
-    .newsletter-form button:hover {
+    .newsletter-form a:hover {
       background: var(--light-gold);
     }
 
@@ -2091,6 +2102,7 @@
       justify-content: center;
       font-size: 18px;
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      text-decoration: none;
     }
 
     @media (max-width: 768px) {
@@ -2198,6 +2210,7 @@
       align-items: center;
       transition: var(--transition);
       z-index: 9991;
+      text-decoration: none;
     }
 
     .menu-close-btn span {
@@ -2413,34 +2426,30 @@
 <body>
   <!-- Theme Controls - EXACT SAME AS GALLERY PAGE -->
   <div class="theme-controls">
-    <button class="theme-btn" id="themeToggle" title="Toggle Dark Mode">
+    <a href="#" class="theme-btn" id="themeToggle" title="Toggle Dark Mode">
       <i class="fas fa-moon"></i>
-    </button>
+    </a>
     <div class="language-container">
-      <button class="language-btn" id="languageToggle" title="Select Language">
+      <a href="#" class="language-btn" id="languageToggle" title="Select Language">
         <i class="fas fa-globe"></i>
-      </button>
+      </a>
       <div class="language-dropdown" id="languageDropdown">
-        <div class="language-option active" data-lang="en">
+        <a href="#" class="language-option active" data-lang="en">
           <i class="fas fa-check"></i>
           <span>English</span>
-        </div>
-        <div class="language-option" data-lang="es">
+        </a>
+        <a href="#" class="language-option" data-lang="es">
           <i class="fas fa-check" style="display: none"></i>
           <span>Español</span>
-        </div>
-        <div class="language-option" data-lang="de">
+        </a>
+        <a href="#" class="language-option" data-lang="de">
           <i class="fas fa-check" style="display: none"></i>
           <span>German</span>
-        </div>
-        <div class="language-option" data-lang="es">
-          <i class="fas fa-check" style="display: none"></i>
-          <span>Spanish</span>
-        </div>
-        <div class="language-option" data-lang="fr">
+        </a>
+        <a href="#" class="language-option" data-lang="fr">
           <i class="fas fa-check" style="display: none"></i>
           <span>Français</span>
-        </div>
+        </a>
       </div>
     </div>
   </div>
@@ -2492,9 +2501,9 @@
     <div class="side-reservation">
       <span class="label">RESERVATION</span>
       <span class="divider"></span>
-      <span class="phone-icon">
+      <a href="#" class="phone-icon">
         <i class="fas fa-phone"></i>
-      </span>
+      </a>
       <span class="phone">
         +234 809 999 1244<br>
         +234 704 282 5937
@@ -2512,7 +2521,6 @@
     <div class="hero-content">
       <h1>IMMERSE IN LUXURY</h1>
       <div class="hero-divider"></div>
-      <!-- <p class="hero-subtitle">Beyond Accommodation, A Lifestyle Awaits</p> -->
       <p class="hero-description">At WestBrook Hotel, we redefine luxury through unforgettable experiences. From rejuvenating spa treatments to world-class dining and exclusive activities, every moment is crafted to create lasting memories.</p>
       
       <div class="hero-stats">
@@ -2535,10 +2543,10 @@
       </div>
       
       <!-- Scroll Indicator -->
-      <div class="scroll-hint" onclick="scrollToNextSection()">
+      <a href="#" class="scroll-hint" onclick="scrollToNextSection(); return false;">
         <div class="scroll-hint-text">DISCOVER MORE</div>
         <div class="scroll-hint-arrow"></div>
-      </div>
+      </a>
     </div>
   </section>
 
@@ -2592,10 +2600,10 @@
           </div>
         </div>
         
-        <button class="cta-button" onclick="bookExperience('spa')">
+        <a href="#" class="cta-button" onclick="bookExperience('spa'); return false;">
           BOOK SPA SESSION
           <i class="fas fa-arrow-right"></i>
-        </button>
+        </a>
       </div>
       
       <div class="spa-image fade-in delay-2">
@@ -2647,10 +2655,10 @@
           </div>
         </div>
         
-        <button class="cta-button" onclick="bookExperience('dining')">
+        <a href="#" class="cta-button" onclick="bookExperience('dining'); return false;">
           RESERVE A TABLE
           <i class="fas fa-utensils"></i>
-        </button>
+        </a>
       </div>
     </div>
   </section>
@@ -2687,10 +2695,10 @@
         </div>
       </div>
       
-      <button class="cta-button fade-in delay-4" onclick="bookExperience('pool')">
+      <a href="#" class="cta-button fade-in delay-4" onclick="bookExperience('pool'); return false;">
         EXPERIENCE THE POOL
         <i class="fas fa-swimming-pool"></i>
-      </button>
+      </a>
     </div>
   </section>
 
@@ -2728,10 +2736,10 @@
           </div>
         </div>
         
-        <button class="cta-button" onclick="bookExperience('fitness')">
+        <a href="#" class="cta-button" onclick="bookExperience('fitness'); return false;">
           VIEW SCHEDULE
           <i class="fas fa-calendar-alt"></i>
-        </button>
+        </a>
       </div>
       
       <div class="fitness-image fade-in delay-2">
@@ -2855,10 +2863,10 @@
     <div class="cta-container">
       <h2 class="cta-title fade-in">Ready for an Unforgettable Experience?</h2>
       <p class="cta-subtitle fade-in delay-1">Book your WestBrook experience today and immerse yourself in luxury beyond imagination. Our concierge team is ready to craft your perfect stay.</p>
-      <button class="cta-button fade-in delay-2" onclick="window.location.href='contact.html'">
+      <a href="contact.html" class="cta-button fade-in delay-2">
         BOOK YOUR EXPERIENCE
         <i class="fas fa-calendar-check"></i>
-      </button>
+      </a>
     </div>
   </section>
 
@@ -2905,7 +2913,7 @@
         <p>Subscribe for exclusive experience offers and updates</p>
         <div class="newsletter-form">
           <input type="email" placeholder="Your Email">
-          <button type="submit"><i class="fas fa-paper-plane"></i></button>
+          <a href="#" class="submit-btn"><i class="fas fa-paper-plane"></i></a>
         </div>
         <p class="newsletter-note">Receive curated luxury experience recommendations</p>
       </div>
@@ -2923,16 +2931,16 @@
   </footer>
 
   <!-- Back to Top Button -->
-  <button class="back-to-top" id="backToTop">
+  <a href="#" class="back-to-top" id="backToTop">
     <i class="fas fa-chevron-up"></i>
-  </button>
+  </a>
 
   <!-- Mobile Menu Overlay - EXACT SAME AS GALLERY PAGE -->
   <div class="mobile-menu-overlay" id="mobileMenuOverlay">
-    <button class="menu-close-btn" id="menuCloseBtn">
+    <a href="#" class="menu-close-btn" id="menuCloseBtn">
       <span></span>
       <span></span>
-    </button>
+    </a>
     
     <div class="mobile-menu-container">
       <a href="index.html">HOME</a>
@@ -3070,7 +3078,8 @@
           icon.className = 'fas fa-sun';
         }
         
-        themeToggle.addEventListener('click', () => {
+        themeToggle.addEventListener('click', (e) => {
+          e.preventDefault();
           const isDark = document.body.classList.toggle('dark-mode');
           
           if (isDark) {
@@ -3092,12 +3101,14 @@
         const languageOptions = document.querySelectorAll('.language-option');
         
         languageToggle.addEventListener('click', (e) => {
+          e.preventDefault();
           e.stopPropagation();
           languageDropdown.classList.toggle('active');
         });
         
         languageOptions.forEach(option => {
-          option.addEventListener('click', () => {
+          option.addEventListener('click', (e) => {
+            e.preventDefault();
             const lang = option.dataset.lang;
             
             languageOptions.forEach(opt => {
@@ -3155,13 +3166,13 @@
               <a href="contact.html">CONTACT</a>
             </div>
             
-            <button class="book-btn" onclick="window.location.href='index.html#booking'">BOOK NOW</button>
+            <a href="index.html#booking" class="book-btn">BOOK NOW</a>
             
-            <button class="hamburger-btn" id="stickyHamburger">
+            <a href="#" class="hamburger-btn" id="stickyHamburger">
               <span></span>
               <span></span>
               <span></span>
-            </button>
+            </a>
           </div>
         `;
 
@@ -3177,6 +3188,7 @@
         // Sticky navbar hamburger
         if (stickyHamburger) {
           stickyHamburger.addEventListener("click", (e) => {
+            e.preventDefault();
             e.stopPropagation();
             mobileMenuOverlay.classList.add("active");
             stickyHamburger.classList.add("active");
@@ -3185,7 +3197,8 @@
         }
 
         // Close mobile menu from sticky navbar
-        menuCloseBtn.addEventListener("click", () => {
+        menuCloseBtn.addEventListener("click", (e) => {
+          e.preventDefault();
           mobileMenuOverlay.classList.remove("active");
           const hamburger = document.getElementById("hamburger");
           if (hamburger) hamburger.classList.remove("active");
@@ -3225,7 +3238,8 @@
             document.body.style.overflow = "hidden";
           });
 
-          menuCloseBtn.addEventListener("click", () => {
+          menuCloseBtn.addEventListener("click", (e) => {
+            e.preventDefault();
             mobileMenuOverlay.classList.remove("active");
             hamburger.classList.remove("active");
             document.body.style.overflow = "auto";
@@ -3266,7 +3280,8 @@
         }
       }
 
-      backToTop.addEventListener("click", () => {
+      backToTop.addEventListener("click", (e) => {
+        e.preventDefault();
         window.scrollTo({
           top: 0,
           behavior: "smooth",
