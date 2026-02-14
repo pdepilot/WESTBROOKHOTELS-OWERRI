@@ -72,7 +72,7 @@
     @media (max-width: 768px) {
       .theme-controls {
         top: 28px;
-        right: 55px;
+        right: 80px;
         z-index: 1002;
       }
     }
@@ -281,7 +281,7 @@
     /* Book Now Button - Adjusted position */
     .sticky-nav .book-btn {
       position: absolute;
-      right: 140px;
+      right: 100px;
       top: 50%;
       transform: translateY(-50%);
       background: linear-gradient(135deg, var(--gold) 0%, var(--light-gold) 100%);
@@ -323,7 +323,7 @@
       box-shadow: 0 6px 20px rgba(193, 154, 91, 0.4);
     }
 
-    /* Sticky nav hamburger - FIXED POSITION */
+    /* Sticky nav hamburger - FIXED POSITION with 5px spacing */
     .sticky-nav .hamburger-btn {
       display: none;
       flex-direction: column;
@@ -334,7 +334,7 @@
       padding: 8px;
       z-index: 1002;
       position: absolute;
-      right: 0;
+      right: 0; /* Changed from 5px to 0 to avoid overlapping with language button */
       top: 50%;
       transform: translateY(-50%);
       text-decoration: none;
@@ -373,11 +373,12 @@
       }
       
       .sticky-nav .book-btn {
-        right: 110px;
+        right: 100px;
       }
       
       .sticky-nav .hamburger-btn {
-        right: 0;
+        right: 1px; /* Keep consistent spacing */
+        
       }
     }
 
@@ -396,7 +397,8 @@
 
       .sticky-nav .hamburger-btn {
         display: flex;
-        right: 0;
+        right: 1px; /* Keep consistent spacing */
+        
       }
 
       .sticky-nav .logo img {
@@ -410,7 +412,8 @@
       }
       
       .sticky-nav .hamburger-btn {
-        right: 0;
+        right: 1px; /* Keep consistent spacing */
+      
       }
       
       .sticky-nav .logo img {
@@ -675,7 +678,7 @@
     }
 
     /* ===========================================
-       HEADER - UPDATED WITH CENTERED NAVIGATION
+       HEADER - MODIFIED FOR MOBILE LOGO POSITION (MATCHES INDEX.HTML)
        =========================================== */
     .header {
       position: absolute;
@@ -689,10 +692,25 @@
       align-items: center;
     }
 
+    @media (max-width: 1024px) {
+      .header {
+        padding: 25px 40px;
+      }
+    }
+
+    /* MODIFIED: Mobile header padding reduced to move logo up */
     @media (max-width: 768px) {
       .header {
-        padding: 20px 25px;
+        padding: 15px 25px; /* Matches index.html */
         justify-content: space-between;
+        top: 10px; /* Matches index.html */
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header {
+        padding: 10px 20px; /* Matches index.html */
+        top: 5px;
       }
     }
 
@@ -708,14 +726,36 @@
       transition: var(--transition);
     }
 
+    @media (max-width: 1024px) {
+      .logo {
+        left: 40px;
+      }
+    }
+
+    /* MODIFIED: Mobile logo styles - exactly as in index.html */
     @media (max-width: 768px) {
       .logo {
         position: static;
         transform: none;
+        left: auto;
+        padding-left: 0;
+        margin-left: 0;
+        margin-top: -2px; /* Fine-tune vertical alignment */
       }
       
       .logo img {
-        width: 80px;
+        width: 75px; /* Slightly smaller for better fit */
+        position: relative;
+        left: 0;
+        margin-left: 0;
+        top: 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .logo img {
+        width: 65px; /* Even smaller on very small screens */
+        margin-top: 0;
       }
     }
 
@@ -760,6 +800,7 @@
       width: 100%;
     }
 
+    /* HAMBURGER - adjusted to match index.html position */
     .hamburger {
       display: none;
       flex-direction: column;
@@ -775,8 +816,28 @@
       .hamburger {
         display: none;
         position: fixed;
-        right: 5px;
-        top: 35px;
+        right: 25px;
+        top: 30px; /* Matches index.html */
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hamburger {
+        right: 20px;
+        top: 22px; /* Matches index.html */
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hamburger {
+        right: 15px;
+        top: 18px; /* Matches index.html */
+        gap: 5px;
+      }
+      
+      .hamburger span {
+        width: 24px;
+        height: 2px;
       }
     }
 
@@ -2291,10 +2352,6 @@
         font-size: 2.2rem;
       }
       
-      .logo img {
-        width: 90px;
-      }
-      
       .hero-featured-image {
         width: 90%;
         height: 250px;
@@ -2498,7 +2555,7 @@
     <!-- Luxury Sparkles -->
     <div class="luxury-sparkles" id="sparklesContainer"></div>
 
-    <!-- Header - UPDATED WITH CENTERED NAVIGATION -->
+    <!-- Header - MODIFIED WITH CORRECT LOGO POSITIONING -->
     <header class="header">
       <div class="logo">
         <a href="index.html">
