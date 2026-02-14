@@ -968,7 +968,7 @@
     }
 
     /* ===========================================
-       NAVBAR STYLES (From Gallery Page)
+       NAVBAR STYLES - MODIFIED FOR MOBILE LOGO POSITION (ONLY CHANGE)
        =========================================== */
     .header {
       position: absolute;
@@ -988,16 +988,19 @@
       }
     }
 
+    /* MODIFIED: Mobile header padding reduced and logo positioning adjusted */
     @media (max-width: 768px) {
       .header {
-        padding: 20px 25px;
+        padding: 15px 25px; /* Reduced from 20px 25px to move logo up */
         justify-content: space-between;
+        top: 10px; /* Slight top adjustment for absolute positioning */
       }
     }
 
     @media (max-width: 480px) {
       .header {
-        padding: 15px 20px;
+        padding: 10px 20px; /* Further reduced for smaller phones */
+        top: 5px;
       }
     }
 
@@ -1019,26 +1022,30 @@
       }
     }
 
+    /* MODIFIED: Mobile logo styles - moved up and left adjusted */
     @media (max-width: 768px) {
       .logo {
         position: static; /* Reset for mobile */
         transform: none;
         left: auto;
-        padding-left: 5px; /* Consistent spacing */
+        padding-left: 0; /* Reset */
         margin-left: 0;
+        margin-top: -2px; /* Fine-tune vertical alignment */
       }
       
       .logo img {
-        width: 80px;
+        width: 75px; /* Slightly smaller for better fit */
         position: relative;
         left: 0;
         margin-left: 0;
+        top: 0; /* Ensure no extra top offset */
       }
     }
 
     @media (max-width: 480px) {
       .logo img {
-        width: 70px;
+        width: 65px; /* Even smaller on very small screens */
+        margin-top: 0;
       }
     }
 
@@ -1083,28 +1090,42 @@
       width: 100%;
     }
 
-    @media (max-width: 992px) {
-      .hamburger {
-        display: flex;
-        position: fixed;
-        right: 25px;
-        top: 35px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .hamburger {
-        right: 20px;
-        top: 25px;
-      }
-    }
-
+    /* HAMBURGER - adjusted for new mobile padding */
     .hamburger {
       display: none;
       flex-direction: column;
       gap: 6px;
       cursor: pointer;
       z-index: 1001;
+    }
+
+    @media (max-width: 992px) {
+      .hamburger {
+        display: none;
+        position: fixed;
+        right: 25px;
+        top: 30px; /* Slightly adjusted to align with new header padding */
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hamburger {
+        right: 20px;
+        top: 22px; /* Fine-tuned for reduced header padding */
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hamburger {
+        right: 15px;
+        top: 18px; /* Final adjustment for very small screens */
+        gap: 5px;
+      }
+      
+      .hamburger span {
+        width: 24px;
+        height: 2px;
+      }
     }
 
     .hamburger span {
@@ -1877,7 +1898,7 @@
       margin: 10px 0;
     }
 
-    /* Mobile Social Icons - NEW SECTION (RETAINED IN HAMBURGER MENU) */
+    /* Mobile Social Icons - RETAINED IN HAMBURGER MENU */
     .mobile-social-icons {
       display: flex;
       justify-content: center;
