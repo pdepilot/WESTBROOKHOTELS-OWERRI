@@ -520,7 +520,7 @@
     }
 
     /* ===========================================
-       NAVBAR STYLES (UPDATED - CENTERED NAVIGATION FROM ABOUT.HTML)
+       NAVBAR STYLES - MODIFIED FOR MOBILE LOGO POSITION (MATCHES INDEX.HTML)
        =========================================== */
     .header {
       position: absolute;
@@ -530,20 +530,35 @@
       z-index: 1000;
       padding: 25px 64px;
       display: flex;
-      justify-content: center; /* Centered navigation */
+      justify-content: center;
       align-items: center;
     }
 
+    @media (max-width: 1024px) {
+      .header {
+        padding: 25px 40px;
+      }
+    }
+
+    /* MODIFIED: Mobile header padding reduced to move logo up */
     @media (max-width: 768px) {
       .header {
-        padding: 20px 25px;
-        justify-content: space-between; /* Keep space-between on mobile */
+        padding: 15px 25px; /* Matches index.html */
+        justify-content: space-between;
+        top: 10px; /* Matches index.html */
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header {
+        padding: 10px 20px; /* Matches index.html */
+        top: 5px;
       }
     }
 
     .logo {
-      position: absolute; /* Position logo absolutely */
-      left: 64px; /* Align to left edge */
+      position: absolute;
+      left: 64px;
       top: 50%;
       transform: translateY(-50%);
     }
@@ -553,20 +568,36 @@
       transition: var(--transition);
     }
 
+    @media (max-width: 1024px) {
+      .logo {
+        left: 40px;
+      }
+    }
+
+    /* MODIFIED: Mobile logo styles - exactly as in index.html */
     @media (max-width: 768px) {
       .logo {
-        position: static; /* Reset for mobile */
+        position: static;
         transform: none;
         left: auto;
-        padding-left: 5px; /* Consistent spacing */
+        padding-left: 0;
         margin-left: 0;
+        margin-top: -2px; /* Fine-tune vertical alignment */
       }
       
       .logo img {
-        width: 80px;
+        width: 75px; /* Slightly smaller for better fit */
         position: relative;
         left: 0;
         margin-left: 0;
+        top: 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .logo img {
+        width: 65px; /* Even smaller on very small screens */
+        margin-top: 0;
       }
     }
 
@@ -610,6 +641,67 @@
     .nav a.active::after {
       width: 100%;
     }
+    
+    /* HAMBURGER - adjusted to match index.html position */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+      z-index: 1001;
+    }
+
+    @media (max-width: 992px) {
+      .hamburger {
+        display: none;
+        position: fixed;
+        right: 25px;
+        top: 30px; /* Matches index.html */
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hamburger {
+        right: 20px;
+        top: 22px; /* Matches index.html */
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hamburger {
+        right: 15px;
+        top: 18px; /* Matches index.html */
+        gap: 5px;
+      }
+      
+      .hamburger span {
+        width: 24px;
+        height: 2px;
+      }
+    }
+
+    .hamburger span {
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      transition: var(--transition);
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(6px, 6px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+    
     /* SIDE RESERVATION (FROM GALLERY PAGE) */
     .side-reservation {
       position: absolute;
@@ -764,45 +856,6 @@
       background: rgba(255, 255, 255, 0.1);
       border-color: var(--gold);
       transform: scale(1.1);
-    }
-
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 6px;
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: 0;
-      z-index: 1001;
-    }
-
-    @media (max-width: 992px) {
-      .hamburger {
-        display: none;
-        position: fixed;
-        right: 25px;
-        top: 35px;
-      }
-    }
-
-    .hamburger span {
-      width: 24px;
-      height: 2px;
-      background: var(--white);
-      transition: var(--transition);
-    }
-
-    .hamburger.active span:nth-child(1) {
-      transform: rotate(45deg) translate(6px, 6px);
-    }
-
-    .hamburger.active span:nth-child(2) {
-      opacity: 0;
-    }
-
-    .hamburger.active span:nth-child(3) {
-      transform: rotate(-45deg) translate(6px, -6px);
     }
 
     /* ===========================================
@@ -2591,7 +2644,7 @@
     <!-- Animated Particles -->
     <div class="hero-particles" id="heroParticles"></div>
 
-    <!-- Header - EXACT SAME LOGO SIZE AS GALLERY PAGE -->
+    <!-- Header - EXACT SAME LOGO POSITION AS INDEX.HTML -->
     <header class="header">
       <div class="logo">
         <a href="index.html">

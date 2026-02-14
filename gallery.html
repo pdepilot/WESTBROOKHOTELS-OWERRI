@@ -438,7 +438,7 @@
       }
 
       /* ===========================================
-       NAVBAR STYLES (From Contact Page)
+       NAVBAR STYLES - MODIFIED FOR MOBILE LOGO POSITION (MATCHES INDEX.HTML)
        =========================================== */
       .header {
         position: absolute;
@@ -452,10 +452,25 @@
         align-items: center;
       }
 
+      @media (max-width: 1024px) {
+        .header {
+          padding: 25px 40px;
+        }
+      }
+
+      /* MODIFIED: Mobile header padding reduced to move logo up */
       @media (max-width: 768px) {
         .header {
-          padding: 20px 25px;
+          padding: 15px 25px; /* Matches index.html */
           justify-content: space-between; /* Keep space-between on mobile */
+          top: 10px; /* Matches index.html */
+        }
+      }
+
+      @media (max-width: 480px) {
+        .header {
+          padding: 10px 20px; /* Matches index.html */
+          top: 5px;
         }
       }
 
@@ -471,20 +486,36 @@
         transition: var(--transition);
       }
 
+      @media (max-width: 1024px) {
+        .logo {
+          left: 40px;
+        }
+      }
+
+      /* MODIFIED: Mobile logo styles - exactly as in index.html */
       @media (max-width: 768px) {
         .logo {
           position: static; /* Reset for mobile */
           transform: none;
           left: auto;
-          padding-left: 5px; /* Consistent spacing */
+          padding-left: 0;
           margin-left: 0;
+          margin-top: -2px; /* Fine-tune vertical alignment */
         }
         
         .logo img {
-          width: 80px;
+          width: 75px; /* Slightly smaller for better fit */
           position: relative;
           left: 0;
           margin-left: 0;
+          top: 0;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .logo img {
+          width: 65px; /* Even smaller on very small screens */
+          margin-top: 0;
         }
       }
 
@@ -527,6 +558,66 @@
       .nav a:hover::after,
       .nav a.active::after {
         width: 100%;
+      }
+
+      /* HAMBURGER - adjusted to match index.html position */
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 6px;
+        cursor: pointer;
+        background: none;
+        border: none;
+        padding: 0;
+        z-index: 1001;
+      }
+
+      @media (max-width: 992px) {
+        .hamburger {
+          display: none;
+          position: fixed;
+          right: 25px;
+          top: 30px; /* Matches index.html */
+        }
+      }
+
+      @media (max-width: 768px) {
+        .hamburger {
+          right: 20px;
+          top: 22px; /* Matches index.html */
+        }
+      }
+
+      @media (max-width: 480px) {
+        .hamburger {
+          right: 15px;
+          top: 18px; /* Matches index.html */
+          gap: 5px;
+        }
+        
+        .hamburger span {
+          width: 24px;
+          height: 2px;
+        }
+      }
+
+      .hamburger span {
+        width: 24px;
+        height: 2px;
+        background: var(--white);
+        transition: var(--transition);
+      }
+
+      .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
+      }
+
+      .hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
       }
 
       /* SIDE RESERVATION (From Contact Page) */
@@ -1960,71 +2051,6 @@
         margin: 10px 0;
       }
 
-      .mobile-contact-info {
-        margin-top: 30px;
-        color: rgba(255, 255, 255, 0.8);
-        transform: translateY(30px);
-        opacity: 0;
-        transition: var(--transition) 0.5s;
-      }
-
-      .mobile-menu-overlay.active .mobile-contact-info {
-        transform: translateY(0);
-        opacity: 1;
-      }
-
-      .mobile-contact-info p {
-        font-size: 14px;
-        letter-spacing: 2px;
-        margin-bottom: 15px;
-        text-transform: uppercase;
-      }
-
-      .mobile-contact-info .phone {
-        font-size: 16px;
-        margin: 10px 0;
-        color: var(--gold);
-      }
-
-      .menu-close-btn {
-        position: absolute;
-        top: 25px;
-        right: 25px;
-        width: 45px;
-        height: 45px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 50%;
-        border: none;
-        cursor: pointer;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        transition: var(--transition);
-        z-index: 9991;
-      }
-
-      .menu-close-btn span {
-        width: 20px;
-        height: 2px;
-        background: var(--white);
-        position: absolute;
-        transition: var(--transition);
-      }
-
-      .menu-close-btn span:first-child {
-        transform: rotate(45deg);
-      }
-
-      .menu-close-btn span:last-child {
-        transform: rotate(-45deg);
-      }
-
-      .menu-close-btn:hover {
-        background: var(--gold);
-        transform: rotate(90deg);
-      }
-
       /* ===========================================
        BACK TO TOP BUTTON
        =========================================== */
@@ -2298,7 +2324,7 @@
       <!-- Floating Particles -->
       <div class="particles-container" id="particlesContainer"></div>
 
-      <!-- Header -->
+      <!-- Header - EXACT SAME LOGO POSITION AS INDEX.HTML -->
       <header class="header">
         <div class="logo">
           <a href="index.html">
