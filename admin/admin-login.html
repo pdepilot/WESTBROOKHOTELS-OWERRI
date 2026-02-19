@@ -1,0 +1,1612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>WestBrook Hotel | Admin Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="WestBrook Hotel Administrative Portal - Secure access for hotel management">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="icon" href="./images/westbrook logo.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Montserrat:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    /* ===========================================
+       GLOBAL VARIABLES & RESETS
+       =========================================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --gold: #c19a5b;
+      --gold-light: #d4af37;
+      --gold-dark: #a07d49;
+      --gold-glow: rgba(193, 154, 91, 0.3);
+      --deep-blue: #0a1929;
+      --deep-blue-light: #1a2a3a;
+      --charcoal: #1e1e2f;
+      --slate: #2d3a4a;
+      --white: #ffffff;
+      --off-white: #f8f9fa;
+      --gray-light: #e9ecef;
+      --gray: #6c757d;
+      --dark: #0b0b1a;
+      --success: #28a745;
+      --warning: #ffc107;
+      --danger: #dc3545;
+      --info: #17a2b8;
+      
+      --shadow-sm: 0 5px 20px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.15);
+      --shadow-gold: 0 15px 40px rgba(193, 154, 91, 0.15);
+      --shadow-gold-lg: 0 25px 50px rgba(193, 154, 91, 0.25);
+      
+      --gradient-gold: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+      --gradient-deep: linear-gradient(145deg, var(--deep-blue) 0%, var(--charcoal) 100%);
+      --gradient-midnight: linear-gradient(135deg, #0b0b1a 0%, #1a1a2e 100%);
+      
+      --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-slow: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--gradient-midnight);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow-x: hidden;
+      padding: 20px;
+    }
+
+    /* Animated Background */
+    .bg-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bg-circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(193, 154, 91, 0.03);
+      animation: float 20s infinite ease-in-out;
+    }
+
+    .bg-circle:nth-child(1) {
+      width: 600px;
+      height: 600px;
+      top: -200px;
+      right: -200px;
+      background: radial-gradient(circle, rgba(193,154,91,0.05) 0%, transparent 70%);
+      animation-delay: 0s;
+    }
+
+    .bg-circle:nth-child(2) {
+      width: 500px;
+      height: 500px;
+      bottom: -150px;
+      left: -150px;
+      background: radial-gradient(circle, rgba(193,154,91,0.05) 0%, transparent 70%);
+      animation-delay: 5s;
+    }
+
+    .bg-circle:nth-child(3) {
+      width: 300px;
+      height: 300px;
+      top: 30%;
+      left: 20%;
+      background: radial-gradient(circle, rgba(193,154,91,0.03) 0%, transparent 70%);
+      animation-delay: 10s;
+    }
+
+    .bg-particles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,0.02) 1px, transparent 1px),
+        radial-gradient(circle at 80% 70%, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: particleDrift 60s linear infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(30px, -30px) scale(1.1); }
+      66% { transform: translate(-20px, 20px) scale(0.9); }
+    }
+
+    @keyframes particleDrift {
+      0% { background-position: 0 0; }
+      100% { background-position: 100px 100px; }
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -1000px 0; }
+      100% { background-position: 1000px 0; }
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes glowPulse {
+      0%, 100% {
+        box-shadow: 0 0 20px rgba(193, 154, 91, 0.2);
+      }
+      50% {
+        box-shadow: 0 0 40px rgba(193, 154, 91, 0.4);
+      }
+    }
+
+    @keyframes rotate {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Main Container */
+    .login-container {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 1400px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 60px;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg), 0 0 0 1px rgba(193, 154, 91, 0.1);
+      animation: slideUp 1s ease-out;
+    }
+
+    @media (max-width: 992px) {
+      .login-container {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+      }
+    }
+
+    /* Left Panel - Branding */
+    .brand-panel {
+      background: var(--gradient-deep);
+      padding: 60px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand-panel::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 30%, rgba(193, 154, 91, 0.1) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .brand-panel::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(193, 154, 91, 0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .brand-content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 60px;
+      animation: slideInLeft 0.8s ease-out;
+    }
+
+    .brand-logo img {
+      width: 60px;
+      height: 60px;
+      filter: drop-shadow(0 10px 20px rgba(193, 154, 91, 0.3));
+      animation: glowPulse 3s infinite;
+    }
+
+    .brand-logo span {
+      font-size: 28px;
+      font-weight: 700;
+      font-family: 'Playfair Display', serif;
+      background: linear-gradient(135deg, #fff 0%, var(--gold) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: 2px;
+    }
+
+    .brand-welcome {
+      margin-bottom: auto;
+    }
+
+    .brand-welcome h1 {
+      font-size: 48px;
+      font-weight: 700;
+      font-family: 'Playfair Display', serif;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 20px;
+      animation: slideInLeft 0.9s ease-out 0.1s both;
+    }
+
+    .brand-welcome h1 span {
+      color: var(--gold);
+      display: block;
+      font-size: 64px;
+      margin-top: 10px;
+      text-shadow: 0 10px 30px rgba(193, 154, 91, 0.3);
+    }
+
+    .brand-welcome p {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.8;
+      max-width: 400px;
+      margin-bottom: 40px;
+      animation: slideInLeft 1s ease-out 0.2s both;
+    }
+
+    /* Stats Cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-top: 40px;
+      animation: slideInLeft 1.1s ease-out 0.3s both;
+    }
+
+    .stat-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 30px;
+      padding: 25px;
+      transition: var(--transition);
+      cursor: default;
+      backdrop-filter: blur(10px);
+    }
+
+    .stat-card:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(193, 154, 91, 0.3);
+      transform: translateY(-5px);
+    }
+
+    .stat-icon {
+      width: 50px;
+      height: 50px;
+      background: rgba(193, 154, 91, 0.15);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      color: var(--gold);
+      font-size: 24px;
+      transition: var(--transition);
+    }
+
+    .stat-card:hover .stat-icon {
+      background: var(--gold);
+      color: var(--dark);
+    }
+
+    .stat-number {
+      font-size: 28px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 5px;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.6);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* Right Panel - Login Form */
+    .login-panel {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 60px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .dark-mode .login-panel {
+      background: rgba(30, 30, 46, 0.95);
+    }
+
+    .login-header {
+      margin-bottom: 50px;
+      animation: slideInRight 0.8s ease-out;
+    }
+
+    .login-header h2 {
+      font-size: 42px;
+      font-family: 'Playfair Display', serif;
+      color: var(--dark);
+      margin-bottom: 10px;
+    }
+
+    .dark-mode .login-header h2 {
+      color: #fff;
+    }
+
+    .login-header p {
+      color: var(--gray);
+      font-size: 15px;
+    }
+
+    .dark-mode .login-header p {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .login-header p a {
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 600;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .login-header p a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--gold);
+      transition: width 0.3s ease;
+    }
+
+    .login-header p a:hover::after {
+      width: 100%;
+    }
+
+    /* Login Form */
+    .login-form {
+      margin-bottom: 40px;
+      animation: slideInRight 0.9s ease-out 0.1s both;
+    }
+
+    .form-group {
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 10px;
+      transition: var(--transition);
+    }
+
+    .dark-mode .form-group label {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .input-wrapper i {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gray);
+      font-size: 18px;
+      transition: var(--transition);
+      z-index: 1;
+    }
+
+    .input-wrapper .toggle-password {
+      left: auto;
+      right: 20px;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .input-wrapper .toggle-password:hover {
+      color: var(--gold);
+    }
+
+    .input-wrapper input {
+      width: 100%;
+      padding: 18px 20px 18px 55px;
+      background: var(--off-white);
+      border: 2px solid transparent;
+      border-radius: 20px;
+      font-size: 15px;
+      color: var(--dark);
+      transition: var(--transition);
+      font-family: 'Montserrat', sans-serif;
+      outline: none;
+    }
+
+    .dark-mode .input-wrapper input {
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+    }
+
+    .input-wrapper input:focus {
+      border-color: var(--gold);
+      background: #fff;
+      box-shadow: 0 10px 30px rgba(193, 154, 91, 0.1);
+    }
+
+    .dark-mode .input-wrapper input:focus {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .input-wrapper input:focus + i {
+      color: var(--gold);
+    }
+
+    .input-wrapper input::placeholder {
+      color: rgba(108, 117, 125, 0.5);
+      font-weight: 300;
+    }
+
+    .dark-mode .input-wrapper input::placeholder {
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* Password Strength Meter */
+    .password-strength {
+      margin-top: 10px;
+      display: none;
+    }
+
+    .password-strength.visible {
+      display: block;
+    }
+
+    .strength-bar {
+      height: 4px;
+      background: var(--gray-light);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .strength-bar-fill {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--danger), var(--warning), var(--success));
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+
+    .strength-text {
+      font-size: 12px;
+      color: var(--gray);
+    }
+
+    /* Remember & Forgot */
+    .form-options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .remember-me {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .remember-me input[type="checkbox"] {
+      display: none;
+    }
+
+    .remember-me .checkbox-custom {
+      width: 20px;
+      height: 20px;
+      background: var(--off-white);
+      border: 2px solid var(--gray-light);
+      border-radius: 6px;
+      display: inline-block;
+      position: relative;
+      transition: var(--transition);
+    }
+
+    .dark-mode .remember-me .checkbox-custom {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .remember-me input[type="checkbox"]:checked + .checkbox-custom {
+      background: var(--gradient-gold);
+      border-color: var(--gold);
+    }
+
+    .remember-me input[type="checkbox"]:checked + .checkbox-custom::after {
+      content: '\f00c';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: var(--dark);
+      font-size: 12px;
+    }
+
+    .remember-me span {
+      font-size: 14px;
+      color: var(--gray);
+    }
+
+    .dark-mode .remember-me span {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .forgot-link {
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .forgot-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--gold);
+      transition: width 0.3s ease;
+    }
+
+    .forgot-link:hover::after {
+      width: 100%;
+    }
+
+    /* Login Button */
+    .login-btn {
+      width: 100%;
+      padding: 18px;
+      background: var(--gradient-gold);
+      border: none;
+      border-radius: 20px;
+      color: var(--dark);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: var(--transition-bounce);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .login-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .login-btn:hover::before {
+      left: 100%;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 40px rgba(193, 154, 91, 0.4);
+    }
+
+    .login-btn:active {
+      transform: translateY(0);
+    }
+
+    .login-btn.loading {
+      pointer-events: none;
+      opacity: 0.8;
+    }
+
+    .login-btn .btn-text {
+      transition: var(--transition);
+    }
+
+    .login-btn .spinner {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 24px;
+      height: 24px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: var(--dark);
+      animation: spin 0.8s linear infinite;
+    }
+
+    .login-btn.loading .btn-text {
+      opacity: 0;
+    }
+
+    .login-btn.loading .spinner {
+      display: block;
+    }
+
+    @keyframes spin {
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    /* Security Badge */
+    .security-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      padding: 20px;
+      background: rgba(193, 154, 91, 0.05);
+      border-radius: 20px;
+      margin-top: 20px;
+      animation: slideInRight 1s ease-out 0.2s both;
+    }
+
+    .security-icon {
+      width: 50px;
+      height: 50px;
+      background: rgba(193, 154, 91, 0.1);
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-size: 24px;
+    }
+
+    .security-text {
+      flex: 1;
+    }
+
+    .security-text h4 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 5px;
+    }
+
+    .dark-mode .security-text h4 {
+      color: #fff;
+    }
+
+    .security-text p {
+      font-size: 12px;
+      color: var(--gray);
+    }
+
+    .dark-mode .security-text p {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* MFA Section */
+    .mfa-section {
+      display: none;
+      margin-top: 30px;
+      animation: slideUp 0.5s ease;
+    }
+
+    .mfa-section.active {
+      display: block;
+    }
+
+    .mfa-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .mfa-icon {
+      width: 80px;
+      height: 80px;
+      background: rgba(193, 154, 91, 0.1);
+      border-radius: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      color: var(--gold);
+      font-size: 40px;
+      animation: glowPulse 2s infinite;
+    }
+
+    .mfa-header h3 {
+      font-size: 24px;
+      font-family: 'Playfair Display', serif;
+      color: var(--dark);
+      margin-bottom: 10px;
+    }
+
+    .dark-mode .mfa-header h3 {
+      color: #fff;
+    }
+
+    .mfa-header p {
+      color: var(--gray);
+      font-size: 14px;
+    }
+
+    .mfa-inputs {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .mfa-input {
+      width: 60px;
+      height: 70px;
+      background: var(--off-white);
+      border: 2px solid transparent;
+      border-radius: 15px;
+      text-align: center;
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--dark);
+      transition: var(--transition);
+      outline: none;
+    }
+
+    .dark-mode .mfa-input {
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+    }
+
+    .mfa-input:focus {
+      border-color: var(--gold);
+      background: #fff;
+      box-shadow: 0 10px 30px rgba(193, 154, 91, 0.1);
+    }
+
+    .mfa-timer {
+      text-align: center;
+      color: var(--gray);
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .mfa-timer span {
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    .mfa-back {
+      text-align: center;
+    }
+
+    .mfa-back a {
+      color: var(--gray);
+      text-decoration: none;
+      font-size: 14px;
+      transition: var(--transition);
+    }
+
+    .mfa-back a:hover {
+      color: var(--gold);
+    }
+
+    /* Footer */
+    .login-footer {
+      margin-top: auto;
+      text-align: center;
+      color: var(--gray);
+      font-size: 13px;
+      animation: slideInRight 1.1s ease-out 0.3s both;
+    }
+
+    .dark-mode .login-footer {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .login-footer a {
+      color: var(--gold);
+      text-decoration: none;
+      margin: 0 10px;
+      transition: var(--transition);
+    }
+
+    .login-footer a:hover {
+      color: var(--gold-light);
+    }
+
+    /* Alert Messages */
+    .alert {
+      padding: 15px 20px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      display: none;
+      align-items: center;
+      gap: 15px;
+      animation: slideUp 0.3s ease;
+    }
+
+    .alert.visible {
+      display: flex;
+    }
+
+    .alert i {
+      font-size: 20px;
+    }
+
+    .alert-content {
+      flex: 1;
+    }
+
+    .alert-title {
+      font-weight: 600;
+      margin-bottom: 3px;
+    }
+
+    .alert-message {
+      font-size: 13px;
+      opacity: 0.8;
+    }
+
+    .alert-success {
+      background: rgba(40, 167, 69, 0.1);
+      border: 1px solid rgba(40, 167, 69, 0.2);
+      color: var(--success);
+    }
+
+    .alert-warning {
+      background: rgba(255, 193, 7, 0.1);
+      border: 1px solid rgba(255, 193, 7, 0.2);
+      color: var(--warning);
+    }
+
+    .alert-danger {
+      background: rgba(220, 53, 69, 0.1);
+      border: 1px solid rgba(220, 53, 69, 0.2);
+      color: var(--danger);
+    }
+
+    .alert-info {
+      background: rgba(23, 162, 184, 0.1);
+      border: 1px solid rgba(23, 162, 184, 0.2);
+      color: var(--info);
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .brand-panel {
+        display: none;
+      }
+      
+      .login-panel {
+        padding: 40px;
+      }
+      
+      .login-header h2 {
+        font-size: 36px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .login-panel {
+        padding: 30px 20px;
+      }
+      
+      .form-options {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+      }
+      
+      .mfa-inputs {
+        gap: 10px;
+      }
+      
+      .mfa-input {
+        width: 45px;
+        height: 55px;
+        font-size: 24px;
+      }
+    }
+
+    /* Dark Mode Toggle */
+    .dark-mode-toggle {
+      position: fixed;
+      top: 30px;
+      right: 30px;
+      z-index: 100;
+      width: 50px;
+      height: 50px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 20px;
+      text-decoration: none;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .dark-mode-toggle:hover {
+      background: var(--gold);
+      transform: scale(1.1) rotate(180deg);
+      box-shadow: 0 10px 30px rgba(193, 154, 91, 0.3);
+    }
+
+    /* Demo Credentials */
+    .demo-credentials {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      z-index: 100;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      padding: 15px 25px;
+      border-radius: 50px;
+      color: #fff;
+      font-size: 14px;
+      border-left: 4px solid var(--gold);
+      animation: slideInLeft 1s ease-out;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .demo-credentials i {
+      color: var(--gold);
+      margin-right: 10px;
+    }
+
+    .demo-credentials span {
+      color: var(--gold);
+      font-weight: 600;
+      margin: 0 10px;
+    }
+
+    .demo-credentials code {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 5px 10px;
+      border-radius: 30px;
+      margin: 0 5px;
+    }
+
+    @media (max-width: 768px) {
+      .demo-credentials {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Animated Background -->
+  <div class="bg-animation">
+    <div class="bg-circle"></div>
+    <div class="bg-circle"></div>
+    <div class="bg-circle"></div>
+    <div class="bg-particles"></div>
+  </div>
+
+  <!-- Dark Mode Toggle -->
+  <a href="#" class="dark-mode-toggle" id="darkModeToggle" title="Toggle Dark Mode">
+    <i class="fas fa-moon"></i>
+  </a>
+
+  <!-- Demo Credentials (for demonstration purposes) -->
+  <div class="demo-credentials">
+    <i class="fas fa-info-circle"></i>
+    <span>Demo Credentials:</span>
+    <code>admin@westbrook.com</code>
+    <span>/</span>
+    <code>admin123</code>
+  </div>
+
+  <!-- Main Login Container -->
+  <div class="login-container">
+    <!-- Left Panel - Branding -->
+    <div class="brand-panel">
+      <div class="brand-content">
+        <div class="brand-logo">
+          <img src="/images/westbrook logo.png" alt="WestBrook Hotel">
+          <span>WestBrook</span>
+        </div>
+
+        <div class="brand-welcome">
+          <h1>
+            Welcome Back,
+            <span>Administrator</span>
+          </h1>
+          <p>Access the WestBrook Hotel management system to oversee operations, manage bookings, and deliver exceptional guest experiences.</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-calendar-check"></i>
+            </div>
+            <div class="stat-number">247</div>
+            <div class="stat-label">Active Bookings</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <div class="stat-number">189</div>
+            <div class="stat-label">Current Guests</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-hotel"></i>
+            </div>
+            <div class="stat-number">86%</div>
+            <div class="stat-label">Occupancy Rate</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-star"></i>
+            </div>
+            <div class="stat-number">4.9</div>
+            <div class="stat-label">Guest Rating</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Panel - Login Form -->
+    <div class="login-panel">
+      <!-- Alert Messages -->
+      <div class="alert alert-info" id="infoAlert">
+        <i class="fas fa-info-circle"></i>
+        <div class="alert-content">
+          <div class="alert-title">Welcome back!</div>
+          <div class="alert-message">Please enter your credentials to access the admin panel.</div>
+        </div>
+      </div>
+
+      <div class="alert alert-danger" id="errorAlert">
+        <i class="fas fa-exclamation-circle"></i>
+        <div class="alert-content">
+          <div class="alert-title">Login Failed</div>
+          <div class="alert-message" id="errorMessage">Invalid email or password.</div>
+        </div>
+      </div>
+
+      <!-- Login Header -->
+      <div class="login-header">
+        <h2>Admin Login</h2>
+        <p>Secure access for hotel management • <a href="#" id="needHelp">Need help?</a></p>
+      </div>
+
+      <!-- Login Form -->
+      <div class="login-form" id="loginForm">
+        <form id="adminLoginForm">
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <div class="input-wrapper">
+              <i class="fas fa-envelope"></i>
+              <input type="email" id="email" placeholder="admin@westbrook.com" value="admin@westbrook.com" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <div class="input-wrapper">
+              <i class="fas fa-lock"></i>
+              <input type="password" id="password" placeholder="••••••••" value="admin123" required>
+              <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+            </div>
+            
+            <!-- Password Strength Meter -->
+            <div class="password-strength" id="passwordStrength">
+              <div class="strength-bar">
+                <div class="strength-bar-fill" id="strengthBarFill" style="width: 0%"></div>
+              </div>
+              <div class="strength-text" id="strengthText">Enter password</div>
+            </div>
+          </div>
+
+          <div class="form-options">
+            <label class="remember-me">
+              <input type="checkbox" id="remember" checked>
+              <span class="checkbox-custom"></span>
+              <span>Remember me</span>
+            </label>
+            <a href="#" class="forgot-link" id="forgotPassword">Forgot Password?</a>
+          </div>
+
+          <button type="submit" class="login-btn" id="loginBtn">
+            <span class="btn-text">Sign In to Dashboard</span>
+            <span class="spinner"></span>
+          </button>
+        </form>
+
+        <!-- Security Badge -->
+        <div class="security-badge">
+          <div class="security-icon">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <div class="security-text">
+            <h4>256-bit SSL Encrypted</h4>
+            <p>Your connection is secure and private</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- MFA Section (2FA) -->
+      <div class="mfa-section" id="mfaSection">
+        <div class="mfa-header">
+          <div class="mfa-icon">
+            <i class="fas fa-mobile-alt"></i>
+          </div>
+          <h3>Two-Factor Authentication</h3>
+          <p>Enter the 6-digit code from your authenticator app</p>
+        </div>
+
+        <div class="mfa-inputs">
+          <input type="text" class="mfa-input" maxlength="1" pattern="[0-9]" inputmode="numeric">
+          <input type="text" class="mfa-input" maxlength="1" pattern="[0-9]" inputmode="numeric">
+          <input type="text" class="mfa-input" maxlength="1" pattern="[0-9]" inputmode="numeric">
+          <input type="text" class="mfa-input" maxlength="1" pattern="[0-9]" inputmode="numeric">
+          <input type="text" class="mfa-input" maxlength="1" pattern="[0-9]" inputmode="numeric">
+          <input type="text" class="mfa-input" maxlength="1" pattern="[0-9]" inputmode="numeric">
+        </div>
+
+        <div class="mfa-timer">
+          <i class="fas fa-clock"></i> Code expires in <span id="mfaTimer">2:00</span>
+        </div>
+
+        <div class="mfa-back">
+          <a href="#" id="backToLogin"><i class="fas fa-arrow-left"></i> Back to login</a>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="login-footer">
+        <p>&copy; 2025 WestBrook Hotel. All rights reserved.</p>
+        <p>
+          <a href="#">Privacy Policy</a> • 
+          <a href="#">Terms of Service</a> • 
+          <a href="#">Contact Support</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // ===========================================
+      // DOM Elements
+      // ===========================================
+      const darkModeToggle = document.getElementById('darkModeToggle');
+      const themeIcon = darkModeToggle.querySelector('i');
+      const togglePassword = document.getElementById('togglePassword');
+      const passwordInput = document.getElementById('password');
+      const loginForm = document.getElementById('adminLoginForm');
+      const loginBtn = document.getElementById('loginBtn');
+      const emailInput = document.getElementById('email');
+      const rememberCheck = document.getElementById('remember');
+      const infoAlert = document.getElementById('infoAlert');
+      const errorAlert = document.getElementById('errorAlert');
+      const errorMessage = document.getElementById('errorMessage');
+      const needHelp = document.getElementById('needHelp');
+      const forgotPassword = document.getElementById('forgotPassword');
+      const mfaSection = document.getElementById('mfaSection');
+      const loginFormDiv = document.getElementById('loginForm');
+      const backToLogin = document.getElementById('backToLogin');
+      const mfaInputs = document.querySelectorAll('.mfa-input');
+      const mfaTimer = document.getElementById('mfaTimer');
+      
+      // Password strength elements
+      const passwordStrength = document.getElementById('passwordStrength');
+      const strengthBarFill = document.getElementById('strengthBarFill');
+      const strengthText = document.getElementById('strengthText');
+
+      // ===========================================
+      // Demo Credentials
+      // ===========================================
+      const DEMO_EMAIL = 'admin@westbrook.com';
+      const DEMO_PASSWORD = 'admin123';
+
+      // ===========================================
+      // Dark Mode Toggle
+      // ===========================================
+      darkModeToggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.body.classList.toggle('dark-mode');
+        
+        if (document.body.classList.contains('dark-mode')) {
+          themeIcon.classList.remove('fa-moon');
+          themeIcon.classList.add('fa-sun');
+          localStorage.setItem('adminTheme', 'dark');
+        } else {
+          themeIcon.classList.remove('fa-sun');
+          themeIcon.classList.add('fa-moon');
+          localStorage.setItem('adminTheme', 'light');
+        }
+      });
+
+      // Load saved theme
+      const savedTheme = localStorage.getItem('adminTheme');
+      if (savedTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+        themeIcon.classList.remove('fa-moon');
+        themeIcon.classList.add('fa-sun');
+      }
+
+      // ===========================================
+      // Toggle Password Visibility
+      // ===========================================
+      togglePassword.addEventListener('click', function() {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+      });
+
+      // ===========================================
+      // Password Strength Meter
+      // ===========================================
+      passwordInput.addEventListener('input', function() {
+        const password = this.value;
+        
+        if (password.length > 0) {
+          passwordStrength.classList.add('visible');
+          
+          // Calculate strength
+          let strength = 0;
+          if (password.length >= 8) strength += 25;
+          if (password.match(/[a-z]/)) strength += 25;
+          if (password.match(/[A-Z]/)) strength += 25;
+          if (password.match(/[0-9]/)) strength += 15;
+          if (password.match(/[^a-zA-Z0-9]/)) strength += 10;
+          
+          strength = Math.min(strength, 100);
+          strengthBarFill.style.width = strength + '%';
+          
+          // Update text
+          if (strength < 30) {
+            strengthText.textContent = 'Weak password';
+            strengthText.style.color = 'var(--danger)';
+          } else if (strength < 60) {
+            strengthText.textContent = 'Moderate password';
+            strengthText.style.color = 'var(--warning)';
+          } else if (strength < 80) {
+            strengthText.textContent = 'Strong password';
+            strengthText.style.color = 'var(--success)';
+          } else {
+            strengthText.textContent = 'Very strong password';
+            strengthText.style.color = 'var(--success)';
+          }
+        } else {
+          passwordStrength.classList.remove('visible');
+        }
+      });
+
+      // Trigger initial check if password is pre-filled
+      if (passwordInput.value) {
+        passwordInput.dispatchEvent(new Event('input'));
+      }
+
+      // ===========================================
+      // Login Form Submission
+      // ===========================================
+      loginForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+        
+        // Hide any previous alerts
+        errorAlert.classList.remove('visible');
+        
+        // Validate
+        if (!email || !password) {
+          showError('Please enter both email and password');
+          return;
+        }
+        
+        if (!isValidEmail(email)) {
+          showError('Please enter a valid email address');
+          return;
+        }
+        
+        // Show loading state
+        loginBtn.classList.add('loading');
+        loginBtn.disabled = true;
+        
+        // Simulate API call
+        setTimeout(() => {
+          // Check credentials (demo)
+          if (email === DEMO_EMAIL && password === DEMO_PASSWORD) {
+            // Success - show MFA or redirect
+            if (rememberCheck.checked) {
+              // Save to localStorage for "remember me"
+              localStorage.setItem('adminEmail', email);
+            }
+            
+            // Simulate MFA verification
+            loginFormDiv.style.display = 'none';
+            mfaSection.classList.add('active');
+            startMFATimer();
+            
+            // Hide loading
+            loginBtn.classList.remove('loading');
+            loginBtn.disabled = false;
+            
+            // Show success message (optional)
+            console.log('Login successful, proceeding to MFA');
+          } else {
+            // Failed login
+            loginBtn.classList.remove('loading');
+            loginBtn.disabled = false;
+            showError('Invalid email or password. Please try again.');
+          }
+        }, 1500);
+      });
+
+      // ===========================================
+      // MFA Input Handling
+      // ===========================================
+      mfaInputs.forEach((input, index) => {
+        input.addEventListener('input', function(e) {
+          // Only allow numbers
+          this.value = this.value.replace(/[^0-9]/g, '');
+          
+          if (this.value.length === 1 && index < mfaInputs.length - 1) {
+            mfaInputs[index + 1].focus();
+          }
+          
+          // Check if all inputs are filled
+          const allFilled = Array.from(mfaInputs).every(input => input.value.length === 1);
+          if (allFilled) {
+            verifyMFA();
+          }
+        });
+        
+        input.addEventListener('keydown', function(e) {
+          if (e.key === 'Backspace' && this.value.length === 0 && index > 0) {
+            mfaInputs[index - 1].focus();
+          }
+        });
+        
+        input.addEventListener('paste', function(e) {
+          e.preventDefault();
+          const paste = (e.clipboardData || window.clipboardData).getData('text');
+          const numbers = paste.replace(/[^0-9]/g, '').split('');
+          
+          numbers.forEach((num, i) => {
+            if (i < mfaInputs.length) {
+              mfaInputs[i].value = num;
+            }
+          });
+          
+          // Focus last filled or next empty
+          const lastIndex = Math.min(numbers.length, mfaInputs.length) - 1;
+          if (lastIndex >= 0 && lastIndex < mfaInputs.length - 1) {
+            mfaInputs[lastIndex + 1].focus();
+          }
+        });
+      });
+
+      function verifyMFA() {
+        const code = Array.from(mfaInputs).map(input => input.value).join('');
+        console.log('Verifying MFA code:', code);
+        
+        // Simulate MFA verification
+        loginBtn.classList.add('loading');
+        loginBtn.disabled = true;
+        
+        setTimeout(() => {
+          // Demo always succeeds with 123456
+          if (code === '123456') {
+            // Redirect to admin dashboard
+            window.location.href = 'admin-dashboard.html';
+          } else {
+            // Show error and clear inputs
+            mfaInputs.forEach(input => {
+              input.value = '';
+              input.style.borderColor = 'var(--danger)';
+            });
+            
+            setTimeout(() => {
+              mfaInputs.forEach(input => {
+                input.style.borderColor = '';
+              });
+              mfaInputs[0].focus();
+            }, 1000);
+            
+            loginBtn.classList.remove('loading');
+            loginBtn.disabled = false;
+          }
+        }, 1000);
+      }
+
+      // ===========================================
+      // MFA Timer
+      // ===========================================
+      let timerInterval;
+      
+      function startMFATimer() {
+        let timeLeft = 120; // 2 minutes in seconds
+        
+        timerInterval = setInterval(() => {
+          timeLeft--;
+          
+          const minutes = Math.floor(timeLeft / 60);
+          const seconds = timeLeft % 60;
+          mfaTimer.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+          
+          if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            // Reset MFA
+            mfaInputs.forEach(input => input.value = '');
+            mfaTimer.textContent = 'Expired';
+          }
+        }, 1000);
+      }
+
+      // ===========================================
+      // Back to Login from MFA
+      // ===========================================
+      backToLogin.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        clearInterval(timerInterval);
+        mfaSection.classList.remove('active');
+        loginFormDiv.style.display = 'block';
+        
+        // Clear MFA inputs
+        mfaInputs.forEach(input => input.value = '');
+        
+        // Reset timer display
+        mfaTimer.textContent = '2:00';
+      });
+
+      // ===========================================
+      // Helper Functions
+      // ===========================================
+      function isValidEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+      }
+
+      function showError(message) {
+        errorMessage.textContent = message;
+        errorAlert.classList.add('visible');
+        
+        setTimeout(() => {
+          errorAlert.classList.remove('visible');
+        }, 5000);
+      }
+
+      // ===========================================
+      // Load saved email from localStorage
+      // ===========================================
+      const savedEmail = localStorage.getItem('adminEmail');
+      if (savedEmail) {
+        emailInput.value = savedEmail;
+        rememberCheck.checked = true;
+      }
+
+      // ===========================================
+      // Need Help & Forgot Password
+      // ===========================================
+      needHelp.addEventListener('click', function(e) {
+        e.preventDefault();
+        alert('Please contact the IT department at it@westbrook.com or call extension 1234.');
+      });
+
+      forgotPassword.addEventListener('click', function(e) {
+        e.preventDefault();
+        alert('Password reset link has been sent to your email address.');
+      });
+
+      // ===========================================
+      // Focus email input on load
+      // ===========================================
+      emailInput.focus();
+
+      // ===========================================
+      // Animate stats on hover
+      // ===========================================
+      const statCards = document.querySelectorAll('.stat-card');
+      statCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+          const icon = this.querySelector('.stat-icon i');
+          icon.style.transform = 'scale(1.2)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+          const icon = this.querySelector('.stat-icon i');
+          icon.style.transform = 'scale(1)';
+        });
+      });
+    });
+  </script>
+</body>
+</html>

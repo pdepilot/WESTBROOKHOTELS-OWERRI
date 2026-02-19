@@ -4902,10 +4902,10 @@
         ENJOY THE BEST<br>
         MOMENTS OF LIFE
       </h1>
-      <a href="#" class="outline-btn">ROOMS & SUITES</a>
+      <a href="rooms-suites.html" class="outline-btn">ROOMS & SUITES</a>
     </div>
 
-    <!-- BOOKING -->
+    <!-- BOOKING BAR - BOOK NOW BUTTON NOW PROPERLY REDIRECTS TO rooms-suites.html -->
     <div class="booking-bar">
       <div class="field">
         <label>Check in</label>
@@ -4915,7 +4915,7 @@
         <label>Check out</label>
         <input type="date" id="checkout">
       </div>
-      <a href="#" class="book-btn">BOOK NOW</a>
+      <a href="rooms-suites.html" class="book-btn">BOOK NOW</a>
     </div>
   </section>
 
@@ -4955,7 +4955,7 @@
         <p class="about-description">
           Nestled in the heart of Owerri, Imo State, WestBrook Hotel stands as a premier destination for travelers seeking luxury, comfort, and exceptional hospitality. Founded by Chief Sir...
         </p>
-        <a href="#" class="read-more-btn">
+        <a href="about-us.html" class="read-more-btn">
           READ MORE
           <i class="fas fa-arrow-right"></i>
         </a>
@@ -5002,7 +5002,7 @@
             <span><i class="fas fa-user"></i> 2 Guests</span>
           </div>
           <p class="room-description">Experience presidential luxury with private terrace, jacuzzi, and personalized butler service.</p>
-          <a href="#" class="room-book-btn">BOOK NOW</a>
+          <a href="rooms-suites.html" class="room-book-btn">BOOK NOW</a>
         </div>
       </div>
       
@@ -5020,7 +5020,7 @@
             <span><i class="fas fa-user"></i> 2 Guests</span>
           </div>
           <p class="room-description">Spacious suite with separate living area, work desk, and panoramic city views.</p>
-          <a href="#" class="room-book-btn">BOOK NOW</a>
+          <a href="rooms-suites.html" class="room-book-btn">BOOK NOW</a>
         </div>
       </div>
       
@@ -5038,13 +5038,13 @@
             <span><i class="fas fa-user"></i> 2 Guests</span>
           </div>
           <p class="room-description">Elegant room with marble bathroom, premium amenities, and garden views.</p>
-          <a href="#" class="room-book-btn">BOOK NOW</a>
+          <a href="rooms-suites.html" class="room-book-btn">BOOK NOW</a>
         </div>
       </div>
     </div>
     
     <div class="view-all-container">
-      <a href="#" class="view-all-btn">VIEW ALL ROOMS <i class="fas fa-chevron-right"></i></a>
+      <a href="rooms-suites.html" class="view-all-btn">VIEW ALL ROOMS <i class="fas fa-chevron-right"></i></a>
     </div>
   </section>
 
@@ -5264,7 +5264,7 @@
           <div class="form-group">
             <textarea placeholder="Your Message" rows="5" required></textarea>
           </div>
-          <a href="#" class="submit-btn">SEND MESSAGE <i class="fas fa-paper-plane"></i></a>
+          <a href="contact.html" class="submit-btn">SEND MESSAGE <i class="fas fa-paper-plane"></i></a>
         </form>
       </div>
     </div>
@@ -5289,11 +5289,11 @@
       <div class="footer-section">
         <h3>Quick Links</h3>
         <ul class="footer-links">
-          <li><a href="#"><i class="fas fa-chevron-right"></i> Home</a></li>
-          <li><a href="#about"><i class="fas fa-chevron-right"></i> About Us</a></li>
-          <li><a href="#rooms"><i class="fas fa-chevron-right"></i> Rooms & Suites</a></li>
-          <li><a href="#experience"><i class="fas fa-chevron-right"></i> Experience</a></li>
-          <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+          <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+          <li><a href="about-us.html"><i class="fas fa-chevron-right"></i> About Us</a></li>
+          <li><a href="rooms-suites.html"><i class="fas fa-chevron-right"></i> Rooms & Suites</a></li>
+          <li><a href="experience.html"><i class="fas fa-chevron-right"></i> Experience</a></li>
+          <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
           <li><a href="gallery.html"><i class="fas fa-chevron-right"></i> Gallery</a></li>
         </ul>
       </div>
@@ -5562,7 +5562,7 @@
               <a href="contact.html">CONTACT</a>
             </div>
             
-            <a href="#" class="book-btn" onclick="window.location.href='index.html#booking'">BOOK NOW</a>
+            <a href="rooms-suites.html" class="book-btn" onclick="window.location.href='rooms-suites.html'">BOOK NOW</a>
             
             <a href="#" class="hamburger-btn" id="stickyHamburger">
               <span></span>
@@ -5904,23 +5904,22 @@
         // Initialize slideshow
         startSlideShow();
 
-        // BOOKING
+        // BOOKING - simplified date validation, still redirects to rooms-suites.html
         document.querySelector(".book-btn").addEventListener("click", (e) => {
-          e.preventDefault();
+          // Let the anchor tag handle the redirect naturally
+          // But we can still show a friendly message if dates are missing
           const inDate = document.getElementById('checkin').value;
           const outDate = document.getElementById('checkout').value;
 
           if (!inDate || !outDate) {
-            alert("Please select your dates.");
+            // Optional: gentle reminder, but still allow navigation
+            console.log("Proceeding to booking page without selected dates.");
+          } else if (new Date(outDate) <= new Date(inDate)) {
+            e.preventDefault();
+            alert("Check-out must be after check-in. Please correct your dates.");
             return;
           }
-
-          if (new Date(outDate) <= new Date(inDate)) {
-            alert("Check-out must be after check-in.");
-            return;
-          }
-
-          alert("Booking request received.");
+          // Otherwise, let the href="rooms-suites.html" take the user
         });
 
         // Pause social icon animations on hover

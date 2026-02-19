@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Complete Your Reservation | WestBrook Hotel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="icon" href="./images/westbrook logo.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --gold: #c19a5b;
+      --gold-light: #d4af37;
+      --cream: #faf7f2;
+      --charcoal: #1a1a1a;
+      --white: #ffffff;
+      --gray-300: #e0e0e0;
+      --gray-500: #808080;
+      --success: #28a745;
+      --danger: #dc3545;
+      --warning: #ffc107;
+      --shadow-lg: 0 30px 60px -25px rgba(0, 0, 0, 0.3);
+      --shadow-gold: 0 15px 40px -15px rgba(193, 154, 91, 0.2);
+      --transition: all 0.4s ease;
+    }
+
+    body {
+      font-family: "Montserrat", sans-serif;
+      background: linear-gradient(135deg, rgba(193, 154, 91, 0.05) 0%, rgba(193, 154, 91, 0.02) 100%);
+      color: var(--charcoal);
+      line-height: 1.6;
+      font-weight: 300;
+      min-height: 100vh;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: "Cormorant Garamond", serif;
+      font-weight: 400;
+      letter-spacing: 1px;
+    }
+
+    .booking-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .booking-container {
+      max-width: 1000px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* Progress Bar */
+    .booking-progress {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 50px;
+      position: relative;
+      padding: 0 20px;
+    }
+
+    .booking-progress::before {
+      content: '';
+      position: absolute;
+      top: 15px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: rgba(193, 154, 91, 0.2);
+      z-index: 1;
+    }
+
+    .progress-step {
+      position: relative;
+      z-index: 2;
+      background: var(--white);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 500;
+      border: 2px solid rgba(193, 154, 91, 0.2);
+      transition: var(--transition);
+    }
+
+    .progress-step.completed {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: white;
+    }
+
+    .progress-step.active {
+      border-color: var(--gold);
+      border-width: 3px;
+      transform: scale(1.1);
+    }
+
+    .step-label {
+      position: absolute;
+      top: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 11px;
+      letter-spacing: 1px;
+      white-space: nowrap;
+      color: var(--gray-500);
+    }
+
+    .booking-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .booking-header h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+
+    .booking-header p {
+      color: var(--gray-500);
+      font-size: 16px;
+    }
+
+    .booking-card {
+      background: var(--white);
+      border-radius: 40px;
+      padding: 50px;
+      box-shadow: var(--shadow-lg);
+      transition: var(--transition);
+      animation: fadeIn 0.6s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Step 1: Review Booking */
+    .review-section {
+      margin-bottom: 40px;
+    }
+
+    .review-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+      margin: 30px 0;
+    }
+
+    .review-item {
+      padding: 20px;
+      background: rgba(193, 154, 91, 0.05);
+      border-radius: 15px;
+    }
+
+    .review-item .label {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gray-500);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .review-item .value {
+      font-size: 18px;
+      font-weight: 500;
+    }
+
+    .price-breakdown {
+      background: linear-gradient(135deg, rgba(193, 154, 91, 0.08) 0%, rgba(193, 154, 91, 0.03) 100%);
+      padding: 30px;
+      border-radius: 20px;
+      margin: 30px 0;
+    }
+
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px dashed rgba(193, 154, 91, 0.2);
+    }
+
+    .price-row.total {
+      border-bottom: none;
+      padding-top: 20px;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    /* Step 2: Guest Details */
+    .form-section {
+      margin-bottom: 30px;
+    }
+
+    .form-section h3 {
+      font-size: 1.5rem;
+      margin-bottom: 25px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(193, 154, 91, 0.2);
+    }
+
+    .form-row {
+      margin-bottom: 25px;
+    }
+
+    .form-row label {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gray-500);
+      margin-bottom: 8px;
+    }
+
+    .form-row input,
+    .form-row select,
+    .form-row textarea {
+      width: 100%;
+      padding: 15px 20px;
+      background: rgba(193, 154, 91, 0.05);
+      border: 2px solid transparent;
+      border-radius: 15px;
+      font-size: 15px;
+      color: var(--charcoal);
+      transition: var(--transition);
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .form-row input:focus,
+    .form-row select:focus,
+    .form-row textarea:focus {
+      outline: none;
+      border-color: var(--gold);
+      background: var(--white);
+      box-shadow: 0 0 0 6px rgba(193, 154, 91, 0.1);
+    }
+
+    .form-row input.error {
+      border-color: var(--danger);
+    }
+
+    .error-text {
+      color: var(--danger);
+      font-size: 12px;
+      margin-top: 5px;
+      display: none;
+    }
+
+    .error-text.visible {
+      display: block;
+    }
+
+    /* Step 3: Payment */
+    .payment-methods {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin: 30px 0;
+    }
+
+    .payment-method {
+      padding: 20px;
+      background: rgba(193, 154, 91, 0.05);
+      border: 2px solid transparent;
+      border-radius: 15px;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .payment-method:hover {
+      background: rgba(193, 154, 91, 0.1);
+    }
+
+    .payment-method.active {
+      border-color: var(--gold);
+      background: rgba(193, 154, 91, 0.1);
+    }
+
+    .payment-method i {
+      font-size: 24px;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+
+    .payment-method span {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .card-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .pay-later-option {
+      margin: 20px 0;
+      padding: 20px;
+      background: rgba(193, 154, 91, 0.05);
+      border-radius: 15px;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+      border: 2px solid transparent;
+    }
+
+    .pay-later-option:hover {
+      background: rgba(193, 154, 91, 0.1);
+    }
+
+    .pay-later-option.active {
+      border-color: var(--gold);
+    }
+
+    .pay-later-option i {
+      font-size: 24px;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+
+    /* Step 4: Confirmation */
+    .confirmation-section {
+      text-align: center;
+    }
+
+    .success-icon {
+      width: 80px;
+      height: 80px;
+      background: rgba(40, 167, 69, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 30px;
+      font-size: 40px;
+      color: var(--success);
+      animation: scaleIn 0.6s ease;
+    }
+
+    @keyframes scaleIn {
+      from { transform: scale(0); }
+      to { transform: scale(1); }
+    }
+
+    .booking-id {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+      padding: 20px;
+      border-radius: 15px;
+      margin: 30px 0;
+      font-size: 24px;
+      letter-spacing: 3px;
+      font-weight: 500;
+    }
+
+    .booking-details-confirm {
+      background: rgba(193, 154, 91, 0.05);
+      padding: 30px;
+      border-radius: 20px;
+      margin: 30px 0;
+      text-align: left;
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(193, 154, 91, 0.1);
+    }
+
+    .payment-status {
+      display: inline-block;
+      padding: 8px 20px;
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: 500;
+      margin-top: 15px;
+    }
+
+    .status-paid {
+      background: rgba(40, 167, 69, 0.1);
+      color: var(--success);
+    }
+
+    .status-pending {
+      background: rgba(255, 193, 7, 0.1);
+      color: var(--warning);
+    }
+
+    /* Navigation Buttons */
+    .button-group {
+      display: flex;
+      gap: 15px;
+      margin-top: 40px;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      padding: 18px 30px;
+      border: none;
+      border-radius: 15px;
+      font-size: 13px;
+      letter-spacing: 2px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      text-transform: uppercase;
+      flex: 1;
+      text-decoration: none;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+      color: var(--charcoal);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-gold);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 2px solid var(--gold);
+      color: var(--charcoal);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(193, 154, 91, 0.1);
+    }
+
+    .loading-spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+      margin-right: 10px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .secure-badge {
+      text-align: center;
+      margin-top: 20px;
+      color: var(--gray-500);
+      font-size: 12px;
+    }
+
+    .secure-badge i {
+      color: var(--gold);
+      margin-right: 5px;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 30px;
+      color: var(--gray-500);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.3s ease;
+    }
+
+    .back-link:hover {
+      color: var(--gold);
+    }
+
+    /* Limited Availability Warning */
+    .limited-warning {
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid var(--warning);
+      padding: 15px 20px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .limited-warning i {
+      color: var(--warning);
+      font-size: 24px;
+    }
+
+    .limited-warning p {
+      color: #856404;
+      margin: 0;
+    }
+
+    @media (max-width: 768px) {
+      .booking-card { padding: 30px; }
+      .review-grid { grid-template-columns: 1fr; }
+      .payment-methods { grid-template-columns: 1fr; }
+      .button-group { flex-direction: column; }
+      .progress-step .step-label { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="booking-page">
+    <div class="booking-container">
+      <!-- Progress Indicator -->
+      <div class="booking-progress">
+        <div class="progress-step active" data-step="1">
+          1
+          <span class="step-label">Review</span>
+        </div>
+        <div class="progress-step" data-step="2">
+          2
+          <span class="step-label">Details</span>
+        </div>
+        <div class="progress-step" data-step="3">
+          3
+          <span class="step-label">Payment</span>
+        </div>
+        <div class="progress-step" data-step="4">
+          4
+          <span class="step-label">Confirm</span>
+        </div>
+      </div>
+
+      <div class="booking-header">
+        <h1>Complete Your Reservation</h1>
+        <p id="stepDescription">Review your booking details</p>
+      </div>
+
+      <div class="booking-card" id="bookingCard">
+        <!-- Step content will be dynamically inserted -->
+      </div>
+      
+      <a href="west-delux.html" class="back-link">
+        <i class="fas fa-arrow-left"></i> Back to Room Details
+      </a>
+    </div>
+  </div>
+
+  <script>
+    // ===========================================
+    // WESTBROOK HOTEL - BOOK-NOW PAGE
+    // Fully synchronized with west-delux.html
+    // Real-time data transfer via sessionStorage and URL parameters
+    // ===========================================
+    
+    // ===========================================
+    // CONFIGURATION
+    // ===========================================
+    const CONFIG = {
+      ROOM_PRICE: 65000,
+      ROOM_TYPE: 'Westbrook Deluxe',
+      TAX_RATE: 0.075,
+      BOOKING_PREFIX: 'WD'
+    };
+
+    // ===========================================
+    // STATE MANAGEMENT
+    // ===========================================
+    let currentStep = 1;
+    let bookingData = {
+      roomType: CONFIG.ROOM_TYPE,
+      basePrice: CONFIG.ROOM_PRICE,
+      checkin: null,
+      checkout: null,
+      checkinDisplay: null,
+      checkoutDisplay: null,
+      adults: 2,
+      children: 0,
+      nights: 0,
+      totalPrice: 0,
+      subtotal: 0,
+      tax: 0,
+      multiplier: 1,
+      status: 'available',
+      guestInfo: {
+        fullName: '',
+        email: '',
+        phone: '',
+        specialRequests: ''
+      },
+      paymentMethod: 'card',
+      paymentStatus: null,
+      bookingId: null,
+      isPayLater: false,
+      timestamp: null
+    };
+
+    // ===========================================
+    // INITIALIZATION
+    // ===========================================
+    function init() {
+      loadBookingData();
+      checkUrlParameters();
+      renderCurrentStep();
+      attachEventListeners();
+    }
+
+    // Load data from sessionStorage (from west-delux.html)
+    function loadBookingData() {
+      const stored = sessionStorage.getItem('westbrook_booking_temp');
+      if (stored) {
+        try {
+          const data = JSON.parse(stored);
+          bookingData = { ...bookingData, ...data };
+          console.log('✅ Loaded booking data from session:', bookingData);
+        } catch (e) {
+          console.error('Error parsing stored booking data:', e);
+        }
+      }
+      
+      // Also check localStorage as backup
+      const localStored = localStorage.getItem('latest_booking');
+      if (localStored && !bookingData.checkin) {
+        try {
+          const data = JSON.parse(localStored);
+          bookingData = { ...bookingData, ...data };
+          console.log('✅ Loaded booking data from localStorage:', bookingData);
+        } catch (e) {
+          console.error('Error parsing localStorage booking data:', e);
+        }
+      }
+    }
+
+    // Check URL parameters (passed from west-delux.html)
+    function checkUrlParameters() {
+      const params = new URLSearchParams(window.location.search);
+      
+      if (params.get('checkin')) {
+        bookingData.checkin = params.get('checkin');
+      }
+      if (params.get('checkout')) {
+        bookingData.checkout = params.get('checkout');
+      }
+      if (params.get('adults')) {
+        bookingData.adults = parseInt(params.get('adults'));
+      }
+      if (params.get('children')) {
+        bookingData.children = parseInt(params.get('children'));
+      }
+      if (params.get('total')) {
+        bookingData.totalPrice = parseInt(params.get('total'));
+      }
+      
+      // Calculate nights if we have dates
+      if (bookingData.checkin && bookingData.checkout) {
+        calculateNights();
+      }
+    }
+
+    // Calculate nights between dates
+    function calculateNights() {
+      const checkin = new Date(bookingData.checkin);
+      const checkout = new Date(bookingData.checkout);
+      bookingData.nights = Math.ceil((checkout - checkin) / (1000 * 60 * 60 * 24));
+      
+      // Calculate price if not already set
+      if (!bookingData.totalPrice) {
+        const baseTotal = bookingData.basePrice * bookingData.nights;
+        const subtotal = bookingData.multiplier === 1.1 ? baseTotal * 1.1 : baseTotal;
+        bookingData.tax = subtotal * CONFIG.TAX_RATE;
+        bookingData.totalPrice = subtotal + bookingData.tax;
+        bookingData.subtotal = subtotal;
+      }
+      
+      // Format dates for display
+      bookingData.checkinDisplay = formatDate(bookingData.checkin, 'display');
+      bookingData.checkoutDisplay = formatDate(bookingData.checkout, 'display');
+    }
+
+    // Format date helper
+    function formatDate(date, format = 'iso') {
+      if (!date) return '';
+      const d = new Date(date);
+      if (isNaN(d.getTime())) return '';
+      
+      if (format === 'iso') {
+        return d.toISOString().split('T')[0];
+      } else if (format === 'display') {
+        return d.toLocaleDateString('en-US', { 
+          year: 'numeric', 
+          month: 'long', 
+          day: 'numeric' 
+        });
+      } else if (format === 'short') {
+        return d.toLocaleDateString('en-US', { 
+          month: 'short', 
+          day: 'numeric', 
+          year: 'numeric' 
+        });
+      }
+      return d.toISOString().split('T')[0];
+    }
+
+    // ===========================================
+    // GENERATE BOOKING ID
+    // ===========================================
+    function generateBookingId() {
+      const year = new Date().getFullYear();
+      const random = Math.floor(Math.random() * 90000 + 10000);
+      const timestamp = Date.now().toString().slice(-4);
+      return `${CONFIG.BOOKING_PREFIX}-${year}-${random}${timestamp}`;
+    }
+
+    // ===========================================
+    // STEP RENDERING
+    // ===========================================
+    function renderCurrentStep() {
+      const card = document.getElementById('bookingCard');
+      const stepDesc = document.getElementById('stepDescription');
+      
+      // Update progress steps
+      updateProgressSteps();
+      
+      switch(currentStep) {
+        case 1:
+          stepDesc.textContent = 'Review your booking details';
+          card.innerHTML = renderStep1();
+          break;
+        case 2:
+          stepDesc.textContent = 'Tell us about yourself';
+          card.innerHTML = renderStep2();
+          break;
+        case 3:
+          stepDesc.textContent = 'Choose payment method';
+          card.innerHTML = renderStep3();
+          break;
+        case 4:
+          stepDesc.textContent = 'Booking confirmed';
+          card.innerHTML = renderStep4();
+          break;
+      }
+      
+      // Re-attach event listeners for this step
+      attachStepEventListeners();
+    }
+
+    function updateProgressSteps() {
+      document.querySelectorAll('.progress-step').forEach((step, index) => {
+        const stepNum = index + 1;
+        step.classList.remove('active', 'completed');
+        
+        if (stepNum === currentStep) {
+          step.classList.add('active');
+        } else if (stepNum < currentStep) {
+          step.classList.add('completed');
+        }
+      });
+    }
+
+    // ===========================================
+    // STEP 1: REVIEW BOOKING
+    // ===========================================
+    function renderStep1() {
+      const isLimited = bookingData.status === 'limited';
+      
+      return `
+        <div class="review-section">
+          <h3>Review Your Stay</h3>
+          
+          ${isLimited ? `
+            <div class="limited-warning">
+              <i class="fas fa-exclamation-triangle"></i>
+              <div>
+                <strong>Limited Availability</strong>
+                <p>Some dates have limited availability. Final price reflects premium rate.</p>
+              </div>
+            </div>
+          ` : ''}
+          
+          <div class="review-grid">
+            <div class="review-item">
+              <span class="label">Room Type</span>
+              <span class="value">${bookingData.roomType}</span>
+            </div>
+            <div class="review-item">
+              <span class="label">Check-in</span>
+              <span class="value">${bookingData.checkinDisplay || formatDate(bookingData.checkin, 'display')}</span>
+            </div>
+            <div class="review-item">
+              <span class="label">Check-out</span>
+              <span class="value">${bookingData.checkoutDisplay || formatDate(bookingData.checkout, 'display')}</span>
+            </div>
+            <div class="review-item">
+              <span class="label">Nights</span>
+              <span class="value">${bookingData.nights} nights</span>
+            </div>
+            <div class="review-item">
+              <span class="label">Guests</span>
+              <span class="value">${bookingData.adults} Adult${bookingData.adults > 1 ? 's' : ''}${bookingData.children > 0 ? `, ${bookingData.children} Child${bookingData.children > 1 ? 'ren' : ''}` : ''}</span>
+            </div>
+          </div>
+          
+          <div class="price-breakdown">
+            <h4 style="margin-bottom: 20px;">Price Breakdown</h4>
+            <div class="price-row">
+              <span>Room Rate (₦${bookingData.basePrice.toLocaleString()} × ${bookingData.nights} nights)</span>
+              <span>₦${Math.round(bookingData.basePrice * bookingData.nights).toLocaleString()}</span>
+            </div>
+            ${isLimited ? `
+            <div class="price-row">
+              <span>Premium Rate (Limited Availability)</span>
+              <span>+10%</span>
+            </div>
+            ` : ''}
+            <div class="price-row">
+              <span>Taxes & Fees (7.5%)</span>
+              <span>₦${Math.round(bookingData.tax || (bookingData.basePrice * bookingData.nights * CONFIG.TAX_RATE)).toLocaleString()}</span>
+            </div>
+            <div class="price-row total">
+              <span>Total</span>
+              <span>₦${Math.round(bookingData.totalPrice || (bookingData.basePrice * bookingData.nights * (isLimited ? 1.1 : 1) * (1 + CONFIG.TAX_RATE))).toLocaleString()}</span>
+            </div>
+          </div>
+          
+          <div class="button-group">
+            <a href="west-delux.html" class="btn-secondary">Modify Dates</a>
+            <button class="btn-primary" onclick="nextStep()">Continue to Details</button>
+          </div>
+        </div>
+      `;
+    }
+
+    // ===========================================
+    // STEP 2: GUEST DETAILS
+    // ===========================================
+    function renderStep2() {
+      return `
+        <div class="form-section">
+          <h3>Guest Information</h3>
+          
+          <div class="form-row">
+            <label>Full Name *</label>
+            <input type="text" id="fullName" value="${bookingData.guestInfo.fullName || ''}" placeholder="As it appears on ID">
+            <div class="error-text" id="nameError">Please enter your full name</div>
+          </div>
+
+          <div class="form-row">
+            <label>Email Address *</label>
+            <input type="email" id="email" value="${bookingData.guestInfo.email || ''}" placeholder="your@email.com">
+            <div class="error-text" id="emailError">Please enter a valid email address</div>
+          </div>
+
+          <div class="form-row">
+            <label>Phone Number *</label>
+            <input type="tel" id="phone" value="${bookingData.guestInfo.phone || ''}" placeholder="+234 XXX XXX XXXX">
+            <div class="error-text" id="phoneError">Please enter your phone number</div>
+          </div>
+
+          <div class="form-row">
+            <label>Special Requests (Optional)</label>
+            <textarea id="specialRequests" rows="4" placeholder="Dietary requirements, room preferences, celebration notes...">${bookingData.guestInfo.specialRequests || ''}</textarea>
+          </div>
+
+          <div class="button-group">
+            <button class="btn-secondary" onclick="prevStep()">Back</button>
+            <button class="btn-primary" onclick="validateAndSaveGuest()">Continue to Payment</button>
+          </div>
+        </div>
+      `;
+    }
+
+    // ===========================================
+    // STEP 3: PAYMENT
+    // ===========================================
+    function renderStep3() {
+      return `
+        <div class="form-section">
+          <h3>Payment Method</h3>
+          
+          <div class="payment-methods">
+            <div class="payment-method ${bookingData.paymentMethod === 'card' ? 'active' : ''}" onclick="selectPaymentMethod('card')">
+              <i class="fas fa-credit-card"></i>
+              <span>Card</span>
+            </div>
+            <div class="payment-method ${bookingData.paymentMethod === 'paystack' ? 'active' : ''}" onclick="selectPaymentMethod('paystack')">
+              <i class="fas fa-bolt"></i>
+              <span>Paystack</span>
+            </div>
+            <div class="payment-method ${bookingData.paymentMethod === 'flutterwave' ? 'active' : ''}" onclick="selectPaymentMethod('flutterwave')">
+              <i class="fas fa-wave-square"></i>
+              <span>Flutterwave</span>
+            </div>
+          </div>
+
+          <div id="cardPaymentFields" style="${bookingData.paymentMethod === 'card' ? 'display: block;' : 'display: none;'}">
+            <div class="card-details">
+              <div class="form-row" style="grid-column: 1/-1;">
+                <label>Card Number</label>
+                <input type="text" id="cardNumber" placeholder="4242 4242 4242 4242">
+              </div>
+              <div class="form-row">
+                <label>Expiry</label>
+                <input type="text" id="expiry" placeholder="MM/YY">
+              </div>
+              <div class="form-row">
+                <label>CVV</label>
+                <input type="text" id="cvv" placeholder="123">
+              </div>
+            </div>
+          </div>
+
+          <div class="pay-later-option ${bookingData.isPayLater ? 'active' : ''}" onclick="togglePayLater()">
+            <i class="fas fa-clock"></i>
+            <span>Pay Later - Reserve now, pay at hotel</span>
+            <small style="display: block; margin-top: 5px; color: var(--gray-500);">No payment required now. Your booking will be held.</small>
+          </div>
+
+          <div class="button-group">
+            <button class="btn-secondary" onclick="prevStep()">Back</button>
+            <button class="btn-primary" id="paymentButton" onclick="processBooking()">
+              ${bookingData.isPayLater ? 'Confirm Reservation' : 'Pay Now'}
+            </button>
+          </div>
+
+          <div class="secure-badge">
+            <i class="fas fa-lock"></i> 
+            ${bookingData.isPayLater ? 
+              'Your reservation is secured' : 
+              '256-bit SSL encrypted payment'}
+          </div>
+        </div>
+      `;
+    }
+
+    // ===========================================
+    // STEP 4: CONFIRMATION
+    // ===========================================
+    function renderStep4() {
+      const isPaid = bookingData.paymentStatus === 'paid';
+      
+      return `
+        <div class="confirmation-section">
+          <div class="success-icon">
+            <i class="fas ${isPaid ? 'fa-check-circle' : 'fa-clock'}"></i>
+          </div>
+          
+          <h2>${isPaid ? 'Booking Confirmed!' : 'Booking Reserved!'}</h2>
+          <p style="margin: 20px 0; color: var(--gray-500);">
+            ${isPaid ? 
+              'Your payment has been processed successfully.' : 
+              'Your room is reserved. Please complete payment at check-in.'}
+          </p>
+          
+          <div class="booking-id">
+            ${bookingData.bookingId || generateBookingId()}
+          </div>
+          
+          <div class="booking-details-confirm">
+            <h3 style="margin-bottom: 20px;">Booking Summary</h3>
+            <div class="detail-row">
+              <span>Guest Name</span>
+              <span>${bookingData.guestInfo.fullName}</span>
+            </div>
+            <div class="detail-row">
+              <span>Room Type</span>
+              <span>${bookingData.roomType}</span>
+            </div>
+            <div class="detail-row">
+              <span>Check-in / Check-out</span>
+              <span>${bookingData.checkinDisplay || formatDate(bookingData.checkin, 'display')} - ${bookingData.checkoutDisplay || formatDate(bookingData.checkout, 'display')}</span>
+            </div>
+            <div class="detail-row">
+              <span>Nights / Guests</span>
+              <span>${bookingData.nights} nights, ${bookingData.adults} Adults, ${bookingData.children} Children</span>
+            </div>
+            <div class="detail-row">
+              <span>Total Amount</span>
+              <span>₦${Math.round(bookingData.totalPrice || bookingData.basePrice * bookingData.nights).toLocaleString()}</span>
+            </div>
+            <div class="detail-row">
+              <span>Payment Status</span>
+              <span class="payment-status ${isPaid ? 'status-paid' : 'status-pending'}">
+                ${isPaid ? 'Paid' : 'Pending (Pay at Hotel)'}
+              </span>
+            </div>
+          </div>
+          
+          <p style="margin: 20px 0;">
+            <i class="fas fa-envelope" style="color: var(--gold);"></i> 
+            Confirmation sent to ${bookingData.guestInfo.email}
+          </p>
+          
+          <div class="button-group">
+            <a href="index.html" class="btn-primary">Return to Home</a>
+            <button class="btn-secondary" onclick="window.print()">Print Confirmation</button>
+          </div>
+        </div>
+      `;
+    }
+
+    // ===========================================
+    // STEP NAVIGATION
+    // ===========================================
+    window.nextStep = function() {
+      if (currentStep < 4) {
+        currentStep++;
+        renderCurrentStep();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    };
+
+    window.prevStep = function() {
+      if (currentStep > 1) {
+        currentStep--;
+        renderCurrentStep();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    };
+
+    // ===========================================
+    // VALIDATION & DATA SAVING
+    // ===========================================
+    window.validateAndSaveGuest = function() {
+      const name = document.getElementById('fullName')?.value.trim();
+      const email = document.getElementById('email')?.value.trim();
+      const phone = document.getElementById('phone')?.value.trim();
+      const requests = document.getElementById('specialRequests')?.value.trim() || '';
+      
+      let isValid = true;
+      
+      // Clear previous errors
+      document.querySelectorAll('.error-text').forEach(el => el.classList.remove('visible'));
+      document.querySelectorAll('input').forEach(el => el.classList.remove('error'));
+      
+      // Validate name
+      if (!name) {
+        showError('nameError', 'Please enter your full name');
+        isValid = false;
+      }
+      
+      // Validate email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!email || !emailRegex.test(email)) {
+        showError('emailError', 'Please enter a valid email address');
+        isValid = false;
+      }
+      
+      // Validate phone
+      if (!phone || phone.length < 10) {
+        showError('phoneError', 'Please enter a valid phone number');
+        isValid = false;
+      }
+      
+      if (isValid) {
+        bookingData.guestInfo = {
+          fullName: name,
+          email: email,
+          phone: phone,
+          specialRequests: requests
+        };
+        
+        // Save to sessionStorage
+        sessionStorage.setItem('westbrook_booking_temp', JSON.stringify(bookingData));
+        
+        nextStep();
+      }
+    };
+
+    function showError(elementId, message) {
+      const errorEl = document.getElementById(elementId);
+      if (errorEl) {
+        errorEl.textContent = message;
+        errorEl.classList.add('visible');
+        
+        // Highlight the input field
+        const inputId = elementId.replace('Error', '');
+        const input = document.getElementById(inputId);
+        if (input) input.classList.add('error');
+      }
+    }
+
+    // ===========================================
+    // PAYMENT HANDLING
+    // ===========================================
+    window.selectPaymentMethod = function(method) {
+      bookingData.paymentMethod = method;
+      renderCurrentStep();
+    };
+
+    window.togglePayLater = function() {
+      bookingData.isPayLater = !bookingData.isPayLater;
+      renderCurrentStep();
+    };
+
+    // Simulate payment processing
+    function processPayment() {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          // 95% success rate for simulation
+          const success = Math.random() < 0.95;
+          resolve({
+            success: success,
+            transactionId: success ? 'TXN-' + Date.now() : null,
+            message: success ? 'Payment successful' : 'Payment failed'
+          });
+        }, 2000);
+      });
+    }
+
+    window.processBooking = async function() {
+      const paymentBtn = document.getElementById('paymentButton');
+      if (!paymentBtn) return;
+      
+      // Generate booking ID
+      if (!bookingData.bookingId) {
+        bookingData.bookingId = generateBookingId();
+      }
+      
+      if (bookingData.isPayLater) {
+        // Pay later flow
+        bookingData.paymentStatus = 'pending';
+        await completeBooking();
+      } else {
+        // Payment flow
+        try {
+          paymentBtn.disabled = true;
+          paymentBtn.innerHTML = '<span class="loading-spinner"></span> Processing...';
+          
+          const paymentResult = await processPayment();
+          
+          if (paymentResult.success) {
+            bookingData.paymentStatus = 'paid';
+            bookingData.transactionId = paymentResult.transactionId;
+            await completeBooking();
+          } else {
+            throw new Error('Payment failed');
+          }
+          
+        } catch (error) {
+          console.error('Payment failed:', error);
+          paymentBtn.disabled = false;
+          paymentBtn.innerHTML = 'Try Again';
+          
+          // Show error message
+          alert('Payment failed. Please try again or choose another payment method.');
+        }
+      }
+    };
+
+    async function completeBooking() {
+      // Save booking data
+      const completedBooking = {
+        ...bookingData,
+        completedAt: new Date().toISOString()
+      };
+      
+      // Store in localStorage for history
+      const bookings = JSON.parse(localStorage.getItem('westbrook_bookings') || '[]');
+      bookings.push(completedBooking);
+      localStorage.setItem('westbrook_bookings', JSON.stringify(bookings));
+      
+      // Clear temporary data
+      sessionStorage.removeItem('westbrook_booking_temp');
+      
+      // Send confirmation email (simulated)
+      await sendConfirmationEmail();
+      
+      // Go to confirmation step
+      currentStep = 4;
+      renderCurrentStep();
+    }
+
+    // Simulate email confirmation
+    function sendConfirmationEmail() {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          console.log('📧 Confirmation email sent to:', bookingData.guestInfo.email);
+          resolve();
+        }, 1000);
+      });
+    }
+
+    // ===========================================
+    // EVENT LISTENERS
+    // ===========================================
+    function attachEventListeners() {
+      // Add any global event listeners here
+    }
+
+    function attachStepEventListeners() {
+      // Add step-specific event listeners
+    }
+
+    // ===========================================
+    // START THE APPLICATION
+    // ===========================================
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
