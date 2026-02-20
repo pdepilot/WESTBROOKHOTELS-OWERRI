@@ -1,0 +1,3061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>WestBrook Hotel | Admin Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="WestBrook Hotel Enterprise Administration Portal">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="icon" href="./images/westbrook logo.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    /* ===========================================
+       GLOBAL VARIABLES & RESETS
+       =========================================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      /* Primary Colors */
+      --gold: #c19a5b;
+      --gold-light: #d4af37;
+      --gold-dark: #a07d49;
+      --gold-soft: rgba(193, 154, 91, 0.1);
+      --gold-glow: rgba(193, 154, 91, 0.2);
+      
+      /* Neutrals */
+      --white: #ffffff;
+      --off-white: #f8fafc;
+      --gray-50: #f1f5f9;
+      --gray-100: #e2e8f0;
+      --gray-200: #cbd5e1;
+      --gray-300: #94a3b8;
+      --gray-400: #64748b;
+      --gray-500: #475569;
+      --gray-600: #334155;
+      --gray-700: #1e293b;
+      --gray-800: #0f172a;
+      --gray-900: #0a0f1c;
+      
+      /* Semantic Colors */
+      --success: #10b981;
+      --success-light: rgba(16, 185, 129, 0.1);
+      --warning: #f59e0b;
+      --warning-light: rgba(245, 158, 11, 0.1);
+      --danger: #ef4444;
+      --danger-light: rgba(239, 68, 68, 0.1);
+      --info: #3b82f6;
+      --info-light: rgba(59, 130, 246, 0.1);
+      --purple: #8b5cf6;
+      --purple-light: rgba(139, 92, 246, 0.1);
+      
+      /* Gradients */
+      --gradient-gold: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+      --gradient-success: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+      --gradient-warning: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+      --gradient-danger: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
+      --gradient-info: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+      --gradient-purple: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
+      
+      /* Shadows */
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+      --shadow-gold: 0 10px 25px -5px rgba(193, 154, 91, 0.3);
+      
+      /* Transitions */
+      --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-slow: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      
+      /* Spacing */
+      --sidebar-width: 280px;
+      --header-height: 70px;
+      --border-radius: 16px;
+      --border-radius-sm: 12px;
+      --border-radius-lg: 24px;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--gray-50);
+      color: var(--gray-900);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    /* ===========================================
+       LAYOUT
+       =========================================== */
+    .admin-wrapper {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: var(--sidebar-width);
+      background: var(--white);
+      border-right: 1px solid var(--gray-100);
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      overflow-y: auto;
+      transition: var(--transition);
+      z-index: 50;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .sidebar.collapsed {
+      width: 80px;
+    }
+
+    .sidebar.collapsed .sidebar-link span,
+    .sidebar.collapsed .sidebar-heading {
+      display: none;
+    }
+
+    .sidebar.collapsed .logo-text {
+      display: none;
+    }
+
+    .sidebar-header {
+      padding: 24px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--gray-100);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+    }
+
+    .logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 700;
+      background: var(--gradient-gold);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: 0.5px;
+    }
+
+    .sidebar-toggle {
+      width: 32px;
+      height: 32px;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-100);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--gray-500);
+      transition: var(--transition);
+    }
+
+    .sidebar-toggle:hover {
+      background: var(--gold-soft);
+      color: var(--gold);
+      border-color: var(--gold);
+    }
+
+    /* Navigation */
+    .sidebar-nav {
+      padding: 24px 16px;
+    }
+
+    .sidebar-heading {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--gray-400);
+      padding: 0 12px;
+      margin: 24px 0 12px;
+    }
+
+    .sidebar-heading:first-of-type {
+      margin-top: 0;
+    }
+
+    .sidebar-menu {
+      list-style: none;
+    }
+
+    .sidebar-item {
+      margin-bottom: 4px;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      color: var(--gray-600);
+      text-decoration: none;
+      border-radius: var(--border-radius-sm);
+      transition: var(--transition);
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .sidebar-link i {
+      width: 20px;
+      font-size: 18px;
+      color: var(--gray-400);
+      transition: var(--transition);
+    }
+
+    .sidebar-link:hover {
+      background: var(--gold-soft);
+      color: var(--gold);
+    }
+
+    .sidebar-link:hover i {
+      color: var(--gold);
+    }
+
+    .sidebar-link.active {
+      background: var(--gradient-gold);
+      color: var(--white);
+      box-shadow: var(--shadow-gold);
+    }
+
+    .sidebar-link.active i {
+      color: var(--white);
+    }
+
+    .sidebar-badge {
+      margin-left: auto;
+      background: var(--danger);
+      color: var(--white);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 20px;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      margin-left: var(--sidebar-width);
+      transition: var(--transition);
+      min-height: 100vh;
+      background: var(--gray-50);
+    }
+
+    .main-content.expanded {
+      margin-left: 80px;
+    }
+
+    /* Header */
+    .admin-header {
+      height: var(--header-height);
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-100);
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-menu-toggle {
+      display: none;
+      width: 40px;
+      height: 40px;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-100);
+      border-radius: 10px;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--gray-500);
+      transition: var(--transition);
+    }
+
+    .header-menu-toggle:hover {
+      background: var(--gold-soft);
+      color: var(--gold);
+    }
+
+    .page-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--gray-800);
+    }
+
+    .page-title span {
+      color: var(--gold);
+      font-weight: 500;
+      font-size: 14px;
+      margin-left: 8px;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    /* Search */
+    .header-search {
+      position: relative;
+      width: 300px;
+    }
+
+    .header-search i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gray-400);
+      font-size: 18px;
+    }
+
+    .header-search input {
+      width: 100%;
+      height: 44px;
+      padding: 0 16px 0 44px;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-100);
+      border-radius: 30px;
+      font-size: 14px;
+      color: var(--gray-800);
+      transition: var(--transition);
+    }
+
+    .header-search input:focus {
+      outline: none;
+      border-color: var(--gold);
+      background: var(--white);
+      box-shadow: 0 0 0 4px var(--gold-soft);
+    }
+
+    .header-search input::placeholder {
+      color: var(--gray-400);
+    }
+
+    /* Notifications */
+    .notification-btn {
+      position: relative;
+      width: 44px;
+      height: 44px;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-100);
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gray-600);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .notification-btn:hover {
+      background: var(--gold-soft);
+      color: var(--gold);
+    }
+
+    .notification-badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: var(--danger);
+      color: var(--white);
+      font-size: 11px;
+      font-weight: 600;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--white);
+    }
+
+    /* User Menu */
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 6px 12px 6px 6px;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-100);
+      border-radius: 40px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .user-menu:hover {
+      background: var(--gold-soft);
+      border-color: var(--gold);
+    }
+
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      background: var(--gradient-gold);
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    .user-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .user-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--gray-800);
+    }
+
+    .user-role {
+      font-size: 12px;
+      color: var(--gray-500);
+    }
+
+    /* Dashboard Content */
+    .dashboard-content {
+      padding: 32px;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    @media (max-width: 1200px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .stat-card {
+      background: var(--white);
+      border-radius: var(--border-radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-md);
+      transition: var(--transition);
+      border: 1px solid var(--gray-100);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--gradient-gold);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .stat-card:hover::before {
+      opacity: 1;
+    }
+
+    .stat-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .stat-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--gold-soft);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-size: 24px;
+      transition: var(--transition);
+    }
+
+    .stat-card:hover .stat-icon {
+      background: var(--gradient-gold);
+      color: var(--white);
+    }
+
+    .stat-value {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--gray-800);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+
+    .stat-trend {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    .trend-up {
+      color: var(--success);
+    }
+
+    .trend-down {
+      color: var(--danger);
+    }
+
+    .trend-neutral {
+      color: var(--gray-500);
+    }
+
+    .trend-badge {
+      padding: 4px 8px;
+      border-radius: 30px;
+      font-weight: 600;
+    }
+
+    .trend-badge.up {
+      background: var(--success-light);
+      color: var(--success);
+    }
+
+    .trend-badge.down {
+      background: var(--danger-light);
+      color: var(--danger);
+    }
+
+    /* Charts Row */
+    .charts-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    @media (max-width: 992px) {
+      .charts-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .chart-card {
+      background: var(--white);
+      border-radius: var(--border-radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--gray-100);
+    }
+
+    .chart-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .chart-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--gray-800);
+    }
+
+    .chart-legend {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--gray-600);
+    }
+
+    .legend-color {
+      width: 12px;
+      height: 12px;
+      border-radius: 4px;
+    }
+
+    .legend-color.occupancy {
+      background: var(--gold);
+    }
+
+    .legend-color.revenue {
+      background: var(--info);
+    }
+
+    /* Chart Container */
+    .chart-container {
+      height: 300px;
+      position: relative;
+    }
+
+    /* Mini Stats */
+    .mini-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .mini-stat {
+      background: var(--gray-50);
+      border-radius: var(--border-radius-sm);
+      padding: 16px;
+      border: 1px solid var(--gray-100);
+    }
+
+    .mini-stat-label {
+      font-size: 12px;
+      color: var(--gray-500);
+      margin-bottom: 8px;
+    }
+
+    .mini-stat-value {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--gray-800);
+    }
+
+    .mini-stat-trend {
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    /* Tables */
+    .table-section {
+      background: var(--white);
+      border-radius: var(--border-radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--gray-100);
+      margin-bottom: 32px;
+    }
+
+    .table-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .table-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--gray-800);
+    }
+
+    .table-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .table-filter {
+      padding: 8px 16px;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-100);
+      border-radius: 30px;
+      font-size: 13px;
+      color: var(--gray-600);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .table-filter:hover {
+      background: var(--gold-soft);
+      border-color: var(--gold);
+    }
+
+    .table-view-all {
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .table-view-all:hover {
+      color: var(--gold-dark);
+    }
+
+    /* Data Table */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .data-table th {
+      text-align: left;
+      padding: 16px 12px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid var(--gray-100);
+    }
+
+    .data-table td {
+      padding: 16px 12px;
+      font-size: 14px;
+      color: var(--gray-700);
+      border-bottom: 1px solid var(--gray-100);
+    }
+
+    .data-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .data-table tr:hover td {
+      background: var(--gray-50);
+    }
+
+    /* Status Badges */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: capitalize;
+    }
+
+    .status-badge.confirmed {
+      background: var(--success-light);
+      color: var(--success);
+    }
+
+    .status-badge.pending {
+      background: var(--warning-light);
+      color: var(--warning);
+    }
+
+    .status-badge.cancelled {
+      background: var(--danger-light);
+      color: var(--danger);
+    }
+
+    .status-badge.checked-in {
+      background: var(--info-light);
+      color: var(--info);
+    }
+
+    .status-badge.checked-out {
+      background: var(--gray-100);
+      color: var(--gray-600);
+    }
+
+    /* Action Buttons */
+    .action-btn {
+      width: 32px;
+      height: 32px;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-100);
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gray-500);
+      cursor: pointer;
+      transition: var(--transition);
+      margin: 0 2px;
+      text-decoration: none;
+    }
+
+    .action-btn:hover {
+      background: var(--gold-soft);
+      color: var(--gold);
+      border-color: var(--gold);
+    }
+
+    .action-btn.danger:hover {
+      background: var(--danger-light);
+      color: var(--danger);
+      border-color: var(--danger);
+    }
+
+    /* Recent Activity */
+    .activity-list {
+      list-style: none;
+    }
+
+    .activity-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--gray-100);
+    }
+
+    .activity-item:last-child {
+      border-bottom: none;
+    }
+
+    .activity-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--gold-soft);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-size: 18px;
+    }
+
+    .activity-content {
+      flex: 1;
+    }
+
+    .activity-text {
+      font-size: 14px;
+      color: var(--gray-700);
+      margin-bottom: 4px;
+    }
+
+    .activity-text strong {
+      color: var(--gray-900);
+      font-weight: 600;
+    }
+
+    .activity-time {
+      font-size: 12px;
+      color: var(--gray-500);
+    }
+
+    /* Tabs */
+    .admin-tabs {
+      display: flex;
+      gap: 8px;
+      border-bottom: 1px solid var(--gray-100);
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .admin-tab {
+      padding: 8px 20px;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-100);
+      border-radius: 30px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray-600);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .admin-tab:hover {
+      background: var(--gold-soft);
+      color: var(--gold);
+    }
+
+    .admin-tab.active {
+      background: var(--gradient-gold);
+      color: var(--white);
+      border-color: var(--gold);
+    }
+
+    /* Grid Layouts */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    @media (max-width: 1200px) {
+      .grid-4 { grid-template-columns: repeat(2, 1fr); }
+      .grid-3 { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    }
+
+    /* Forms */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gray-700);
+      margin-bottom: 8px;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--white);
+      border: 1px solid var(--gray-100);
+      border-radius: var(--border-radius-sm);
+      font-size: 14px;
+      color: var(--gray-800);
+      transition: var(--transition);
+      font-family: 'Inter', sans-serif;
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 4px var(--gold-soft);
+    }
+
+    .form-input.error,
+    .form-select.error,
+    .form-textarea.error {
+      border-color: var(--danger);
+    }
+
+    .form-error {
+      color: var(--danger);
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    /* Image Upload */
+    .image-upload {
+      border: 2px dashed var(--gray-100);
+      border-radius: var(--border-radius);
+      padding: 40px;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .image-upload:hover {
+      border-color: var(--gold);
+      background: var(--gold-soft);
+    }
+
+    .image-upload i {
+      font-size: 40px;
+      color: var(--gray-300);
+      margin-bottom: 12px;
+    }
+
+    .image-upload p {
+      font-size: 14px;
+      color: var(--gray-500);
+    }
+
+    .image-preview {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .preview-item {
+      position: relative;
+      aspect-ratio: 1;
+      border-radius: var(--border-radius-sm);
+      overflow: hidden;
+    }
+
+    .preview-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .preview-remove {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      width: 24px;
+      height: 24px;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .preview-remove:hover {
+      background: var(--danger);
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--white);
+      border-radius: var(--border-radius-lg);
+      width: 90%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-2xl);
+    }
+
+    .modal-header {
+      padding: 24px;
+      border-bottom: 1px solid var(--gray-100);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--gray-800);
+    }
+
+    .modal-close {
+      width: 36px;
+      height: 36px;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-100);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .modal-close:hover {
+      background: var(--danger-light);
+      color: var(--danger);
+    }
+
+    .modal-body {
+      padding: 24px;
+    }
+
+    .modal-footer {
+      padding: 24px;
+      border-top: 1px solid var(--gray-100);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 24px;
+      border-radius: 30px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition-bounce);
+      border: none;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--gradient-gold);
+      color: var(--white);
+      box-shadow: var(--shadow-gold);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-gold), var(--shadow-lg);
+    }
+
+    .btn-secondary {
+      background: var(--white);
+      border: 2px solid var(--gold);
+      color: var(--gold);
+    }
+
+    .btn-secondary:hover {
+      background: var(--gold-soft);
+    }
+
+    .btn-success {
+      background: var(--gradient-success);
+      color: var(--white);
+    }
+
+    .btn-warning {
+      background: var(--gradient-warning);
+      color: var(--white);
+    }
+
+    .btn-danger {
+      background: var(--gradient-danger);
+      color: var(--white);
+    }
+
+    .btn-sm {
+      padding: 6px 16px;
+      font-size: 12px;
+    }
+
+    .btn-lg {
+      padding: 14px 32px;
+      font-size: 16px;
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Toast Notifications */
+    .toast-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 2000;
+    }
+
+    .toast {
+      background: var(--white);
+      border-radius: var(--border-radius);
+      padding: 16px 20px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow-xl);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 300px;
+      max-width: 400px;
+      animation: slideInRight 0.3s ease;
+      border-left: 4px solid;
+    }
+
+    .toast.success {
+      border-left-color: var(--success);
+    }
+
+    .toast.error {
+      border-left-color: var(--danger);
+    }
+
+    .toast.warning {
+      border-left-color: var(--warning);
+    }
+
+    .toast.info {
+      border-left-color: var(--info);
+    }
+
+    .toast-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .toast.success .toast-icon {
+      background: var(--success-light);
+      color: var(--success);
+    }
+
+    .toast.error .toast-icon {
+      background: var(--danger-light);
+      color: var(--danger);
+    }
+
+    .toast.warning .toast-icon {
+      background: var(--warning-light);
+      color: var(--warning);
+    }
+
+    .toast.info .toast-icon {
+      background: var(--info-light);
+      color: var(--info);
+    }
+
+    .toast-content {
+      flex: 1;
+    }
+
+    .toast-title {
+      font-weight: 600;
+      color: var(--gray-800);
+      margin-bottom: 2px;
+    }
+
+    .toast-message {
+      font-size: 13px;
+      color: var(--gray-600);
+    }
+
+    .toast-close {
+      color: var(--gray-400);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .toast-close:hover {
+      color: var(--gray-600);
+    }
+
+    @keyframes slideInRight {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    /* Loading States */
+    .loading-spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(193, 154, 91, 0.2);
+      border-radius: 50%;
+      border-top-color: var(--gold);
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .skeleton {
+      background: linear-gradient(90deg, var(--gray-100) 25%, var(--gray-50) 50%, var(--gray-100) 75%);
+      background-size: 200% 100%;
+      animation: loading 1.5s infinite;
+      border-radius: 4px;
+    }
+
+    @keyframes loading {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* Section Visibility */
+    .admin-section {
+      display: none;
+    }
+
+    .admin-section.active {
+      display: block;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+      
+      .sidebar.mobile-open {
+        transform: translateX(0);
+      }
+      
+      .main-content {
+        margin-left: 0 !important;
+      }
+      
+      .header-menu-toggle {
+        display: flex;
+      }
+      
+      .header-search {
+        width: 200px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-content {
+        padding: 20px;
+      }
+      
+      .header-search {
+        display: none;
+      }
+      
+      .user-info {
+        display: none;
+      }
+      
+      .charts-row {
+        gap: 16px;
+      }
+    }
+
+    /* Dropdown Menu */
+    .dropdown-menu {
+      position: absolute;
+      background: var(--white);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-xl);
+      border: 1px solid var(--gray-100);
+      min-width: 200px;
+      display: none;
+      z-index: 100;
+    }
+
+    .dropdown-menu.show {
+      display: block;
+    }
+
+    .dropdown-item {
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--gray-700);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .dropdown-item:hover {
+      background: var(--gold-soft);
+      color: var(--gold);
+    }
+
+    .dropdown-item i {
+      width: 18px;
+      color: var(--gray-400);
+    }
+
+    .dropdown-divider {
+      height: 1px;
+      background: var(--gray-100);
+      margin: 8px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-wrapper">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <img src="./images/westbrook logo.png" alt="WestBrook" onerror="this.src='https://via.placeholder.com/40x40?text=WB'">
+          <span class="logo-text">WestBrook</span>
+        </div>
+        <div class="sidebar-toggle" id="sidebarToggle">
+          <i class="fas fa-chevron-left"></i>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="sidebar-heading">MAIN</div>
+        <ul class="sidebar-menu">
+          <li class="sidebar-item">
+            <a href="#" class="sidebar-link active" data-section="dashboard">
+              <i class="fas fa-th-large"></i>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a href="#" class="sidebar-link" data-section="bookings">
+              <i class="fas fa-calendar-check"></i>
+              <span>Bookings</span>
+              <span class="sidebar-badge">12</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a href="#" class="sidebar-link" data-section="calendar">
+              <i class="fas fa-calendar-alt"></i>
+              <span>Calendar</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a href="#" class="sidebar-link" data-section="rooms">
+              <i class="fas fa-hotel"></i>
+              <span>Rooms & Pricing</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="sidebar-heading">MANAGEMENT</div>
+        <ul class="sidebar-menu">
+          <li class="sidebar-item">
+            <a href="#" class="sidebar-link" data-section="content">
+              <i class="fas fa-edit"></i>
+              <span>Content</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a href="#" class="sidebar-link" data-section="payments">
+              <i class="fas fa-credit-card"></i>
+              <span>Payments</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a href="#" class="sidebar-link" data-section="guests">
+              <i class="fas fa-users"></i>
+              <span>Guests</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a href="#" class="sidebar-link" data-section="emails">
+              <i class="fas fa-envelope"></i>
+              <span>Email Notifications</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="sidebar-heading">ADMIN</div>
+        <ul class="sidebar-menu">
+          <li class="sidebar-item">
+            <a href="#" class="sidebar-link" data-section="users">
+              <i class="fas fa-user-shield"></i>
+              <span>User Roles</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a href="#" class="sidebar-link" data-section="reports">
+              <i class="fas fa-chart-bar"></i>
+              <span>Reports</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a href="#" class="sidebar-link" data-section="settings">
+              <i class="fas fa-cog"></i>
+              <span>Settings</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+      <!-- Header -->
+      <header class="admin-header">
+        <div class="header-left">
+          <div class="header-menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+          </div>
+          <div class="page-title" id="pageTitle">
+            Dashboard
+            <span>Executive Overview</span>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <!-- Search -->
+          <div class="header-search">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search bookings, guests..." id="globalSearch">
+          </div>
+
+          <!-- Notifications -->
+          <div class="notification-btn" id="notificationBtn">
+            <i class="far fa-bell"></i>
+            <span class="notification-badge">3</span>
+          </div>
+
+          <!-- User Menu -->
+          <div class="user-menu" id="userMenuBtn">
+            <div class="user-avatar">SA</div>
+            <div class="user-info">
+              <span class="user-name">Samuel A.</span>
+              <span class="user-role">Super Admin</span>
+            </div>
+            <i class="fas fa-chevron-down" style="font-size: 12px; color: var(--gray-400);"></i>
+          </div>
+        </div>
+      </header>
+
+      <!-- Dashboard Content -->
+      <div class="dashboard-content">
+        <!-- Dashboard Section -->
+        <div class="admin-section active" id="dashboard-section">
+          <!-- Stats Grid -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-header">
+                <span class="stat-title">Total Bookings</span>
+                <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
+              </div>
+              <div class="stat-value">1,284</div>
+              <div class="stat-trend">
+                <span class="trend-up"><i class="fas fa-arrow-up"></i> +12.5%</span>
+                <span class="trend-badge up">vs last month</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-header">
+                <span class="stat-title">Today's Arrivals</span>
+                <div class="stat-icon"><i class="fas fa-sign-in-alt"></i></div>
+              </div>
+              <div class="stat-value">24</div>
+              <div class="stat-trend">
+                <span class="trend-neutral"><i class="fas fa-minus"></i> 0%</span>
+                <span class="trend-badge">vs yesterday</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-header">
+                <span class="stat-title">Today's Departures</span>
+                <div class="stat-icon"><i class="fas fa-sign-out-alt"></i></div>
+              </div>
+              <div class="stat-value">18</div>
+              <div class="stat-trend">
+                <span class="trend-up"><i class="fas fa-arrow-up"></i> +5.8%</span>
+                <span class="trend-badge up">vs yesterday</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-header">
+                <span class="stat-title">Revenue (MTD)</span>
+                <div class="stat-icon"><i class="fas fa-naira-sign"></i></div>
+              </div>
+              <div class="stat-value">₦18.4M</div>
+              <div class="stat-trend">
+                <span class="trend-up"><i class="fas fa-arrow-up"></i> +23.1%</span>
+                <span class="trend-badge up">vs target</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Charts Row -->
+          <div class="charts-row">
+            <div class="chart-card">
+              <div class="chart-header">
+                <h3 class="chart-title">Revenue & Occupancy Trends</h3>
+                <div class="chart-legend">
+                  <div class="legend-item">
+                    <span class="legend-color occupancy"></span>
+                    <span>Occupancy %</span>
+                  </div>
+                  <div class="legend-item">
+                    <span class="legend-color revenue"></span>
+                    <span>Revenue (₦M)</span>
+                  </div>
+                </div>
+              </div>
+              <div class="chart-container">
+                <canvas id="revenueChart"></canvas>
+              </div>
+            </div>
+
+            <div class="chart-card">
+              <div class="chart-header">
+                <h3 class="chart-title">Quick Stats</h3>
+              </div>
+              <div class="mini-stats">
+                <div class="mini-stat">
+                  <div class="mini-stat-label">Avg. Daily Rate</div>
+                  <div class="mini-stat-value">₦72,500</div>
+                  <div class="mini-stat-trend trend-up">+5.2% vs last month</div>
+                </div>
+                <div class="mini-stat">
+                  <div class="mini-stat-label">RevPAR</div>
+                  <div class="mini-stat-value">₦62,350</div>
+                  <div class="mini-stat-trend trend-up">+8.1% vs last month</div>
+                </div>
+                <div class="mini-stat">
+                  <div class="mini-stat-label">Total Rooms</div>
+                  <div class="mini-stat-value">124</div>
+                  <div class="mini-stat-trend trend-neutral">+0 new this month</div>
+                </div>
+                <div class="mini-stat">
+                  <div class="mini-stat-label">Maintenance</div>
+                  <div class="mini-stat-value">3</div>
+                  <div class="mini-stat-trend trend-down">+1 vs yesterday</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Bookings Table -->
+          <div class="table-section">
+            <div class="table-header">
+              <h3 class="table-title">Recent Bookings</h3>
+              <div class="table-actions">
+                <div class="table-filter" id="filterBookings">
+                  <i class="fas fa-filter"></i> Filter
+                </div>
+                <a href="#" class="table-view-all" data-section="bookings">View All →</a>
+              </div>
+            </div>
+
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Booking ID</th>
+                  <th>Guest</th>
+                  <th>Room</th>
+                  <th>Check-in</th>
+                  <th>Check-out</th>
+                  <th>Guests</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>#WB-2024-001</td>
+                  <td><strong>John Smith</strong></td>
+                  <td>Deluxe King</td>
+                  <td>2024-03-15</td>
+                  <td>2024-03-18</td>
+                  <td>2</td>
+                  <td>₦195,000</td>
+                  <td><span class="status-badge confirmed">Confirmed</span></td>
+                  <td>
+                    <a href="#" class="action-btn view-booking" data-id="WB-2024-001"><i class="fas fa-eye"></i></a>
+                    <a href="#" class="action-btn edit-booking" data-id="WB-2024-001"><i class="fas fa-edit"></i></a>
+                    <a href="#" class="action-btn danger cancel-booking" data-id="WB-2024-001"><i class="fas fa-times"></i></a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>#WB-2024-002</td>
+                  <td><strong>Sarah Johnson</strong></td>
+                  <td>Executive Suite</td>
+                  <td>2024-03-15</td>
+                  <td>2024-03-20</td>
+                  <td>3</td>
+                  <td>₦425,000</td>
+                  <td><span class="status-badge pending">Pending</span></td>
+                  <td>
+                    <a href="#" class="action-btn view-booking" data-id="WB-2024-002"><i class="fas fa-eye"></i></a>
+                    <a href="#" class="action-btn edit-booking" data-id="WB-2024-002"><i class="fas fa-edit"></i></a>
+                    <a href="#" class="action-btn danger cancel-booking" data-id="WB-2024-002"><i class="fas fa-times"></i></a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>#WB-2024-003</td>
+                  <td><strong>Michael Chen</strong></td>
+                  <td>Standard Twin</td>
+                  <td>2024-03-16</td>
+                  <td>2024-03-19</td>
+                  <td>2</td>
+                  <td>₦150,000</td>
+                  <td><span class="status-badge checked-in">Checked In</span></td>
+                  <td>
+                    <a href="#" class="action-btn view-booking" data-id="WB-2024-003"><i class="fas fa-eye"></i></a>
+                    <a href="#" class="action-btn edit-booking" data-id="WB-2024-003"><i class="fas fa-edit"></i></a>
+                    <a href="#" class="action-btn danger cancel-booking" data-id="WB-2024-003"><i class="fas fa-times"></i></a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>#WB-2024-004</td>
+                  <td><strong>Emily Davis</strong></td>
+                  <td>Deluxe Twin</td>
+                  <td>2024-03-14</td>
+                  <td>2024-03-16</td>
+                  <td>2</td>
+                  <td>₦130,000</td>
+                  <td><span class="status-badge checked-out">Checked Out</span></td>
+                  <td>
+                    <a href="#" class="action-btn view-booking" data-id="WB-2024-004"><i class="fas fa-eye"></i></a>
+                    <a href="#" class="action-btn edit-booking" data-id="WB-2024-004"><i class="fas fa-edit"></i></a>
+                    <a href="#" class="action-btn danger cancel-booking" data-id="WB-2024-004"><i class="fas fa-times"></i></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Recent Activity & Pending Tasks -->
+          <div class="grid-2">
+            <div class="table-section">
+              <div class="table-header">
+                <h3 class="table-title">Recent Activity</h3>
+              </div>
+              <ul class="activity-list">
+                <li class="activity-item">
+                  <div class="activity-icon"><i class="fas fa-check"></i></div>
+                  <div class="activity-content">
+                    <div class="activity-text"><strong>John Smith</strong> checked in to Deluxe King (Room 402)</div>
+                    <div class="activity-time">2 minutes ago</div>
+                  </div>
+                </li>
+                <li class="activity-item">
+                  <div class="activity-icon"><i class="fas fa-credit-card"></i></div>
+                  <div class="activity-content">
+                    <div class="activity-text">Payment of <strong>₦425,000</strong> received from Sarah Johnson</div>
+                    <div class="activity-time">15 minutes ago</div>
+                  </div>
+                </li>
+                <li class="activity-item">
+                  <div class="activity-icon"><i class="fas fa-times"></i></div>
+                  <div class="activity-content">
+                    <div class="activity-text">Booking <strong>#WB-2024-005</strong> was cancelled</div>
+                    <div class="activity-time">1 hour ago</div>
+                  </div>
+                </li>
+                <li class="activity-item">
+                  <div class="activity-icon"><i class="fas fa-plus"></i></div>
+                  <div class="activity-content">
+                    <div class="activity-text">New booking from <strong>Robert Wilson</strong> (Executive Suite)</div>
+                    <div class="activity-time">2 hours ago</div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <div class="table-section">
+              <div class="table-header">
+                <h3 class="table-title">Pending Tasks</h3>
+              </div>
+              <ul class="activity-list">
+                <li class="activity-item">
+                  <div class="activity-icon" style="background: var(--warning-light); color: var(--warning);">
+                    <i class="fas fa-clock"></i>
+                  </div>
+                  <div class="activity-content">
+                    <div class="activity-text">5 bookings pending confirmation</div>
+                    <div class="activity-time">Requires action</div>
+                  </div>
+                </li>
+                <li class="activity-item">
+                  <div class="activity-icon" style="background: var(--danger-light); color: var(--danger);">
+                    <i class="fas fa-exclamation"></i>
+                  </div>
+                  <div class="activity-content">
+                    <div class="activity-text">3 payments failed - review required</div>
+                    <div class="activity-time">Urgent</div>
+                  </div>
+                </li>
+                <li class="activity-item">
+                  <div class="activity-icon" style="background: var(--info-light); color: var(--info);">
+                    <i class="fas fa-envelope"></i>
+                  </div>
+                  <div class="activity-content">
+                    <div class="activity-text">12 unread guest messages</div>
+                    <div class="activity-time">Respond within 24h</div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bookings Section -->
+        <div class="admin-section" id="bookings-section">
+          <div class="table-section">
+            <div class="table-header">
+              <h3 class="table-title">All Bookings</h3>
+              <div class="table-actions">
+                <div class="table-filter" id="exportBookings">
+                  <i class="fas fa-download"></i> Export
+                </div>
+                <button class="btn btn-primary btn-sm" id="newBookingBtn">
+                  <i class="fas fa-plus"></i> New Booking
+                </button>
+              </div>
+            </div>
+
+            <!-- Booking Tabs -->
+            <div class="admin-tabs">
+              <div class="admin-tab active" data-status="all">All (284)</div>
+              <div class="admin-tab" data-status="pending">Pending (12)</div>
+              <div class="admin-tab" data-status="confirmed">Confirmed (156)</div>
+              <div class="admin-tab" data-status="checked-in">Checked In (48)</div>
+              <div class="admin-tab" data-status="checked-out">Checked Out (62)</div>
+              <div class="admin-tab" data-status="cancelled">Cancelled (6)</div>
+            </div>
+
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th><input type="checkbox" id="selectAll"></th>
+                  <th>Booking ID</th>
+                  <th>Guest</th>
+                  <th>Room</th>
+                  <th>Check-in</th>
+                  <th>Check-out</th>
+                  <th>Nights</th>
+                  <th>Total</th>
+                  <th>Payment</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="bookingsTableBody">
+                <!-- Dynamically populated via JavaScript -->
+              </tbody>
+            </table>
+
+            <!-- Pagination -->
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 24px;">
+              <div style="font-size: 14px; color: var(--gray-500);" id="paginationInfo">Showing 1-10 of 284 bookings</div>
+              <div style="display: flex; gap: 8px;" id="pagination">
+                <a href="#" class="action-btn" data-page="prev"><i class="fas fa-chevron-left"></i></a>
+                <a href="#" class="action-btn active" data-page="1">1</a>
+                <a href="#" class="action-btn" data-page="2">2</a>
+                <a href="#" class="action-btn" data-page="3">3</a>
+                <a href="#" class="action-btn" data-page="4">4</a>
+                <a href="#" class="action-btn" data-page="5">5</a>
+                <a href="#" class="action-btn" data-page="next"><i class="fas fa-chevron-right"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Calendar Section -->
+        <div class="admin-section" id="calendar-section">
+          <div class="grid-2">
+            <div class="table-section">
+              <div class="table-header">
+                <h3 class="table-title">Room Calendar</h3>
+                <div class="table-actions">
+                  <div class="table-filter" id="prevMonth">
+                    <i class="fas fa-chevron-left"></i>
+                  </div>
+                  <span style="font-weight: 600;" id="currentMonthDisplay">March 2024</span>
+                  <div class="table-filter" id="nextMonth">
+                    <i class="fas fa-chevron-right"></i>
+                  </div>
+                  <button class="btn btn-primary btn-sm" id="blockDatesBtn">
+                    <i class="fas fa-lock"></i> Block Dates
+                  </button>
+                </div>
+              </div>
+
+              <!-- Calendar Grid -->
+              <div id="calendarGrid"></div>
+
+              <div style="display: flex; gap: 24px; margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--gray-100); flex-wrap: wrap;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <div style="width: 16px; height: 16px; background: var(--success-light); border-radius: 4px;"></div>
+                  <span style="font-size: 13px;">Available</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <div style="width: 16px; height: 16px; background: var(--gold-soft); border-radius: 4px;"></div>
+                  <span style="font-size: 13px;">Booked</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <div style="width: 16px; height: 16px; background: var(--gray-100); border-radius: 4px;"></div>
+                  <span style="font-size: 13px;">Blocked</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <div style="width: 16px; height: 16px; background: var(--danger-light); border-radius: 4px;"></div>
+                  <span style="font-size: 13px;">Maintenance</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="table-section">
+              <div class="table-header">
+                <h3 class="table-title">Today's Schedule</h3>
+              </div>
+              <div style="margin-bottom: 20px;">
+                <div style="font-size: 28px; font-weight: 700; color: var(--gray-800);" id="todayDate"></div>
+                <div style="color: var(--gray-500);" id="todayDay"></div>
+              </div>
+
+              <div style="margin-bottom: 24px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 16px;">
+                  <span style="font-weight: 600;">Arrivals (<span id="arrivalsCount">24</span>)</span>
+                  <a href="#" style="color: var(--gold);" data-section="bookings">View all</a>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 12px;" id="arrivalsList">
+                  <!-- Populated via JavaScript -->
+                </div>
+              </div>
+
+              <div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 16px;">
+                  <span style="font-weight: 600;">Departures (<span id="departuresCount">18</span>)</span>
+                  <a href="#" style="color: var(--gold);" data-section="bookings">View all</a>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 12px;" id="departuresList">
+                  <!-- Populated via JavaScript -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rooms Section -->
+        <div class="admin-section" id="rooms-section">
+          <div class="table-section">
+            <div class="table-header">
+              <h3 class="table-title">Rooms & Pricing</h3>
+              <div class="table-actions">
+                <div class="table-filter" id="exportRooms">
+                  <i class="fas fa-download"></i> Export
+                </div>
+                <button class="btn btn-primary btn-sm" id="addRoomBtn">
+                  <i class="fas fa-plus"></i> Add Room
+                </button>
+              </div>
+            </div>
+
+            <div class="admin-tabs">
+              <div class="admin-tab active" data-room-type="all">All Rooms (124)</div>
+              <div class="admin-tab" data-room-type="standard">Standard (45)</div>
+              <div class="admin-tab" data-room-type="deluxe">Deluxe (52)</div>
+              <div class="admin-tab" data-room-type="suite">Suites (27)</div>
+            </div>
+
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Room #</th>
+                  <th>Type</th>
+                  <th>View</th>
+                  <th>Capacity</th>
+                  <th>Base Price</th>
+                  <th>Current Price</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="roomsTableBody">
+                <tr>
+                  <td>101</td>
+                  <td>Standard Twin</td>
+                  <td>Garden</td>
+                  <td>2 Adults</td>
+                  <td>₦45,000</td>
+                  <td>₦45,000</td>
+                  <td><span class="status-badge confirmed">Available</span></td>
+                  <td>
+                    <a href="#" class="action-btn"><i class="fas fa-edit"></i></a>
+                    <a href="#" class="action-btn"><i class="fas fa-copy"></i></a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>102</td>
+                  <td>Standard Twin</td>
+                  <td>Garden</td>
+                  <td>2 Adults</td>
+                  <td>₦45,000</td>
+                  <td>₦45,000</td>
+                  <td><span class="status-badge checked-in">Occupied</span></td>
+                  <td>
+                    <a href="#" class="action-btn"><i class="fas fa-edit"></i></a>
+                    <a href="#" class="action-btn"><i class="fas fa-copy"></i></a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>201</td>
+                  <td>Deluxe King</td>
+                  <td>Ocean</td>
+                  <td>2 Adults + 1 Child</td>
+                  <td>₦85,000</td>
+                  <td>₦85,000</td>
+                  <td><span class="status-badge confirmed">Available</span></td>
+                  <td>
+                    <a href="#" class="action-btn"><i class="fas fa-edit"></i></a>
+                    <a href="#" class="action-btn"><i class="fas fa-copy"></i></a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>301</td>
+                  <td>Executive Suite</td>
+                  <td>Panoramic</td>
+                  <td>4 Adults</td>
+                  <td>₦150,000</td>
+                  <td>₦165,000</td>
+                  <td><span class="status-badge pending">Maintenance</span></td>
+                  <td>
+                    <a href="#" class="action-btn"><i class="fas fa-edit"></i></a>
+                    <a href="#" class="action-btn"><i class="fas fa-copy"></i></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Content Section -->
+        <div class="admin-section" id="content-section">
+          <div class="grid-2">
+            <div class="table-section">
+              <div class="table-header">
+                <h3 class="table-title">Website Pages</h3>
+                <button class="btn btn-primary btn-sm" id="newPageBtn">
+                  <i class="fas fa-plus"></i> New Page
+                </button>
+              </div>
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Page</th>
+                    <th>Last Updated</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Homepage</td>
+                    <td>2024-03-14</td>
+                    <td><span class="status-badge confirmed">Published</span></td>
+                    <td>
+                      <a href="#" class="action-btn"><i class="fas fa-edit"></i></a>
+                      <a href="#" class="action-btn"><i class="fas fa-eye"></i></a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Rooms & Suites</td>
+                    <td>2024-03-10</td>
+                    <td><span class="status-badge confirmed">Published</span></td>
+                    <td>
+                      <a href="#" class="action-btn"><i class="fas fa-edit"></i></a>
+                      <a href="#" class="action-btn"><i class="fas fa-eye"></i></a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>About Us</td>
+                    <td>2024-03-01</td>
+                    <td><span class="status-badge pending">Draft</span></td>
+                    <td>
+                      <a href="#" class="action-btn"><i class="fas fa-edit"></i></a>
+                      <a href="#" class="action-btn"><i class="fas fa-eye"></i></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="table-section">
+              <div class="table-header">
+                <h3 class="table-title">Media Gallery</h3>
+                <button class="btn btn-primary btn-sm" id="uploadMediaBtn">
+                  <i class="fas fa-upload"></i> Upload
+                </button>
+              </div>
+              <div class="image-preview">
+                <div class="preview-item">
+                  <img src="https://via.placeholder.com/150" alt="Room">
+                  <div class="preview-remove"><i class="fas fa-times"></i></div>
+                </div>
+                <div class="preview-item">
+                  <img src="https://via.placeholder.com/150" alt="Lobby">
+                  <div class="preview-remove"><i class="fas fa-times"></i></div>
+                </div>
+                <div class="preview-item">
+                  <img src="https://via.placeholder.com/150" alt="Restaurant">
+                  <div class="preview-remove"><i class="fas fa-times"></i></div>
+                </div>
+                <div class="preview-item">
+                  <img src="https://via.placeholder.com/150" alt="Pool">
+                  <div class="preview-remove"><i class="fas fa-times"></i></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payments Section -->
+        <div class="admin-section" id="payments-section">
+          <div class="table-section">
+            <div class="table-header">
+              <h3 class="table-title">Recent Transactions</h3>
+              <div class="table-actions">
+                <div class="table-filter">
+                  <i class="fas fa-filter"></i> Filter
+                </div>
+                <div class="table-filter">
+                  <i class="fas fa-download"></i> Export
+                </div>
+              </div>
+            </div>
+
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Transaction ID</th>
+                  <th>Booking ID</th>
+                  <th>Guest</th>
+                  <th>Amount</th>
+                  <th>Method</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>TXN-001</td>
+                  <td>#WB-2024-001</td>
+                  <td>John Smith</td>
+                  <td>₦195,000</td>
+                  <td>Credit Card</td>
+                  <td>2024-03-14</td>
+                  <td><span class="status-badge confirmed">Completed</span></td>
+                  <td>
+                    <a href="#" class="action-btn"><i class="fas fa-receipt"></i></a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>TXN-002</td>
+                  <td>#WB-2024-002</td>
+                  <td>Sarah Johnson</td>
+                  <td>₦425,000</td>
+                  <td>Bank Transfer</td>
+                  <td>2024-03-14</td>
+                  <td><span class="status-badge pending">Pending</span></td>
+                  <td>
+                    <a href="#" class="action-btn"><i class="fas fa-receipt"></i></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Guests Section -->
+        <div class="admin-section" id="guests-section">
+          <div class="table-section">
+            <div class="table-header">
+              <h3 class="table-title">Guest Directory</h3>
+              <div class="table-actions">
+                <input type="text" class="form-input" placeholder="Search guests..." style="width: 250px;">
+                <button class="btn btn-primary btn-sm">
+                  <i class="fas fa-user-plus"></i> Add Guest
+                </button>
+              </div>
+            </div>
+
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Guest ID</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Total Stays</th>
+                  <th>Last Visit</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>G-1001</td>
+                  <td><strong>John Smith</strong></td>
+                  <td>john@email.com</td>
+                  <td>+234 801 234 5678</td>
+                  <td>5</td>
+                  <td>2024-03-15</td>
+                  <td><span class="status-badge confirmed">Active</span></td>
+                  <td>
+                    <a href="#" class="action-btn"><i class="fas fa-eye"></i></a>
+                    <a href="#" class="action-btn"><i class="fas fa-envelope"></i></a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>G-1002</td>
+                  <td><strong>Sarah Johnson</strong></td>
+                  <td>sarah@email.com</td>
+                  <td>+234 802 345 6789</td>
+                  <td>3</td>
+                  <td>2024-03-15</td>
+                  <td><span class="status-badge confirmed">Active</span></td>
+                  <td>
+                    <a href="#" class="action-btn"><i class="fas fa-eye"></i></a>
+                    <a href="#" class="action-btn"><i class="fas fa-envelope"></i></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Email Notifications Section -->
+        <div class="admin-section" id="emails-section">
+          <div class="grid-2">
+            <div class="table-section">
+              <div class="table-header">
+                <h3 class="table-title">Email Templates</h3>
+                <button class="btn btn-primary btn-sm">
+                  <i class="fas fa-plus"></i> New Template
+                </button>
+              </div>
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Template Name</th>
+                    <th>Subject</th>
+                    <th>Last Modified</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Booking Confirmation</td>
+                    <td>Your booking at WestBrook is confirmed</td>
+                    <td>2024-03-10</td>
+                    <td><span class="status-badge confirmed">Active</span></td>
+                    <td>
+                      <a href="#" class="action-btn"><i class="fas fa-edit"></i></a>
+                      <a href="#" class="action-btn"><i class="fas fa-copy"></i></a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Check-in Reminder</td>
+                    <td>Your stay starts tomorrow at WestBrook</td>
+                    <td>2024-03-08</td>
+                    <td><span class="status-badge confirmed">Active</span></td>
+                    <td>
+                      <a href="#" class="action-btn"><i class="fas fa-edit"></i></a>
+                      <a href="#" class="action-btn"><i class="fas fa-copy"></i></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="table-section">
+              <div class="table-header">
+                <h3 class="table-title">Email Logs</h3>
+              </div>
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Recipient</th>
+                    <th>Template</th>
+                    <th>Sent Date</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>john@email.com</td>
+                    <td>Booking Confirmation</td>
+                    <td>2024-03-14 10:30</td>
+                    <td><span class="status-badge confirmed">Delivered</span></td>
+                  </tr>
+                  <tr>
+                    <td>sarah@email.com</td>
+                    <td>Booking Confirmation</td>
+                    <td>2024-03-14 11:45</td>
+                    <td><span class="status-badge confirmed">Delivered</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- User Roles Section -->
+        <div class="admin-section" id="users-section">
+          <div class="table-section">
+            <div class="table-header">
+              <h3 class="table-title">User Management</h3>
+              <button class="btn btn-primary btn-sm" id="addUserBtn">
+                <i class="fas fa-user-plus"></i> Add User
+              </button>
+            </div>
+
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>User</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th>Last Active</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                      <div class="user-avatar" style="width: 32px; height: 32px;">SA</div>
+                      <strong>Samuel A.</strong>
+                    </div>
+                  </td>
+                  <td>samuel@westbrook.com</td>
+                  <td>Super Admin</td>
+                  <td>Now</td>
+                  <td><span class="status-badge confirmed">Active</span></td>
+                  <td>
+                    <a href="#" class="action-btn"><i class="fas fa-edit"></i></a>
+                    <a href="#" class="action-btn"><i class="fas fa-lock"></i></a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                      <div class="user-avatar" style="width: 32px; height: 32px; background: var(--info);">JD</div>
+                      <strong>Jane Doe</strong>
+                    </div>
+                  </td>
+                  <td>jane@westbrook.com</td>
+                  <td>Manager</td>
+                  <td>5 mins ago</td>
+                  <td><span class="status-badge confirmed">Active</span></td>
+                  <td>
+                    <a href="#" class="action-btn"><i class="fas fa-edit"></i></a>
+                    <a href="#" class="action-btn"><i class="fas fa-lock"></i></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Reports Section -->
+        <div class="admin-section" id="reports-section">
+          <div class="grid-2">
+            <div class="table-section">
+              <div class="table-header">
+                <h3 class="table-title">Revenue Report</h3>
+                <div class="table-actions">
+                  <select class="form-select" style="width: 150px;">
+                    <option>Last 30 Days</option>
+                    <option>Last Quarter</option>
+                    <option>Last Year</option>
+                  </select>
+                  <button class="btn btn-primary btn-sm">
+                    <i class="fas fa-download"></i> Download
+                  </button>
+                </div>
+              </div>
+              <div style="height: 300px;">
+                <canvas id="revenueReportChart"></canvas>
+              </div>
+            </div>
+
+            <div class="table-section">
+              <div class="table-header">
+                <h3 class="table-title">Occupancy Report</h3>
+                <div class="table-actions">
+                  <select class="form-select" style="width: 150px;">
+                    <option>Last 30 Days</option>
+                    <option>Last Quarter</option>
+                    <option>Last Year</option>
+                  </select>
+                  <button class="btn btn-primary btn-sm">
+                    <i class="fas fa-download"></i> Download
+                  </button>
+                </div>
+              </div>
+              <div style="height: 300px;">
+                <canvas id="occupancyReportChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="table-section">
+            <div class="table-header">
+              <h3 class="table-title">Popular Reports</h3>
+            </div>
+            <div class="grid-3">
+              <div class="mini-stat" style="cursor: pointer;">
+                <i class="fas fa-chart-line" style="font-size: 24px; color: var(--gold); margin-bottom: 12px;"></i>
+                <div class="mini-stat-value">Monthly Financial Summary</div>
+                <div class="mini-stat-label">Download PDF</div>
+              </div>
+              <div class="mini-stat" style="cursor: pointer;">
+                <i class="fas fa-users" style="font-size: 24px; color: var(--info); margin-bottom: 12px;"></i>
+                <div class="mini-stat-value">Guest Demographics</div>
+                <div class="mini-stat-label">Download PDF</div>
+              </div>
+              <div class="mini-stat" style="cursor: pointer;">
+                <i class="fas fa-calendar" style="font-size: 24px; color: var(--success); margin-bottom: 12px;"></i>
+                <div class="mini-stat-value">Booking Trends</div>
+                <div class="mini-stat-label">Download PDF</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Settings Section -->
+        <div class="admin-section" id="settings-section">
+          <div class="table-section">
+            <div class="table-header">
+              <h3 class="table-title">General Settings</h3>
+              <button class="btn btn-primary btn-sm" id="saveSettings">Save Changes</button>
+            </div>
+
+            <div class="grid-2">
+              <div>
+                <div class="form-group">
+                  <label class="form-label">Hotel Name</label>
+                  <input type="text" class="form-input" value="WestBrook Hotel & Suites">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Contact Email</label>
+                  <input type="email" class="form-input" value="info@westbrook.com">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Contact Phone</label>
+                  <input type="text" class="form-input" value="+234 123 456 7890">
+                </div>
+              </div>
+              <div>
+                <div class="form-group">
+                  <label class="form-label">Address</label>
+                  <textarea class="form-textarea" rows="3">123 Luxury Avenue, Victoria Island, Lagos, Nigeria</textarea>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Currency</label>
+                  <select class="form-select">
+                    <option selected>Nigerian Naira (₦)</option>
+                    <option>US Dollar ($)</option>
+                    <option>Euro (€)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--gray-100);">
+              <h4 style="margin-bottom: 16px;">Business Hours</h4>
+              <div class="grid-2">
+                <div class="form-group">
+                  <label class="form-label">Check-in Time</label>
+                  <input type="time" class="form-input" value="14:00">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Check-out Time</label>
+                  <input type="time" class="form-input" value="12:00">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- User Menu Dropdown -->
+  <div class="dropdown-menu" id="userDropdown">
+    <a href="#" class="dropdown-item" data-section="profile">
+      <i class="fas fa-user"></i> My Profile
+    </a>
+    <a href="#" class="dropdown-item" data-section="settings">
+      <i class="fas fa-cog"></i> Settings
+    </a>
+    <div class="dropdown-divider"></div>
+    <a href="#" class="dropdown-item" id="logoutBtn">
+      <i class="fas fa-sign-out-alt"></i> Logout
+    </a>
+  </div>
+
+  <!-- New Booking Modal -->
+  <div class="modal" id="newBookingModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">New Booking</h3>
+        <div class="modal-close" id="closeBookingModal">
+          <i class="fas fa-times"></i>
+        </div>
+      </div>
+      <div class="modal-body">
+        <form id="newBookingForm">
+          <div class="form-group">
+            <label class="form-label">Guest Name</label>
+            <input type="text" class="form-input" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-input" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone</label>
+            <input type="tel" class="form-input" required>
+          </div>
+          <div class="grid-2">
+            <div class="form-group">
+              <label class="form-label">Check-in Date</label>
+              <input type="date" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Check-out Date</label>
+              <input type="date" class="form-input" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Room Type</label>
+            <select class="form-select" required>
+              <option>Standard Twin</option>
+              <option>Deluxe King</option>
+              <option>Executive Suite</option>
+              <option>Presidential Suite</option>
+            </select>
+          </div>
+          <div class="grid-2">
+            <div class="form-group">
+              <label class="form-label">Adults</label>
+              <input type="number" class="form-input" value="2" min="1" max="4">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Children</label>
+              <input type="number" class="form-input" value="0" min="0" max="3">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancelBooking">Cancel</button>
+        <button class="btn btn-primary" id="saveBooking">Create Booking</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script>
+    // DOM Elements
+    const sidebar = document.getElementById('sidebar');
+    const mainContent = document.getElementById('mainContent');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const menuToggle = document.getElementById('menuToggle');
+    const sections = document.querySelectorAll('.admin-section');
+    const sidebarLinks = document.querySelectorAll('.sidebar-link');
+    const pageTitle = document.getElementById('pageTitle');
+    const userMenuBtn = document.getElementById('userMenuBtn');
+    const userDropdown = document.getElementById('userDropdown');
+    const notificationBtn = document.getElementById('notificationBtn');
+    const globalSearch = document.getElementById('globalSearch');
+    const newBookingBtn = document.getElementById('newBookingBtn');
+    const newBookingModal = document.getElementById('newBookingModal');
+    const closeBookingModal = document.getElementById('closeBookingModal');
+    const cancelBooking = document.getElementById('cancelBooking');
+    const saveBooking = document.getElementById('saveBooking');
+    const selectAll = document.getElementById('selectAll');
+    const toastContainer = document.getElementById('toastContainer');
+
+    // State
+    let currentSection = 'dashboard';
+    let isSidebarCollapsed = false;
+
+    // Initialize Charts
+    function initCharts() {
+      // Revenue Chart
+      const revenueCtx = document.getElementById('revenueChart')?.getContext('2d');
+      if (revenueCtx) {
+        new Chart(revenueCtx, {
+          type: 'line',
+          data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            datasets: [{
+              label: 'Occupancy %',
+              data: [72, 75, 78, 82, 85, 88, 92, 90, 87, 83, 79, 74],
+              borderColor: '#c19a5b',
+              backgroundColor: 'rgba(193, 154, 91, 0.1)',
+              tension: 0.4,
+              yAxisID: 'y'
+            }, {
+              label: 'Revenue (₦M)',
+              data: [12.5, 13.2, 14.8, 15.6, 16.9, 18.2, 20.1, 19.8, 18.4, 16.7, 15.2, 13.8],
+              borderColor: '#3b82f6',
+              backgroundColor: 'rgba(59, 130, 246, 0.1)',
+              tension: 0.4,
+              yAxisID: 'y1'
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: {
+              mode: 'index',
+              intersect: false,
+            },
+            plugins: {
+              legend: {
+                display: false
+              }
+            },
+            scales: {
+              y: {
+                type: 'linear',
+                display: true,
+                position: 'left',
+                title: {
+                  display: true,
+                  text: 'Occupancy %'
+                }
+              },
+              y1: {
+                type: 'linear',
+                display: true,
+                position: 'right',
+                title: {
+                  display: true,
+                  text: 'Revenue (₦M)'
+                },
+                grid: {
+                  drawOnChartArea: false
+                }
+              }
+            }
+          }
+        });
+      }
+
+      // Revenue Report Chart
+      const revenueReportCtx = document.getElementById('revenueReportChart')?.getContext('2d');
+      if (revenueReportCtx) {
+        new Chart(revenueReportCtx, {
+          type: 'bar',
+          data: {
+            labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+            datasets: [{
+              label: 'Revenue (₦M)',
+              data: [4.2, 4.8, 5.1, 4.3],
+              backgroundColor: 'rgba(193, 154, 91, 0.8)',
+              borderRadius: 8
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                display: false
+              }
+            }
+          }
+        });
+      }
+
+      // Occupancy Report Chart
+      const occupancyReportCtx = document.getElementById('occupancyReportChart')?.getContext('2d');
+      if (occupancyReportCtx) {
+        new Chart(occupancyReportCtx, {
+          type: 'doughnut',
+          data: {
+            labels: ['Occupied', 'Available', 'Maintenance'],
+            datasets: [{
+              data: [86, 11, 3],
+              backgroundColor: ['#c19a5b', '#3b82f6', '#ef4444'],
+              borderWidth: 0
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: 'bottom'
+              }
+            }
+          }
+        });
+      }
+    }
+
+    // Initialize Bookings Table
+    function initBookingsTable() {
+      const bookingsTableBody = document.getElementById('bookingsTableBody');
+      if (!bookingsTableBody) return;
+
+      const bookings = [
+        { id: 'WB-2024-001', guest: 'John Smith', email: 'john@email.com', room: 'Deluxe King', checkin: '2024-03-15', checkout: '2024-03-18', nights: 3, total: '195,000', payment: 'Paid', status: 'confirmed' },
+        { id: 'WB-2024-002', guest: 'Sarah Johnson', email: 'sarah@email.com', room: 'Executive Suite', checkin: '2024-03-15', checkout: '2024-03-20', nights: 5, total: '425,000', payment: 'Pending', status: 'pending' },
+        { id: 'WB-2024-003', guest: 'Michael Chen', email: 'michael@email.com', room: 'Standard Twin', checkin: '2024-03-16', checkout: '2024-03-19', nights: 3, total: '150,000', payment: 'Paid', status: 'checked-in' },
+        { id: 'WB-2024-004', guest: 'Emily Davis', email: 'emily@email.com', room: 'Deluxe Twin', checkin: '2024-03-14', checkout: '2024-03-16', nights: 2, total: '130,000', payment: 'Paid', status: 'checked-out' },
+        { id: 'WB-2024-005', guest: 'Robert Wilson', email: 'robert@email.com', room: 'Executive Suite', checkin: '2024-03-17', checkout: '2024-03-19', nights: 2, total: '170,000', payment: 'Pending', status: 'pending' }
+      ];
+
+      bookingsTableBody.innerHTML = bookings.map(booking => `
+        <tr>
+          <td><input type="checkbox" class="booking-checkbox" data-id="${booking.id}"></td>
+          <td>#${booking.id}</td>
+          <td><strong>${booking.guest}</strong><br><span style="font-size: 12px; color: var(--gray-500);">${booking.email}</span></td>
+          <td>${booking.room}</td>
+          <td>${booking.checkin}</td>
+          <td>${booking.checkout}</td>
+          <td>${booking.nights}</td>
+          <td>₦${booking.total}</td>
+          <td><span class="status-badge ${booking.payment === 'Paid' ? 'confirmed' : 'pending'}">${booking.payment}</span></td>
+          <td><span class="status-badge ${booking.status}">${booking.status.replace('-', ' ')}</span></td>
+          <td>
+            <a href="#" class="action-btn view-booking" data-id="${booking.id}"><i class="fas fa-eye"></i></a>
+            <a href="#" class="action-btn edit-booking" data-id="${booking.id}"><i class="fas fa-edit"></i></a>
+            <a href="#" class="action-btn checkin-booking" data-id="${booking.id}"><i class="fas fa-check"></i></a>
+            <a href="#" class="action-btn danger cancel-booking" data-id="${booking.id}"><i class="fas fa-times"></i></a>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // Initialize Today's Schedule
+    function initTodaySchedule() {
+      const today = new Date();
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      document.getElementById('todayDate').textContent = today.toLocaleDateString('en-US', options);
+      document.getElementById('todayDay').textContent = today.toLocaleDateString('en-US', { weekday: 'long' });
+
+      const arrivals = [
+        { name: 'John Smith', room: 'Deluxe King - 402', time: '14:00' },
+        { name: 'Maria Garcia', room: 'Executive Suite - 501', time: '15:30' },
+        { name: 'David Lee', room: 'Standard Twin - 203', time: '16:00' }
+      ];
+
+      const departures = [
+        { name: 'Emily Davis', room: 'Deluxe Twin - 305', time: '12:00' },
+        { name: 'Michael Chen', room: 'Standard Twin - 207', time: '11:30' }
+      ];
+
+      document.getElementById('arrivalsCount').textContent = arrivals.length;
+      document.getElementById('departuresCount').textContent = departures.length;
+
+      document.getElementById('arrivalsList').innerHTML = arrivals.map(a => `
+        <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px; background: var(--gray-50); border-radius: 12px;">
+          <div>
+            <div style="font-weight: 600;">${a.name}</div>
+            <div style="font-size: 13px; color: var(--gray-500);">${a.room}</div>
+          </div>
+          <span style="font-size: 13px; color: var(--gray-500);">${a.time}</span>
+        </div>
+      `).join('');
+
+      document.getElementById('departuresList').innerHTML = departures.map(d => `
+        <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px; background: var(--gray-50); border-radius: 12px;">
+          <div>
+            <div style="font-weight: 600;">${d.name}</div>
+            <div style="font-size: 13px; color: var(--gray-500);">${d.room}</div>
+          </div>
+          <span style="font-size: 13px; color: var(--gray-500);">${d.time}</span>
+        </div>
+      `).join('');
+    }
+
+    // Initialize Calendar Grid
+    function initCalendarGrid() {
+      const calendarGrid = document.getElementById('calendarGrid');
+      if (!calendarGrid) return;
+
+      const rooms = ['101', '102', '103', '104', '201', '202', '203', '204', '301', '302', '303', '304'];
+      const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+      
+      let html = '<div style="display: grid; grid-template-columns: 100px repeat(7, 1fr); gap: 4px; margin-top: 20px;">';
+      html += '<div style="font-weight: 600; color: var(--gray-500);">Room</div>';
+      
+      days.forEach(day => {
+        html += `<div style="text-align: center; font-weight: 600;">${day}</div>`;
+      });
+
+      rooms.forEach(room => {
+        html += `<div style="padding: 8px; background: var(--gray-50); border-radius: 8px;">${room}</div>`;
+        for (let i = 0; i < 7; i++) {
+          const random = Math.random();
+          let bg = 'var(--success-light)';
+          if (random < 0.3) bg = 'var(--gold-soft)';
+          else if (random < 0.1) bg = 'var(--gray-100)';
+          html += `<div style="height: 40px; background: ${bg}; border-radius: 8px;"></div>`;
+        }
+      });
+
+      html += '</div>';
+      calendarGrid.innerHTML = html;
+    }
+
+    // Section Navigation
+    function switchSection(sectionId) {
+      sections.forEach(section => {
+        section.classList.remove('active');
+      });
+      
+      const targetSection = document.getElementById(`${sectionId}-section`);
+      if (targetSection) {
+        targetSection.classList.add('active');
+      }
+
+      sidebarLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.dataset.section === sectionId) {
+          link.classList.add('active');
+        }
+      });
+
+      const titles = {
+        dashboard: 'Dashboard',
+        bookings: 'Bookings',
+        calendar: 'Calendar',
+        rooms: 'Rooms & Pricing',
+        content: 'Content Management',
+        payments: 'Payments',
+        guests: 'Guest Directory',
+        emails: 'Email Notifications',
+        users: 'User Management',
+        reports: 'Reports',
+        settings: 'Settings'
+      };
+
+      pageTitle.innerHTML = `${titles[sectionId] || sectionId} <span>${sectionId === 'dashboard' ? 'Executive Overview' : 'Management'}</span>`;
+      currentSection = sectionId;
+    }
+
+    // Show Toast
+    function showToast(title, message, type = 'success') {
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `
+        <div class="toast-icon"><i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i></div>
+        <div class="toast-content">
+          <div class="toast-title">${title}</div>
+          <div class="toast-message">${message}</div>
+        </div>
+        <div class="toast-close"><i class="fas fa-times"></i></div>
+      `;
+
+      toastContainer.appendChild(toast);
+
+      const closeBtn = toast.querySelector('.toast-close');
+      closeBtn.addEventListener('click', () => {
+        toast.remove();
+      });
+
+      setTimeout(() => {
+        if (toast.parentNode) {
+          toast.remove();
+        }
+      }, 5000);
+    }
+
+    // Event Listeners
+    sidebarToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('collapsed');
+      mainContent.classList.toggle('expanded');
+      const icon = sidebarToggle.querySelector('i');
+      if (sidebar.classList.contains('collapsed')) {
+        icon.classList.remove('fa-chevron-left');
+        icon.classList.add('fa-chevron-right');
+      } else {
+        icon.classList.remove('fa-chevron-right');
+        icon.classList.add('fa-chevron-left');
+      }
+      isSidebarCollapsed = !isSidebarCollapsed;
+    });
+
+    menuToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('mobile-open');
+    });
+
+    sidebarLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const section = link.dataset.section;
+        switchSection(section);
+        
+        if (window.innerWidth <= 1024) {
+          sidebar.classList.remove('mobile-open');
+        }
+      });
+    });
+
+    document.querySelectorAll('[data-section]').forEach(element => {
+      element.addEventListener('click', (e) => {
+        e.preventDefault();
+        const section = element.dataset.section;
+        switchSection(section);
+      });
+    });
+
+    userMenuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      userDropdown.classList.toggle('show');
+      const rect = userMenuBtn.getBoundingClientRect();
+      userDropdown.style.top = rect.bottom + 10 + 'px';
+      userDropdown.style.right = window.innerWidth - rect.right + 'px';
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!userMenuBtn.contains(e.target) && !userDropdown.contains(e.target)) {
+        userDropdown.classList.remove('show');
+      }
+    });
+
+    notificationBtn.addEventListener('click', () => {
+      showToast('New Notifications', 'You have 3 unread notifications', 'info');
+    });
+
+    globalSearch.addEventListener('input', (e) => {
+      const query = e.target.value;
+      if (query.length > 2) {
+        showToast('Search', `Searching for "${query}"...`, 'info');
+      }
+    });
+
+    if (newBookingBtn) {
+      newBookingBtn.addEventListener('click', () => {
+        newBookingModal.classList.add('active');
+      });
+    }
+
+    const closeModal = () => {
+      newBookingModal.classList.remove('active');
+    };
+
+    if (closeBookingModal) closeBookingModal.addEventListener('click', closeModal);
+    if (cancelBooking) cancelBooking.addEventListener('click', closeModal);
+
+    if (saveBooking) {
+      saveBooking.addEventListener('click', () => {
+        showToast('Success', 'Booking created successfully', 'success');
+        closeModal();
+      });
+    }
+
+    if (selectAll) {
+      selectAll.addEventListener('change', (e) => {
+        document.querySelectorAll('.booking-checkbox').forEach(cb => {
+          cb.checked = e.target.checked;
+        });
+      });
+    }
+
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('.cancel-booking')) {
+        e.preventDefault();
+        if (confirm('Are you sure you want to cancel this booking?')) {
+          showToast('Booking Cancelled', 'The booking has been cancelled', 'warning');
+        }
+      }
+    });
+
+    document.getElementById('logoutBtn')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      showToast('Logged Out', 'You have been logged out successfully', 'info');
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
+    });
+
+    document.getElementById('exportBookings')?.addEventListener('click', () => {
+      showToast('Export Started', 'Your bookings export is being prepared', 'success');
+    });
+
+    document.getElementById('blockDatesBtn')?.addEventListener('click', () => {
+      showToast('Block Dates', 'Select dates to block on the calendar', 'info');
+    });
+
+    document.getElementById('addUserBtn')?.addEventListener('click', () => {
+      showToast('Add User', 'User creation form will open', 'info');
+    });
+
+    document.getElementById('saveSettings')?.addEventListener('click', () => {
+      showToast('Settings Saved', 'Your changes have been saved', 'success');
+    });
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      initCharts();
+      initBookingsTable();
+      initTodaySchedule();
+      initCalendarGrid();
+
+      // Set today's date
+      const today = new Date();
+      document.getElementById('currentMonthDisplay').textContent = today.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+      // Sample toast
+      setTimeout(() => {
+        showToast('Welcome back!', 'You have 12 pending bookings to review', 'info');
+      }, 1000);
+    });
+  </script>
+</body>
+</html>
