@@ -2,15 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>WestBrook Hotel | Admin Dashboard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="WestBrook Hotel Enterprise Administration Portal">
+  <title>WestBrook Hotel | Command Center</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+  <meta name="description" content="WestBrook Hotel Enterprise Command Center">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="icon" href="./images/westbrook logo.png" type="image/png">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
     /* ===========================================
@@ -56,6 +54,14 @@
       --purple: #8b5cf6;
       --purple-light: rgba(139, 92, 246, 0.1);
       
+      /* Alert Colors */
+      --alert-critical: #b91c1c;
+      --alert-critical-light: #fee2e2;
+      --alert-warning: #b45309;
+      --alert-warning-light: #ffedd5;
+      --alert-info: #1e40af;
+      --alert-info-light: #dbeafe;
+      
       /* Gradients */
       --gradient-gold: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
       --gradient-success: linear-gradient(135deg, #10b981 0%, #34d399 100%);
@@ -78,12 +84,17 @@
       --transition-slow: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
       
-      /* Spacing */
+      /* Spacing - Responsive */
       --sidebar-width: 280px;
+      --sidebar-width-collapsed: 80px;
       --header-height: 70px;
+      --header-height-mobile: 60px;
       --border-radius: 16px;
       --border-radius-sm: 12px;
       --border-radius-lg: 24px;
+      --content-padding: 32px;
+      --content-padding-mobile: 16px;
+      --content-padding-tablet: 24px;
     }
 
     body {
@@ -97,14 +108,16 @@
     }
 
     /* ===========================================
-       LAYOUT
+       LAYOUT - FULLY RESPONSIVE
        =========================================== */
     .admin-wrapper {
       display: flex;
       min-height: 100vh;
+      width: 100%;
+      position: relative;
     }
 
-    /* Sidebar */
+    /* Sidebar - Desktop First Approach */
     .sidebar {
       width: var(--sidebar-width);
       background: var(--white);
@@ -114,22 +127,39 @@
       left: 0;
       height: 100vh;
       overflow-y: auto;
+      overflow-x: hidden;
       transition: var(--transition);
-      z-index: 50;
+      z-index: 1000;
       box-shadow: var(--shadow-lg);
     }
 
     .sidebar.collapsed {
-      width: 80px;
+      width: var(--sidebar-width-collapsed);
     }
 
     .sidebar.collapsed .sidebar-link span,
-    .sidebar.collapsed .sidebar-heading {
+    .sidebar.collapsed .sidebar-heading,
+    .sidebar.collapsed .logo-text,
+    .sidebar.collapsed .sidebar-badge {
       display: none;
     }
 
-    .sidebar.collapsed .logo-text {
-      display: none;
+    .sidebar.collapsed .sidebar-link {
+      justify-content: center;
+      padding: 12px 0;
+    }
+
+    .sidebar.collapsed .sidebar-link i {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .sidebar.collapsed .logo {
+      justify-content: center;
+    }
+
+    .sidebar.collapsed .logo-icon {
+      margin-right: 0;
     }
 
     .sidebar-header {
@@ -146,10 +176,18 @@
       gap: 12px;
     }
 
-    .logo img {
+    .logo-icon {
       width: 40px;
       height: 40px;
-      object-fit: contain;
+      min-width: 40px;
+      background: var(--gradient-gold);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-size: 20px;
+      font-weight: bold;
     }
 
     .logo-text {
@@ -161,11 +199,13 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
       letter-spacing: 0.5px;
+      white-space: nowrap;
     }
 
     .sidebar-toggle {
       width: 32px;
       height: 32px;
+      min-width: 32px;
       background: var(--gray-50);
       border: 1px solid var(--gray-100);
       border-radius: 8px;
@@ -196,6 +236,7 @@
       color: var(--gray-400);
       padding: 0 12px;
       margin: 24px 0 12px;
+      white-space: nowrap;
     }
 
     .sidebar-heading:first-of-type {
@@ -221,10 +262,17 @@
       transition: var(--transition);
       font-weight: 500;
       font-size: 14px;
+      cursor: pointer;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+      white-space: nowrap;
     }
 
     .sidebar-link i {
       width: 20px;
+      min-width: 20px;
       font-size: 18px;
       color: var(--gray-400);
       transition: var(--transition);
@@ -257,6 +305,7 @@
       font-weight: 600;
       padding: 2px 8px;
       border-radius: 20px;
+      white-space: nowrap;
     }
 
     /* Main Content */
@@ -265,25 +314,27 @@
       margin-left: var(--sidebar-width);
       transition: var(--transition);
       min-height: 100vh;
+      width: calc(100% - var(--sidebar-width));
       background: var(--gray-50);
     }
 
     .main-content.expanded {
-      margin-left: 80px;
+      margin-left: var(--sidebar-width-collapsed);
+      width: calc(100% - var(--sidebar-width-collapsed));
     }
 
-    /* Header */
+    /* Header - Fully Responsive */
     .admin-header {
       height: var(--header-height);
       background: var(--white);
       border-bottom: 1px solid var(--gray-100);
-      padding: 0 32px;
+      padding: 0 var(--content-padding);
       display: flex;
       align-items: center;
       justify-content: space-between;
       position: sticky;
       top: 0;
-      z-index: 40;
+      z-index: 100;
       box-shadow: var(--shadow-sm);
     }
 
@@ -297,6 +348,7 @@
       display: none;
       width: 40px;
       height: 40px;
+      min-width: 40px;
       background: var(--gray-50);
       border: 1px solid var(--gray-100);
       border-radius: 10px;
@@ -316,6 +368,7 @@
       font-size: 20px;
       font-weight: 600;
       color: var(--gray-800);
+      white-space: nowrap;
     }
 
     .page-title span {
@@ -331,10 +384,11 @@
       gap: 20px;
     }
 
-    /* Search */
+    /* Search - Responsive */
     .header-search {
       position: relative;
       width: 300px;
+      transition: var(--transition);
     }
 
     .header-search i {
@@ -344,6 +398,7 @@
       transform: translateY(-50%);
       color: var(--gray-400);
       font-size: 18px;
+      pointer-events: none;
     }
 
     .header-search input {
@@ -374,6 +429,7 @@
       position: relative;
       width: 44px;
       height: 44px;
+      min-width: 44px;
       background: var(--gray-50);
       border: 1px solid var(--gray-100);
       border-radius: 30px;
@@ -400,6 +456,7 @@
       font-weight: 600;
       width: 20px;
       height: 20px;
+      min-width: 20px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -407,7 +464,7 @@
       border: 2px solid var(--white);
     }
 
-    /* User Menu */
+    /* User Menu - Responsive */
     .user-menu {
       display: flex;
       align-items: center;
@@ -428,6 +485,7 @@
     .user-avatar {
       width: 36px;
       height: 36px;
+      min-width: 36px;
       background: var(--gradient-gold);
       border-radius: 30px;
       display: flex;
@@ -447,19 +505,21 @@
       font-size: 14px;
       font-weight: 600;
       color: var(--gray-800);
+      white-space: nowrap;
     }
 
     .user-role {
       font-size: 12px;
       color: var(--gray-500);
+      white-space: nowrap;
     }
 
-    /* Dashboard Content */
+    /* Dashboard Content - Responsive Padding */
     .dashboard-content {
-      padding: 32px;
+      padding: var(--content-padding);
     }
 
-    /* Stats Grid */
+    /* Stats Grid - Fully Responsive */
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -467,138 +527,434 @@
       margin-bottom: 32px;
     }
 
-    @media (max-width: 1200px) {
-      .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 768px) {
-      .stats-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .stat-card {
+    /* Alert Banner - Responsive */
+    .alert-banner {
       background: var(--white);
       border-radius: var(--border-radius-lg);
-      padding: 24px;
+      padding: 20px 24px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
       box-shadow: var(--shadow-md);
+      border-left: 4px solid;
+      animation: slideDown 0.3s ease;
+    }
+
+    .alert-banner.critical {
+      border-left-color: var(--alert-critical);
+      background: var(--alert-critical-light);
+    }
+
+    .alert-banner.warning {
+      border-left-color: var(--alert-warning);
+      background: var(--alert-warning-light);
+    }
+
+    .alert-banner.info {
+      border-left-color: var(--alert-info);
+      background: var(--alert-info-light);
+    }
+
+    .alert-icon {
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+
+    .alert-banner.critical .alert-icon {
+      background: var(--alert-critical);
+      color: white;
+    }
+
+    .alert-banner.warning .alert-icon {
+      background: var(--alert-warning);
+      color: white;
+    }
+
+    .alert-banner.info .alert-icon {
+      background: var(--alert-info);
+      color: white;
+    }
+
+    .alert-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .alert-title {
+      font-weight: 700;
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+
+    .alert-description {
+      color: var(--gray-600);
+      font-size: 14px;
+    }
+
+    .alert-action {
+      padding: 8px 20px;
+      background: var(--white);
+      border: none;
+      border-radius: 30px;
+      font-weight: 600;
+      cursor: pointer;
       transition: var(--transition);
-      border: 1px solid var(--gray-100);
-      position: relative;
-      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      white-space: nowrap;
     }
 
-    .stat-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 4px;
-      height: 100%;
-      background: var(--gradient-gold);
-      opacity: 0;
-      transition: var(--transition);
+    .alert-action:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
     }
 
-    .stat-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-xl);
+    /* Alert Center */
+    .alert-center {
+      background: var(--white);
+      border-radius: var(--border-radius-lg);
+      padding: 20px;
+      margin-bottom: 32px;
     }
 
-    .stat-card:hover::before {
-      opacity: 1;
-    }
-
-    .stat-header {
+    .alert-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 12px;
     }
 
-    .stat-title {
+    .alert-header h3 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .alert-count {
+      background: var(--gray-100);
+      padding: 2px 10px;
+      border-radius: 30px;
+      font-size: 13px;
+      color: var(--gray-600);
+      white-space: nowrap;
+    }
+
+    .alert-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .alert-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px;
+      background: var(--gray-50);
+      border-radius: var(--border-radius-sm);
+      border-left: 4px solid transparent;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .alert-item:hover {
+      transform: translateX(4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .alert-item.critical {
+      border-left-color: var(--alert-critical);
+    }
+
+    .alert-item.warning {
+      border-left-color: var(--alert-warning);
+    }
+
+    .alert-item.info {
+      border-left-color: var(--alert-info);
+    }
+
+    .alert-item-icon {
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .alert-item-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .alert-item-title {
+      font-weight: 600;
+      margin-bottom: 4px;
       font-size: 14px;
-      font-weight: 500;
-      color: var(--gray-500);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
     }
 
-    .stat-icon {
+    .alert-item-meta {
+      display: flex;
+      gap: 16px;
+      font-size: 12px;
+      color: var(--gray-500);
+      flex-wrap: wrap;
+    }
+
+    .alert-item-severity {
+      padding: 2px 10px;
+      border-radius: 30px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    /* Channel Grid - Fully Responsive */
+    .channel-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    .channel-card {
+      background: var(--white);
+      border-radius: var(--border-radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--gray-100);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .channel-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .channel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .channel-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .channel-logo {
       width: 48px;
       height: 48px;
+      min-width: 48px;
+      background: var(--gray-50);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: var(--gold);
+    }
+
+    .channel-name {
+      min-width: 0;
+    }
+
+    .channel-name h4 {
+      font-weight: 600;
+      margin-bottom: 4px;
+      font-size: 16px;
+    }
+
+    .channel-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      min-width: 8px;
+      border-radius: 50%;
+    }
+
+    .status-dot.connected {
+      background: var(--success);
+      box-shadow: 0 0 0 2px var(--success-light);
+    }
+
+    .status-dot.syncing {
+      background: var(--warning);
+      box-shadow: 0 0 0 2px var(--warning-light);
+      animation: pulse 1.5s infinite;
+    }
+
+    .channel-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+      padding: 16px 0;
+      border-top: 1px solid var(--gray-100);
+      border-bottom: 1px solid var(--gray-100);
+    }
+
+    .channel-stat {
+      text-align: center;
+    }
+
+    .channel-stat-label {
+      font-size: 12px;
+      color: var(--gray-500);
+      margin-bottom: 4px;
+    }
+
+    .channel-stat-value {
+      font-weight: 700;
+      color: var(--gray-800);
+      font-size: 16px;
+    }
+
+    .channel-sync {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--gray-500);
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .channel-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .channel-btn {
+      flex: 1;
+      padding: 10px;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-100);
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .channel-btn:hover {
       background: var(--gold-soft);
-      border-radius: 16px;
+      border-color: var(--gold);
+    }
+
+    /* Channel Feed */
+    .channel-feed {
+      background: var(--white);
+      border-radius: var(--border-radius-lg);
+      padding: 24px;
+      margin-top: 24px;
+    }
+
+    .feed-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .feed-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .feed-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 16px;
+      background: var(--gray-50);
+      border-radius: var(--border-radius-sm);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .feed-item:hover {
+      background: var(--white);
+      box-shadow: var(--shadow-md);
+    }
+
+    .feed-icon {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      background: var(--gold-soft);
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--gold);
-      font-size: 24px;
-      transition: var(--transition);
+      font-size: 18px;
     }
 
-    .stat-card:hover .stat-icon {
-      background: var(--gradient-gold);
-      color: var(--white);
+    .feed-content {
+      flex: 1;
+      min-width: 0;
     }
 
-    .stat-value {
-      font-size: 36px;
-      font-weight: 700;
-      color: var(--gray-800);
-      line-height: 1.2;
-      margin-bottom: 8px;
-    }
-
-    .stat-trend {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-    }
-
-    .trend-up {
-      color: var(--success);
-    }
-
-    .trend-down {
-      color: var(--danger);
-    }
-
-    .trend-neutral {
-      color: var(--gray-500);
-    }
-
-    .trend-badge {
-      padding: 4px 8px;
-      border-radius: 30px;
+    .feed-title {
       font-weight: 600;
+      margin-bottom: 4px;
+      font-size: 14px;
     }
 
-    .trend-badge.up {
-      background: var(--success-light);
-      color: var(--success);
+    .feed-meta {
+      display: flex;
+      gap: 16px;
+      font-size: 12px;
+      color: var(--gray-500);
+      flex-wrap: wrap;
     }
 
-    .trend-badge.down {
-      background: var(--danger-light);
-      color: var(--danger);
+    .feed-channel {
+      padding: 2px 8px;
+      background: var(--white);
+      border-radius: 30px;
+      font-size: 11px;
+      font-weight: 600;
+      white-space: nowrap;
     }
 
-    /* Charts Row */
+    /* Charts Row - Fully Responsive */
     .charts-row {
       display: grid;
       grid-template-columns: 2fr 1fr;
       gap: 24px;
       margin-bottom: 32px;
-    }
-
-    @media (max-width: 992px) {
-      .charts-row {
-        grid-template-columns: 1fr;
-      }
     }
 
     .chart-card {
@@ -614,6 +970,8 @@
       align-items: center;
       justify-content: space-between;
       margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 12px;
     }
 
     .chart-title {
@@ -626,6 +984,7 @@
       display: flex;
       align-items: center;
       gap: 16px;
+      flex-wrap: wrap;
     }
 
     .legend-item {
@@ -639,56 +998,17 @@
     .legend-color {
       width: 12px;
       height: 12px;
+      min-width: 12px;
       border-radius: 4px;
     }
 
-    .legend-color.occupancy {
-      background: var(--gold);
-    }
-
-    .legend-color.revenue {
-      background: var(--info);
-    }
-
-    /* Chart Container */
     .chart-container {
       height: 300px;
       position: relative;
+      width: 100%;
     }
 
-    /* Mini Stats */
-    .mini-stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-top: 24px;
-    }
-
-    .mini-stat {
-      background: var(--gray-50);
-      border-radius: var(--border-radius-sm);
-      padding: 16px;
-      border: 1px solid var(--gray-100);
-    }
-
-    .mini-stat-label {
-      font-size: 12px;
-      color: var(--gray-500);
-      margin-bottom: 8px;
-    }
-
-    .mini-stat-value {
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--gray-800);
-    }
-
-    .mini-stat-trend {
-      font-size: 12px;
-      margin-top: 4px;
-    }
-
-    /* Tables */
+    /* Tables - Fully Responsive */
     .table-section {
       background: var(--white);
       border-radius: var(--border-radius-lg);
@@ -696,6 +1016,7 @@
       box-shadow: var(--shadow-md);
       border: 1px solid var(--gray-100);
       margin-bottom: 32px;
+      overflow-x: auto;
     }
 
     .table-header {
@@ -703,6 +1024,8 @@
       align-items: center;
       justify-content: space-between;
       margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
     }
 
     .table-title {
@@ -715,6 +1038,7 @@
       display: flex;
       align-items: center;
       gap: 12px;
+      flex-wrap: wrap;
     }
 
     .table-filter {
@@ -726,6 +1050,7 @@
       color: var(--gray-600);
       cursor: pointer;
       transition: var(--transition);
+      white-space: nowrap;
     }
 
     .table-filter:hover {
@@ -733,22 +1058,11 @@
       border-color: var(--gold);
     }
 
-    .table-view-all {
-      color: var(--gold);
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 500;
-      transition: var(--transition);
-    }
-
-    .table-view-all:hover {
-      color: var(--gold-dark);
-    }
-
-    /* Data Table */
+    /* Data Table - Horizontal Scroll on Mobile */
     .data-table {
       width: 100%;
       border-collapse: collapse;
+      min-width: 800px;
     }
 
     .data-table th {
@@ -760,6 +1074,7 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
       border-bottom: 1px solid var(--gray-100);
+      white-space: nowrap;
     }
 
     .data-table td {
@@ -786,37 +1101,14 @@
       font-size: 12px;
       font-weight: 600;
       text-transform: capitalize;
-    }
-
-    .status-badge.confirmed {
-      background: var(--success-light);
-      color: var(--success);
-    }
-
-    .status-badge.pending {
-      background: var(--warning-light);
-      color: var(--warning);
-    }
-
-    .status-badge.cancelled {
-      background: var(--danger-light);
-      color: var(--danger);
-    }
-
-    .status-badge.checked-in {
-      background: var(--info-light);
-      color: var(--info);
-    }
-
-    .status-badge.checked-out {
-      background: var(--gray-100);
-      color: var(--gray-600);
+      white-space: nowrap;
     }
 
     /* Action Buttons */
     .action-btn {
       width: 32px;
       height: 32px;
+      min-width: 32px;
       background: var(--gray-50);
       border: 1px solid var(--gray-100);
       border-radius: 8px;
@@ -828,70 +1120,10 @@
       transition: var(--transition);
       margin: 0 2px;
       text-decoration: none;
+      border: none;
     }
 
-    .action-btn:hover {
-      background: var(--gold-soft);
-      color: var(--gold);
-      border-color: var(--gold);
-    }
-
-    .action-btn.danger:hover {
-      background: var(--danger-light);
-      color: var(--danger);
-      border-color: var(--danger);
-    }
-
-    /* Recent Activity */
-    .activity-list {
-      list-style: none;
-    }
-
-    .activity-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 16px;
-      padding: 16px 0;
-      border-bottom: 1px solid var(--gray-100);
-    }
-
-    .activity-item:last-child {
-      border-bottom: none;
-    }
-
-    .activity-icon {
-      width: 40px;
-      height: 40px;
-      background: var(--gold-soft);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--gold);
-      font-size: 18px;
-    }
-
-    .activity-content {
-      flex: 1;
-    }
-
-    .activity-text {
-      font-size: 14px;
-      color: var(--gray-700);
-      margin-bottom: 4px;
-    }
-
-    .activity-text strong {
-      color: var(--gray-900);
-      font-weight: 600;
-    }
-
-    .activity-time {
-      font-size: 12px;
-      color: var(--gray-500);
-    }
-
-    /* Tabs */
+    /* Tabs - Responsive */
     .admin-tabs {
       display: flex;
       gap: 8px;
@@ -911,20 +1143,10 @@
       color: var(--gray-600);
       cursor: pointer;
       transition: var(--transition);
+      white-space: nowrap;
     }
 
-    .admin-tab:hover {
-      background: var(--gold-soft);
-      color: var(--gold);
-    }
-
-    .admin-tab.active {
-      background: var(--gradient-gold);
-      color: var(--white);
-      border-color: var(--gold);
-    }
-
-    /* Grid Layouts */
+    /* Grid Layouts - Responsive */
     .grid-2 {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -939,23 +1161,7 @@
       margin-bottom: 32px;
     }
 
-    .grid-4 {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 24px;
-      margin-bottom: 32px;
-    }
-
-    @media (max-width: 1200px) {
-      .grid-4 { grid-template-columns: repeat(2, 1fr); }
-      .grid-3 { grid-template-columns: repeat(2, 1fr); }
-    }
-
-    @media (max-width: 768px) {
-      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
-    }
-
-    /* Forms */
+    /* Forms - Responsive */
     .form-group {
       margin-bottom: 20px;
     }
@@ -969,8 +1175,7 @@
     }
 
     .form-input,
-    .form-select,
-    .form-textarea {
+    .form-select {
       width: 100%;
       padding: 12px 16px;
       background: var(--white);
@@ -982,93 +1187,7 @@
       font-family: 'Inter', sans-serif;
     }
 
-    .form-input:focus,
-    .form-select:focus,
-    .form-textarea:focus {
-      outline: none;
-      border-color: var(--gold);
-      box-shadow: 0 0 0 4px var(--gold-soft);
-    }
-
-    .form-input.error,
-    .form-select.error,
-    .form-textarea.error {
-      border-color: var(--danger);
-    }
-
-    .form-error {
-      color: var(--danger);
-      font-size: 12px;
-      margin-top: 4px;
-    }
-
-    /* Image Upload */
-    .image-upload {
-      border: 2px dashed var(--gray-100);
-      border-radius: var(--border-radius);
-      padding: 40px;
-      text-align: center;
-      cursor: pointer;
-      transition: var(--transition);
-    }
-
-    .image-upload:hover {
-      border-color: var(--gold);
-      background: var(--gold-soft);
-    }
-
-    .image-upload i {
-      font-size: 40px;
-      color: var(--gray-300);
-      margin-bottom: 12px;
-    }
-
-    .image-upload p {
-      font-size: 14px;
-      color: var(--gray-500);
-    }
-
-    .image-preview {
-      margin-top: 16px;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-    }
-
-    .preview-item {
-      position: relative;
-      aspect-ratio: 1;
-      border-radius: var(--border-radius-sm);
-      overflow: hidden;
-    }
-
-    .preview-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .preview-remove {
-      position: absolute;
-      top: 4px;
-      right: 4px;
-      width: 24px;
-      height: 24px;
-      background: rgba(0, 0, 0, 0.5);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--white);
-      cursor: pointer;
-      transition: var(--transition);
-    }
-
-    .preview-remove:hover {
-      background: var(--danger);
-    }
-
-    /* Modal */
+    /* Modal - Responsive */
     .modal {
       display: none;
       position: fixed;
@@ -1078,9 +1197,10 @@
       height: 100%;
       background: rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(4px);
-      z-index: 1000;
+      z-index: 2000;
       align-items: center;
       justify-content: center;
+      padding: 16px;
     }
 
     .modal.active {
@@ -1090,59 +1210,14 @@
     .modal-content {
       background: var(--white);
       border-radius: var(--border-radius-lg);
-      width: 90%;
+      width: 100%;
       max-width: 600px;
       max-height: 90vh;
       overflow-y: auto;
       box-shadow: var(--shadow-2xl);
     }
 
-    .modal-header {
-      padding: 24px;
-      border-bottom: 1px solid var(--gray-100);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .modal-title {
-      font-size: 20px;
-      font-weight: 600;
-      color: var(--gray-800);
-    }
-
-    .modal-close {
-      width: 36px;
-      height: 36px;
-      background: var(--gray-50);
-      border: 1px solid var(--gray-100);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: var(--transition);
-    }
-
-    .modal-close:hover {
-      background: var(--danger-light);
-      color: var(--danger);
-    }
-
-    .modal-body {
-      padding: 24px;
-    }
-
-    .modal-footer {
-      padding: 24px;
-      border-top: 1px solid var(--gray-100);
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 12px;
-    }
-
-    /* Buttons */
+    /* Buttons - Responsive */
     .btn {
       display: inline-flex;
       align-items: center;
@@ -1156,42 +1231,7 @@
       transition: var(--transition-bounce);
       border: none;
       text-decoration: none;
-    }
-
-    .btn-primary {
-      background: var(--gradient-gold);
-      color: var(--white);
-      box-shadow: var(--shadow-gold);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-gold), var(--shadow-lg);
-    }
-
-    .btn-secondary {
-      background: var(--white);
-      border: 2px solid var(--gold);
-      color: var(--gold);
-    }
-
-    .btn-secondary:hover {
-      background: var(--gold-soft);
-    }
-
-    .btn-success {
-      background: var(--gradient-success);
-      color: var(--white);
-    }
-
-    .btn-warning {
-      background: var(--gradient-warning);
-      color: var(--white);
-    }
-
-    .btn-danger {
-      background: var(--gradient-danger);
-      color: var(--white);
+      white-space: nowrap;
     }
 
     .btn-sm {
@@ -1199,22 +1239,13 @@
       font-size: 12px;
     }
 
-    .btn-lg {
-      padding: 14px 32px;
-      font-size: 16px;
-    }
-
-    .btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    /* Toast Notifications */
+    /* Toast Notifications - Responsive */
     .toast-container {
       position: fixed;
       top: 20px;
       right: 20px;
-      z-index: 2000;
+      z-index: 3000;
+      max-width: calc(100% - 40px);
     }
 
     .toast {
@@ -1228,179 +1259,21 @@
       gap: 12px;
       min-width: 300px;
       max-width: 400px;
+      width: 100%;
       animation: slideInRight 0.3s ease;
       border-left: 4px solid;
     }
 
-    .toast.success {
-      border-left-color: var(--success);
-    }
-
-    .toast.error {
-      border-left-color: var(--danger);
-    }
-
-    .toast.warning {
-      border-left-color: var(--warning);
-    }
-
-    .toast.info {
-      border-left-color: var(--info);
-    }
-
-    .toast-icon {
-      width: 24px;
-      height: 24px;
-      border-radius: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-    }
-
-    .toast.success .toast-icon {
-      background: var(--success-light);
-      color: var(--success);
-    }
-
-    .toast.error .toast-icon {
-      background: var(--danger-light);
-      color: var(--danger);
-    }
-
-    .toast.warning .toast-icon {
-      background: var(--warning-light);
-      color: var(--warning);
-    }
-
-    .toast.info .toast-icon {
-      background: var(--info-light);
-      color: var(--info);
-    }
-
-    .toast-content {
-      flex: 1;
-    }
-
-    .toast-title {
-      font-weight: 600;
-      color: var(--gray-800);
-      margin-bottom: 2px;
-    }
-
-    .toast-message {
-      font-size: 13px;
-      color: var(--gray-600);
-    }
-
-    .toast-close {
-      color: var(--gray-400);
-      cursor: pointer;
-      transition: var(--transition);
-    }
-
-    .toast-close:hover {
-      color: var(--gray-600);
-    }
-
-    @keyframes slideInRight {
-      from {
-        transform: translateX(100%);
-        opacity: 0;
-      }
-      to {
-        transform: translateX(0);
-        opacity: 1;
-      }
-    }
-
-    /* Loading States */
-    .loading-spinner {
-      display: inline-block;
-      width: 20px;
-      height: 20px;
-      border: 3px solid rgba(193, 154, 91, 0.2);
-      border-radius: 50%;
-      border-top-color: var(--gold);
-      animation: spin 0.8s linear infinite;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    .skeleton {
-      background: linear-gradient(90deg, var(--gray-100) 25%, var(--gray-50) 50%, var(--gray-100) 75%);
-      background-size: 200% 100%;
-      animation: loading 1.5s infinite;
-      border-radius: 4px;
-    }
-
-    @keyframes loading {
-      0% { background-position: 200% 0; }
-      100% { background-position: -200% 0; }
-    }
-
-    /* Section Visibility */
-    .admin-section {
-      display: none;
-    }
-
-    .admin-section.active {
-      display: block;
-    }
-
-    /* Responsive */
-    @media (max-width: 1024px) {
-      .sidebar {
-        transform: translateX(-100%);
-      }
-      
-      .sidebar.mobile-open {
-        transform: translateX(0);
-      }
-      
-      .main-content {
-        margin-left: 0 !important;
-      }
-      
-      .header-menu-toggle {
-        display: flex;
-      }
-      
-      .header-search {
-        width: 200px;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .dashboard-content {
-        padding: 20px;
-      }
-      
-      .header-search {
-        display: none;
-      }
-      
-      .user-info {
-        display: none;
-      }
-      
-      .charts-row {
-        gap: 16px;
-      }
-    }
-
-    /* Dropdown Menu */
+    /* Dropdown Menu - Responsive */
     .dropdown-menu {
-      position: absolute;
+      position: fixed;
       background: var(--white);
       border-radius: var(--border-radius);
       box-shadow: var(--shadow-xl);
       border: 1px solid var(--gray-100);
       min-width: 200px;
       display: none;
-      z-index: 100;
+      z-index: 1500;
     }
 
     .dropdown-menu.show {
@@ -1415,22 +1288,486 @@
       color: var(--gray-700);
       text-decoration: none;
       transition: var(--transition);
+      cursor: pointer;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+      font-size: 14px;
     }
 
-    .dropdown-item:hover {
-      background: var(--gold-soft);
-      color: var(--gold);
+    /* Calendar Grid - Responsive */
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+      overflow-x: auto;
+      min-width: 100%;
     }
 
-    .dropdown-item i {
-      width: 18px;
-      color: var(--gray-400);
+    .calendar-day {
+      padding: 15px 10px;
+      border-radius: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 14px;
+      white-space: nowrap;
     }
 
-    .dropdown-divider {
-      height: 1px;
-      background: var(--gray-100);
-      margin: 8px 0;
+    /* ===========================================
+       RESPONSIVE BREAKPOINTS
+       =========================================== */
+
+    /* Large Desktop */
+    @media (max-width: 1400px) {
+      :root {
+        --content-padding: 28px;
+      }
+      
+      .stats-grid {
+        gap: 20px;
+      }
+      
+      .channel-grid {
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      }
+    }
+
+    /* Desktop */
+    @media (max-width: 1200px) {
+      :root {
+        --content-padding: 24px;
+      }
+      
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .grid-3 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .header-search {
+        width: 250px;
+      }
+    }
+
+    /* Tablet Landscape */
+    @media (max-width: 1024px) {
+      .sidebar {
+        transform: translateX(-100%);
+        box-shadow: none;
+      }
+      
+      .sidebar.mobile-open {
+        transform: translateX(0);
+        box-shadow: var(--shadow-xl);
+      }
+      
+      .main-content,
+      .main-content.expanded {
+        margin-left: 0;
+        width: 100%;
+      }
+      
+      .header-menu-toggle {
+        display: flex;
+      }
+      
+      .header-search {
+        width: 220px;
+      }
+      
+      .user-info {
+        display: none;
+      }
+      
+      .page-title span {
+        display: none;
+      }
+      
+      .charts-row {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+    }
+
+    /* Tablet Portrait */
+    @media (max-width: 768px) {
+      :root {
+        --header-height: var(--header-height-mobile);
+        --content-padding: var(--content-padding-mobile);
+      }
+      
+      .admin-header {
+        padding: 0 16px;
+      }
+      
+      .header-search {
+        display: none;
+      }
+      
+      .page-title {
+        font-size: 18px;
+      }
+      
+      .stats-grid {
+        gap: 16px;
+      }
+      
+      .stat-card {
+        padding: 20px;
+      }
+      
+      .stat-value {
+        font-size: 28px;
+      }
+      
+      .stat-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+      }
+      
+      .alert-banner {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 16px;
+        gap: 16px;
+      }
+      
+      .alert-action {
+        width: 100%;
+      }
+      
+      .alert-item {
+        flex-wrap: wrap;
+      }
+      
+      .alert-item-icon {
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+      }
+      
+      .grid-2,
+      .grid-3 {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      
+      .channel-card {
+        padding: 20px;
+      }
+      
+      .channel-stats {
+        gap: 12px;
+      }
+      
+      .channel-actions {
+        flex-direction: column;
+      }
+      
+      .channel-btn {
+        width: 100%;
+      }
+      
+      .feed-item {
+        flex-wrap: wrap;
+      }
+      
+      .feed-icon {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+      }
+      
+      .chart-card {
+        padding: 20px;
+      }
+      
+      .chart-container {
+        height: 250px;
+      }
+      
+      .table-section {
+        padding: 20px;
+      }
+      
+      .table-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .table-actions {
+        width: 100%;
+        justify-content: flex-start;
+      }
+      
+      .admin-tabs {
+        overflow-x: auto;
+        padding-bottom: 12px;
+        flex-wrap: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+      
+      .admin-tab {
+        flex-shrink: 0;
+      }
+      
+      .calendar-day {
+        padding: 10px 5px;
+        font-size: 12px;
+      }
+      
+      .toast {
+        min-width: 250px;
+        padding: 14px 16px;
+      }
+    }
+
+    /* Mobile */
+    @media (max-width: 480px) {
+      :root {
+        --content-padding: 12px;
+      }
+      
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .admin-header {
+        padding: 0 12px;
+      }
+      
+      .user-menu {
+        padding: 4px 8px 4px 4px;
+      }
+      
+      .user-avatar {
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+        font-size: 14px;
+      }
+      
+      .notification-btn {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+      }
+      
+      .page-title {
+        font-size: 16px;
+      }
+      
+      .stat-card {
+        padding: 16px;
+      }
+      
+      .stat-value {
+        font-size: 24px;
+      }
+      
+      .stat-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 18px;
+      }
+      
+      .alert-center {
+        padding: 16px;
+      }
+      
+      .alert-item-meta {
+        flex-direction: column;
+        gap: 8px;
+      }
+      
+      .channel-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .modal-content {
+        margin: 16px;
+      }
+      
+      .modal-header,
+      .modal-body,
+      .modal-footer {
+        padding: 16px;
+      }
+      
+      .btn {
+        width: 100%;
+      }
+      
+      .modal-footer {
+        flex-direction: column;
+      }
+      
+      .modal-footer .btn {
+        width: 100%;
+      }
+      
+      .toast {
+        min-width: auto;
+        width: 100%;
+        padding: 12px 16px;
+      }
+      
+      .toast-container {
+        left: 20px;
+        right: 20px;
+      }
+      
+      .calendar-grid {
+        gap: 4px;
+      }
+      
+      .calendar-day {
+        padding: 8px 3px;
+        font-size: 11px;
+      }
+    }
+
+    /* Small Mobile */
+    @media (max-width: 360px) {
+      .header-right {
+        gap: 12px;
+      }
+      
+      .notification-btn {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+      }
+      
+      .user-avatar {
+        width: 28px;
+        height: 28px;
+        min-width: 28px;
+        font-size: 12px;
+      }
+      
+      .page-title {
+        font-size: 14px;
+      }
+      
+      .stat-value {
+        font-size: 22px;
+      }
+    }
+
+    /* Touch Optimizations */
+    @media (hover: none) and (pointer: coarse) {
+      .sidebar-link,
+      .action-btn,
+      .btn,
+      .table-filter,
+      .admin-tab,
+      .channel-btn,
+      .alert-item,
+      .feed-item,
+      .calendar-day {
+        cursor: default;
+        -webkit-tap-highlight-color: transparent;
+      }
+      
+      .sidebar-link:active,
+      .action-btn:active,
+      .btn:active,
+      .table-filter:active,
+      .admin-tab:active,
+      .channel-btn:active,
+      .alert-item:active,
+      .feed-item:active,
+      .calendar-day:active {
+        opacity: 0.7;
+      }
+    }
+
+    /* Print Styles */
+    @media print {
+      .sidebar,
+      .admin-header,
+      .btn,
+      .table-filter,
+      .action-btn,
+      .channel-actions,
+      .alert-action,
+      .toast-container,
+      .modal {
+        display: none !important;
+      }
+      
+      .main-content,
+      .main-content.expanded {
+        margin-left: 0;
+        width: 100%;
+      }
+      
+      .dashboard-content {
+        padding: 0;
+      }
+      
+      .stat-card,
+      .chart-card,
+      .table-section,
+      .alert-center,
+      .channel-feed {
+        break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid var(--gray-200);
+      }
+    }
+
+    /* Animations */
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    @keyframes slideInRight {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translateY(-20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    /* Utility Classes */
+    .hide-mobile {
+      display: block;
+    }
+    
+    .show-mobile {
+      display: none;
+    }
+    
+    @media (max-width: 768px) {
+      .hide-mobile {
+        display: none;
+      }
+      
+      .show-mobile {
+        display: block;
+      }
     }
   </style>
 </head>
@@ -1440,7 +1777,7 @@
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-header">
         <div class="logo">
-          <img src="./images/westbrook logo.png" alt="WestBrook" onerror="this.src='https://via.placeholder.com/40x40?text=WB'">
+          <div class="logo-icon">WB</div>
           <span class="logo-text">WestBrook</span>
         </div>
         <div class="sidebar-toggle" id="sidebarToggle">
@@ -1452,79 +1789,86 @@
         <div class="sidebar-heading">MAIN</div>
         <ul class="sidebar-menu">
           <li class="sidebar-item">
-            <a href="#" class="sidebar-link active" data-section="dashboard">
+            <button class="sidebar-link active" data-section="dashboard">
               <i class="fas fa-th-large"></i>
               <span>Dashboard</span>
-            </a>
+            </button>
           </li>
           <li class="sidebar-item">
-            <a href="#" class="sidebar-link" data-section="bookings">
+            <button class="sidebar-link" data-section="bookings">
               <i class="fas fa-calendar-check"></i>
               <span>Bookings</span>
               <span class="sidebar-badge">12</span>
-            </a>
+            </button>
           </li>
           <li class="sidebar-item">
-            <a href="#" class="sidebar-link" data-section="calendar">
+            <button class="sidebar-link" data-section="calendar">
               <i class="fas fa-calendar-alt"></i>
               <span>Calendar</span>
-            </a>
+            </button>
           </li>
           <li class="sidebar-item">
-            <a href="#" class="sidebar-link" data-section="rooms">
+            <button class="sidebar-link" data-section="rooms">
               <i class="fas fa-hotel"></i>
               <span>Rooms & Pricing</span>
-            </a>
+            </button>
+          </li>
+          <li class="sidebar-item">
+            <button class="sidebar-link" data-section="channel">
+              <i class="fas fa-globe"></i>
+              <span>Channel Manager</span>
+              <span class="sidebar-badge" style="background: var(--success);">Live</span>
+            </button>
           </li>
         </ul>
 
         <div class="sidebar-heading">MANAGEMENT</div>
         <ul class="sidebar-menu">
           <li class="sidebar-item">
-            <a href="#" class="sidebar-link" data-section="content">
+            <button class="sidebar-link" data-section="content">
               <i class="fas fa-edit"></i>
               <span>Content</span>
-            </a>
+            </button>
           </li>
           <li class="sidebar-item">
-            <a href="#" class="sidebar-link" data-section="payments">
+            <button class="sidebar-link" data-section="payments">
               <i class="fas fa-credit-card"></i>
               <span>Payments</span>
-            </a>
+            </button>
           </li>
           <li class="sidebar-item">
-            <a href="#" class="sidebar-link" data-section="guests">
+            <button class="sidebar-link" data-section="guests">
               <i class="fas fa-users"></i>
               <span>Guests</span>
-            </a>
+            </button>
           </li>
           <li class="sidebar-item">
-            <a href="#" class="sidebar-link" data-section="emails">
+            <button class="sidebar-link" data-section="emails">
               <i class="fas fa-envelope"></i>
               <span>Email Notifications</span>
-            </a>
+            </button>
           </li>
         </ul>
 
         <div class="sidebar-heading">ADMIN</div>
         <ul class="sidebar-menu">
           <li class="sidebar-item">
-            <a href="#" class="sidebar-link" data-section="users">
+            <button class="sidebar-link" data-section="users">
               <i class="fas fa-user-shield"></i>
               <span>User Roles</span>
-            </a>
+            </button>
           </li>
           <li class="sidebar-item">
-            <a href="#" class="sidebar-link" data-section="reports">
+            <button class="sidebar-link" data-section="reports">
               <i class="fas fa-chart-bar"></i>
               <span>Reports</span>
-            </a>
+            </button>
           </li>
           <li class="sidebar-item">
-            <a href="#" class="sidebar-link" data-section="settings">
+            <button class="sidebar-link" data-section="settings">
               <i class="fas fa-cog"></i>
               <span>Settings</span>
-            </a>
+            </button>
           </li>
         </ul>
       </nav>
@@ -1539,30 +1883,27 @@
             <i class="fas fa-bars"></i>
           </div>
           <div class="page-title" id="pageTitle">
-            Dashboard
+            Command Center
             <span>Executive Overview</span>
           </div>
         </div>
 
         <div class="header-right">
-          <!-- Search -->
           <div class="header-search">
             <i class="fas fa-search"></i>
             <input type="text" placeholder="Search bookings, guests..." id="globalSearch">
           </div>
 
-          <!-- Notifications -->
           <div class="notification-btn" id="notificationBtn">
             <i class="far fa-bell"></i>
-            <span class="notification-badge">3</span>
+            <span class="notification-badge">5</span>
           </div>
 
-          <!-- User Menu -->
           <div class="user-menu" id="userMenuBtn">
             <div class="user-avatar">SA</div>
             <div class="user-info">
               <span class="user-name">Samuel A.</span>
-              <span class="user-role">Super Admin</span>
+              <span class="user-role">Command Center</span>
             </div>
             <i class="fas fa-chevron-down" style="font-size: 12px; color: var(--gray-400);"></i>
           </div>
@@ -1573,56 +1914,80 @@
       <div class="dashboard-content">
         <!-- Dashboard Section -->
         <div class="admin-section active" id="dashboard-section">
+          <!-- Alert Banner -->
+          <div class="alert-banner critical" id="overbookingAlert" onclick="showToast('Critical Alert', 'Overbooking risk detected - Take action now', 'critical')">
+            <div class="alert-icon">
+              <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="alert-content">
+              <div class="alert-title">Critical Overbooking Risk Detected</div>
+              <div class="alert-description">March 15-17 occupancy at 94% - 3 rooms overbooked. Immediate action required.</div>
+            </div>
+            <button class="alert-action" onclick="event.stopPropagation(); showToast('Action Required', 'Review overbooking protection', 'warning')">Review Now</button>
+          </div>
+
+          <!-- Alert Center -->
+          <div class="alert-center">
+            <div class="alert-header">
+              <h3><i class="fas fa-bell" style="color: var(--gold);"></i> Active Alerts</h3>
+              <span class="alert-count" id="alertCount">5</span>
+            </div>
+            <div class="alert-list" id="alertList"></div>
+          </div>
+
           <!-- Stats Grid -->
           <div class="stats-grid">
-            <div class="stat-card">
+            <div class="stat-card" onclick="showToast('Occupancy Report', 'Current occupancy: 86%', 'info')">
               <div class="stat-header">
-                <span class="stat-title">Total Bookings</span>
-                <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
+                <span class="stat-title">Current Occupancy</span>
+                <div class="stat-icon"><i class="fas fa-bed"></i></div>
               </div>
-              <div class="stat-value">1,284</div>
+              <div class="stat-value">86%</div>
               <div class="stat-trend">
-                <span class="trend-up"><i class="fas fa-arrow-up"></i> +12.5%</span>
-                <span class="trend-badge up">vs last month</span>
+                <span class="trend-up"><i class="fas fa-arrow-up"></i> +5.2%</span>
+                <span class="trend-badge up">peak season</span>
               </div>
             </div>
 
-            <div class="stat-card">
+            <div class="stat-card" onclick="showToast('Overbooking Risk', '3 rooms overbooked for Mar 15', 'critical')">
               <div class="stat-header">
-                <span class="stat-title">Today's Arrivals</span>
-                <div class="stat-icon"><i class="fas fa-sign-in-alt"></i></div>
+                <span class="stat-title">Overbooking Risk</span>
+                <div class="stat-icon"><i class="fas fa-exclamation"></i></div>
               </div>
-              <div class="stat-value">24</div>
+              <div class="stat-value" style="color: var(--danger);">Critical</div>
               <div class="stat-trend">
-                <span class="trend-neutral"><i class="fas fa-minus"></i> 0%</span>
-                <span class="trend-badge">vs yesterday</span>
+                <span class="trend-down"><i class="fas fa-exclamation-circle"></i> 3 rooms</span>
+                <span class="trend-badge down">action needed</span>
               </div>
             </div>
 
-            <div class="stat-card">
+            <div class="stat-card" onclick="showToast('Channel Status', 'All channels connected', 'success')">
               <div class="stat-header">
-                <span class="stat-title">Today's Departures</span>
-                <div class="stat-icon"><i class="fas fa-sign-out-alt"></i></div>
+                <span class="stat-title">Active Channels</span>
+                <div class="stat-icon"><i class="fas fa-globe"></i></div>
               </div>
-              <div class="stat-value">18</div>
+              <div class="stat-value">4/4</div>
               <div class="stat-trend">
-                <span class="trend-up"><i class="fas fa-arrow-up"></i> +5.8%</span>
-                <span class="trend-badge up">vs yesterday</span>
+                <span class="trend-up"><i class="fas fa-check-circle"></i> All connected</span>
+                <span class="trend-badge up">live</span>
               </div>
             </div>
 
-            <div class="stat-card">
+            <div class="stat-card" onclick="showToast('Rate Parity', '3 rate discrepancies found', 'warning')">
               <div class="stat-header">
-                <span class="stat-title">Revenue (MTD)</span>
-                <div class="stat-icon"><i class="fas fa-naira-sign"></i></div>
+                <span class="stat-title">Rate Parity</span>
+                <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
               </div>
-              <div class="stat-value">₦18.4M</div>
+              <div class="stat-value">98%</div>
               <div class="stat-trend">
-                <span class="trend-up"><i class="fas fa-arrow-up"></i> +23.1%</span>
-                <span class="trend-badge up">vs target</span>
+                <span class="trend-down"><i class="fas fa-exclamation-triangle"></i> 3 discrepancies</span>
+                <span class="trend-badge down">review</span>
               </div>
             </div>
           </div>
+
+          <!-- Channel Status Overview -->
+          <div class="channel-grid" id="dashboardChannels"></div>
 
           <!-- Charts Row -->
           <div class="charts-row">
@@ -1647,196 +2012,88 @@
 
             <div class="chart-card">
               <div class="chart-header">
-                <h3 class="chart-title">Quick Stats</h3>
+                <h3 class="chart-title">Channel Distribution</h3>
               </div>
-              <div class="mini-stats">
-                <div class="mini-stat">
-                  <div class="mini-stat-label">Avg. Daily Rate</div>
-                  <div class="mini-stat-value">₦72,500</div>
-                  <div class="mini-stat-trend trend-up">+5.2% vs last month</div>
-                </div>
-                <div class="mini-stat">
-                  <div class="mini-stat-label">RevPAR</div>
-                  <div class="mini-stat-value">₦62,350</div>
-                  <div class="mini-stat-trend trend-up">+8.1% vs last month</div>
-                </div>
-                <div class="mini-stat">
-                  <div class="mini-stat-label">Total Rooms</div>
-                  <div class="mini-stat-value">124</div>
-                  <div class="mini-stat-trend trend-neutral">+0 new this month</div>
-                </div>
-                <div class="mini-stat">
-                  <div class="mini-stat-label">Maintenance</div>
-                  <div class="mini-stat-value">3</div>
-                  <div class="mini-stat-trend trend-down">+1 vs yesterday</div>
-                </div>
+              <div class="chart-container">
+                <canvas id="channelChart"></canvas>
               </div>
             </div>
           </div>
 
-          <!-- Recent Bookings Table -->
-          <div class="table-section">
-            <div class="table-header">
-              <h3 class="table-title">Recent Bookings</h3>
+          <!-- Channel Feed -->
+          <div class="channel-feed">
+            <div class="feed-header">
+              <h3 class="chart-title">Live Channel Activity</h3>
               <div class="table-actions">
-                <div class="table-filter" id="filterBookings">
-                  <i class="fas fa-filter"></i> Filter
+                <div class="table-filter" onclick="refreshFeed()">
+                  <i class="fas fa-sync-alt"></i> Refresh
                 </div>
-                <a href="#" class="table-view-all" data-section="bookings">View All →</a>
               </div>
             </div>
+            <div class="feed-list" id="channelFeed"></div>
+          </div>
+        </div>
 
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th>Booking ID</th>
-                  <th>Guest</th>
-                  <th>Room</th>
-                  <th>Check-in</th>
-                  <th>Check-out</th>
-                  <th>Guests</th>
-                  <th>Total</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>#WB-2024-001</td>
-                  <td><strong>John Smith</strong></td>
-                  <td>Deluxe King</td>
-                  <td>2024-03-15</td>
-                  <td>2024-03-18</td>
-                  <td>2</td>
-                  <td>₦195,000</td>
-                  <td><span class="status-badge confirmed">Confirmed</span></td>
-                  <td>
-                    <a href="#" class="action-btn view-booking" data-id="WB-2024-001"><i class="fas fa-eye"></i></a>
-                    <a href="#" class="action-btn edit-booking" data-id="WB-2024-001"><i class="fas fa-edit"></i></a>
-                    <a href="#" class="action-btn danger cancel-booking" data-id="WB-2024-001"><i class="fas fa-times"></i></a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>#WB-2024-002</td>
-                  <td><strong>Sarah Johnson</strong></td>
-                  <td>Executive Suite</td>
-                  <td>2024-03-15</td>
-                  <td>2024-03-20</td>
-                  <td>3</td>
-                  <td>₦425,000</td>
-                  <td><span class="status-badge pending">Pending</span></td>
-                  <td>
-                    <a href="#" class="action-btn view-booking" data-id="WB-2024-002"><i class="fas fa-eye"></i></a>
-                    <a href="#" class="action-btn edit-booking" data-id="WB-2024-002"><i class="fas fa-edit"></i></a>
-                    <a href="#" class="action-btn danger cancel-booking" data-id="WB-2024-002"><i class="fas fa-times"></i></a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>#WB-2024-003</td>
-                  <td><strong>Michael Chen</strong></td>
-                  <td>Standard Twin</td>
-                  <td>2024-03-16</td>
-                  <td>2024-03-19</td>
-                  <td>2</td>
-                  <td>₦150,000</td>
-                  <td><span class="status-badge checked-in">Checked In</span></td>
-                  <td>
-                    <a href="#" class="action-btn view-booking" data-id="WB-2024-003"><i class="fas fa-eye"></i></a>
-                    <a href="#" class="action-btn edit-booking" data-id="WB-2024-003"><i class="fas fa-edit"></i></a>
-                    <a href="#" class="action-btn danger cancel-booking" data-id="WB-2024-003"><i class="fas fa-times"></i></a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>#WB-2024-004</td>
-                  <td><strong>Emily Davis</strong></td>
-                  <td>Deluxe Twin</td>
-                  <td>2024-03-14</td>
-                  <td>2024-03-16</td>
-                  <td>2</td>
-                  <td>₦130,000</td>
-                  <td><span class="status-badge checked-out">Checked Out</span></td>
-                  <td>
-                    <a href="#" class="action-btn view-booking" data-id="WB-2024-004"><i class="fas fa-eye"></i></a>
-                    <a href="#" class="action-btn edit-booking" data-id="WB-2024-004"><i class="fas fa-edit"></i></a>
-                    <a href="#" class="action-btn danger cancel-booking" data-id="WB-2024-004"><i class="fas fa-times"></i></a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+        <!-- Channel Manager Section -->
+        <div class="admin-section" id="channel-section">
+          <div class="alert-center">
+            <div class="alert-header">
+              <h3><i class="fas fa-globe" style="color: var(--gold);"></i> Channel Manager Status</h3>
+              <span class="alert-count">Real-time sync active</span>
+            </div>
           </div>
 
-          <!-- Recent Activity & Pending Tasks -->
+          <div class="channel-grid" id="channelManagerGrid"></div>
+
           <div class="grid-2">
             <div class="table-section">
               <div class="table-header">
-                <h3 class="table-title">Recent Activity</h3>
+                <h3 class="table-title">Incoming Bookings</h3>
+                <div class="table-actions">
+                  <div class="table-filter" onclick="syncAllChannels()">
+                    <i class="fas fa-sync-alt"></i> Sync All
+                  </div>
+                </div>
               </div>
-              <ul class="activity-list">
-                <li class="activity-item">
-                  <div class="activity-icon"><i class="fas fa-check"></i></div>
-                  <div class="activity-content">
-                    <div class="activity-text"><strong>John Smith</strong> checked in to Deluxe King (Room 402)</div>
-                    <div class="activity-time">2 minutes ago</div>
-                  </div>
-                </li>
-                <li class="activity-item">
-                  <div class="activity-icon"><i class="fas fa-credit-card"></i></div>
-                  <div class="activity-content">
-                    <div class="activity-text">Payment of <strong>₦425,000</strong> received from Sarah Johnson</div>
-                    <div class="activity-time">15 minutes ago</div>
-                  </div>
-                </li>
-                <li class="activity-item">
-                  <div class="activity-icon"><i class="fas fa-times"></i></div>
-                  <div class="activity-content">
-                    <div class="activity-text">Booking <strong>#WB-2024-005</strong> was cancelled</div>
-                    <div class="activity-time">1 hour ago</div>
-                  </div>
-                </li>
-                <li class="activity-item">
-                  <div class="activity-icon"><i class="fas fa-plus"></i></div>
-                  <div class="activity-content">
-                    <div class="activity-text">New booking from <strong>Robert Wilson</strong> (Executive Suite)</div>
-                    <div class="activity-time">2 hours ago</div>
-                  </div>
-                </li>
-              </ul>
+              <div class="feed-list" id="incomingBookings"></div>
             </div>
 
             <div class="table-section">
               <div class="table-header">
-                <h3 class="table-title">Pending Tasks</h3>
+                <h3 class="table-title">Sync Logs</h3>
+                <div class="table-actions">
+                  <div class="table-filter" onclick="clearLogs()">
+                    <i class="fas fa-trash"></i> Clear
+                  </div>
+                </div>
               </div>
-              <ul class="activity-list">
-                <li class="activity-item">
-                  <div class="activity-icon" style="background: var(--warning-light); color: var(--warning);">
-                    <i class="fas fa-clock"></i>
-                  </div>
-                  <div class="activity-content">
-                    <div class="activity-text">5 bookings pending confirmation</div>
-                    <div class="activity-time">Requires action</div>
-                  </div>
-                </li>
-                <li class="activity-item">
-                  <div class="activity-icon" style="background: var(--danger-light); color: var(--danger);">
-                    <i class="fas fa-exclamation"></i>
-                  </div>
-                  <div class="activity-content">
-                    <div class="activity-text">3 payments failed - review required</div>
-                    <div class="activity-time">Urgent</div>
-                  </div>
-                </li>
-                <li class="activity-item">
-                  <div class="activity-icon" style="background: var(--info-light); color: var(--info);">
-                    <i class="fas fa-envelope"></i>
-                  </div>
-                  <div class="activity-content">
-                    <div class="activity-text">12 unread guest messages</div>
-                    <div class="activity-time">Respond within 24h</div>
-                  </div>
-                </li>
-              </ul>
+              <div class="feed-list" id="syncLogs"></div>
             </div>
+          </div>
+
+          <div class="table-section">
+            <div class="table-header">
+              <h3 class="table-title">Rate Parity Monitor</h3>
+              <div class="table-actions">
+                <div class="table-filter" onclick="checkRateParity()">
+                  <i class="fas fa-search"></i> Check Parity
+                </div>
+              </div>
+            </div>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Room Type</th>
+                  <th>Base Rate</th>
+                  <th>Booking.com</th>
+                  <th>Expedia</th>
+                  <th>Agoda</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="parityTable"></tbody>
+            </table>
           </div>
         </div>
 
@@ -1846,29 +2103,28 @@
             <div class="table-header">
               <h3 class="table-title">All Bookings</h3>
               <div class="table-actions">
-                <div class="table-filter" id="exportBookings">
+                <div class="table-filter" onclick="showToast('Export Started', 'Your bookings export is being prepared', 'success')">
                   <i class="fas fa-download"></i> Export
                 </div>
-                <button class="btn btn-primary btn-sm" id="newBookingBtn">
+                <button class="btn btn-primary btn-sm" onclick="document.getElementById('newBookingModal').classList.add('active')">
                   <i class="fas fa-plus"></i> New Booking
                 </button>
               </div>
             </div>
 
-            <!-- Booking Tabs -->
             <div class="admin-tabs">
-              <div class="admin-tab active" data-status="all">All (284)</div>
-              <div class="admin-tab" data-status="pending">Pending (12)</div>
-              <div class="admin-tab" data-status="confirmed">Confirmed (156)</div>
-              <div class="admin-tab" data-status="checked-in">Checked In (48)</div>
-              <div class="admin-tab" data-status="checked-out">Checked Out (62)</div>
-              <div class="admin-tab" data-status="cancelled">Cancelled (6)</div>
+              <div class="admin-tab active" onclick="filterBookings('all')">All (284)</div>
+              <div class="admin-tab" onclick="filterBookings('pending')">Pending (12)</div>
+              <div class="admin-tab" onclick="filterBookings('confirmed')">Confirmed (156)</div>
+              <div class="admin-tab" onclick="filterBookings('checked-in')">Checked In (48)</div>
+              <div class="admin-tab" onclick="filterBookings('checked-out')">Checked Out (62)</div>
+              <div class="admin-tab" onclick="filterBookings('cancelled')">Cancelled (6)</div>
             </div>
 
             <table class="data-table">
               <thead>
                 <tr>
-                  <th><input type="checkbox" id="selectAll"></th>
+                  <th><input type="checkbox" id="selectAll" onclick="toggleAllCheckboxes(this)"></th>
                   <th>Booking ID</th>
                   <th>Guest</th>
                   <th>Room</th>
@@ -1881,99 +2137,23 @@
                   <th>Actions</th>
                 </tr>
               </thead>
-              <tbody id="bookingsTableBody">
-                <!-- Dynamically populated via JavaScript -->
-              </tbody>
+              <tbody id="bookingsTableBody"></tbody>
             </table>
-
-            <!-- Pagination -->
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 24px;">
-              <div style="font-size: 14px; color: var(--gray-500);" id="paginationInfo">Showing 1-10 of 284 bookings</div>
-              <div style="display: flex; gap: 8px;" id="pagination">
-                <a href="#" class="action-btn" data-page="prev"><i class="fas fa-chevron-left"></i></a>
-                <a href="#" class="action-btn active" data-page="1">1</a>
-                <a href="#" class="action-btn" data-page="2">2</a>
-                <a href="#" class="action-btn" data-page="3">3</a>
-                <a href="#" class="action-btn" data-page="4">4</a>
-                <a href="#" class="action-btn" data-page="5">5</a>
-                <a href="#" class="action-btn" data-page="next"><i class="fas fa-chevron-right"></i></a>
-              </div>
-            </div>
           </div>
         </div>
 
         <!-- Calendar Section -->
         <div class="admin-section" id="calendar-section">
-          <div class="grid-2">
-            <div class="table-section">
-              <div class="table-header">
-                <h3 class="table-title">Room Calendar</h3>
-                <div class="table-actions">
-                  <div class="table-filter" id="prevMonth">
-                    <i class="fas fa-chevron-left"></i>
-                  </div>
-                  <span style="font-weight: 600;" id="currentMonthDisplay">March 2024</span>
-                  <div class="table-filter" id="nextMonth">
-                    <i class="fas fa-chevron-right"></i>
-                  </div>
-                  <button class="btn btn-primary btn-sm" id="blockDatesBtn">
-                    <i class="fas fa-lock"></i> Block Dates
-                  </button>
-                </div>
-              </div>
-
-              <!-- Calendar Grid -->
-              <div id="calendarGrid"></div>
-
-              <div style="display: flex; gap: 24px; margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--gray-100); flex-wrap: wrap;">
-                <div style="display: flex; align-items: center; gap: 8px;">
-                  <div style="width: 16px; height: 16px; background: var(--success-light); border-radius: 4px;"></div>
-                  <span style="font-size: 13px;">Available</span>
-                </div>
-                <div style="display: flex; align-items: center; gap: 8px;">
-                  <div style="width: 16px; height: 16px; background: var(--gold-soft); border-radius: 4px;"></div>
-                  <span style="font-size: 13px;">Booked</span>
-                </div>
-                <div style="display: flex; align-items: center; gap: 8px;">
-                  <div style="width: 16px; height: 16px; background: var(--gray-100); border-radius: 4px;"></div>
-                  <span style="font-size: 13px;">Blocked</span>
-                </div>
-                <div style="display: flex; align-items: center; gap: 8px;">
-                  <div style="width: 16px; height: 16px; background: var(--danger-light); border-radius: 4px;"></div>
-                  <span style="font-size: 13px;">Maintenance</span>
-                </div>
+          <div class="table-section">
+            <div class="table-header">
+              <h3 class="table-title">Room Calendar</h3>
+              <div class="table-actions">
+                <div class="table-filter" onclick="changeMonth(-1)"><i class="fas fa-chevron-left"></i></div>
+                <span style="font-weight: 600;" id="currentMonthDisplay">March 2024</span>
+                <div class="table-filter" onclick="changeMonth(1)"><i class="fas fa-chevron-right"></i></div>
               </div>
             </div>
-
-            <div class="table-section">
-              <div class="table-header">
-                <h3 class="table-title">Today's Schedule</h3>
-              </div>
-              <div style="margin-bottom: 20px;">
-                <div style="font-size: 28px; font-weight: 700; color: var(--gray-800);" id="todayDate"></div>
-                <div style="color: var(--gray-500);" id="todayDay"></div>
-              </div>
-
-              <div style="margin-bottom: 24px;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 16px;">
-                  <span style="font-weight: 600;">Arrivals (<span id="arrivalsCount">24</span>)</span>
-                  <a href="#" style="color: var(--gold);" data-section="bookings">View all</a>
-                </div>
-                <div style="display: flex; flex-direction: column; gap: 12px;" id="arrivalsList">
-                  <!-- Populated via JavaScript -->
-                </div>
-              </div>
-
-              <div>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 16px;">
-                  <span style="font-weight: 600;">Departures (<span id="departuresCount">18</span>)</span>
-                  <a href="#" style="color: var(--gold);" data-section="bookings">View all</a>
-                </div>
-                <div style="display: flex; flex-direction: column; gap: 12px;" id="departuresList">
-                  <!-- Populated via JavaScript -->
-                </div>
-              </div>
-            </div>
+            <div class="calendar-grid" id="calendarGrid"></div>
           </div>
         </div>
 
@@ -1982,544 +2162,83 @@
           <div class="table-section">
             <div class="table-header">
               <h3 class="table-title">Rooms & Pricing</h3>
-              <div class="table-actions">
-                <div class="table-filter" id="exportRooms">
-                  <i class="fas fa-download"></i> Export
-                </div>
-                <button class="btn btn-primary btn-sm" id="addRoomBtn">
-                  <i class="fas fa-plus"></i> Add Room
-                </button>
-              </div>
+              <button class="btn btn-primary btn-sm" onclick="showToast('Add Room', 'Room creation form opening', 'info')">Add Room</button>
             </div>
-
-            <div class="admin-tabs">
-              <div class="admin-tab active" data-room-type="all">All Rooms (124)</div>
-              <div class="admin-tab" data-room-type="standard">Standard (45)</div>
-              <div class="admin-tab" data-room-type="deluxe">Deluxe (52)</div>
-              <div class="admin-tab" data-room-type="suite">Suites (27)</div>
-            </div>
-
             <table class="data-table">
               <thead>
-                <tr>
-                  <th>Room #</th>
-                  <th>Type</th>
-                  <th>View</th>
-                  <th>Capacity</th>
-                  <th>Base Price</th>
-                  <th>Current Price</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
+                <tr><th>Room #</th><th>Type</th><th>Status</th><th>Price</th><th>Actions</th></tr>
               </thead>
-              <tbody id="roomsTableBody">
-                <tr>
-                  <td>101</td>
-                  <td>Standard Twin</td>
-                  <td>Garden</td>
-                  <td>2 Adults</td>
-                  <td>₦45,000</td>
-                  <td>₦45,000</td>
-                  <td><span class="status-badge confirmed">Available</span></td>
-                  <td>
-                    <a href="#" class="action-btn"><i class="fas fa-edit"></i></a>
-                    <a href="#" class="action-btn"><i class="fas fa-copy"></i></a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>102</td>
-                  <td>Standard Twin</td>
-                  <td>Garden</td>
-                  <td>2 Adults</td>
-                  <td>₦45,000</td>
-                  <td>₦45,000</td>
-                  <td><span class="status-badge checked-in">Occupied</span></td>
-                  <td>
-                    <a href="#" class="action-btn"><i class="fas fa-edit"></i></a>
-                    <a href="#" class="action-btn"><i class="fas fa-copy"></i></a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>201</td>
-                  <td>Deluxe King</td>
-                  <td>Ocean</td>
-                  <td>2 Adults + 1 Child</td>
-                  <td>₦85,000</td>
-                  <td>₦85,000</td>
-                  <td><span class="status-badge confirmed">Available</span></td>
-                  <td>
-                    <a href="#" class="action-btn"><i class="fas fa-edit"></i></a>
-                    <a href="#" class="action-btn"><i class="fas fa-copy"></i></a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>301</td>
-                  <td>Executive Suite</td>
-                  <td>Panoramic</td>
-                  <td>4 Adults</td>
-                  <td>₦150,000</td>
-                  <td>₦165,000</td>
-                  <td><span class="status-badge pending">Maintenance</span></td>
-                  <td>
-                    <a href="#" class="action-btn"><i class="fas fa-edit"></i></a>
-                    <a href="#" class="action-btn"><i class="fas fa-copy"></i></a>
-                  </td>
-                </tr>
+              <tbody>
+                <tr><td>101</td><td>Standard Twin</td><td><span class="status-badge confirmed">Available</span></td><td>₦45,000</td><td><button class="action-btn" onclick="showToast('Edit Room', 'Editing room 101', 'info')"><i class="fas fa-edit"></i></button></td></tr>
+                <tr><td>102</td><td>Standard Twin</td><td><span class="status-badge checked-in">Occupied</span></td><td>₦45,000</td><td><button class="action-btn" onclick="showToast('Edit Room', 'Editing room 102', 'info')"><i class="fas fa-edit"></i></button></td></tr>
+                <tr><td>201</td><td>Deluxe King</td><td><span class="status-badge confirmed">Available</span></td><td>₦85,000</td><td><button class="action-btn" onclick="showToast('Edit Room', 'Editing room 201', 'info')"><i class="fas fa-edit"></i></button></td></tr>
               </tbody>
             </table>
           </div>
         </div>
 
-        <!-- Content Section -->
+        <!-- Other sections (simplified) -->
         <div class="admin-section" id="content-section">
-          <div class="grid-2">
-            <div class="table-section">
-              <div class="table-header">
-                <h3 class="table-title">Website Pages</h3>
-                <button class="btn btn-primary btn-sm" id="newPageBtn">
-                  <i class="fas fa-plus"></i> New Page
-                </button>
-              </div>
-              <table class="data-table">
-                <thead>
-                  <tr>
-                    <th>Page</th>
-                    <th>Last Updated</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Homepage</td>
-                    <td>2024-03-14</td>
-                    <td><span class="status-badge confirmed">Published</span></td>
-                    <td>
-                      <a href="#" class="action-btn"><i class="fas fa-edit"></i></a>
-                      <a href="#" class="action-btn"><i class="fas fa-eye"></i></a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Rooms & Suites</td>
-                    <td>2024-03-10</td>
-                    <td><span class="status-badge confirmed">Published</span></td>
-                    <td>
-                      <a href="#" class="action-btn"><i class="fas fa-edit"></i></a>
-                      <a href="#" class="action-btn"><i class="fas fa-eye"></i></a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>About Us</td>
-                    <td>2024-03-01</td>
-                    <td><span class="status-badge pending">Draft</span></td>
-                    <td>
-                      <a href="#" class="action-btn"><i class="fas fa-edit"></i></a>
-                      <a href="#" class="action-btn"><i class="fas fa-eye"></i></a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+          <div class="table-section">
+            <div class="table-header">
+              <h3 class="table-title">Content Management</h3>
             </div>
-
-            <div class="table-section">
-              <div class="table-header">
-                <h3 class="table-title">Media Gallery</h3>
-                <button class="btn btn-primary btn-sm" id="uploadMediaBtn">
-                  <i class="fas fa-upload"></i> Upload
-                </button>
-              </div>
-              <div class="image-preview">
-                <div class="preview-item">
-                  <img src="https://via.placeholder.com/150" alt="Room">
-                  <div class="preview-remove"><i class="fas fa-times"></i></div>
-                </div>
-                <div class="preview-item">
-                  <img src="https://via.placeholder.com/150" alt="Lobby">
-                  <div class="preview-remove"><i class="fas fa-times"></i></div>
-                </div>
-                <div class="preview-item">
-                  <img src="https://via.placeholder.com/150" alt="Restaurant">
-                  <div class="preview-remove"><i class="fas fa-times"></i></div>
-                </div>
-                <div class="preview-item">
-                  <img src="https://via.placeholder.com/150" alt="Pool">
-                  <div class="preview-remove"><i class="fas fa-times"></i></div>
-                </div>
-              </div>
-            </div>
+            <p style="color: var(--gray-500); text-align: center; padding: 40px;">Content management interface would appear here</p>
           </div>
         </div>
 
-        <!-- Payments Section -->
         <div class="admin-section" id="payments-section">
           <div class="table-section">
             <div class="table-header">
-              <h3 class="table-title">Recent Transactions</h3>
-              <div class="table-actions">
-                <div class="table-filter">
-                  <i class="fas fa-filter"></i> Filter
-                </div>
-                <div class="table-filter">
-                  <i class="fas fa-download"></i> Export
-                </div>
-              </div>
+              <h3 class="table-title">Payments</h3>
             </div>
-
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th>Transaction ID</th>
-                  <th>Booking ID</th>
-                  <th>Guest</th>
-                  <th>Amount</th>
-                  <th>Method</th>
-                  <th>Date</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>TXN-001</td>
-                  <td>#WB-2024-001</td>
-                  <td>John Smith</td>
-                  <td>₦195,000</td>
-                  <td>Credit Card</td>
-                  <td>2024-03-14</td>
-                  <td><span class="status-badge confirmed">Completed</span></td>
-                  <td>
-                    <a href="#" class="action-btn"><i class="fas fa-receipt"></i></a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>TXN-002</td>
-                  <td>#WB-2024-002</td>
-                  <td>Sarah Johnson</td>
-                  <td>₦425,000</td>
-                  <td>Bank Transfer</td>
-                  <td>2024-03-14</td>
-                  <td><span class="status-badge pending">Pending</span></td>
-                  <td>
-                    <a href="#" class="action-btn"><i class="fas fa-receipt"></i></a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <p style="color: var(--gray-500); text-align: center; padding: 40px;">Payment processing interface would appear here</p>
           </div>
         </div>
 
-        <!-- Guests Section -->
         <div class="admin-section" id="guests-section">
           <div class="table-section">
             <div class="table-header">
               <h3 class="table-title">Guest Directory</h3>
-              <div class="table-actions">
-                <input type="text" class="form-input" placeholder="Search guests..." style="width: 250px;">
-                <button class="btn btn-primary btn-sm">
-                  <i class="fas fa-user-plus"></i> Add Guest
-                </button>
-              </div>
             </div>
-
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th>Guest ID</th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Phone</th>
-                  <th>Total Stays</th>
-                  <th>Last Visit</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>G-1001</td>
-                  <td><strong>John Smith</strong></td>
-                  <td>john@email.com</td>
-                  <td>+234 801 234 5678</td>
-                  <td>5</td>
-                  <td>2024-03-15</td>
-                  <td><span class="status-badge confirmed">Active</span></td>
-                  <td>
-                    <a href="#" class="action-btn"><i class="fas fa-eye"></i></a>
-                    <a href="#" class="action-btn"><i class="fas fa-envelope"></i></a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>G-1002</td>
-                  <td><strong>Sarah Johnson</strong></td>
-                  <td>sarah@email.com</td>
-                  <td>+234 802 345 6789</td>
-                  <td>3</td>
-                  <td>2024-03-15</td>
-                  <td><span class="status-badge confirmed">Active</span></td>
-                  <td>
-                    <a href="#" class="action-btn"><i class="fas fa-eye"></i></a>
-                    <a href="#" class="action-btn"><i class="fas fa-envelope"></i></a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <p style="color: var(--gray-500); text-align: center; padding: 40px;">Guest management interface would appear here</p>
           </div>
         </div>
 
-        <!-- Email Notifications Section -->
         <div class="admin-section" id="emails-section">
-          <div class="grid-2">
-            <div class="table-section">
-              <div class="table-header">
-                <h3 class="table-title">Email Templates</h3>
-                <button class="btn btn-primary btn-sm">
-                  <i class="fas fa-plus"></i> New Template
-                </button>
-              </div>
-              <table class="data-table">
-                <thead>
-                  <tr>
-                    <th>Template Name</th>
-                    <th>Subject</th>
-                    <th>Last Modified</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Booking Confirmation</td>
-                    <td>Your booking at WestBrook is confirmed</td>
-                    <td>2024-03-10</td>
-                    <td><span class="status-badge confirmed">Active</span></td>
-                    <td>
-                      <a href="#" class="action-btn"><i class="fas fa-edit"></i></a>
-                      <a href="#" class="action-btn"><i class="fas fa-copy"></i></a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Check-in Reminder</td>
-                    <td>Your stay starts tomorrow at WestBrook</td>
-                    <td>2024-03-08</td>
-                    <td><span class="status-badge confirmed">Active</span></td>
-                    <td>
-                      <a href="#" class="action-btn"><i class="fas fa-edit"></i></a>
-                      <a href="#" class="action-btn"><i class="fas fa-copy"></i></a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+          <div class="table-section">
+            <div class="table-header">
+              <h3 class="table-title">Email Notifications</h3>
             </div>
-
-            <div class="table-section">
-              <div class="table-header">
-                <h3 class="table-title">Email Logs</h3>
-              </div>
-              <table class="data-table">
-                <thead>
-                  <tr>
-                    <th>Recipient</th>
-                    <th>Template</th>
-                    <th>Sent Date</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>john@email.com</td>
-                    <td>Booking Confirmation</td>
-                    <td>2024-03-14 10:30</td>
-                    <td><span class="status-badge confirmed">Delivered</span></td>
-                  </tr>
-                  <tr>
-                    <td>sarah@email.com</td>
-                    <td>Booking Confirmation</td>
-                    <td>2024-03-14 11:45</td>
-                    <td><span class="status-badge confirmed">Delivered</span></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            <p style="color: var(--gray-500); text-align: center; padding: 40px;">Email template management would appear here</p>
           </div>
         </div>
 
-        <!-- User Roles Section -->
         <div class="admin-section" id="users-section">
           <div class="table-section">
             <div class="table-header">
               <h3 class="table-title">User Management</h3>
-              <button class="btn btn-primary btn-sm" id="addUserBtn">
-                <i class="fas fa-user-plus"></i> Add User
-              </button>
             </div>
-
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th>User</th>
-                  <th>Email</th>
-                  <th>Role</th>
-                  <th>Last Active</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <div style="display: flex; align-items: center; gap: 12px;">
-                      <div class="user-avatar" style="width: 32px; height: 32px;">SA</div>
-                      <strong>Samuel A.</strong>
-                    </div>
-                  </td>
-                  <td>samuel@westbrook.com</td>
-                  <td>Super Admin</td>
-                  <td>Now</td>
-                  <td><span class="status-badge confirmed">Active</span></td>
-                  <td>
-                    <a href="#" class="action-btn"><i class="fas fa-edit"></i></a>
-                    <a href="#" class="action-btn"><i class="fas fa-lock"></i></a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div style="display: flex; align-items: center; gap: 12px;">
-                      <div class="user-avatar" style="width: 32px; height: 32px; background: var(--info);">JD</div>
-                      <strong>Jane Doe</strong>
-                    </div>
-                  </td>
-                  <td>jane@westbrook.com</td>
-                  <td>Manager</td>
-                  <td>5 mins ago</td>
-                  <td><span class="status-badge confirmed">Active</span></td>
-                  <td>
-                    <a href="#" class="action-btn"><i class="fas fa-edit"></i></a>
-                    <a href="#" class="action-btn"><i class="fas fa-lock"></i></a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <p style="color: var(--gray-500); text-align: center; padding: 40px;">User role management would appear here</p>
           </div>
         </div>
 
-        <!-- Reports Section -->
         <div class="admin-section" id="reports-section">
-          <div class="grid-2">
-            <div class="table-section">
-              <div class="table-header">
-                <h3 class="table-title">Revenue Report</h3>
-                <div class="table-actions">
-                  <select class="form-select" style="width: 150px;">
-                    <option>Last 30 Days</option>
-                    <option>Last Quarter</option>
-                    <option>Last Year</option>
-                  </select>
-                  <button class="btn btn-primary btn-sm">
-                    <i class="fas fa-download"></i> Download
-                  </button>
-                </div>
-              </div>
-              <div style="height: 300px;">
-                <canvas id="revenueReportChart"></canvas>
-              </div>
-            </div>
-
-            <div class="table-section">
-              <div class="table-header">
-                <h3 class="table-title">Occupancy Report</h3>
-                <div class="table-actions">
-                  <select class="form-select" style="width: 150px;">
-                    <option>Last 30 Days</option>
-                    <option>Last Quarter</option>
-                    <option>Last Year</option>
-                  </select>
-                  <button class="btn btn-primary btn-sm">
-                    <i class="fas fa-download"></i> Download
-                  </button>
-                </div>
-              </div>
-              <div style="height: 300px;">
-                <canvas id="occupancyReportChart"></canvas>
-              </div>
-            </div>
-          </div>
-
           <div class="table-section">
             <div class="table-header">
-              <h3 class="table-title">Popular Reports</h3>
+              <h3 class="table-title">Reports</h3>
             </div>
-            <div class="grid-3">
-              <div class="mini-stat" style="cursor: pointer;">
-                <i class="fas fa-chart-line" style="font-size: 24px; color: var(--gold); margin-bottom: 12px;"></i>
-                <div class="mini-stat-value">Monthly Financial Summary</div>
-                <div class="mini-stat-label">Download PDF</div>
-              </div>
-              <div class="mini-stat" style="cursor: pointer;">
-                <i class="fas fa-users" style="font-size: 24px; color: var(--info); margin-bottom: 12px;"></i>
-                <div class="mini-stat-value">Guest Demographics</div>
-                <div class="mini-stat-label">Download PDF</div>
-              </div>
-              <div class="mini-stat" style="cursor: pointer;">
-                <i class="fas fa-calendar" style="font-size: 24px; color: var(--success); margin-bottom: 12px;"></i>
-                <div class="mini-stat-value">Booking Trends</div>
-                <div class="mini-stat-label">Download PDF</div>
-              </div>
-            </div>
+            <p style="color: var(--gray-500); text-align: center; padding: 40px;">Analytics and reporting interface would appear here</p>
           </div>
         </div>
 
-        <!-- Settings Section -->
         <div class="admin-section" id="settings-section">
           <div class="table-section">
             <div class="table-header">
-              <h3 class="table-title">General Settings</h3>
-              <button class="btn btn-primary btn-sm" id="saveSettings">Save Changes</button>
+              <h3 class="table-title">Settings</h3>
+              <button class="btn btn-primary btn-sm" onclick="showToast('Settings Saved', 'Configuration updated', 'success')">Save Changes</button>
             </div>
-
-            <div class="grid-2">
-              <div>
-                <div class="form-group">
-                  <label class="form-label">Hotel Name</label>
-                  <input type="text" class="form-input" value="WestBrook Hotel & Suites">
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Contact Email</label>
-                  <input type="email" class="form-input" value="info@westbrook.com">
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Contact Phone</label>
-                  <input type="text" class="form-input" value="+234 123 456 7890">
-                </div>
-              </div>
-              <div>
-                <div class="form-group">
-                  <label class="form-label">Address</label>
-                  <textarea class="form-textarea" rows="3">123 Luxury Avenue, Victoria Island, Lagos, Nigeria</textarea>
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Currency</label>
-                  <select class="form-select">
-                    <option selected>Nigerian Naira (₦)</option>
-                    <option>US Dollar ($)</option>
-                    <option>Euro (€)</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            <div style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--gray-100);">
-              <h4 style="margin-bottom: 16px;">Business Hours</h4>
-              <div class="grid-2">
-                <div class="form-group">
-                  <label class="form-label">Check-in Time</label>
-                  <input type="time" class="form-input" value="14:00">
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Check-out Time</label>
-                  <input type="time" class="form-input" value="12:00">
-                </div>
-              </div>
-            </div>
+            <p style="color: var(--gray-500); text-align: center; padding: 40px;">System configuration interface would appear here</p>
           </div>
         </div>
       </div>
@@ -2528,16 +2247,16 @@
 
   <!-- User Menu Dropdown -->
   <div class="dropdown-menu" id="userDropdown">
-    <a href="#" class="dropdown-item" data-section="profile">
+    <button class="dropdown-item" onclick="showToast('Profile', 'Viewing profile settings', 'info')">
       <i class="fas fa-user"></i> My Profile
-    </a>
-    <a href="#" class="dropdown-item" data-section="settings">
+    </button>
+    <button class="dropdown-item" onclick="switchSection('settings')">
       <i class="fas fa-cog"></i> Settings
-    </a>
+    </button>
     <div class="dropdown-divider"></div>
-    <a href="#" class="dropdown-item" id="logoutBtn">
+    <button class="dropdown-item" onclick="logout()">
       <i class="fas fa-sign-out-alt"></i> Logout
-    </a>
+    </button>
   </div>
 
   <!-- New Booking Modal -->
@@ -2545,58 +2264,43 @@
     <div class="modal-content">
       <div class="modal-header">
         <h3 class="modal-title">New Booking</h3>
-        <div class="modal-close" id="closeBookingModal">
+        <div class="modal-close" onclick="document.getElementById('newBookingModal').classList.remove('active')">
           <i class="fas fa-times"></i>
         </div>
       </div>
       <div class="modal-body">
-        <form id="newBookingForm">
+        <form id="newBookingForm" onsubmit="event.preventDefault(); createBooking()">
           <div class="form-group">
             <label class="form-label">Guest Name</label>
-            <input type="text" class="form-input" required>
+            <input type="text" class="form-input" id="guestName" required>
           </div>
           <div class="form-group">
             <label class="form-label">Email</label>
-            <input type="email" class="form-input" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Phone</label>
-            <input type="tel" class="form-input" required>
+            <input type="email" class="form-input" id="guestEmail" required>
           </div>
           <div class="grid-2">
             <div class="form-group">
-              <label class="form-label">Check-in Date</label>
-              <input type="date" class="form-input" required>
+              <label class="form-label">Check-in</label>
+              <input type="date" class="form-input" id="checkin" required>
             </div>
             <div class="form-group">
-              <label class="form-label">Check-out Date</label>
-              <input type="date" class="form-input" required>
+              <label class="form-label">Check-out</label>
+              <input type="date" class="form-input" id="checkout" required>
             </div>
           </div>
           <div class="form-group">
             <label class="form-label">Room Type</label>
-            <select class="form-select" required>
-              <option>Standard Twin</option>
+            <select class="form-select" id="roomType">
               <option>Deluxe King</option>
               <option>Executive Suite</option>
-              <option>Presidential Suite</option>
+              <option>Standard Twin</option>
             </select>
-          </div>
-          <div class="grid-2">
-            <div class="form-group">
-              <label class="form-label">Adults</label>
-              <input type="number" class="form-input" value="2" min="1" max="4">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Children</label>
-              <input type="number" class="form-input" value="0" min="0" max="3">
-            </div>
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-secondary" id="cancelBooking">Cancel</button>
-        <button class="btn btn-primary" id="saveBooking">Create Booking</button>
+        <button class="btn btn-secondary" onclick="document.getElementById('newBookingModal').classList.remove('active')">Cancel</button>
+        <button class="btn btn-primary" onclick="createBooking()">Create Booking</button>
       </div>
     </div>
   </div>
@@ -2605,33 +2309,476 @@
   <div class="toast-container" id="toastContainer"></div>
 
   <script>
-    // DOM Elements
-    const sidebar = document.getElementById('sidebar');
-    const mainContent = document.getElementById('mainContent');
-    const sidebarToggle = document.getElementById('sidebarToggle');
-    const menuToggle = document.getElementById('menuToggle');
-    const sections = document.querySelectorAll('.admin-section');
-    const sidebarLinks = document.querySelectorAll('.sidebar-link');
-    const pageTitle = document.getElementById('pageTitle');
-    const userMenuBtn = document.getElementById('userMenuBtn');
-    const userDropdown = document.getElementById('userDropdown');
-    const notificationBtn = document.getElementById('notificationBtn');
-    const globalSearch = document.getElementById('globalSearch');
-    const newBookingBtn = document.getElementById('newBookingBtn');
-    const newBookingModal = document.getElementById('newBookingModal');
-    const closeBookingModal = document.getElementById('closeBookingModal');
-    const cancelBooking = document.getElementById('cancelBooking');
-    const saveBooking = document.getElementById('saveBooking');
-    const selectAll = document.getElementById('selectAll');
-    const toastContainer = document.getElementById('toastContainer');
-
-    // State
+    // ==================== STATE MANAGEMENT ====================
     let currentSection = 'dashboard';
-    let isSidebarCollapsed = false;
+    let currentMonth = new Date();
+    let alerts = [];
+    let channels = [];
+    let channelFeed = [];
+    let bookings = [];
 
-    // Initialize Charts
-    function initCharts() {
-      // Revenue Chart
+    // ==================== INITIALIZATION ====================
+    document.addEventListener('DOMContentLoaded', () => {
+      initializeData();
+      initializeCharts();
+      initializeEventListeners();
+      initializeAlerts();
+      initializeChannels();
+      updateUI();
+      
+      // Welcome toast
+      setTimeout(() => {
+        showToast('Command Center Active', '5 active alerts - review recommended', 'info');
+      }, 1000);
+    });
+
+    // ==================== DATA INITIALIZATION ====================
+    function initializeData() {
+      bookings = [
+        { id: 'WB-2024-001', guest: 'John Smith', email: 'john@email.com', room: 'Deluxe King', checkin: '2024-03-15', checkout: '2024-03-18', nights: 3, total: '195,000', payment: 'Paid', status: 'confirmed' },
+        { id: 'WB-2024-002', guest: 'Sarah Johnson', email: 'sarah@email.com', room: 'Executive Suite', checkin: '2024-03-15', checkout: '2024-03-20', nights: 5, total: '425,000', payment: 'Pending', status: 'pending' },
+        { id: 'WB-2024-003', guest: 'Michael Chen', email: 'michael@email.com', room: 'Standard Twin', checkin: '2024-03-16', checkout: '2024-03-19', nights: 3, total: '150,000', payment: 'Paid', status: 'checked-in' },
+        { id: 'WB-2024-004', guest: 'Emily Davis', email: 'emily@email.com', room: 'Deluxe Twin', checkin: '2024-03-14', checkout: '2024-03-16', nights: 2, total: '130,000', payment: 'Paid', status: 'checked-out' },
+        { id: 'WB-2024-005', guest: 'Robert Wilson', email: 'robert@email.com', room: 'Executive Suite', checkin: '2024-03-17', checkout: '2024-03-19', nights: 2, total: '170,000', payment: 'Pending', status: 'pending' }
+      ];
+    }
+
+    // ==================== ALERT SYSTEM ====================
+    function initializeAlerts() {
+      alerts = [
+        {
+          id: 1,
+          severity: 'critical',
+          title: 'Overbooking Risk - March 15-17',
+          description: '3 rooms overbooked for Deluxe category',
+          time: '2 minutes ago'
+        },
+        {
+          id: 2,
+          severity: 'warning',
+          title: 'High Demand Alert',
+          description: 'Weekend of March 22-24 at 95% occupancy',
+          time: '15 minutes ago'
+        },
+        {
+          id: 3,
+          severity: 'warning',
+          title: 'Multiple Bookings - Room 402',
+          description: 'Double booking detected for same room',
+          time: '1 hour ago'
+        },
+        {
+          id: 4,
+          severity: 'info',
+          title: 'Last Available Room',
+          description: 'Only 1 suite remaining for March 20',
+          time: '2 hours ago'
+        },
+        {
+          id: 5,
+          severity: 'critical',
+          title: 'Channel Discrepancy',
+          description: 'Expedia showing incorrect availability',
+          time: '3 hours ago'
+        }
+      ];
+
+      renderAlerts();
+    }
+
+    function renderAlerts() {
+      const alertList = document.getElementById('alertList');
+      if (!alertList) return;
+
+      alertList.innerHTML = alerts.map(alert => `
+        <div class="alert-item ${alert.severity}" onclick="handleAlertClick(${alert.id})">
+          <div class="alert-item-icon">
+            <i class="fas fa-${alert.severity === 'critical' ? 'exclamation-triangle' : alert.severity === 'warning' ? 'exclamation-circle' : 'info-circle'}"></i>
+          </div>
+          <div class="alert-item-content">
+            <div class="alert-item-title">${alert.title}</div>
+            <div class="alert-item-meta">
+              <span>${alert.description}</span>
+              <span class="alert-item-severity">${alert.severity}</span>
+            </div>
+          </div>
+          <div style="font-size: 12px; color: var(--gray-400);">${alert.time}</div>
+        </div>
+      `).join('');
+
+      document.getElementById('alertCount').textContent = alerts.length;
+      document.querySelector('.notification-badge').textContent = alerts.filter(a => a.severity === 'critical').length;
+    }
+
+    function handleAlertClick(alertId) {
+      const alert = alerts.find(a => a.id === alertId);
+      if (alert) {
+        showToast(`Alert: ${alert.title}`, alert.description, alert.severity);
+      }
+    }
+
+    // ==================== CHANNEL MANAGER ====================
+    function initializeChannels() {
+      channels = [
+        {
+          name: 'Booking.com',
+          icon: 'fab fa-booking',
+          status: 'connected',
+          bookings: 12,
+          revenue: '1.2M',
+          lastSync: '2s ago',
+          availability: 45
+        },
+        {
+          name: 'Expedia',
+          icon: 'fab fa-expedia',
+          status: 'syncing',
+          bookings: 8,
+          revenue: '890K',
+          lastSync: 'Syncing...',
+          availability: 45
+        },
+        {
+          name: 'Agoda',
+          icon: 'fas fa-hotel',
+          status: 'connected',
+          bookings: 5,
+          revenue: '450K',
+          lastSync: '5m ago',
+          availability: 45
+        },
+        {
+          name: 'Direct Bookings',
+          icon: 'fas fa-building',
+          status: 'connected',
+          bookings: 15,
+          revenue: '1.8M',
+          lastSync: 'Real-time',
+          availability: 45
+        }
+      ];
+
+      channelFeed = [
+        { channel: 'Booking.com', action: 'New booking', guest: 'Emma Watson', room: 'Deluxe King', amount: '₦195,000', time: '1 min ago' },
+        { channel: 'Expedia', action: 'Availability update', details: '5 rooms released', time: '3 mins ago' },
+        { channel: 'Agoda', action: 'Rate change', details: 'Suite rate updated to ₦165,000', time: '5 mins ago' },
+        { channel: 'Booking.com', action: 'Booking cancelled', guest: 'James Brown', room: 'Standard Twin', time: '7 mins ago' },
+        { channel: 'Direct', action: 'New booking', guest: 'Lisa Anderson', room: 'Executive Suite', amount: '₦425,000', time: '10 mins ago' }
+      ];
+
+      renderChannels();
+      renderChannelFeed();
+      renderParityTable();
+      renderIncomingBookings();
+      renderSyncLogs();
+    }
+
+    function renderChannels() {
+      const dashboardChannels = document.getElementById('dashboardChannels');
+      const channelManagerGrid = document.getElementById('channelManagerGrid');
+      
+      const channelHTML = channels.map(channel => `
+        <div class="channel-card" onclick="showChannelDetails('${channel.name}')">
+          <div class="channel-header">
+            <div class="channel-info">
+              <div class="channel-logo"><i class="${channel.icon}"></i></div>
+              <div class="channel-name">
+                <h4>${channel.name}</h4>
+                <div class="channel-status">
+                  <span class="status-dot ${channel.status}"></span>
+                  <span>${channel.status.charAt(0).toUpperCase() + channel.status.slice(1)}</span>
+                </div>
+              </div>
+            </div>
+            <i class="fas fa-${channel.status === 'connected' ? 'check-circle' : 'sync-alt fa-spin'}" style="color: ${channel.status === 'connected' ? 'var(--success)' : 'var(--warning)'};"></i>
+          </div>
+          <div class="channel-stats">
+            <div class="channel-stat">
+              <div class="channel-stat-label">Bookings today</div>
+              <div class="channel-stat-value">${channel.bookings}</div>
+            </div>
+            <div class="channel-stat">
+              <div class="channel-stat-label">Revenue</div>
+              <div class="channel-stat-value">₦${channel.revenue}</div>
+            </div>
+          </div>
+          <div class="channel-sync">
+            <span><i class="fas fa-${channel.status === 'syncing' ? 'sync-alt fa-spin' : 'clock'}"></i> Last sync: ${channel.lastSync}</span>
+            <span>Availability: ${channel.availability} rooms</span>
+          </div>
+          <div class="channel-actions">
+            <button class="channel-btn" onclick="event.stopPropagation(); syncChannel('${channel.name}')">
+              <i class="fas fa-sync-alt"></i> Sync Now
+            </button>
+            <button class="channel-btn sync" onclick="event.stopPropagation(); showChannelDetails('${channel.name}')">
+              <i class="fas fa-chart-line"></i> Details
+            </button>
+          </div>
+        </div>
+      `).join('');
+
+      if (dashboardChannels) dashboardChannels.innerHTML = channelHTML;
+      if (channelManagerGrid) channelManagerGrid.innerHTML = channelHTML;
+    }
+
+    function renderChannelFeed() {
+      const feed = document.getElementById('channelFeed');
+      if (!feed) return;
+
+      feed.innerHTML = channelFeed.map(item => `
+        <div class="feed-item" onclick="showToast('Channel Activity', '${item.action}: ${item.guest || item.details || ''}', 'info')">
+          <div class="feed-icon">
+            <i class="${item.channel === 'Booking.com' ? 'fab fa-booking' : item.channel === 'Expedia' ? 'fab fa-expedia' : item.channel === 'Agoda' ? 'fas fa-hotel' : 'fas fa-building'}"></i>
+          </div>
+          <div class="feed-content">
+            <div class="feed-title">${item.action}</div>
+            <div class="feed-meta">
+              <span class="feed-channel">${item.channel}</span>
+              ${item.guest ? `<span>${item.guest}</span>` : ''}
+              ${item.room ? `<span>${item.room}</span>` : ''}
+              ${item.amount ? `<span>${item.amount}</span>` : ''}
+              ${item.details ? `<span>${item.details}</span>` : ''}
+              <span class="feed-time">${item.time}</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderParityTable() {
+      const tbody = document.getElementById('parityTable');
+      if (!tbody) return;
+
+      const roomTypes = [
+        { type: 'Standard Twin', base: '₦45,000', bcom: '₦45,000', expedia: '₦47,000', agoda: '₦44,000', status: 'warning' },
+        { type: 'Deluxe King', base: '₦85,000', bcom: '₦85,000', expedia: '₦85,000', agoda: '₦85,000', status: 'success' },
+        { type: 'Executive Suite', base: '₦150,000', bcom: '₦150,000', expedia: '₦155,000', agoda: '₦148,000', status: 'danger' }
+      ];
+
+      tbody.innerHTML = roomTypes.map(room => `
+        <tr>
+          <td><strong>${room.type}</strong></td>
+          <td>${room.base}</td>
+          <td style="color: ${room.bcom === room.base ? 'var(--success)' : 'var(--warning)'}">${room.bcom}</td>
+          <td style="color: ${room.expedia === room.base ? 'var(--success)' : 'var(--warning)'}">${room.expedia}</td>
+          <td style="color: ${room.agoda === room.base ? 'var(--success)' : 'var(--warning)'}">${room.agoda}</td>
+          <td><span class="status-badge ${room.status}">${room.status === 'success' ? 'Synced' : 'Discrepancy'}</span></td>
+          <td>
+            <button class="action-btn" onclick="showToast('Force Sync', 'Pushing rates to all channels', 'info')">
+              <i class="fas fa-sync-alt"></i>
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function renderIncomingBookings() {
+      const container = document.getElementById('incomingBookings');
+      if (!container) return;
+
+      const incoming = [
+        { channel: 'Booking.com', guest: 'Emma Watson', room: 'Deluxe King', checkin: '2024-03-20', status: 'confirmed' },
+        { channel: 'Expedia', guest: 'Oliver Smith', room: 'Standard Twin', checkin: '2024-03-21', status: 'pending' },
+        { channel: 'Agoda', guest: 'Sophie Chen', room: 'Executive Suite', checkin: '2024-03-22', status: 'confirmed' },
+        { channel: 'Direct', guest: 'Michael Brown', room: 'Deluxe Twin', checkin: '2024-03-23', status: 'pending' }
+      ];
+
+      container.innerHTML = incoming.map(b => `
+        <div class="feed-item" onclick="showToast('Process Booking', 'Opening booking form', 'info')">
+          <div class="feed-icon">
+            <i class="${b.channel === 'Booking.com' ? 'fab fa-booking' : b.channel === 'Expedia' ? 'fab fa-expedia' : b.channel === 'Agoda' ? 'fas fa-hotel' : 'fas fa-building'}"></i>
+          </div>
+          <div class="feed-content">
+            <div class="feed-title">${b.guest}</div>
+            <div class="feed-meta">
+              <span class="feed-channel">${b.channel}</span>
+              <span>${b.room}</span>
+              <span>Check-in: ${b.checkin}</span>
+              <span class="status-badge ${b.status}">${b.status}</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderSyncLogs() {
+      const container = document.getElementById('syncLogs');
+      if (!container) return;
+
+      const logs = [
+        { channel: 'Booking.com', action: 'Full sync completed', time: '2 mins ago', status: 'success' },
+        { channel: 'Expedia', action: 'Inventory update failed - retrying', time: '5 mins ago', status: 'warning' },
+        { channel: 'Agoda', action: 'Rate push successful', time: '7 mins ago', status: 'success' },
+        { channel: 'Booking.com', action: 'New booking received', time: '10 mins ago', status: 'info' }
+      ];
+
+      container.innerHTML = logs.map(log => `
+        <div class="feed-item" onclick="showToast('Sync Log', '${log.action}', '${log.status}')">
+          <div class="feed-icon" style="background: var(--${log.status}-light); color: var(--${log.status});">
+            <i class="fas fa-${log.status === 'success' ? 'check' : log.status === 'warning' ? 'exclamation' : 'info'}"></i>
+          </div>
+          <div class="feed-content">
+            <div class="feed-title">${log.channel}</div>
+            <div class="feed-meta">
+              <span>${log.action}</span>
+              <span class="feed-time">${log.time}</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // ==================== CHANNEL ACTIONS ====================
+    function syncChannel(channelName) {
+      showToast('Syncing', `${channelName} synchronization started`, 'info');
+      
+      setTimeout(() => {
+        showToast('Sync Complete', `${channelName} updated successfully`, 'success');
+      }, 2000);
+    }
+
+    function syncAllChannels() {
+      showToast('Bulk Sync', 'Syncing all channels...', 'info');
+      
+      setTimeout(() => {
+        showToast('Bulk Sync Complete', 'All channels synchronized', 'success');
+      }, 3000);
+    }
+
+    function showChannelDetails(channelName) {
+      showToast('Channel Details', `Viewing ${channelName} analytics`, 'info');
+    }
+
+    function checkRateParity() {
+      showToast('Checking Rate Parity', 'Scanning for discrepancies...', 'info');
+      
+      setTimeout(() => {
+        renderParityTable();
+        showToast('Parity Check Complete', '2 discrepancies found', 'warning');
+      }, 1500);
+    }
+
+    function clearLogs() {
+      document.getElementById('syncLogs').innerHTML = '<div class="feed-item">No logs to display</div>';
+      showToast('Logs Cleared', 'Sync history cleared', 'success');
+    }
+
+    function refreshFeed() {
+      showToast('Refreshing', 'Fetching latest channel updates', 'info');
+      setTimeout(() => {
+        initializeChannels();
+        showToast('Feed Updated', 'Latest activity loaded', 'success');
+      }, 1000);
+    }
+
+    // ==================== BOOKINGS MANAGEMENT ====================
+    function renderBookingsTable() {
+      const tbody = document.getElementById('bookingsTableBody');
+      if (!tbody) return;
+
+      tbody.innerHTML = bookings.map(booking => `
+        <tr>
+          <td><input type="checkbox" class="booking-checkbox" data-id="${booking.id}"></td>
+          <td>#${booking.id}</td>
+          <td><strong>${booking.guest}</strong><br><span style="font-size: 12px; color: var(--gray-500);">${booking.email}</span></td>
+          <td>${booking.room}</td>
+          <td>${booking.checkin}</td>
+          <td>${booking.checkout}</td>
+          <td>${booking.nights}</td>
+          <td>₦${booking.total}</td>
+          <td><span class="status-badge ${booking.payment === 'Paid' ? 'confirmed' : 'pending'}">${booking.payment}</span></td>
+          <td><span class="status-badge ${booking.status}">${booking.status.replace('-', ' ')}</span></td>
+          <td>
+            <button class="action-btn" onclick="showToast('View Booking', '#${booking.id}', 'info')"><i class="fas fa-eye"></i></button>
+            <button class="action-btn" onclick="showToast('Edit Booking', '#${booking.id}', 'info')"><i class="fas fa-edit"></i></button>
+            <button class="action-btn danger" onclick="cancelBooking('${booking.id}')"><i class="fas fa-times"></i></button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function filterBookings(status) {
+      showToast('Filtering', `Showing ${status} bookings`, 'info');
+      
+      document.querySelectorAll('#bookings-section .admin-tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      event.target.classList.add('active');
+    }
+
+    function cancelBooking(id) {
+      if (confirm('Cancel this booking?')) {
+        showToast('Booking Cancelled', `#${id} has been cancelled`, 'warning');
+      }
+    }
+
+    function createBooking() {
+      const guestName = document.getElementById('guestName')?.value;
+      if (!guestName) {
+        showToast('Error', 'Please fill all required fields', 'error');
+        return;
+      }
+
+      showToast('Success', 'Booking created successfully', 'success');
+      document.getElementById('newBookingModal').classList.remove('active');
+      
+      bookings.push({
+        id: 'WB-2024-00' + (bookings.length + 1),
+        guest: guestName,
+        email: document.getElementById('guestEmail')?.value || 'guest@email.com',
+        room: document.getElementById('roomType')?.value || 'Standard',
+        checkin: document.getElementById('checkin')?.value || '2024-03-20',
+        checkout: document.getElementById('checkout')?.value || '2024-03-22',
+        nights: 2,
+        total: '195,000',
+        payment: 'Pending',
+        status: 'pending'
+      });
+      
+      renderBookingsTable();
+    }
+
+    function toggleAllCheckboxes(checkbox) {
+      document.querySelectorAll('.booking-checkbox').forEach(cb => {
+        cb.checked = checkbox.checked;
+      });
+    }
+
+    // ==================== CALENDAR ====================
+    function renderCalendar() {
+      const calendarGrid = document.getElementById('calendarGrid');
+      if (!calendarGrid) return;
+
+      const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+      let html = '';
+      
+      days.forEach(day => {
+        html += `<div style="text-align: center; font-weight: 600; padding: 10px;">${day}</div>`;
+      });
+      
+      for (let i = 1; i <= 30; i++) {
+        const occupancy = Math.random() * 100;
+        let bg = 'var(--success-light)';
+        if (occupancy > 90) bg = 'var(--danger-light)';
+        else if (occupancy > 75) bg = 'var(--warning-light)';
+        else if (occupancy > 50) bg = 'var(--gold-soft)';
+        
+        html += `<div class="calendar-day" style="background: ${bg};" onclick="showToast('March ${i}', 'Occupancy: ${Math.round(occupancy)}%', 'info')">${i}</div>`;
+      }
+      
+      calendarGrid.innerHTML = html;
+    }
+
+    function changeMonth(delta) {
+      currentMonth.setMonth(currentMonth.getMonth() + delta);
+      document.getElementById('currentMonthDisplay').textContent = 
+        currentMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+      renderCalendar();
+      showToast('Calendar Updated', `Showing ${currentMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}`, 'info');
+    }
+
+    // ==================== CHARTS ====================
+    function initializeCharts() {
       const revenueCtx = document.getElementById('revenueChart')?.getContext('2d');
       if (revenueCtx) {
         new Chart(revenueCtx, {
@@ -2657,204 +2804,54 @@
           options: {
             responsive: true,
             maintainAspectRatio: false,
-            interaction: {
-              mode: 'index',
-              intersect: false,
-            },
-            plugins: {
-              legend: {
-                display: false
-              }
-            },
-            scales: {
-              y: {
-                type: 'linear',
-                display: true,
-                position: 'left',
-                title: {
-                  display: true,
-                  text: 'Occupancy %'
-                }
-              },
-              y1: {
-                type: 'linear',
-                display: true,
-                position: 'right',
-                title: {
-                  display: true,
-                  text: 'Revenue (₦M)'
-                },
-                grid: {
-                  drawOnChartArea: false
-                }
-              }
-            }
+            interaction: { mode: 'index', intersect: false },
+            plugins: { legend: { display: false } }
           }
         });
       }
 
-      // Revenue Report Chart
-      const revenueReportCtx = document.getElementById('revenueReportChart')?.getContext('2d');
-      if (revenueReportCtx) {
-        new Chart(revenueReportCtx, {
-          type: 'bar',
-          data: {
-            labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
-            datasets: [{
-              label: 'Revenue (₦M)',
-              data: [4.2, 4.8, 5.1, 4.3],
-              backgroundColor: 'rgba(193, 154, 91, 0.8)',
-              borderRadius: 8
-            }]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-              legend: {
-                display: false
-              }
-            }
-          }
-        });
-      }
-
-      // Occupancy Report Chart
-      const occupancyReportCtx = document.getElementById('occupancyReportChart')?.getContext('2d');
-      if (occupancyReportCtx) {
-        new Chart(occupancyReportCtx, {
+      const channelCtx = document.getElementById('channelChart')?.getContext('2d');
+      if (channelCtx) {
+        new Chart(channelCtx, {
           type: 'doughnut',
           data: {
-            labels: ['Occupied', 'Available', 'Maintenance'],
+            labels: ['Booking.com', 'Expedia', 'Agoda', 'Direct'],
             datasets: [{
-              data: [86, 11, 3],
-              backgroundColor: ['#c19a5b', '#3b82f6', '#ef4444'],
+              data: [42, 28, 18, 12],
+              backgroundColor: ['#c19a5b', '#3b82f6', '#8b5cf6', '#10b981'],
               borderWidth: 0
             }]
           },
           options: {
             responsive: true,
             maintainAspectRatio: false,
-            plugins: {
-              legend: {
-                position: 'bottom'
-              }
-            }
+            plugins: { legend: { position: 'bottom' } },
+            cutout: '70%'
           }
         });
       }
     }
 
-    // Initialize Bookings Table
-    function initBookingsTable() {
-      const bookingsTableBody = document.getElementById('bookingsTableBody');
-      if (!bookingsTableBody) return;
-
-      const bookings = [
-        { id: 'WB-2024-001', guest: 'John Smith', email: 'john@email.com', room: 'Deluxe King', checkin: '2024-03-15', checkout: '2024-03-18', nights: 3, total: '195,000', payment: 'Paid', status: 'confirmed' },
-        { id: 'WB-2024-002', guest: 'Sarah Johnson', email: 'sarah@email.com', room: 'Executive Suite', checkin: '2024-03-15', checkout: '2024-03-20', nights: 5, total: '425,000', payment: 'Pending', status: 'pending' },
-        { id: 'WB-2024-003', guest: 'Michael Chen', email: 'michael@email.com', room: 'Standard Twin', checkin: '2024-03-16', checkout: '2024-03-19', nights: 3, total: '150,000', payment: 'Paid', status: 'checked-in' },
-        { id: 'WB-2024-004', guest: 'Emily Davis', email: 'emily@email.com', room: 'Deluxe Twin', checkin: '2024-03-14', checkout: '2024-03-16', nights: 2, total: '130,000', payment: 'Paid', status: 'checked-out' },
-        { id: 'WB-2024-005', guest: 'Robert Wilson', email: 'robert@email.com', room: 'Executive Suite', checkin: '2024-03-17', checkout: '2024-03-19', nights: 2, total: '170,000', payment: 'Pending', status: 'pending' }
-      ];
-
-      bookingsTableBody.innerHTML = bookings.map(booking => `
-        <tr>
-          <td><input type="checkbox" class="booking-checkbox" data-id="${booking.id}"></td>
-          <td>#${booking.id}</td>
-          <td><strong>${booking.guest}</strong><br><span style="font-size: 12px; color: var(--gray-500);">${booking.email}</span></td>
-          <td>${booking.room}</td>
-          <td>${booking.checkin}</td>
-          <td>${booking.checkout}</td>
-          <td>${booking.nights}</td>
-          <td>₦${booking.total}</td>
-          <td><span class="status-badge ${booking.payment === 'Paid' ? 'confirmed' : 'pending'}">${booking.payment}</span></td>
-          <td><span class="status-badge ${booking.status}">${booking.status.replace('-', ' ')}</span></td>
-          <td>
-            <a href="#" class="action-btn view-booking" data-id="${booking.id}"><i class="fas fa-eye"></i></a>
-            <a href="#" class="action-btn edit-booking" data-id="${booking.id}"><i class="fas fa-edit"></i></a>
-            <a href="#" class="action-btn checkin-booking" data-id="${booking.id}"><i class="fas fa-check"></i></a>
-            <a href="#" class="action-btn danger cancel-booking" data-id="${booking.id}"><i class="fas fa-times"></i></a>
-          </td>
-        </tr>
-      `).join('');
-    }
-
-    // Initialize Today's Schedule
-    function initTodaySchedule() {
-      const today = new Date();
-      const options = { year: 'numeric', month: 'long', day: 'numeric' };
-      document.getElementById('todayDate').textContent = today.toLocaleDateString('en-US', options);
-      document.getElementById('todayDay').textContent = today.toLocaleDateString('en-US', { weekday: 'long' });
-
-      const arrivals = [
-        { name: 'John Smith', room: 'Deluxe King - 402', time: '14:00' },
-        { name: 'Maria Garcia', room: 'Executive Suite - 501', time: '15:30' },
-        { name: 'David Lee', room: 'Standard Twin - 203', time: '16:00' }
-      ];
-
-      const departures = [
-        { name: 'Emily Davis', room: 'Deluxe Twin - 305', time: '12:00' },
-        { name: 'Michael Chen', room: 'Standard Twin - 207', time: '11:30' }
-      ];
-
-      document.getElementById('arrivalsCount').textContent = arrivals.length;
-      document.getElementById('departuresCount').textContent = departures.length;
-
-      document.getElementById('arrivalsList').innerHTML = arrivals.map(a => `
-        <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px; background: var(--gray-50); border-radius: 12px;">
-          <div>
-            <div style="font-weight: 600;">${a.name}</div>
-            <div style="font-size: 13px; color: var(--gray-500);">${a.room}</div>
-          </div>
-          <span style="font-size: 13px; color: var(--gray-500);">${a.time}</span>
+    // ==================== UTILITIES ====================
+    function showToast(title, message, type = 'info') {
+      const toastContainer = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `
+        <div class="toast-icon"><i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i></div>
+        <div class="toast-content">
+          <div class="toast-title">${title}</div>
+          <div class="toast-message">${message}</div>
         </div>
-      `).join('');
+        <div class="toast-close" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></div>
+      `;
 
-      document.getElementById('departuresList').innerHTML = departures.map(d => `
-        <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px; background: var(--gray-50); border-radius: 12px;">
-          <div>
-            <div style="font-weight: 600;">${d.name}</div>
-            <div style="font-size: 13px; color: var(--gray-500);">${d.room}</div>
-          </div>
-          <span style="font-size: 13px; color: var(--gray-500);">${d.time}</span>
-        </div>
-      `).join('');
+      toastContainer.appendChild(toast);
+      setTimeout(() => toast.remove(), 5000);
     }
 
-    // Initialize Calendar Grid
-    function initCalendarGrid() {
-      const calendarGrid = document.getElementById('calendarGrid');
-      if (!calendarGrid) return;
-
-      const rooms = ['101', '102', '103', '104', '201', '202', '203', '204', '301', '302', '303', '304'];
-      const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-      
-      let html = '<div style="display: grid; grid-template-columns: 100px repeat(7, 1fr); gap: 4px; margin-top: 20px;">';
-      html += '<div style="font-weight: 600; color: var(--gray-500);">Room</div>';
-      
-      days.forEach(day => {
-        html += `<div style="text-align: center; font-weight: 600;">${day}</div>`;
-      });
-
-      rooms.forEach(room => {
-        html += `<div style="padding: 8px; background: var(--gray-50); border-radius: 8px;">${room}</div>`;
-        for (let i = 0; i < 7; i++) {
-          const random = Math.random();
-          let bg = 'var(--success-light)';
-          if (random < 0.3) bg = 'var(--gold-soft)';
-          else if (random < 0.1) bg = 'var(--gray-100)';
-          html += `<div style="height: 40px; background: ${bg}; border-radius: 8px;"></div>`;
-        }
-      });
-
-      html += '</div>';
-      calendarGrid.innerHTML = html;
-    }
-
-    // Section Navigation
     function switchSection(sectionId) {
-      sections.forEach(section => {
+      document.querySelectorAll('.admin-section').forEach(section => {
         section.classList.remove('active');
       });
       
@@ -2863,7 +2860,7 @@
         targetSection.classList.add('active');
       }
 
-      sidebarLinks.forEach(link => {
+      document.querySelectorAll('.sidebar-link').forEach(link => {
         link.classList.remove('active');
         if (link.dataset.section === sectionId) {
           link.classList.add('active');
@@ -2871,10 +2868,11 @@
       });
 
       const titles = {
-        dashboard: 'Dashboard',
+        dashboard: 'Command Center',
         bookings: 'Bookings',
         calendar: 'Calendar',
         rooms: 'Rooms & Pricing',
+        channel: 'Channel Manager',
         content: 'Content Management',
         payments: 'Payments',
         guests: 'Guest Directory',
@@ -2884,178 +2882,126 @@
         settings: 'Settings'
       };
 
-      pageTitle.innerHTML = `${titles[sectionId] || sectionId} <span>${sectionId === 'dashboard' ? 'Executive Overview' : 'Management'}</span>`;
+      document.getElementById('pageTitle').innerHTML = `${titles[sectionId] || sectionId} <span>${sectionId === 'dashboard' ? 'Real-time Operations' : 'Management'}</span>`;
       currentSection = sectionId;
+
+      // Close mobile sidebar when switching sections
+      if (window.innerWidth <= 1024) {
+        document.getElementById('sidebar').classList.remove('mobile-open');
+      }
+
+      if (sectionId === 'calendar') {
+        renderCalendar();
+      }
     }
 
-    // Show Toast
-    function showToast(title, message, type = 'success') {
-      const toast = document.createElement('div');
-      toast.className = `toast ${type}`;
-      toast.innerHTML = `
-        <div class="toast-icon"><i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i></div>
-        <div class="toast-content">
-          <div class="toast-title">${title}</div>
-          <div class="toast-message">${message}</div>
-        </div>
-        <div class="toast-close"><i class="fas fa-times"></i></div>
-      `;
+    function logout() {
+      showToast('Logged Out', 'Session ended', 'info');
+      setTimeout(() => location.reload(), 1500);
+    }
 
-      toastContainer.appendChild(toast);
-
-      const closeBtn = toast.querySelector('.toast-close');
-      closeBtn.addEventListener('click', () => {
-        toast.remove();
+    function initializeEventListeners() {
+      // Sidebar toggle
+      document.getElementById('sidebarToggle').addEventListener('click', () => {
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('mainContent');
+        sidebar.classList.toggle('collapsed');
+        mainContent.classList.toggle('expanded');
+        
+        const icon = document.querySelector('#sidebarToggle i');
+        if (sidebar.classList.contains('collapsed')) {
+          icon.classList.remove('fa-chevron-left');
+          icon.classList.add('fa-chevron-right');
+        } else {
+          icon.classList.remove('fa-chevron-right');
+          icon.classList.add('fa-chevron-left');
+        }
       });
 
-      setTimeout(() => {
-        if (toast.parentNode) {
-          toast.remove();
-        }
-      }, 5000);
-    }
+      // Mobile menu toggle
+      document.getElementById('menuToggle').addEventListener('click', () => {
+        document.getElementById('sidebar').classList.toggle('mobile-open');
+      });
 
-    // Event Listeners
-    sidebarToggle.addEventListener('click', () => {
-      sidebar.classList.toggle('collapsed');
-      mainContent.classList.toggle('expanded');
-      const icon = sidebarToggle.querySelector('i');
-      if (sidebar.classList.contains('collapsed')) {
-        icon.classList.remove('fa-chevron-left');
-        icon.classList.add('fa-chevron-right');
-      } else {
-        icon.classList.remove('fa-chevron-right');
-        icon.classList.add('fa-chevron-left');
-      }
-      isSidebarCollapsed = !isSidebarCollapsed;
-    });
-
-    menuToggle.addEventListener('click', () => {
-      sidebar.classList.toggle('mobile-open');
-    });
-
-    sidebarLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const section = link.dataset.section;
-        switchSection(section);
+      // Close mobile sidebar when clicking outside
+      document.addEventListener('click', (e) => {
+        const sidebar = document.getElementById('sidebar');
+        const menuToggle = document.getElementById('menuToggle');
         
         if (window.innerWidth <= 1024) {
-          sidebar.classList.remove('mobile-open');
+          if (!sidebar.contains(e.target) && !menuToggle.contains(e.target) && sidebar.classList.contains('mobile-open')) {
+            sidebar.classList.remove('mobile-open');
+          }
         }
       });
-    });
 
-    document.querySelectorAll('[data-section]').forEach(element => {
-      element.addEventListener('click', (e) => {
-        e.preventDefault();
-        const section = element.dataset.section;
-        switchSection(section);
-      });
-    });
-
-    userMenuBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      userDropdown.classList.toggle('show');
-      const rect = userMenuBtn.getBoundingClientRect();
-      userDropdown.style.top = rect.bottom + 10 + 'px';
-      userDropdown.style.right = window.innerWidth - rect.right + 'px';
-    });
-
-    document.addEventListener('click', (e) => {
-      if (!userMenuBtn.contains(e.target) && !userDropdown.contains(e.target)) {
-        userDropdown.classList.remove('show');
-      }
-    });
-
-    notificationBtn.addEventListener('click', () => {
-      showToast('New Notifications', 'You have 3 unread notifications', 'info');
-    });
-
-    globalSearch.addEventListener('input', (e) => {
-      const query = e.target.value;
-      if (query.length > 2) {
-        showToast('Search', `Searching for "${query}"...`, 'info');
-      }
-    });
-
-    if (newBookingBtn) {
-      newBookingBtn.addEventListener('click', () => {
-        newBookingModal.classList.add('active');
-      });
-    }
-
-    const closeModal = () => {
-      newBookingModal.classList.remove('active');
-    };
-
-    if (closeBookingModal) closeBookingModal.addEventListener('click', closeModal);
-    if (cancelBooking) cancelBooking.addEventListener('click', closeModal);
-
-    if (saveBooking) {
-      saveBooking.addEventListener('click', () => {
-        showToast('Success', 'Booking created successfully', 'success');
-        closeModal();
-      });
-    }
-
-    if (selectAll) {
-      selectAll.addEventListener('change', (e) => {
-        document.querySelectorAll('.booking-checkbox').forEach(cb => {
-          cb.checked = e.target.checked;
+      // Navigation links
+      document.querySelectorAll('.sidebar-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const section = link.dataset.section;
+          switchSection(section);
         });
       });
+
+      // User menu
+      document.getElementById('userMenuBtn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        const dropdown = document.getElementById('userDropdown');
+        dropdown.classList.toggle('show');
+        
+        const rect = e.target.closest('.user-menu').getBoundingClientRect();
+        dropdown.style.top = rect.bottom + 10 + 'px';
+        dropdown.style.right = window.innerWidth - rect.right + 'px';
+      });
+
+      // Close dropdown on outside click
+      document.addEventListener('click', (e) => {
+        const dropdown = document.getElementById('userDropdown');
+        if (!e.target.closest('.user-menu') && !e.target.closest('#userDropdown')) {
+          dropdown.classList.remove('show');
+        }
+      });
+
+      // Notifications
+      document.getElementById('notificationBtn').addEventListener('click', () => {
+        showToast('Notifications', '5 unread alerts - critical overbooking risk', 'warning');
+      });
+
+      // Global search
+      document.getElementById('globalSearch').addEventListener('input', (e) => {
+        if (e.target.value.length > 2) {
+          showToast('Search', `Searching for "${e.target.value}"...`, 'info');
+        }
+      });
+
+      // Handle window resize
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+          // Close mobile sidebar on resize to desktop
+          if (window.innerWidth > 1024) {
+            document.getElementById('sidebar').classList.remove('mobile-open');
+          }
+        }, 250);
+      });
+
+      // Touch optimizations
+      if ('ontouchstart' in window) {
+        document.body.classList.add('touch-device');
+      }
     }
 
-    document.addEventListener('click', (e) => {
-      if (e.target.closest('.cancel-booking')) {
-        e.preventDefault();
-        if (confirm('Are you sure you want to cancel this booking?')) {
-          showToast('Booking Cancelled', 'The booking has been cancelled', 'warning');
-        }
-      }
-    });
-
-    document.getElementById('logoutBtn')?.addEventListener('click', (e) => {
-      e.preventDefault();
-      showToast('Logged Out', 'You have been logged out successfully', 'info');
-      setTimeout(() => {
-        window.location.reload();
-      }, 1500);
-    });
-
-    document.getElementById('exportBookings')?.addEventListener('click', () => {
-      showToast('Export Started', 'Your bookings export is being prepared', 'success');
-    });
-
-    document.getElementById('blockDatesBtn')?.addEventListener('click', () => {
-      showToast('Block Dates', 'Select dates to block on the calendar', 'info');
-    });
-
-    document.getElementById('addUserBtn')?.addEventListener('click', () => {
-      showToast('Add User', 'User creation form will open', 'info');
-    });
-
-    document.getElementById('saveSettings')?.addEventListener('click', () => {
-      showToast('Settings Saved', 'Your changes have been saved', 'success');
-    });
-
-    // Initialize
-    document.addEventListener('DOMContentLoaded', () => {
-      initCharts();
-      initBookingsTable();
-      initTodaySchedule();
-      initCalendarGrid();
-
-      // Set today's date
-      const today = new Date();
-      document.getElementById('currentMonthDisplay').textContent = today.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-
-      // Sample toast
-      setTimeout(() => {
-        showToast('Welcome back!', 'You have 12 pending bookings to review', 'info');
-      }, 1000);
-    });
+    function updateUI() {
+      renderBookingsTable();
+      renderAlerts();
+      renderChannels();
+      renderChannelFeed();
+      
+      document.getElementById('currentMonthDisplay').textContent = 
+        currentMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+    }
   </script>
 </body>
 </html>
