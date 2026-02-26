@@ -1083,6 +1083,8 @@
     <code>admin@westbrook.com</code>
     <span>/</span>
     <code>admin123</code>
+    <span>/</span>
+    <code>MFA: 123456</code>
   </div>
 
   <!-- Main Login Container -->
@@ -1224,7 +1226,7 @@
             <i class="fas fa-mobile-alt"></i>
           </div>
           <h3>Two-Factor Authentication</h3>
-          <p>Enter the 6-digit code from your authenticator app</p>
+          <p>Enter the 6-digit code from your authenticator app (use 123456 for demo)</p>
         </div>
 
         <div class="mfa-inputs">
@@ -1470,6 +1472,12 @@
           if (lastIndex >= 0 && lastIndex < mfaInputs.length - 1) {
             mfaInputs[lastIndex + 1].focus();
           }
+          
+          // Check if all inputs are filled after paste
+          const allFilled = Array.from(mfaInputs).every(input => input.value.length === 1);
+          if (allFilled) {
+            verifyMFA();
+          }
         });
       });
 
@@ -1484,8 +1492,8 @@
         setTimeout(() => {
           // Demo always succeeds with 123456
           if (code === '123456') {
-            // Redirect to admin dashboard
-            window.location.href = 'admin-dashboard.html';
+            // Redirect to dashboard.html (changed from admin-dashboard.html to dashboard.html)
+            window.location.href = 'dashboard.html';
           } else {
             // Show error and clear inputs
             mfaInputs.forEach(input => {

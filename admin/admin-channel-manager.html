@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>WestBrook Hotel | Rooms & Pricing</title>
+  <title>WestBrook Hotel | Channel Manager</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
-  <meta name="description" content="WestBrook Hotel – Room inventory and rate management">
+  <meta name="description" content="WestBrook Hotel – Central channel management, rate parity & OTA sync">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -427,12 +427,12 @@
       color: var(--gray-500);
     }
 
-    /* DASHBOARD CONTENT (rooms & pricing specific) */
+    /* DASHBOARD CONTENT (channel manager specific) */
     .dashboard-content {
       padding: var(--content-padding);
     }
 
-    /* ===== ROOMS & PRICING EXCLUSIVE STYLES ===== */
+    /* ===== CHANNEL MANAGER EXCLUSIVE STYLES ===== */
     .page-header {
       display: flex;
       align-items: center;
@@ -570,222 +570,192 @@
       color: var(--gray-500);
     }
 
-    /* filter bar */
-    .filter-bar {
+    /* connection status bar */
+    .connection-bar {
       background: var(--white);
-      padding: 16px 24px;
-      border-radius: 80px;
-      box-shadow: var(--shadow-sm);
+      border-radius: 100px;
+      padding: 8px 24px 8px 16px;
       display: flex;
       align-items: center;
       flex-wrap: wrap;
-      gap: 16px;
+      gap: 24px;
       margin-bottom: 32px;
       border: 1px solid var(--gray-100);
+      box-shadow: var(--shadow-sm);
     }
 
-    .filter-tabs {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .filter-tab {
-      padding: 10px 22px;
-      border-radius: 40px;
-      font-size: 14px;
-      font-weight: 500;
-      background: var(--gray-50);
-      color: var(--gray-600);
-      cursor: pointer;
-      transition: var(--transition);
-      border: 1px solid transparent;
-    }
-
-    .filter-tab:hover {
-      background: var(--gold-soft);
-      color: var(--gold);
-    }
-
-    .filter-tab.active {
-      background: var(--gradient-gold);
-      color: white;
-      box-shadow: var(--shadow-gold);
-    }
-
-    .search-small {
-      margin-left: auto;
+    .connection-item {
       display: flex;
       align-items: center;
+      gap: 12px;
+    }
+
+    .channel-logo-mini {
+      width: 36px;
+      height: 36px;
       background: var(--gray-50);
-      border-radius: 40px;
-      padding: 0 16px;
-      border: 1px solid var(--gray-100);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-size: 18px;
     }
 
-    .search-small i {
-      color: var(--gray-400);
+    .connection-info {
+      display: flex;
+      flex-direction: column;
     }
 
-    .search-small input {
-      border: none;
-      background: transparent;
-      padding: 12px 10px;
-      width: 200px;
-      outline: none;
+    .connection-name {
+      font-weight: 600;
       font-size: 14px;
     }
 
-    /* ROOM GRID – MODERN, AIRBNB STYLE */
-    .room-grid {
+    .connection-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .status-dot.connected { background: var(--success); box-shadow: 0 0 0 3px var(--success-light); }
+    .status-dot.syncing { background: var(--warning); box-shadow: 0 0 0 3px var(--warning-light); animation: pulse 1.5s infinite; }
+    .status-dot.disconnected { background: var(--danger); box-shadow: 0 0 0 3px var(--danger-light); }
+
+    @keyframes pulse { 50% { opacity: 0.5; } }
+
+    /* channel grid */
+    .channel-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 28px;
       margin-bottom: 40px;
     }
 
-    .room-card {
+    .channel-card {
       background: var(--white);
       border-radius: 28px;
-      overflow: hidden;
+      padding: 24px;
       box-shadow: var(--shadow-md);
-      transition: var(--transition);
       border: 1px solid var(--gray-100);
+      transition: var(--transition);
       cursor: pointer;
     }
 
-    .room-card:hover {
-      transform: translateY(-8px);
+    .channel-card:hover {
+      transform: translateY(-6px);
       box-shadow: var(--shadow-xl);
       border-color: var(--gold-soft);
     }
 
-    .room-image {
-      height: 200px;
-      background: var(--gradient-gold);
-      position: relative;
+    .channel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .channel-logo {
+      width: 56px;
+      height: 56px;
+      background: var(--gray-50);
+      border-radius: 18px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: white;
-      font-size: 48px;
-      background-image: linear-gradient(145deg, #c19a5b, #e0b87b);
+      color: var(--gold);
+      font-size: 28px;
     }
 
-    .room-badge {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      background: rgba(255,255,255,0.9);
-      backdrop-filter: blur(4px);
+    .channel-badge {
       padding: 6px 14px;
       border-radius: 40px;
       font-size: 12px;
       font-weight: 600;
-      color: var(--gray-800);
-      box-shadow: var(--shadow-sm);
+      background: var(--success-light);
+      color: var(--success);
     }
 
-    .room-content {
-      padding: 24px;
-    }
+    .channel-badge.syncing { background: var(--warning-light); color: var(--warning); }
+    .channel-badge.disconnected { background: var(--danger-light); color: var(--danger); }
 
-    .room-type {
+    .channel-stats {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-
-    .room-type h3 {
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--gray-800);
-    }
-
-    .room-status {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      font-weight: 500;
-    }
-
-    .status-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-    }
-
-    .status-dot.available { background: var(--success); box-shadow: 0 0 0 3px var(--success-light); }
-    .status-dot.occupied { background: var(--warning); box-shadow: 0 0 0 3px var(--warning-light); }
-    .status-dot.maintenance { background: var(--danger); box-shadow: 0 0 0 3px var(--danger-light); }
-
-    .room-features {
-      display: flex;
-      gap: 16px;
-      margin: 16px 0;
-      color: var(--gray-500);
-      font-size: 14px;
-    }
-
-    .room-features span i {
-      color: var(--gold);
-      width: 20px;
-    }
-
-    .room-price-row {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      margin-top: 20px;
-      padding-top: 16px;
+      margin: 20px 0;
+      padding: 16px 0;
       border-top: 1px solid var(--gray-100);
+      border-bottom: 1px solid var(--gray-100);
     }
 
-    .price-tag {
-      font-size: 24px;
+    .channel-stat {
+      text-align: center;
+      flex: 1;
+    }
+
+    .channel-stat-value {
       font-weight: 700;
+      font-size: 20px;
       color: var(--gray-800);
     }
 
-    .price-tag small {
-      font-size: 14px;
-      font-weight: 400;
+    .channel-stat-label {
+      font-size: 12px;
       color: var(--gray-500);
+      margin-top: 4px;
     }
 
-    .room-actions {
+    .channel-sync {
       display: flex;
-      gap: 8px;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--gray-500);
+      margin-bottom: 20px;
     }
 
-    .room-action-btn {
-      width: 38px;
-      height: 38px;
+    .channel-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .channel-action-btn {
+      flex: 1;
+      padding: 12px;
       background: var(--gray-50);
-      border-radius: 12px;
+      border: 1px solid var(--gray-100);
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gray-700);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--gray-500);
+      gap: 8px;
       transition: var(--transition);
-      border: 1px solid var(--gray-100);
+      cursor: pointer;
     }
 
-    .room-action-btn:hover {
+    .channel-action-btn:hover {
       background: var(--gold-soft);
-      color: var(--gold);
       border-color: var(--gold);
+      color: var(--gold);
     }
 
-    /* rate table (advanced) */
-    .rate-table-section {
+    /* parity monitor */
+    .parity-section {
       background: var(--white);
       border-radius: var(--border-radius-lg);
       padding: 28px;
       box-shadow: var(--shadow-lg);
-      margin-top: 32px;
+      margin-bottom: 40px;
     }
 
     .section-header {
@@ -803,12 +773,12 @@
       color: var(--gray-800);
     }
 
-    .rate-table {
+    .parity-table {
       width: 100%;
       border-collapse: collapse;
     }
 
-    .rate-table th {
+    .parity-table th {
       text-align: left;
       padding: 16px 12px;
       font-size: 13px;
@@ -818,48 +788,85 @@
       border-bottom: 1px solid var(--gray-200);
     }
 
-    .rate-table td {
+    .parity-table td {
       padding: 18px 12px;
       font-size: 15px;
       border-bottom: 1px solid var(--gray-100);
-      color: var(--gray-700);
     }
 
-    .rate-table tr:last-child td {
-      border-bottom: none;
+    .parity-badge {
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: 600;
     }
 
-    .editable-field {
+    .parity-badge.success { background: var(--success-light); color: var(--success); }
+    .parity-badge.warning { background: var(--warning-light); color: var(--warning); }
+    .parity-badge.danger { background: var(--danger-light); color: var(--danger); }
+
+    /* live feed */
+    .feed-section {
+      background: var(--white);
+      border-radius: var(--border-radius-lg);
+      padding: 28px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .feed-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .feed-item {
       display: flex;
       align-items: center;
-      gap: 8px;
-    }
-
-    .editable-field input {
-      width: 90px;
-      padding: 8px 12px;
-      border: 1px solid var(--gray-100);
-      border-radius: 20px;
+      gap: 18px;
+      padding: 16px 20px;
       background: var(--gray-50);
-      font-size: 14px;
-      text-align: right;
-    }
-
-    .editable-field input:focus {
-      outline: none;
-      border-color: var(--gold);
-      background: white;
-    }
-
-    .save-indicator {
-      color: var(--success);
-      font-size: 12px;
-      opacity: 0;
+      border-radius: 20px;
       transition: var(--transition);
+      border-left: 4px solid transparent;
     }
 
-    tr:hover .save-indicator {
-      opacity: 1;
+    .feed-item:hover {
+      background: var(--white);
+      box-shadow: var(--shadow-md);
+      border-left-color: var(--gold);
+    }
+
+    .feed-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--gold-soft);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-size: 20px;
+    }
+
+    .feed-content {
+      flex: 1;
+    }
+
+    .feed-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: var(--gray-800);
+    }
+
+    .feed-meta {
+      display: flex;
+      gap: 20px;
+      font-size: 13px;
+      color: var(--gray-500);
+    }
+
+    .feed-time {
+      color: var(--gray-400);
     }
 
     /* modal */
@@ -878,7 +885,7 @@
     .modal-card {
       background: white;
       border-radius: 40px;
-      max-width: 550px;
+      max-width: 500px;
       width: 100%;
       padding: 36px;
       box-shadow: var(--shadow-2xl);
@@ -895,13 +902,6 @@
       display: flex; align-items: center; justify-content: center;
       cursor: pointer; border: 1px solid var(--gray-100);
     }
-    .modal-field { margin-bottom: 22px; }
-    .modal-field label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; }
-    .modal-field input, .modal-field select {
-      width: 100%; padding: 16px 18px; background: var(--gray-50); border: 1px solid var(--gray-100);
-      border-radius: 24px; font-size: 15px; outline: none;
-    }
-    .modal-field input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-soft); }
     .modal-actions { display: flex; gap: 16px; justify-content: flex-end; margin-top: 36px; }
 
     /* toast */
@@ -933,11 +933,12 @@
       .main-content, .main-content.expanded { margin-left: 0; width: 100%; }
       .header-menu-toggle { display: flex; }
       .user-info { display: none; }
+      .connection-bar { border-radius: 30px; }
     }
     @media (max-width: 768px) {
       .stats-grid { grid-template-columns: 1fr; }
       .header-search { display: none; }
-      .room-grid { grid-template-columns: 1fr; }
+      .channel-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -959,15 +960,15 @@
         <ul class="sidebar-menu">
           <li class="sidebar-item"><a href="dashboard.html" class="sidebar-link" data-section="dashboard"><i class="fas fa-th-large"></i><span>Dashboard</span></a></li>
           <li class="sidebar-item"><a href="admin-booking.html" class="sidebar-link" data-section="bookings"><i class="fas fa-calendar-check"></i><span>Bookings</span><span class="sidebar-badge">12</span></a></li>
-          <li class="sidebar-item"><a href="admin-calendar.html" class="sidebar-link" data-section="calendar"><i class="fas fa-calendar-alt"></i><span>Calendar</span></a></li>
-          <li class="sidebar-item"><a href="admin-rooms.html" class="sidebar-link active" data-section="rooms"><i class="fas fa-hotel"></i><span>Rooms & Pricing</span></a></li>
-          <li class="sidebar-item"><a href="admin-channel-manager.html" class="sidebar-link" data-section="channel"><i class="fas fa-globe"></i><span>Channel Manager</span><span class="sidebar-badge" style="background: var(--success);">Live</span></a></li>
+          <li class="sidebar-item"><a href="admin-contact.html" class="sidebar-link" data-section="contact"><i class="fas fa-calendar-alt"></i><span>Contact</span></a></li>
+          <li class="sidebar-item"><a href="admin-rooms.html" class="sidebar-link" data-section="rooms"><i class="fas fa-hotel"></i><span>Rooms & Pricing</span></a></li>
+          <li class="sidebar-item"><a href="admin-channel-manager.html" class="sidebar-link active" data-section="channel"><i class="fas fa-globe"></i><span>Channel Manager</span><span class="sidebar-badge" style="background: var(--success);">Live</span></a></li>
         </ul>
         <div class="sidebar-heading">MANAGEMENT</div>
         <ul class="sidebar-menu">
           <li class="sidebar-item"><a href="admin-content.html" class="sidebar-link" data-section="content"><i class="fas fa-edit"></i><span>Content</span></a></li>
           <li class="sidebar-item"><a href="admin-payments.html" class="sidebar-link" data-section="payments"><i class="fas fa-credit-card"></i><span>Payments</span></a></li>
-          <li class="sidebar-item"><a href="admin-guests.html" class="sidebar-link" data-section="guests"><i class="fas fa-users"></i><span>Guests</span></a></li>
+          <li class="sidebar-item"><a href="admin-guest.html" class="sidebar-link" data-section="guests"><i class="fas fa-users"></i><span>Guests</span></a></li>
           <li class="sidebar-item"><a href="admin-emails.html" class="sidebar-link" data-section="emails"><i class="fas fa-envelope"></i><span>Email Notifications</span></a></li>
         </ul>
         <div class="sidebar-heading">ADMIN</div>
@@ -992,99 +993,103 @@
       <header class="admin-header">
         <div class="header-left">
           <div class="header-menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></div>
-          <div class="page-title" id="pageTitle">Rooms & Pricing <span>Inventory Management</span></div>
+          <div class="page-title" id="pageTitle">Channel Manager <span>Real-time OTA Sync</span></div>
         </div>
         <div class="header-right">
-          <div class="header-search"><i class="fas fa-search"></i><input type="text" placeholder="Search rooms, rate plans..." id="globalSearch"></div>
-          <div class="notification-btn" id="notificationBtn"><i class="far fa-bell"></i><span class="notification-badge">3</span></div>
+          <div class="header-search"><i class="fas fa-search"></i><input type="text" placeholder="Search channels, bookings..." id="globalSearch"></div>
+          <div class="notification-btn" id="notificationBtn"><i class="far fa-bell"></i><span class="notification-badge">7</span></div>
           <div class="user-menu" id="userMenuBtn"><div class="user-avatar">SA</div><div class="user-info"><span class="user-name">Samuel A.</span><span class="user-role">Revenue Manager</span></div><i class="fas fa-chevron-down" style="font-size: 12px;"></i></div>
         </div>
       </header>
 
-      <!-- ROOMS & PRICING CONTENT -->
+      <!-- CHANNEL MANAGER CONTENT -->
       <div class="dashboard-content">
-        <!-- page header with actions -->
+        <!-- page header -->
         <div class="page-header">
-          <div><h2 style="font-size: 26px; font-weight: 700;">🏨 Room inventory</h2></div>
+          <div><h2 style="font-size: 26px; font-weight: 700;">🌐 Central connectivity</h2></div>
           <div class="header-actions">
-            <button class="btn-outline" onclick="exportRates()"><i class="fas fa-download"></i> Export</button>
-            <button class="btn-primary" onclick="openAddRoomModal()"><i class="fas fa-plus"></i> Add room</button>
+            <button class="btn-outline" onclick="exportChannelData()"><i class="fas fa-download"></i> Export</button>
+            <button class="btn-primary" onclick="syncAllChannels()"><i class="fas fa-sync-alt"></i> Sync all channels</button>
           </div>
         </div>
 
         <!-- KPI cards -->
         <div class="stats-grid">
           <div class="stat-card">
-            <div class="stat-header"><span class="stat-title">Total rooms</span><div class="stat-icon"><i class="fas fa-door-open"></i></div></div>
-            <div class="stat-value" id="totalRooms">48</div>
-            <div class="stat-footer"><span>🟢 42 available</span><span>🔴 6 maintenance</span></div>
+            <div class="stat-header"><span class="stat-title">Active connections</span><div class="stat-icon"><i class="fas fa-plug"></i></div></div>
+            <div class="stat-value">4/4</div>
+            <div class="stat-footer"><span>🟢 all online</span><span>100%</span></div>
           </div>
           <div class="stat-card">
-            <div class="stat-header"><span class="stat-title">Occupancy tonight</span><div class="stat-icon"><i class="fas fa-moon"></i></div></div>
-            <div class="stat-value">79%</div>
-            <div class="stat-footer"><span>38 rooms occupied</span><span>↗️ +5%</span></div>
+            <div class="stat-header"><span class="stat-title">Bookings today</span><div class="stat-icon"><i class="fas fa-calendar-check"></i></div></div>
+            <div class="stat-value">23</div>
+            <div class="stat-footer"><span>via OTAs: 18</span><span>↗️ +5</span></div>
           </div>
           <div class="stat-card">
-            <div class="stat-header"><span class="stat-title">Avg daily rate</span><div class="stat-icon"><i class="fas fa-chart-line"></i></div></div>
-            <div class="stat-value">₦82,400</div>
-            <div class="stat-footer"><span>vs last month +3.2%</span><span>📈</span></div>
+            <div class="stat-header"><span class="stat-title">Rate parity</span><div class="stat-icon"><i class="fas fa-balance-scale"></i></div></div>
+            <div class="stat-value">98%</div>
+            <div class="stat-footer"><span>2 discrepancies</span><span>⚠️ review</span></div>
           </div>
           <div class="stat-card">
-            <div class="stat-header"><span class="stat-title">RevPAR</span><div class="stat-icon"><i class="fas fa-crown"></i></div></div>
-            <div class="stat-value">₦65,200</div>
-            <div class="stat-footer"><span>🏆 +12% YOY</span></div>
+            <div class="stat-header"><span class="stat-title">Revenue (OTA)</span><div class="stat-icon"><i class="fas fa-chart-pie"></i></div></div>
+            <div class="stat-value">₦4.2M</div>
+            <div class="stat-footer"><span>this week</span><span>📈 +12%</span></div>
           </div>
         </div>
 
-        <!-- filter row -->
-        <div class="filter-bar">
-          <div class="filter-tabs">
-            <span class="filter-tab active" onclick="filterRooms('all')">All rooms</span>
-            <span class="filter-tab" onclick="filterRooms('available')">Available</span>
-            <span class="filter-tab" onclick="filterRooms('occupied')">Occupied</span>
-            <span class="filter-tab" onclick="filterRooms('maintenance')">Maintenance</span>
-          </div>
-          <div class="search-small">
-            <i class="fas fa-search"></i>
-            <input type="text" placeholder="Search room number or type" id="roomSearchInput" onkeyup="searchRooms()">
-          </div>
+        <!-- quick connection status bar -->
+        <div class="connection-bar">
+          <div class="connection-item"><div class="channel-logo-mini"><i class="fab fa-booking"></i></div><div class="connection-info"><span class="connection-name">Booking.com</span><span class="connection-status"><span class="status-dot connected"></span> live · 2s ago</span></div></div>
+          <div class="connection-item"><div class="channel-logo-mini"><i class="fab fa-expedia"></i></div><div class="connection-info"><span class="connection-name">Expedia</span><span class="connection-status"><span class="status-dot connected"></span> live · 5s ago</span></div></div>
+          <div class="connection-item"><div class="channel-logo-mini"><i class="fas fa-hotel"></i></div><div class="connection-info"><span class="connection-name">Agoda</span><span class="connection-status"><span class="status-dot syncing"></span> syncing</span></div></div>
+          <div class="connection-item"><div class="channel-logo-mini"><i class="fas fa-building"></i></div><div class="connection-info"><span class="connection-name">Direct</span><span class="connection-status"><span class="status-dot connected"></span> real-time</span></div></div>
         </div>
 
-        <!-- ROOM GRID (dynamic) -->
-        <div class="room-grid" id="roomGridContainer"></div>
+        <!-- CHANNEL GRID (dynamic) -->
+        <div class="channel-grid" id="channelGridContainer"></div>
 
-        <!-- RATE MANAGEMENT TABLE -->
-        <div class="rate-table-section">
+        <!-- RATE PARITY MONITOR -->
+        <div class="parity-section">
           <div class="section-header">
-            <h2><i class="fas fa-tag" style="color: var(--gold);"></i> Rate plans & dynamic pricing</h2>
-            <button class="btn-outline" onclick="syncRates()"><i class="fas fa-sync-alt"></i> Sync to channels</button>
+            <h2><i class="fas fa-tags" style="color: var(--gold);"></i> Rate parity monitor</h2>
+            <button class="btn-outline" onclick="checkParity()"><i class="fas fa-search"></i> Check now</button>
           </div>
-          <table class="rate-table">
-            <thead><tr><th>Room type</th><th>Base rate (₦)</th><th>Weekend</th><th>Peak (₦)</th><th>Min stay</th><th>Status</th><th></th></tr></thead>
-            <tbody id="rateTableBody"></tbody>
+          <table class="parity-table" id="parityTable">
+            <thead><tr><th>Room type</th><th>Base rate</th><th>Booking.com</th><th>Expedia</th><th>Agoda</th><th>Status</th><th></th></tr></thead>
+            <tbody id="parityTableBody"></tbody>
           </table>
+        </div>
+
+        <!-- LIVE ACTIVITY FEED -->
+        <div class="feed-section">
+          <div class="section-header">
+            <h2><i class="fas fa-bolt" style="color: var(--gold);"></i> Live channel activity</h2>
+            <button class="btn-outline" onclick="refreshFeed()"><i class="fas fa-sync-alt"></i> Refresh</button>
+          </div>
+          <div class="feed-list" id="feedContainer"></div>
         </div>
       </div>
     </main>
   </div>
 
-  <!-- ADD/EDIT ROOM MODAL -->
-  <div class="modal" id="roomModal">
+  <!-- CONNECTION DETAIL MODAL (example) -->
+  <div class="modal" id="channelModal">
     <div class="modal-card">
       <div class="modal-header">
-        <h2 id="modalTitle">Add new room</h2>
-        <div class="close-modal" onclick="closeRoomModal()"><i class="fas fa-times"></i></div>
+        <h2 id="modalChannelName">Channel details</h2>
+        <div class="close-modal" onclick="closeChannelModal()"><i class="fas fa-times"></i></div>
       </div>
       <div class="modal-body">
-        <div class="modal-field"><label>Room number</label><input type="text" id="roomNumber" placeholder="e.g. 401"></div>
-        <div class="modal-field"><label>Room type</label><select id="roomTypeSelect"><option>Deluxe King</option><option>Executive Suite</option><option>Standard Twin</option><option>Deluxe Twin</option></select></div>
-        <div class="modal-field"><label>Base price (₦)</label><input type="number" id="roomPrice" value="45000"></div>
-        <div class="modal-field"><label>Status</label><select id="roomStatusSelect"><option value="available">Available</option><option value="occupied">Occupied</option><option value="maintenance">Maintenance</option></select></div>
-        <div class="modal-field"><label>Floor</label><input type="text" id="roomFloor" placeholder="4th"></div>
+        <p style="margin-bottom: 24px;">Connection healthy · last sync 2 seconds ago</p>
+        <div style="background: var(--gray-50); padding: 20px; border-radius: 24px;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 12px;"><span>Total bookings today:</span><strong>8</strong></div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 12px;"><span>Revenue today:</span><strong>₦680,000</strong></div>
+          <div style="display: flex; justify-content: space-between;"><span>Availability pushed:</span><strong>45 rooms</strong></div>
+        </div>
       </div>
       <div class="modal-actions">
-        <button class="btn-outline" onclick="closeRoomModal()">Cancel</button>
-        <button class="btn-primary" onclick="saveRoom()" id="saveRoomBtn">Add room</button>
+        <button class="btn-outline" onclick="closeChannelModal()">Close</button>
+        <button class="btn-primary" onclick="syncSingleChannel()">Sync now</button>
       </div>
     </div>
   </div>
@@ -1093,104 +1098,117 @@
   <div class="toast-container" id="toastContainer"></div>
 
   <script>
-    // ---------- ROOMS DATA (luxury inventory) ----------
-    let rooms = [
-      { id: 1, number: '101', type: 'Standard Twin', price: 45000, status: 'available', floor: '1', features: '2 beds · city view' },
-      { id: 2, number: '102', type: 'Standard Twin', price: 45000, status: 'occupied', floor: '1', features: '2 beds · garden view' },
-      { id: 3, number: '201', type: 'Deluxe King', price: 85000, status: 'available', floor: '2', features: 'king bed · sea view' },
-      { id: 4, number: '202', type: 'Deluxe King', price: 85000, status: 'maintenance', floor: '2', features: 'king bed · balcony' },
-      { id: 5, number: '301', type: 'Executive Suite', price: 150000, status: 'available', floor: '3', features: 'suite · living room' },
-      { id: 6, number: '302', type: 'Executive Suite', price: 150000, status: 'occupied', floor: '3', features: 'suite · jacuzzi' },
-      { id: 7, number: '401', type: 'Deluxe Twin', price: 65000, status: 'available', floor: '4', features: 'twin beds · city' },
-      { id: 8, number: '402', type: 'Deluxe Twin', price: 65000, status: 'available', floor: '4', features: 'twin beds · garden' }
+    // ---------- CHANNELS DATA ----------
+    let channels = [
+      { name: 'Booking.com', icon: 'fab fa-booking', status: 'connected', bookings: 12, revenue: '1.2M', lastSync: '2s ago', availability: 45, badge: 'connected' },
+      { name: 'Expedia', icon: 'fab fa-expedia', status: 'connected', bookings: 8, revenue: '890K', lastSync: '5s ago', availability: 45, badge: 'connected' },
+      { name: 'Agoda', icon: 'fas fa-hotel', status: 'syncing', bookings: 5, revenue: '450K', lastSync: 'Syncing...', availability: 45, badge: 'syncing' },
+      { name: 'Direct', icon: 'fas fa-building', status: 'connected', bookings: 15, revenue: '1.8M', lastSync: 'real-time', availability: 45, badge: 'connected' }
     ];
 
-    // rate plans
-    let ratePlans = [
-      { type: 'Standard Twin', base: 45000, weekend: 52000, peak: 59000, minStay: 1, status: 'active' },
-      { type: 'Deluxe King', base: 85000, weekend: 95000, peak: 115000, minStay: 2, status: 'active' },
-      { type: 'Executive Suite', base: 150000, weekend: 175000, peak: 210000, minStay: 2, status: 'active' },
-      { type: 'Deluxe Twin', base: 65000, weekend: 72000, peak: 85000, minStay: 1, status: 'active' }
+    let parityData = [
+      { type: 'Standard Twin', base: '₦45,000', bcom: '₦45,000', expedia: '₦47,000', agoda: '₦44,000', status: 'warning' },
+      { type: 'Deluxe King', base: '₦85,000', bcom: '₦85,000', expedia: '₦85,000', agoda: '₦85,000', status: 'success' },
+      { type: 'Executive Suite', base: '₦150,000', bcom: '₦150,000', expedia: '₦155,000', agoda: '₦148,000', status: 'danger' },
+      { type: 'Deluxe Twin', base: '₦65,000', bcom: '₦65,000', expedia: '₦67,000', agoda: '₦64,000', status: 'warning' }
     ];
 
-    function renderRoomGrid() {
-      const container = document.getElementById('roomGridContainer');
-      container.innerHTML = rooms.map(r => {
-        const statusDot = r.status === 'available' ? 'available' : r.status === 'occupied' ? 'occupied' : 'maintenance';
-        return `<div class="room-card" onclick="viewRoomDetails('${r.number}')">
-          <div class="room-image"><i class="fas fa-hotel"></i><span class="room-badge">${r.floor} floor</span></div>
-          <div class="room-content">
-            <div class="room-type"><h3>${r.number} · ${r.type}</h3><div class="room-status"><span class="status-dot ${statusDot}"></span> ${r.status}</div></div>
-            <div class="room-features"><span><i class="fas fa-bed"></i> ${r.features.split('·')[0]}</span><span><i class="fas fa-wifi"></i> free wifi</span></div>
-            <div class="room-price-row">
-              <span class="price-tag">₦${r.price.toLocaleString()} <small>/ night</small></span>
-              <div class="room-actions" onclick="event.stopPropagation()">
-                <span class="room-action-btn" onclick="editRoom('${r.number}')"><i class="fas fa-edit"></i></span>
-                <span class="room-action-btn" onclick="duplicateRoom('${r.number}')"><i class="fas fa-copy"></i></span>
-                <span class="room-action-btn" onclick="toggleMaintenance('${r.number}')"><i class="fas fa-tools"></i></span>
-              </div>
-            </div>
+    let feedItems = [
+      { channel: 'Booking.com', action: 'New booking', guest: 'Emma Watson', room: 'Deluxe King', amount: '₦195,000', time: '1 min ago' },
+      { channel: 'Expedia', action: 'Availability update', details: '5 rooms released', time: '3 mins ago' },
+      { channel: 'Agoda', action: 'Rate change', details: 'Suite rate updated to ₦165,000', time: '5 mins ago' },
+      { channel: 'Booking.com', action: 'Booking cancelled', guest: 'James Brown', room: 'Standard Twin', time: '7 mins ago' },
+      { channel: 'Direct', action: 'New booking', guest: 'Lisa Anderson', room: 'Executive Suite', amount: '₦425,000', time: '10 mins ago' },
+      { channel: 'Expedia', action: 'Inventory sync', details: 'Full sync completed', time: '12 mins ago' }
+    ];
+
+    function renderChannelGrid() {
+      const container = document.getElementById('channelGridContainer');
+      container.innerHTML = channels.map(c => `
+        <div class="channel-card" onclick="openChannelModal('${c.name}')">
+          <div class="channel-header">
+            <div class="channel-logo"><i class="${c.icon}"></i></div>
+            <span class="channel-badge ${c.badge === 'syncing' ? 'syncing' : c.badge === 'connected' ? '' : 'disconnected'}">${c.status}</span>
           </div>
-        </div>`;
+          <h3 style="font-size: 20px; margin-bottom: 8px;">${c.name}</h3>
+          <div class="channel-stats">
+            <div class="channel-stat"><span class="channel-stat-value">${c.bookings}</span><div class="channel-stat-label">today</div></div>
+            <div class="channel-stat"><span class="channel-stat-value">₦${c.revenue}</span><div class="channel-stat-label">revenue</div></div>
+            <div class="channel-stat"><span class="channel-stat-value">${c.availability}</span><div class="channel-stat-label">rooms</div></div>
+          </div>
+          <div class="channel-sync">
+            <span><i class="fas fa-clock"></i> last sync: ${c.lastSync}</span>
+            <span><i class="fas fa-wifi"></i> ${c.status}</span>
+          </div>
+          <div class="channel-actions" onclick="event.stopPropagation()">
+            <button class="channel-action-btn" onclick="syncChannel('${c.name}')"><i class="fas fa-sync-alt"></i> Sync</button>
+            <button class="channel-action-btn" onclick="configureChannel('${c.name}')"><i class="fas fa-cog"></i> Config</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderParityTable() {
+      const tbody = document.getElementById('parityTableBody');
+      tbody.innerHTML = parityData.map(p => {
+        let badgeClass = p.status === 'success' ? 'success' : p.status === 'warning' ? 'warning' : 'danger';
+        return `<tr>
+          <td><strong>${p.type}</strong></td>
+          <td>${p.base}</td>
+          <td style="color: ${p.bcom === p.base ? 'var(--success)' : 'var(--warning)'};">${p.bcom}</td>
+          <td style="color: ${p.expedia === p.base ? 'var(--success)' : 'var(--warning)'};">${p.expedia}</td>
+          <td style="color: ${p.agoda === p.base ? 'var(--success)' : 'var(--warning)'};">${p.agoda}</td>
+          <td><span class="parity-badge ${badgeClass}">${p.status === 'success' ? 'Synced' : p.status === 'warning' ? 'Discrepancy' : 'Critical'}</span></td>
+          <td><i class="fas fa-chevron-right" style="color: var(--gray-400);"></i></td>
+        </tr>`;
       }).join('');
     }
 
-    function renderRateTable() {
-      const tbody = document.getElementById('rateTableBody');
-      tbody.innerHTML = ratePlans.map(r => `<tr>
-        <td><strong>${r.type}</strong></td>
-        <td><div class="editable-field"><input type="number" value="${r.base}" step="1000" onchange="updateRate(this, '${r.type}', 'base')"> <span class="save-indicator">✓</span></div></td>
-        <td><div class="editable-field"><input type="number" value="${r.weekend}" step="1000" onchange="updateRate(this, '${r.type}', 'weekend')"> <span class="save-indicator">✓</span></div></td>
-        <td><div class="editable-field"><input type="number" value="${r.peak}" step="1000" onchange="updateRate(this, '${r.type}', 'peak')"> <span class="save-indicator">✓</span></div></td>
-        <td>${r.minStay} night</td>
-        <td><span class="status-badge confirmed" style="background:var(--success-light);color:var(--success)">${r.status}</span></td>
-        <td><i class="fas fa-chevron-right" style="color:var(--gray-400)"></i></td>
-      </tr>`).join('');
+    function renderFeed() {
+      const feed = document.getElementById('feedContainer');
+      feed.innerHTML = feedItems.map(f => `
+        <div class="feed-item">
+          <div class="feed-icon"><i class="${f.channel === 'Booking.com' ? 'fab fa-booking' : f.channel === 'Expedia' ? 'fab fa-expedia' : f.channel === 'Agoda' ? 'fas fa-hotel' : 'fas fa-building'}"></i></div>
+          <div class="feed-content">
+            <div class="feed-title">${f.action}</div>
+            <div class="feed-meta">
+              <span>${f.channel}</span>
+              ${f.guest ? `<span>${f.guest}</span>` : ''}
+              ${f.room ? `<span>${f.room}</span>` : ''}
+              ${f.amount ? `<span>${f.amount}</span>` : ''}
+              ${f.details ? `<span>${f.details}</span>` : ''}
+              <span class="feed-time">${f.time}</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
     }
 
-    // interactive functions
-    function filterRooms(filter) {
-      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
-      event.target.classList.add('active');
-      showToast('Filter', `Showing ${filter} rooms`, 'info');
-      // in real app filter rooms array; we just re-render all for demo
-      renderRoomGrid();
+    // actions
+    function syncAllChannels() {
+      showToast('Bulk sync', 'Syncing all channels...', 'info');
+      setTimeout(() => showToast('Sync complete', 'All channels updated', 'success'), 2000);
     }
-    function searchRooms() { showToast('Search', 'Searching rooms...', 'info'); }
-    function exportRates() { showToast('Export', 'Rate sheet exported', 'success'); }
-    function syncRates() { showToast('Sync', 'Pushing rates to all channels', 'info'); setTimeout(()=>showToast('Sync','Rates updated on all OTAs','success'),1500); }
-    function updateRate(input, type, field) { showToast('Rate updated', `${type} ${field} changed to ₦${input.value}`, 'success'); }
+    function syncChannel(name) {
+      showToast('Sync started', `${name} synchronization`, 'info');
+      setTimeout(() => showToast('Sync finished', `${name} updated`, 'success'), 1500);
+    }
+    function configureChannel(name) { showToast('Configuration', `Opening ${name} settings`, 'info'); }
+    function openChannelModal(name) {
+      document.getElementById('modalChannelName').innerText = name;
+      document.getElementById('channelModal').classList.add('active');
+    }
+    function closeChannelModal() { document.getElementById('channelModal').classList.remove('active'); }
+    function syncSingleChannel() { showToast('Sync', 'Channel synced', 'success'); closeChannelModal(); }
+    function checkParity() { showToast('Parity check', 'Scanning for discrepancies...', 'info'); setTimeout(()=> showToast('Parity','2 issues found','warning'),2000); }
+    function refreshFeed() { showToast('Feed', 'Refreshing activity', 'info'); }
+    function exportChannelData() { showToast('Export', 'Channel report generated', 'success'); }
 
-    // room actions
-    function viewRoomDetails(num) { showToast('Room details', `Viewing room ${num}`, 'info'); }
-    function editRoom(num) { 
-      document.getElementById('modalTitle').innerText = 'Edit room';
-      document.getElementById('saveRoomBtn').innerText = 'Update room';
-      document.getElementById('roomModal').classList.add('active');
-    }
-    function duplicateRoom(num) { showToast('Duplicate', `Room ${num} duplicated`, 'warning'); }
-    function toggleMaintenance(num) { showToast('Maintenance', `Room ${num} toggled`, 'info'); }
-
-    // modal
-    function openAddRoomModal() {
-      document.getElementById('modalTitle').innerText = 'Add new room';
-      document.getElementById('saveRoomBtn').innerText = 'Add room';
-      document.getElementById('roomNumber').value = '';
-      document.getElementById('roomPrice').value = '45000';
-      document.getElementById('roomModal').classList.add('active');
-    }
-    function closeRoomModal() { document.getElementById('roomModal').classList.remove('active'); }
-    function saveRoom() {
-      let num = document.getElementById('roomNumber').value;
-      if (!num) return showToast('Validation', 'Room number required', 'error');
-      showToast('Success', 'Room saved', 'success');
-      closeRoomModal();
-    }
-
-    // sidebar & header functionality
+    // sidebar & header (identical) – now with proper redirection
     document.addEventListener('DOMContentLoaded', () => {
-      renderRoomGrid();
-      renderRateTable();
+      renderChannelGrid();
+      renderParityTable();
+      renderFeed();
       document.getElementById('sidebarToggle').addEventListener('click', ()=>{
         document.getElementById('sidebar').classList.toggle('collapsed');
         document.getElementById('mainContent').classList.toggle('expanded');
@@ -1201,27 +1219,42 @@
       document.getElementById('menuToggle').addEventListener('click', ()=>{
         document.getElementById('sidebar').classList.toggle('mobile-open');
       });
+
+      // SIDEBAR LINKS: now proper anchor tags – we do NOT preventDefault,
+      // we only add a toast for feedback and let the browser navigate.
       document.querySelectorAll('.sidebar-link').forEach(link => {
-        link.addEventListener('click', (e) => { e.preventDefault(); showToast('Navigation', `Switch to ${link.dataset.section}`, 'info'); });
+        link.addEventListener('click', (e) => {
+          // Let the browser handle the navigation to the href.
+          // Optionally update active class and show toast.
+          document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+          link.classList.add('active');
+          showToast('Navigation', `Redirecting to ${link.dataset.section}`, 'info');
+          // Do NOT call e.preventDefault() – navigation proceeds.
+        });
       });
-      document.getElementById('notificationBtn').addEventListener('click', ()=> showToast('Notifications','3 maintenance alerts','warning'));
+
+      document.getElementById('notificationBtn').addEventListener('click', ()=> showToast('Notifications','7 channel alerts','warning'));
       document.getElementById('globalSearch').addEventListener('input', (e)=> { if(e.target.value.length>2) showToast('Search',`Looking for "${e.target.value}"`,'info'); });
     });
 
-    // toast
     function showToast(title, msg, type) {
       let toast = document.createElement('div');
       toast.className = `toast ${type}`;
       toast.innerHTML = `<i class="fas fa-${type==='success'?'check-circle':type==='warning'?'exclamation-triangle':'info-circle'}"></i><div><strong>${title}</strong><br><small>${msg}</small></div>`;
       document.getElementById('toastContainer').appendChild(toast);
-      setTimeout(()=>toast.remove(),3000);
+      setTimeout(()=>toast.remove(), 3000);
     }
 
     // expose globals
-    window.filterRooms = filterRooms; window.searchRooms = searchRooms; window.exportRates = exportRates; window.syncRates = syncRates;
-    window.updateRate = updateRate; window.viewRoomDetails = viewRoomDetails; window.editRoom = editRoom; window.duplicateRoom = duplicateRoom;
-    window.toggleMaintenance = toggleMaintenance; window.openAddRoomModal = openAddRoomModal; window.closeRoomModal = closeRoomModal;
-    window.saveRoom = saveRoom;
+    window.syncAllChannels = syncAllChannels;
+    window.syncChannel = syncChannel;
+    window.configureChannel = configureChannel;
+    window.openChannelModal = openChannelModal;
+    window.closeChannelModal = closeChannelModal;
+    window.syncSingleChannel = syncSingleChannel;
+    window.checkParity = checkParity;
+    window.refreshFeed = refreshFeed;
+    window.exportChannelData = exportChannelData;
   </script>
 </body>
 </html>

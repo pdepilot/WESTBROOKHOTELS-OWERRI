@@ -6,8 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="You have been successfully logged out of the WestBrook Hotel Admin Portal">
   <meta http-equiv="refresh" content="5;url=admin-login.html">
+  <!-- FIXED: Content Security Policy - allows local development and required resources -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' http://127.0.0.1:* ws://127.0.0.1:*; img-src 'self' data:; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com;">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="icon" href="./images/westbrook logo.png" type="image/png">
+  <!-- FIXED: Removed favicon that was causing 404 (file not found) -->
+  <!-- <link rel="icon" href="./images/westbrook logo.png" type="image/png"> -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Montserrat:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
@@ -324,7 +327,7 @@
       transform: rotate(5deg);
     }
 
-    /* Logo */
+    /* Logo - FIXED: replaced image with Font Awesome icon to prevent 404 */
     .logout-logo {
       text-align: center;
       margin-bottom: 40px;
@@ -337,13 +340,17 @@
       margin: 0 auto 20px;
       position: relative;
       animation: glowPulse 3s infinite;
+      background: var(--gradient-gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--dark);
+      font-size: 48px;
     }
 
-    .logo-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      filter: drop-shadow(0 10px 20px rgba(193, 154, 91, 0.3));
+    .logo-image i {
+      filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.2));
     }
 
     .logo-ring {
@@ -879,10 +886,10 @@
         <div class="decoration-line"></div>
       </div>
 
-      <!-- Logo -->
+      <!-- Logo - FIXED: using Font Awesome icon instead of missing image -->
       <div class="logout-logo">
         <div class="logo-image">
-          <img src="/images/westbrook logo.png" alt="WestBrook Hotel">
+          <i class="fas fa-hotel"></i>
           <div class="logo-ring"></div>
         </div>
         <div class="logo-text">WestBrook</div>
@@ -938,6 +945,7 @@
           <i class="fas fa-sign-in-alt"></i>
           Login Again
         </a>
+        <!-- Homepage button now correctly points to index.html -->
         <a href="index.html" class="btn-secondary">
           <i class="fas fa-home"></i>
           Homepage
